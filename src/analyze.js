@@ -1366,6 +1366,24 @@ export async function motionStrips(input, { output, count = 4, window: win = 1, 
   cands.sort((x, y) => y.s - x.s || x.a - y.a);
   const pick = [];
   for (const c of cands) { if (pick.length >= count) break; if (pick.some((p) => c.a < p.a + len && p.a < c.a + len)) continue; if (pick.length >= 3 && c.s < 0.05 * pick[0].s) break; pick.push(c); }
+  // the greedy picks can leave gaps too short for another window (two busy seconds in a 4 s video): put the next one in
+  // the biggest gap and slide the windows apart just enough that they fit side by side, so `count` windows come back
+  // whenever the video is long enough for them
+  if (pick.length < count && count * len <= n && pick.length < cands.length) {
+    const sum = (a) => { let s2 = 0; for (let k = a; k < a + len; k++) s2 += energy[k]; return s2 / len; };
+    while (pick.length < count) {
+      pick.sort((x, y) => x.a - y.a);
+      const edges = [0, ...pick.flatMap((p) => [p.a, p.a + len]), n];
+      let best = 0, at = 0;
+      for (let k = 0; k < edges.length; k += 2) if (edges[k + 1] - edges[k] > best) { best = edges[k + 1] - edges[k]; at = Math.round((edges[k] + edges[k + 1] - len) / 2); }
+      pick.push({ a: Math.max(0, Math.min(n - len, at)), s: 0 });
+      pick.sort((x, y) => x.a - y.a);
+      for (let k = 1; k < pick.length; k++) pick[k].a = Math.max(pick[k].a, pick[k - 1].a + len);
+      pick[pick.length - 1].a = Math.min(pick[pick.length - 1].a, n - len);
+      for (let k = pick.length - 2; k >= 0; k--) pick[k].a = Math.min(pick[k].a, pick[k + 1].a - len);
+      for (const p of pick) p.s = sum(p.a);
+    }
+  }
   pick.sort((x, y) => x.a - y.a);
   const outDir = resolve(output || join(dirname(file), 'analysis', basename(file).replace(/\.[^.]+$/, '')));
   mkdirSync(outDir, { recursive: true });

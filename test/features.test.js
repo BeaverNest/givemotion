@@ -738,6 +738,12 @@ test('analyze --motion: camera stops and strobing in a robotic render, a smooth 
   assert.equal(strips.length, 3);
   for (const st of strips) assert.ok(readFileSync(st.file).subarray(1, 4).toString() === 'PNG' && st.end - st.start <= 1.01);
   for (let i = 1; i < strips.length; i++) assert.ok(strips[i].start >= strips[i - 1].end - 1e-6, 'windows do not overlap');
+  // two busy seconds that leave no 1 s gap between or around them (0.75-1.75 s and 2.25-3.25 s of 4 s): the third window
+  // still comes back, next to them, on every platform
+  const fake = Array.from({ length: r.energy.length }, (_, k) => { const t = k / r.fps; return (t >= 0.75 && t < 1.75) || (t >= 2.25 && t < 3.25) ? 10 : 1; });
+  const packed = await motionStrips(vr, { output: join(d, 'strips2'), energy: fake, fps: r.fps, count: 3 });
+  assert.equal(packed.length, 3, JSON.stringify(packed.map((x) => [x.start, x.end])));
+  for (let i = 1; i < packed.length; i++) assert.ok(packed[i].start >= packed[i - 1].end - 1e-6, 'packed windows do not overlap');
 });
 
 test('check: robotic motion warnings (camera-stop, fast-no-blur, straight-move, same-ease) in classic motion, none for smooth motion', { skip }, async () => {
@@ -1120,16 +1126,16 @@ test('gm-include scope: the same part twice, each copy with its own ids, tween t
     const ctx = await openComposition(f, { mode: 'render' });
     try {
       await ctx.page.seek(1);
-      return await ctx.page.evaluate(`(() => [...document.querySelectorAll('[id^=mark]')].map((e) => [e.id, Math.round(e.getBoundingClientRect().left)]).concat([[getComputedStyle(document.querySelector('.box')).outlineWidth, getComputedStyle(document.querySelector('#out')).outlineWidth]]))()`);
+      return await ctx.page.evaluate(`(() => [...document.querySelectorAll('[id^=mark]')].map((e) => [e.id, Math.round(e.getBoundingClientRect().left)]).concat([[getComputedStyle(document.querySelector('.box')).outlineStyle, getComputedStyle(document.querySelector('#out')).outlineStyle]]))()`);
     } finally { await ctx.page.close(); await ctx.server.close(); }
   };
   const on = await probe('scope');
   assert.deepEqual(on.slice(0, 2), [['mark--s1', 300], ['mark--s2', 500]], 'each copy moves its own mark');
-  assert.deepEqual(on[2], ['7px', '0px'], 'the part style reaches its own copy and nothing outside it');
+  assert.deepEqual(on[2], ['solid', 'none'], 'the part style reaches its own copy and nothing outside it');
   const off = await probe('');
   assert.ok(off.slice(0, 2).some(([id]) => id === 'mark') && !off.some(([id]) => /--s/.test(id)), 'unscoped ids keep their names');
   assert.notDeepEqual(off.slice(0, 2).map((x) => x[1]), [300, 500], 'unscoped: both tweens hit the first #mark');
-  assert.equal(off[2][1], '7px', 'unscoped: the part style leaks out');
+  assert.equal(off[2][1], 'solid', 'unscoped: the part style leaks out');
 });
 
 test('audio: two loud tracks are limited instead of hard-clipping; quiet audio and timing stay exact', { skip }, async () => {
