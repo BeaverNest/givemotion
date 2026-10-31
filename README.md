@@ -1,3 +1,8 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/media/logo/wordmark-dark.svg">
+  <img src="docs/media/logo/wordmark-light.svg" height="64" alt="givemotion">
+</picture>
+
 # givemotion: make videos with AI, free and open source
 
 **Ask your AI for a video. Get an MP4.** givemotion is a free, open-source (MIT) video engine made for AI
