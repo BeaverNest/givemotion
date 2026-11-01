@@ -3,8 +3,9 @@ import { existsSync, mkdirSync, mkdtempSync, rmSync, statSync, writeFileSync, re
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { join, resolve, dirname, basename, extname, relative, isAbsolute } from 'node:path';
-import { cpus, tmpdir, totalmem, freemem } from 'node:os';
+import { tmpdir } from 'node:os';
 import { ensureChrome, FramePage, CACHE_DIR } from './browser.js';
+import { machineLimits, browserMB, reserve, demand, fairShare, atExit } from './machine.js';
 import { startServer, safeJoin } from './server.js';
 import { requireFfmpeg, encoderPlan, openSegmentWriter, finalize, mixAudio, probe, qualitySettings, wantsHardware, encoderIsReproducible } from './ffmpeg.js';
 import { pagePrints } from './parts.js';
@@ -105,12 +106,10 @@ export function resolveInput(input) {
   return { file, root, rel: relative(root, file) };
 }
 
+/** Workers a render wants if it had the computer to itself (reserve() then takes off what other renders use). */
 function defaultWorkers(totalFrames, pixels = 1920 * 1080) {
-  const cores = cpus().length || 2;
-  // a browser needs ~700 MB at 1080p, more at 4K (tiles and layers grow with the frame): ~1.5 GB a worker at 4K
-  const per = (450 + 250 * Math.max(1, pixels / (1920 * 1080))) * 1024 * 1024;
-  const memWorkers = Math.max(1, Math.floor(totalmem() / per));
-  let w = Math.max(1, Math.min(cores, memWorkers, 16));
+  const lim = machineLimits();
+  let w = Math.max(1, Math.min(lim.browsers, Math.floor(lim.memMB / browserMB(pixels))));
   // Short videos are not worth many browsers
   w = Math.min(w, Math.max(1, Math.floor(totalFrames / 24)));
   return w;
@@ -156,8 +155,13 @@ export async function openComposition(input, opts = {}) {
 
 async function newWorker(ctx, opts) {
   const page = new FramePage({ chrome: ctx.chrome, width: ctx.info.width, height: ctx.info.height, scale: opts.scale || 1, capture: ctx.page.mode, gl: opts.gl, transparent: opts.transparent, timeoutMs: opts.timeoutMs });
-  await page.start();
-  await page.open(ctx.url, ctx.config);
+  try {
+    await page.start();
+    await page.open(ctx.url, ctx.config);
+  } catch (e) {
+    await page.close().catch(() => {});
+    throw e;
+  }
   return page;
 }
 
@@ -242,10 +246,16 @@ export async function render(input, opts = {}) {
     phase('done', { output: out, seconds: r.seconds, frames: 0 });
     return r;
   }
-  const ctx = await openComposition(input, { ...opts, mode: 'render', log });
+  // say at once that this render wants workers (the size comes later), so renders that start together share evenly
+  const want = opts.workers ? null : demand(machineLimits().browsers);
+  let ctx;
+  try { ctx = await openComposition(input, { ...opts, mode: 'render', log }); } catch (e) { if (want) want.drop(); throw e; }
   const cleanup = [];
+  if (want) cleanup.push(want.drop);
   const tmp = mkdtempSync(join(opts.tmpdir || tmpdir(), 'gm-render-'));
-  cleanup.push(() => rmSync(tmp, { recursive: true, force: true }));
+  const removeTmp = () => rmSync(tmp, { recursive: true, force: true });
+  const unhookTmp = atExit(removeTmp);
+  cleanup.push(removeTmp, unhookTmp);
   const pages = [ctx.page];
   try {
     const comp = ctx.info;
@@ -315,24 +325,39 @@ export async function render(input, opts = {}) {
       ranges = [{ a: f0, b: f1, file: format === 'png' ? null : join(tmp, `seg.${plan.segExt}`) }];
     }
     const todoFrames = ranges.reduce((s, r) => s + r.b - r.a, 0);
-    const workers = Math.max(1, Math.min(opts.workers || defaultWorkers(todoFrames, size.width * size.height), Math.max(1, todoFrames)));
+    const mbEach = browserMB(size.width * size.height);
+    let workers = Math.max(1, Math.min(opts.workers || defaultWorkers(todoFrames, size.width * size.height), Math.max(1, todoFrames)));
+    // The browsers come out of the computer's budget, shared with the other givemotion processes running now (other
+    // projects' renders, a check): each render gets an even share, gains workers as the others finish and gives some
+    // back between parts when a new one starts. --workers is taken as asked.
+    const shared = !opts.workers && todoFrames > 0;
+    const wanted = workers;
+    if (want) want.set(shared ? wanted : 0);
+    const grant = shared ? reserve(Math.min(wanted, fairShare(mbEach)) - 1, mbEach) : null;
+    if (grant) { cleanup.push(grant.release); workers = 1 + grant.n; }
     const auto = blur.mode === 'auto';
-    // each worker gets a run of neighbouring frames
-    const groups = splitRanges(ranges, workers, useParts ? 1 : 0, tmp, plan);
-    const nWorkers = Math.max(1, groups.length);
+    // each worker gets a run of neighbouring frames; one that runs out takes the back half of the longest run left
+    const runs = splitRanges(ranges, workers, useParts ? 1 : 0, tmp, plan).map((g) => ({ parts: g, owner: -1 }));
+    const segmentFiles = runs.flatMap((r) => r.parts.map((p) => p.file));
+    let nWorkers = Math.max(1, runs.length);
     if (!opts.quiet) {
       log(`givemotion: ${comp.width}x${comp.height}${opts.scale !== 1 ? ' @' + +(/** @type {number} */ (opts.scale)).toFixed(4) + 'x (' + size.width + 'x' + size.height + ')' : ''} ${fps}fps ${(nFrames / fps).toFixed(2)}s (${nFrames} frames) → ${relativeOut(out)} [${format}, ${nWorkers} worker${nWorkers > 1 ? 's' : ''}, ${ctx.page.mode}${blurSamples > 1 ? ', motion blur x' + blurSamples : auto ? ', motion blur auto' : blur.why ? ', no motion blur: the page uses requestAnimationFrame' : ''}${hardware ? ', GPU encoder' : ''}]`);
       if (parts && parts.list.some((p) => p.keep)) {
         const kept = parts.list.filter((p) => p.keep).length;
         log(`  reusing ${kept} of ${parts.list.length} parts from the last render; redoing ${parts.list.length - kept}${parts.redo ? ' (--redo)' : ''}${parts.changedClips.length ? ' (changed: ' + parts.changedClips.slice(0, 4).join(', ') + (parts.changedClips.length > 4 ? ', …' : '') + ')' : ''}`);
       } else if (keepParts && parts.why && parts.why !== 'first render') log(`  redoing every part: ${parts.why}`);
+      if (grant && workers < wanted) log(`  ${workers} worker${workers > 1 ? 's' : ''}${useParts ? ' for now' : ''} instead of ${wanted}: ${grant.limitedBy === 'free memory' ? 'the computer is low on free memory' : `the computer is shared with other givemotion processes (${grant.others} browser${grant.others === 1 ? '' : 's'} open)`}${useParts ? '; more join when they finish' : ''} (--workers <n> to override)`);
     }
 
     if (process.env.GIVEMOTION_PROFILE) log(`  setup ${Date.now() - t0}ms`);
     const setDurations = Object.keys(media.durations).length ? `(() => { const d = ${JSON.stringify(media.durations)}; gm.__setVideoDurations && gm.__setVideoDurations(d); })()` : null;
     // Start other workers in parallel
-    const extra = todoFrames ? await Promise.all(Array.from({ length: nWorkers - 1 }, () => newWorker(ctx, opts))) : [];
-    pages.push(...extra);
+    // (the ones that opened are closed below even when another failed to: they would keep their browsers running)
+    const started = todoFrames ? await Promise.allSettled(Array.from({ length: nWorkers - 1 }, () => newWorker(ctx, opts))) : [];
+    for (const r of started) if (r.status === 'fulfilled') pages.push(r.value);
+    const failed = started.find((r) => r.status === 'rejected');
+    if (failed) throw /** @type {PromiseRejectedResult} */ (failed).reason;
+    if (grant) grant.release(); // the workers are open and count themselves now
     if (setDurations) await Promise.all(pages.map((p) => p.evaluate(setDurations)));
     // Auto blur: seek with velocityBlur (installed once per page), which also smears what moves fast at that time
     const vbArgs = JSON.stringify({ min: AUTO_BLUR.min * blurStats.ref, maxEls: AUTO_BLUR.maxEls });
@@ -361,15 +386,35 @@ export async function render(input, opts = {}) {
 
     if (format === 'png') mkdirSync(out.includes('%') ? dirname(out) : out, { recursive: true });
     const jpegQ = q.jpeg;
-    await Promise.all(groups.map(async (group, wi) => {
-      const page = pages[wi];
+    // the work: a worker takes the next range of its own run; out of work, it takes a retired worker's run, or the back
+    // half of the longest run (its owner takes from the front), so the runs stay neighbouring frames
+    let active = 0, retire = 0, stopped = false;
+    const partsLeft = () => runs.reduce((n, r) => n + r.parts.length, 0);
+    const next = (wi) => {
+      if (stopped) return null;
+      if (retire > 0 && active > 1 && wi !== 0) { retire--; return null; }
+      let own = runs.find((r) => r.owner === wi);
+      if (!own) { own = runs.find((r) => r.owner === -1 && r.parts.length); if (own) own.owner = wi; }
+      if (own && own.parts.length) return own.parts.shift();
+      const left = runs.find((r) => r.owner === -2 && r.parts.length);
+      if (left && own) { own.parts = left.parts; left.parts = []; return own.parts.shift(); }
+      if (left) { left.owner = wi; return left.parts.shift(); }
+      const longest = runs.filter((r) => r.parts.length).sort((x, y) => y.parts.length - x.parts.length)[0];
+      if (!longest) return null;
+      const take = longest.parts.splice(longest.parts.length - Math.max(1, Math.floor(longest.parts.length / 2)));
+      if (own) own.parts = take; else runs.push((own = { parts: take, owner: wi }));
+      return own.parts.shift();
+    };
+    const runWorker = async (page, wi) => {
+      active++;
       let last = null, prevFrame = -2;
       const prof = { seek: 0, cap: 0, write: 0, end: 0 };
       // a finished part's encoder keeps working while the next part is captured (the encoder pipeline stays full)
       const ending = [], open = [];
       let frames = 0;
       try {
-      for (const { a, b, file } of group) {
+      for (let range; (range = next(wi)); ) {
+        const { a, b, file } = range;
         frames += b - a;
         const tmpFile = file ? file + '.tmp.' + plan.segExt : null;
         const writer = file ? openSegmentWriter({ fps, inputCodec: captureFormat === 'png' ? 'png' : 'mjpeg', out: tmpFile, plan, motionBlur: blurSamples > 1 ? { samples: blurSamples } : null }) : null;
@@ -424,9 +469,70 @@ export async function render(input, opts = {}) {
         for (const w of open) w.kill();
         await Promise.allSettled(ending);
         throw e;
+      } finally {
+        active--;
+        // what it had not started goes to the others
+        for (const r of runs) if (r.owner === wi) r.owner = -2;
       }
       if (process.env.GIVEMOTION_PROFILE) log(`  worker ${wi}: seek ${prof.seek}ms, capture ${prof.cap}ms, write ${prof.write}ms, encoder flush ${prof.end}ms for ${frames} frames`);
-    }));
+      // a worker given back to the computer closes its browser now, not at the end
+      if (wi !== 0 && !stopped) await page.close();
+    };
+    // the first error stops every worker (at its next part) and is what the render throws
+    const running = new Set();
+    let failure = null;
+    const launch = (page, wi) => {
+      const p = runWorker(page, wi).catch((e) => { if (!failure) failure = e; stopped = true; }).finally(() => running.delete(p));
+      running.add(p);
+    };
+    pages.forEach((p, wi) => launch(p, wi));
+    // Every second: take this render's share of the computer. More workers when others finished, fewer (between parts)
+    // when a render started since; never fewer than one, never more than the parts left.
+    let peak = nWorkers, ticking = false, launched = nWorkers, spawning = 0;
+    const tick = async () => {
+      if (ticking || stopped) return;
+      ticking = true;
+      try {
+        const left = partsLeft();
+        want.set(Math.min(wanted, active + left));
+        const share = Math.min(fairShare(mbEach), active + left);
+        const have = active + spawning;
+        if (process.env.GIVEMOTION_PROFILE) log(`  t=${((Date.now() - tFrames) / 1000).toFixed(1)} active=${active} share=${share} left=${left} retire=${retire}`);
+        if (have > share) retire = Math.max(0, active - share);
+        else if (retire === 0 && have < share && left > spawning + 1) {
+          const g = reserve(Math.min(share - have, left - spawning - 1), mbEach);
+          if (g.n) {
+            spawning += g.n;
+            const add = (async () => {
+              const opened = await Promise.allSettled(Array.from({ length: g.n }, () => newWorker(ctx, opts)));
+              g.release();
+              spawning -= g.n;
+              for (const r of opened) {
+                if (r.status !== 'fulfilled') continue;
+                const page = r.value;
+                pages.push(page);
+                if (setDurations) await page.evaluate(setDurations);
+                if (stopped || !partsLeft()) { await page.close(); continue; }
+                launch(page, launched++);
+              }
+              peak = Math.max(peak, active);
+            })().catch(() => {}).finally(() => running.delete(add));
+            running.add(add);
+          }
+        }
+      } finally { ticking = false; }
+    };
+    const ticker = shared && useParts ? setInterval(tick, 1000) : null;
+    try {
+      while (running.size) await Promise.race(running);
+    } finally {
+      stopped = true;
+      if (ticker) clearInterval(ticker);
+      // encoding the end needs no browsers: let other renders have them
+      if (want) want.set(0);
+    }
+    if (failure) throw failure;
+    nWorkers = Math.max(peak, nWorkers);
     const tLoop = Date.now();
     const pageErrors = pages.flatMap((p) => p.errors);
     await Promise.all(pages.map((p) => p.close()));
@@ -434,7 +540,7 @@ export async function render(input, opts = {}) {
     if (format !== 'png') {
       phase('encode');
       mkdirSync(dirname(out), { recursive: true });
-      const segments = parts ? parts.list.map((p) => p.file) : groups.flat().map((r) => r.file);
+      const segments = parts ? parts.list.map((p) => p.file) : segmentFiles;
       await finalize({ segments, listFile: join(tmp, 'list.txt'), out, format, duration: nFrames / fps, audio: media.audio.map((a) => ({ ...a, start: a.start - f0 / fps, end: a.end - f0 / fps })).filter((a) => a.end > 0).map((a) => (a.start < 0 ? { ...a, from: a.from + -a.start * a.rate, start: 0 } : a)), fps, plan, transparent });
       if (parts && keepParts) {
         writeFileSync(join(parts.dir, 'parts.json'), JSON.stringify({ settings: parts.settings, shared: parts.deps.shared, clips: parts.deps.clips, parts: parts.list.map(({ a, b, fp }) => ({ a, b, fp })) }));

@@ -1,7 +1,7 @@
 // Tests for motion tools, React mode, audio analysis and the checker's motion handling.
-import { test } from 'node:test';
+import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, writeFileSync, readFileSync, readdirSync, mkdirSync, copyFileSync, symlinkSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, readFileSync, readdirSync, mkdirSync, copyFileSync, symlinkSync, rmSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
@@ -12,7 +12,7 @@ import { render, check, inspect, openComposition } from '../src/api.js';
 import { formatReport } from '../src/check.js';
 
 const skip = !findChrome() || !ffmpegInfo() ? 'needs Chrome and ffmpeg' : false;
-const tmp = () => mkdtempSync(join(tmpdir(), 'gm-feat-'));
+const tmp = () => mkdtempSync(join(TMP, 'feat-'));
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const quiet = { quiet: true, log: () => {} };
 const page = (body, attrs = 'data-width="640" data-height="360" data-fps="30"') => `<!doctype html><html ${attrs}><head><style>body{background:#111;color:#fff;font-family:sans-serif}</style></head><body>${body}</body></html>`;
@@ -850,6 +850,10 @@ test('natural camera: follow trails a moving element and settles on it (lag: 0 a
 // --- motion blur (auto by default in natural motion) ---
 import { resolveMotionBlur } from '../src/render.js';
 import { imageLength } from '../src/ffmpeg.js';
+
+// every test's folders go in one per run, removed at the end (each run used to leave dozens in the temp folder)
+const TMP = mkdtempSync(join(tmpdir(), 'gm-feat-'));
+after(() => rmSync(TMP, { recursive: true, force: true }));
 
 test('motion blur: flag values', () => {
   assert.deepEqual(resolveMotionBlur(undefined), { mode: 'auto', samples: 1 }); // on by default in natural motion

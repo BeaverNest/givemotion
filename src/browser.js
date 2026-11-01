@@ -6,8 +6,9 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import { pipeline } from 'node:stream/promises';
 import { Readable } from 'node:stream';
 import { launchChrome } from './cdp.js';
+import { CACHE_DIR, hold, browserMB } from './machine.js';
 
-export const CACHE_DIR = process.env.GIVEMOTION_CACHE || join(process.env.XDG_CACHE_HOME || join(homedir(), '.cache'), 'givemotion');
+export { CACHE_DIR };
 const CFT_JSON = 'https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json';
 
 function cftPlatform() {
@@ -178,6 +179,8 @@ export class FramePage {
     this.mode = mode;
     this.browser = launchChrome(chrome.path, [...chromeArgs({ kind: chrome.kind, beginFrame: mode === 'beginframe', gl: this.opts.gl, scale: this.opts.scale || 1 }), `--window-size=${width},${height}`, ...((this.opts.scale || 1) !== 1 ? [`--force-device-scale-factor=${this.opts.scale}`] : []), 'about:blank']);
     const b = this.browser;
+    // count it in the computer's budget, so renders started next leave room for it (see machine.js)
+    this._release = hold(1, browserMB(width * height * (this.opts.scale || 1) ** 2));
     const { targetId } = await b.send('Target.createTarget', { url: 'about:blank', width, height, ...(mode === 'beginframe' ? { enableBeginFrameControl: true } : {}) });
     const { sessionId } = await b.send('Target.attachToTarget', { targetId, flatten: true });
     this.sessionId = sessionId;
@@ -370,6 +373,7 @@ export class FramePage {
   }
   async close() {
     if (this.browser) { const b = this.browser; this.browser = null; await b.close(); }
+    if (this._release) { this._release(); this._release = null; }
   }
 }
 

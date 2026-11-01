@@ -400,6 +400,10 @@ Render options: `--quality draft|standard|high|max`, `--fps`, `--scale 2` (4K fr
 `--muted`, `--data file.json`, `--props '{…}'`, `--cache-dir <dir>` (where the parts cache lives),
 `--progress json` (JSON progress lines on stderr, for apps). Every command takes `--json`.
 
+Renders running at the same time (several projects, several agents) share the computer: together they open no more
+browsers than it has performance cores and use at most half its memory, split evenly between them, so starting
+another one does not freeze the machine. `GIVEMOTION_MAX_BROWSERS=N` changes the total.
+
 Rendering again after a change only redoes the parts of the video that changed (edit one scene → only its 1-2 s parts
 are rendered; in one long scene, an edit to something that appears at 40 s keeps the first 40 s), and the result is
 byte-identical to a full render. `--redo 4s-7s` forces a range, `--no-cache` turns it off. The render result says

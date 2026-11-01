@@ -3,6 +3,7 @@ import { spawn, spawnSync } from 'node:child_process';
 import { writeFileSync, readFileSync, mkdtempSync, mkdirSync, rmSync, existsSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { tmpdir, release as osRelease } from 'node:os';
+import { atExit } from './machine.js';
 
 let cachedPath = null;
 export function ffmpegPath() {
@@ -75,6 +76,10 @@ export function encoderPlan({ format, quality = 'standard', crf, codec, transpar
   const precise = quality === 'high' || quality === 'max' ? ':flags=accurate_rnd+full_chroma_int' : '';
   // The tags are also set on the frames: a frame's own properties win over the encoder flags, and frames from a JPEG
   // pipe carry none (the video came out with no primaries and no transfer tag at all, unlike one made from PNG frames).
+  // Software encoders get a fixed number of threads. Left to choose, x264 took 1.5 per core (67 threads in each ffmpeg
+  // on 12 cores) for every part being encoded, while a render already runs one encoder per worker: no faster (8 workers:
+  // 9.8 s either way), ~150 MB more per encoder. Fixed, not from the worker count: the thread count changes the bytes.
+  const threads = ['-threads', '4'];
   const toYuv = (pix) => ['-vf', `format=rgb24,scale=out_color_matrix=bt709:out_range=tv${precise},format=${pix},setparams=colorspace=bt709:color_primaries=bt709:color_trc=iec61966-2-1:range=tv`];
   if (format === 'mp4' || format === 'mkv') {
     if (transparent) throw new Error('MP4 cannot hold transparency. Use --format mov (ProRes 4444) or --format webm (VP9 alpha).');
@@ -82,16 +87,16 @@ export function encoderPlan({ format, quality = 'standard', crf, codec, transpar
     if (c === 'h265' || c === 'hevc') {
       if (hardware && info.encoders.hevc_videotoolbox) return { segExt: format, vf: toYuv('yuv420p'), vargs: ['-c:v', 'hevc_videotoolbox', '-q:v', String(Math.max(40, 80 - (crf ?? q.crf))), '-tag:v', 'hvc1', '-pix_fmt', 'yuv420p', ...colorTags] };
       if (!info.encoders.libx265) throw new Error('Your ffmpeg has no libx265 encoder. Use --codec h264.');
-      return { segExt: format, vf: toYuv('yuv420p'), vargs: ['-c:v', 'libx265', '-preset', q.preset, '-crf', String((crf ?? q.crf) + 4), '-tag:v', 'hvc1', '-pix_fmt', 'yuv420p', ...colorTags] };
+      return { segExt: format, vf: toYuv('yuv420p'), vargs: ['-c:v', 'libx265', '-preset', q.preset, '-crf', String((crf ?? q.crf) + 4), '-x265-params', 'pools=4', '-tag:v', 'hvc1', '-pix_fmt', 'yuv420p', ...colorTags] };
     }
     if (c === 'av1') {
       if (!info.encoders.libsvtav1) throw new Error('Your ffmpeg has no libsvtav1 encoder.');
-      return { segExt: format, vf: toYuv('yuv420p'), vargs: ['-c:v', 'libsvtav1', '-preset', '8', '-crf', String((crf ?? q.crf) + 12), '-pix_fmt', 'yuv420p', ...colorTags] };
+      return { segExt: format, vf: toYuv('yuv420p'), vargs: ['-c:v', 'libsvtav1', '-preset', '8', '-crf', String((crf ?? q.crf) + 12), ...threads, '-pix_fmt', 'yuv420p', ...colorTags] };
     }
     if (hardware && info.encoders.h264_videotoolbox) return { segExt: format, vf: toYuv('yuv420p'), vargs: ['-c:v', 'h264_videotoolbox', '-q:v', String(Math.max(40, 85 - (crf ?? q.crf))), '-pix_fmt', 'yuv420p', ...colorTags] };
     if (hardware && info.encoders.h264_nvenc) return { segExt: format, vf: toYuv('yuv420p'), vargs: ['-c:v', 'h264_nvenc', '-preset', 'p5', '-cq', String(crf ?? q.crf + 2), '-pix_fmt', 'yuv420p', ...colorTags] };
     if (!info.encoders.libx264) throw new Error('Your ffmpeg has no libx264 encoder. Install a full ffmpeg build.');
-    return { segExt: format, vf: toYuv('yuv420p'), vargs: ['-c:v', 'libx264', '-preset', q.preset, '-crf', String(crf ?? q.crf), '-pix_fmt', 'yuv420p', '-profile:v', 'high', ...colorTags] };
+    return { segExt: format, vf: toYuv('yuv420p'), vargs: ['-c:v', 'libx264', '-preset', q.preset, '-crf', String(crf ?? q.crf), ...threads, '-pix_fmt', 'yuv420p', '-profile:v', 'high', ...colorTags] };
   }
   if (format === 'webm') {
     if (!info.encoders.libvpx_vp9) throw new Error('Your ffmpeg has no libvpx-vp9 encoder.');
@@ -99,18 +104,18 @@ export function encoderPlan({ format, quality = 'standard', crf, codec, transpar
     return {
       segExt: 'webm', alpha: !!transparent,
       vf: transparent ? ['-vf', 'format=yuva420p'] : toYuv(pix),
-      vargs: ['-c:v', 'libvpx-vp9', '-b:v', '0', '-crf', String(crf ?? q.vp9crf), '-row-mt', '1', '-deadline', 'good', '-cpu-used', quality === 'draft' ? '8' : '4', '-pix_fmt', pix, ...(transparent ? ['-auto-alt-ref', '0'] : colorTags)],
+      vargs: ['-c:v', 'libvpx-vp9', '-b:v', '0', '-crf', String(crf ?? q.vp9crf), '-row-mt', '1', ...threads, '-deadline', 'good', '-cpu-used', quality === 'draft' ? '8' : '4', '-pix_fmt', pix, ...(transparent ? ['-auto-alt-ref', '0'] : colorTags)],
     };
   }
   if (format === 'mov') {
     if (!info.encoders.prores_ks) throw new Error('Your ffmpeg has no prores_ks encoder.');
     return transparent
-      ? { segExt: 'mov', alpha: true, vf: ['-vf', 'format=yuva444p10le'], vargs: ['-c:v', 'prores_ks', '-profile:v', '4', '-pix_fmt', 'yuva444p10le', '-alpha_bits', '16', '-vendor', 'apl0'] }
-      : { segExt: 'mov', vf: toYuv('yuv422p10le'), vargs: ['-c:v', 'prores_ks', '-profile:v', '3', '-pix_fmt', 'yuv422p10le', '-vendor', 'apl0', ...colorTags] };
+      ? { segExt: 'mov', alpha: true, vf: ['-vf', 'format=yuva444p10le'], vargs: ['-c:v', 'prores_ks', '-profile:v', '4', ...threads, '-pix_fmt', 'yuva444p10le', '-alpha_bits', '16', '-vendor', 'apl0'] }
+      : { segExt: 'mov', vf: toYuv('yuv422p10le'), vargs: ['-c:v', 'prores_ks', '-profile:v', '3', ...threads, '-pix_fmt', 'yuv422p10le', '-vendor', 'apl0', ...colorTags] };
   }
   if (format === 'gif') {
     // Segments are lossless; the GIF is made in one pass at the end for a shared palette.
-    return { segExt: 'mkv', needsFinalTranscode: true, vf: [], vargs: ['-c:v', 'ffv1', '-level', '3', '-pix_fmt', transparent ? 'bgra' : 'bgr0'] };
+    return { segExt: 'mkv', needsFinalTranscode: true, vf: [], vargs: ['-c:v', 'ffv1', '-level', '3', ...threads, '-pix_fmt', transparent ? 'bgra' : 'bgr0'] };
   }
   throw new Error(`Unknown format "${format}". Use mp4, webm, mov, gif, png (frames) or mkv.`);
 }
@@ -130,16 +135,20 @@ export function openSegmentWriter({ fps, inputCodec, out, plan, motionBlur }) {
   const args = ['-hide_banner', '-loglevel', 'error', '-y', '-f', 'image2pipe', '-framerate', String(inFps), '-c:v', inputCodec, '-i', '-',
     ...(vfStr ? ['-vf', vfStr] : []), '-r', String(fps), ...plan.vargs, '-an', out];
   const proc = spawn(ffmpegPath(), args, { stdio: ['pipe', 'ignore', 'pipe'] });
+  // a render that is stopped does not leave its encoders finishing parts nobody will use
+  const unhook = atExit(() => { try { proc.kill('SIGKILL'); } catch {} });
   let err = '';
   proc.stderr.on('data', (d) => { err += d; });
   const done = new Promise((resolve, reject) => {
+    proc.on('exit', () => unhook());
     proc.on('exit', (code) => (code === 0 ? resolve() : reject(new Error(`ffmpeg failed (${code}): ${err.trim().split('\n').slice(-3).join(' ')}`))));
     proc.on('error', reject);
   });
   proc.stdin.on('error', () => {});
   // Frames are queued so capturing the next frame overlaps with encoding this one.
-  // Back-pressure only kicks in when ~64MB are waiting.
-  const HIGH = 64 * 1024 * 1024;
+  // Back-pressure kicks in when ~16 MB are waiting (dozens of JPEG frames, a few 4K PNGs): a worker has up to three
+  // encoders going, and a render up to 16 workers.
+  const HIGH = 16 * 1024 * 1024;
   return {
     async write(buf) {
       proc.stdin.write(buf);

@@ -6,6 +6,7 @@ import { join, resolve, dirname, basename, relative, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
 import { parseArgs, parseScale } from './args.js';
+import { handleSignals } from './machine.js';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PKG_ROOT = resolve(HERE, '..');
@@ -64,7 +65,8 @@ Render options
   --no-cache             Do not keep or reuse parts (by default only changed parts are re-rendered)
   --cache-dir <dir>      Keep the parts in <dir>/<output name>/ instead of .gm-parts/ next to the output
   --cache-key <name>     Name the parts' folder <name> instead of the output's file name (a new output name per version still reuses them)
-  --workers <n>          Parallel browsers (default: based on CPU and memory)
+  --workers <n>          Parallel browsers (default: this render's share of the computer's cores and memory, split
+                         with the other givemotion processes running; GIVEMOTION_MAX_BROWSERS sets the total)
   --transparent          Keep transparency (use --format mov or webm)
   --muted                No audio track
   --motion-blur <mode>   auto (default): a smear on what moves fast in each frame; off: every frame sharp
@@ -142,6 +144,9 @@ const CMD_HELP = {
 const BOOLS = ['json', 'sheets', 'audio', 'motion', 'cache', 'grid', 'force', 'transparent', 'muted', 'fast', 'transitions', 'hardware', 'quiet', 'reuse', 'open', 'sheetOnly', 'help', 'version', 'lossless', 'verbose', 'yes'];
 
 async function main() {
+  // Ctrl+C or a kill ends through exit(), which closes this process's browsers and encoders and removes its temporary
+  // files (Chrome runs in its own process group, which a Ctrl+C in the terminal does not reach)
+  handleSignals();
   const argv = process.argv.slice(2);
   const cmd = argv[0] && !argv[0].startsWith('-') ? argv[0] : (argv.includes('--version') || argv.includes('-v') ? 'version' : 'help');
   const args = parseArgs(cmd === argv[0] ? argv.slice(1) : argv, { boolean: BOOLS, alias: { o: 'output', out: 'output', t: 'time', w: 'workers', q: 'quality', h: 'help', f: 'format' } });

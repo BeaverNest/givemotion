@@ -1,7 +1,7 @@
 // Local HTTP server: serves the project folder, injects the runtime into HTML,
 // expands <gm-include>, and serves video frames decoded by ffmpeg.
 import http from 'node:http';
-import { createReadStream, existsSync, readFileSync, statSync, mkdirSync, readdirSync, watch, realpathSync } from 'node:fs';
+import { createReadStream, existsSync, readFileSync, statSync, mkdirSync, readdirSync, watch, realpathSync, rmSync, utimesSync, writeFileSync } from 'node:fs';
 import { join, extname, resolve, dirname, sep, normalize, basename, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
@@ -185,7 +185,7 @@ export function injectRuntime(html, { inlineConfig } = {}) {
 // Video frame extraction
 // ---------------------------------------------------------------------------
 class FrameExtractor {
-  constructor(maxW, maxH) { this.jobs = new Map(); this.maxW = maxW; this.maxH = maxH; }
+  constructor(maxW, maxH) { this.jobs = new Map(); this.maxW = maxW; this.maxH = maxH; pruneFrames(); }
   key(file, fps) {
     const st = statSync(file);
     return createHash('sha1').update(`${file}|${st.size}|${st.mtimeMs}|${fps}|${this.maxW}x${this.maxH}`).digest('hex').slice(0, 16);
@@ -197,7 +197,11 @@ class FrameExtractor {
     mkdirSync(dir, { recursive: true });
     const p = (i) => join(dir, `${String(i).padStart(7, '0')}.jpg`);
     let jobs = this.jobs.get(key);
-    if (!jobs) { jobs = []; this.jobs.set(key, jobs); }
+    if (!jobs) {
+      jobs = []; this.jobs.set(key, jobs);
+      // in use: pruneFrames keeps it
+      try { const now = new Date(); utimesSync(dir, now, now); } catch {}
+    }
     const complete = (i) => existsSync(p(i + 1)) || (existsSync(p(i)) && !jobs.some((j) => !j.done && i >= j.start && i <= j.end));
     if (complete(idx)) return p(idx);
     let job = jobs.find((j) => !j.done && idx >= j.start && idx <= j.start + Math.ceil(fps * 4) + (j.reached || 0));
@@ -341,11 +345,33 @@ export async function startServer({ root, maxW = 3840, maxH = 2160, studio = fal
   };
 }
 
+/**
+ * Video frames decoded for earlier renders stay in the cache, so the next render of the same video starts at once. A
+ * video's frames not used for two weeks are removed (checked once a day): the folder grew by every video ever rendered.
+ */
+function pruneFrames() {
+  const root = join(CACHE_DIR, 'frames'), stamp = join(root, '.pruned');
+  const now = Date.now(), DAY = 86400000;
+  try { if (now - statSync(stamp).mtimeMs < DAY) return; } catch {}
+  let names = [];
+  try { names = readdirSync(root); } catch { return; }
+  for (const n of names) {
+    if (!/^[0-9a-f]{16}$/.test(n)) continue;
+    try { if (now - statSync(join(root, n)).mtimeMs > 14 * DAY) rmSync(join(root, n), { recursive: true, force: true }); } catch {}
+  }
+  try { writeFileSync(stamp, ''); } catch {}
+}
+
+// Decoded audio (for the waveform and audio data): a studio session keeps it while it runs, so it is capped (the oldest
+// go first) and a file's older versions are dropped when it changes. 10 minutes of audio at 48 kHz is ~110 MB.
 const pcmCache = new Map();
+const PCM_MAX = 512 * 1024 * 1024;
+let pcmBytes = 0;
 function decodePCM(file, sr) {
   const st = statSync(file);
   const key = `${file}|${st.size}|${st.mtimeMs}|${sr}`;
-  if (pcmCache.has(key)) return pcmCache.get(key);
+  if (pcmCache.has(key)) { const p = pcmCache.get(key); pcmCache.delete(key); pcmCache.set(key, p); return p; }
+  for (const [k, v] of pcmCache) if (k.startsWith(file + '|') && k.endsWith('|' + sr)) { pcmCache.delete(k); pcmBytes -= /** @type {any} */ (v).bytes || 0; }
   const p = new Promise((resolveP) => {
     const ff = ffmpegPath();
     if (!ff) return resolveP(null);
@@ -356,6 +382,15 @@ function decodePCM(file, sr) {
     proc.on('close', (code) => resolveP(code === 0 ? Buffer.concat(chunks) : null));
   });
   pcmCache.set(key, p);
+  p.then((buf) => {
+    if (!buf || pcmCache.get(key) !== p) return;
+    /** @type {any} */ (p).bytes = buf.length;
+    pcmBytes += buf.length;
+    for (const [k, v] of pcmCache) {
+      if (pcmBytes <= PCM_MAX || k === key) break;
+      pcmCache.delete(k); pcmBytes -= /** @type {any} */ (v).bytes || 0;
+    }
+  });
   return p;
 }
 

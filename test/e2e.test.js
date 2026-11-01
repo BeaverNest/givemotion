@@ -1,7 +1,7 @@
 // End-to-end tests. They need Chrome (or chrome-headless-shell) and ffmpeg; they skip otherwise.
-import { test } from 'node:test';
+import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, writeFileSync, readFileSync, readdirSync, mkdirSync, copyFileSync, existsSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, readFileSync, readdirSync, mkdirSync, copyFileSync, existsSync, rmSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { tmpdir } from 'node:os';
 import { createHash } from 'node:crypto';
@@ -11,10 +11,14 @@ import { ffmpegInfo, ffmpegPath, probe } from '../src/ffmpeg.js';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { render, stills, check, snapshot, inspect } from '../src/api.js';
 
+// every test's folders go in one per run, removed at the end (each run used to leave dozens in the temp folder)
+const TMP = mkdtempSync(join(tmpdir(), 'gm-e2e-'));
+after(() => rmSync(TMP, { recursive: true, force: true }));
+
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
 const skip = !findChrome() || !ffmpegInfo() ? 'needs Chrome and ffmpeg' : false;
-const tmp = () => mkdtempSync(join(tmpdir(), 'gm-test-'));
+const tmp = () => mkdtempSync(join(TMP, 'test-'));
 const md5 = (f) => createHash('md5').update(readFileSync(f)).digest('hex');
 const quiet = { quiet: true, log: () => {} };
 
@@ -78,6 +82,46 @@ test('deterministic: 1 worker and 3 workers give identical frames (timers, rAF c
   assert.deepEqual(fa, fb);
   const diff = fa.filter((x) => md5(join(a, x)) !== md5(join(b, x)));
   assert.deepEqual(diff, []);
+});
+
+test('shared computer: a render that starts with 1 worker, grows when another render finishes and gives workers back when one starts gives the same bytes as 1 worker', { skip }, async () => {
+  const { CACHE_DIR } = await import('../src/machine.js');
+  const { spawn } = await import('node:child_process');
+  const d = tmp();
+  const f = comp(d, 'long.html', `<style>#b{position:absolute;left:20px;top:110px;width:40px;height:40px;background:#4af}h1{position:absolute;left:20px;top:20px;margin:0;font:32px Inter}</style>
+    <h1 id="h">Sharing</h1><div id="b"></div>
+    <script>gm.timeline().to('#b', { x: 240, rotate: 720, duration: 20, ease: 'linear' }, 0).from('#h', { opacity: 0, y: 20, duration: 1 }, 0.2);</script>`, 'data-width="320" data-height="180" data-fps="30" data-duration="20"');
+  const a = join(d, 'a.mp4'), b = join(d, 'b.mp4');
+  await render(f, { output: a, workers: 1, cache: false, ...quiet });
+  // another givemotion process (a live child standing in for it) that has 3 of the computer's 4 browsers
+  const other = spawn(process.execPath, ['-e', 'setTimeout(() => {}, 120000)'], { stdio: 'ignore' });
+  const lease = join(CACHE_DIR, 'run', `${other.pid}.json`);
+  mkdirSync(dirname(lease), { recursive: true });
+  const env = { max: process.env.GIVEMOTION_MAX_BROWSERS, prof: process.env.GIVEMOTION_PROFILE };
+  process.env.GIVEMOTION_MAX_BROWSERS = '4'; process.env.GIVEMOTION_PROFILE = '1';
+  writeFileSync(lease, JSON.stringify({ pid: other.pid, browsers: 3, mb: 0, wants: 3, claim: null }));
+  const seen = [];
+  let phase = 0;
+  try {
+    await render(f, {
+      output: b, cache: false, quiet: true, log: (line) => {
+        const m = /active=(\d+) share=\d+ left=(\d+)/.exec(line);
+        if (!m) return;
+        seen.push([+m[1], +m[2]]);
+        // it finishes: room for more workers; then a new render wants all four: give some back
+        if (phase === 0 && +m[1] === 1) { phase = 1; rmSync(lease, { force: true }); }
+        else if (phase === 1 && +m[1] >= 3) { phase = 2; writeFileSync(lease, JSON.stringify({ pid: other.pid, browsers: 0, mb: 0, wants: 4, claim: null })); }
+      },
+    });
+  } finally {
+    rmSync(lease, { force: true }); other.kill();
+    for (const [k, v] of [['GIVEMOTION_MAX_BROWSERS', env.max], ['GIVEMOTION_PROFILE', env.prof]]) { if (v == null) delete process.env[k]; else process.env[k] = v; }
+  }
+  const counts = seen.map(([n]) => n), top = Math.max(...counts);
+  assert.equal(counts[0], 1, `started with ${counts[0]} workers while the other process had 3 of 4`);
+  assert.ok(top >= 3, `grew to ${top} when the other finished: ${counts.join(' ')}`);
+  assert.ok(seen.some(([n, left], i) => i > counts.indexOf(top) && n < top && left > 0), `gave workers back while parts were left: ${counts.join(' ')}`);
+  assert.equal(md5(b), md5(a), 'same bytes as 1 worker');
 });
 
 test('entrance (opacity + move) on text: 1 worker == 2 workers byte for byte, also the second after the move ends', { skip }, async () => {

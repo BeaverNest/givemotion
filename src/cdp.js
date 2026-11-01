@@ -1,5 +1,6 @@
 // Minimal Chrome DevTools Protocol client over --remote-debugging-pipe. No dependencies.
 import { spawn } from 'node:child_process';
+import { atExit } from './machine.js';
 
 /**
  * @param {string} executable
@@ -12,6 +13,9 @@ export function launchChrome(executable, args, { env } = {}) {
     env: env || process.env,
     detached: process.platform !== 'win32',
   });
+  // Chrome runs in its own process group, which a Ctrl+C in the terminal does not reach: if this process ends before
+  // closing it, end it too (its helper processes with it)
+  const unhook = atExit(() => { try { process.platform === 'win32' ? proc.kill('SIGKILL') : process.kill(-proc.pid, 'SIGKILL'); } catch {} });
   const writer = /** @type {import('node:stream').Writable} */ (proc.stdio[3]);
   const reader = proc.stdio[4];
   let nextId = 0;
@@ -21,7 +25,7 @@ export function launchChrome(executable, args, { env } = {}) {
   let closed = false;
   let stderr = '';
   proc.stderr.on('data', (d) => { stderr += d; if (stderr.length > 20000) stderr = stderr.slice(-10000); });
-  const exited = new Promise((resolve) => proc.on('exit', (code, sig) => { closed = true; for (const p of pending.values()) p.reject(new Error(`Chrome exited (${code ?? sig}). ${lastLines(stderr)}`)); pending.clear(); resolve(); }));
+  const exited = new Promise((resolve) => proc.on('exit', (code, sig) => { closed = true; unhook(); for (const p of pending.values()) p.reject(new Error(`Chrome exited (${code ?? sig}). ${lastLines(stderr)}`)); pending.clear(); resolve(); }));
   proc.on('error', (e) => { closed = true; for (const p of pending.values()) p.reject(e); pending.clear(); });
   writer.on('error', () => {});
 

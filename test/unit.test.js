@@ -1,12 +1,16 @@
-import { test } from 'node:test';
+import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, writeFileSync, mkdirSync, readFileSync, symlinkSync, existsSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, mkdirSync, readFileSync, symlinkSync, existsSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { parseArgs } from '../src/args.js';
 import { expandIncludes, applyData, injectRuntime, startServer } from '../src/server.js';
 import http from 'node:http';
 import { bundle } from '../src/bundle.js';
+
+// every test's folders go in one per run, removed at the end (each run used to leave dozens in the temp folder)
+const TMP = mkdtempSync(join(tmpdir(), 'gm-unit-'));
+after(() => rmSync(TMP, { recursive: true, force: true }));
 
 test('parseArgs: flags, values, aliases, booleans', () => {
   const a = parseArgs(['in.html', '-o', 'out.mp4', '--workers=4', '--json', '--motion-blur', '8', '--no-reuse'], { boolean: ['json', 'reuse'], alias: { o: 'output' } });
@@ -19,7 +23,7 @@ test('parseArgs: flags, values, aliases, booleans', () => {
 });
 
 test('expandIncludes: params, defaults, inner content, wrapper', () => {
-  const dir = mkdtempSync(join(tmpdir(), 'gm-inc-'));
+  const dir = mkdtempSync(join(TMP, 'inc-'));
   writeFileSync(join(dir, 'b.html'), '<!-- block:\ndescription: x\n-->\n<p style="--c:{{color|red}}">{{name}}|{{content}}|{{data.keep}}</p>');
   const out = expandIncludes('<gm-include src="b.html" name="A&quot;B" data-start="2"><b>hi</b></gm-include>', dir, dir);
   assert.match(out, /data-gm-include="b.html"/);
@@ -34,7 +38,7 @@ test('expandIncludes: params, defaults, inner content, wrapper', () => {
 });
 
 test('expandIncludes: a wrapper with data-enter keeps its box', () => {
-  const dir = mkdtempSync(join(tmpdir(), 'gm-inc-'));
+  const dir = mkdtempSync(join(TMP, 'inc-'));
   writeFileSync(join(dir, 'b.html'), '<p>x</p>');
   const out = expandIncludes('<gm-include src="b.html" data-enter="fade"/>', dir, dir);
   assert.doesNotMatch(out, /display:contents/);
@@ -71,11 +75,79 @@ test('hardware encoder: auto on macOS for H.264/HEVC MP4 only; reproducibility c
   assert.equal(wantsHardware({ format: 'mp4', info, platform: 'linux', hardware: true }), true);
   const real = ffmpegInfo();
   if (!real || !real.encoders.libx264) return;
-  const dir = mkdtempSync(join(tmpdir(), 'gm-hw-')), cacheFile = join(dir, 'hw.json');
+  const dir = mkdtempSync(join(TMP, 'hw-')), cacheFile = join(dir, 'hw.json');
   const plan = encoderPlan({ format: 'mp4', info: real });
   assert.equal(encoderIsReproducible(plan, real, { cacheFile }), true);
   assert.equal(Object.values(JSON.parse(readFileSync(cacheFile, 'utf8')))[0], true, 'answer kept');
   assert.equal(encoderIsReproducible({ ...plan, vargs: ['-c:v', 'no_such_encoder'] }, real, { cacheFile }), false);
+});
+
+test('encoders: software encoders get a fixed thread count (not 1.5 per core in every part encoder), the same whatever the worker count', async () => {
+  const { encoderPlan } = await import('../src/ffmpeg.js');
+  const info = { version: 'x', encoders: { libx264: true, libvpx_vp9: true, prores_ks: true, libsvtav1: true, libx265: true } };
+  for (const o of [{ format: 'mp4' }, { format: 'webm' }, { format: 'mov' }, { format: 'mp4', codec: 'av1' }, { format: 'gif' }]) {
+    const v = encoderPlan({ ...o, info }).vargs;
+    assert.equal(v[v.indexOf('-threads') + 1], '4', JSON.stringify(o));
+  }
+  assert.ok(encoderPlan({ format: 'mp4', codec: 'h265', info }).vargs.includes('pools=4'));
+});
+
+// The budget is shared by processes: each case runs in its own node process with its own cache folder.
+function budgetRun(cache, code, env = {}) {
+  return new Promise((res, rej) => {
+    import('node:child_process').then(({ spawn }) => {
+      const p = spawn(process.execPath, ['--input-type=module', '-e', `import * as m from ${JSON.stringify(new URL('../src/machine.js', import.meta.url).href)};\n${code}`], { env: { ...process.env, GIVEMOTION_CACHE: cache, ...env }, stdio: ['ignore', 'pipe', 'pipe'] });
+      let out = '', err = '';
+      p.stdout.on('data', (d) => (out += d)); p.stderr.on('data', (d) => (err += d));
+      p.on('exit', (c) => (c === 0 ? res(out.trim()) : rej(new Error(err))));
+    });
+  });
+}
+
+test('machine budget: a render takes only the browsers other givemotion processes left; dead and stale processes do not count', async () => {
+  const cache = mkdtempSync(join(TMP, 'budget-'));
+  mkdirSync(join(cache, 'run'));
+  // another live process (this test runner) with 6 browsers open, and one that died without removing its file
+  writeFileSync(join(cache, 'run', `${process.pid}.json`), JSON.stringify({ pid: process.pid, browsers: 6, mb: 0, claim: null }));
+  writeFileSync(join(cache, 'run', '999999.json'), JSON.stringify({ pid: 999999, browsers: 8, mb: 0, claim: null }));
+  const r = JSON.parse(await budgetRun(cache, `const g = m.reserve(7, 1); console.log(JSON.stringify({ n: g.n, others: g.others, limitedBy: g.limitedBy }));`, { GIVEMOTION_MAX_BROWSERS: '8' }));
+  assert.equal(r.others, 6);
+  assert.ok(r.n <= 2, `took ${r.n} of the 2 left`);
+  if (r.n === 2) assert.equal(r.limitedBy, 'other givemotion processes');
+  assert.equal(existsSync(join(cache, 'run', '999999.json')), false, 'a dead process\'s file is removed');
+  // a process counts its own browsers while they are open and removes its file when it has none
+  const own = await budgetRun(cache, `import { readFileSync, existsSync } from 'node:fs';
+    const f = m.CACHE_DIR + '/run/' + process.pid + '.json';
+    const give = m.hold(2, 1400); const a = JSON.parse(readFileSync(f, 'utf8')).browsers;
+    give(); give(); console.log(a, existsSync(f));`);
+  assert.equal(own, '2 false');
+});
+
+test('machine budget: renders that start at the same moment do not both take every core', async () => {
+  const cache = mkdtempSync(join(TMP, 'budget2-'));
+  const at = Date.now() + 600;
+  const code = `while (Date.now() < ${at}) {} const g = m.reserve(8, 1); console.log(g.n); await new Promise((r) => setTimeout(r, 800));`;
+  for (let round = 0; round < 3; round++) {
+    const ns = (await Promise.all([0, 1, 2].map(() => budgetRun(cache, code.replace(String(at), String(Date.now() + 600)), { GIVEMOTION_MAX_BROWSERS: '8' })))).map(Number);
+    assert.ok(ns.reduce((a, b) => a + b, 0) <= 8, `granted ${ns.join(' + ')} of 8`);
+  }
+});
+
+test('machine budget: Ctrl+C or a kill still runs the cleanup (CLI signal handling)', async () => {
+  const cache = mkdtempSync(join(TMP, 'budget3-'));
+  const { spawn } = await import('node:child_process');
+  const marker = join(cache, 'cleaned');
+  const p = spawn(process.execPath, ['--input-type=module', '-e', `import * as m from ${JSON.stringify(new URL('../src/machine.js', import.meta.url).href)};
+    import { writeFileSync } from 'node:fs';
+    m.handleSignals(); m.hold(1, 1); m.atExit(() => writeFileSync(${JSON.stringify(marker)}, 'x'));
+    console.log('ready'); setInterval(() => {}, 1000);`], { env: { ...process.env, GIVEMOTION_CACHE: cache }, stdio: ['ignore', 'pipe', 'inherit'] });
+  await new Promise((r) => p.stdout.once('data', r));
+  assert.equal(existsSync(join(cache, 'run', `${p.pid}.json`)), true);
+  p.kill('SIGTERM');
+  const code = await new Promise((r) => p.on('exit', (c) => r(c)));
+  assert.equal(code, 143);
+  assert.equal(existsSync(marker), true, 'exit cleanup ran');
+  assert.equal(existsSync(join(cache, 'run', `${p.pid}.json`)), false, 'its budget file is gone');
 });
 
 test('skill pack: `givemotion skill <dir>` installs every file for Claude Code and Codex, plus an AGENTS.md section', async () => {
@@ -88,7 +160,7 @@ test('skill pack: `givemotion skill <dir>` installs every file for Claude Code a
   const walk = (d) => readdirSync(d).flatMap((e) => (statSync(join(d, e)).isDirectory() ? walk(join(d, e)) : [join(d, e)]));
   const files = walk(src).map((f) => relative(src, f)).sort();
   assert.ok(files.includes('SKILL.md') && files.includes(join('references', 'motion-design.md')));
-  const dir = mkdtempSync(join(tmpdir(), 'gm-skill-'));
+  const dir = mkdtempSync(join(TMP, 'skill-'));
   writeFileSync(join(dir, 'AGENTS.md'), '# My project\n\nKeep this.\n');
   for (let i = 0; i < 2; i++) execFileSync(process.execPath, [join(root, 'src', 'cli.js'), 'skill', dir], { stdio: 'pipe' });
   for (const target of [join('.claude', 'skills', 'givemotion'), join('.agents', 'skills', 'givemotion')]) {
@@ -211,7 +283,7 @@ test('pacingIssues: short holds by word count, breaks that keep it on screen, co
 });
 
 test('server: no hidden files, no cross-origin reads, only localhost Host headers', async () => {
-  const dir = mkdtempSync(join(tmpdir(), 'gm-srv-'));
+  const dir = mkdtempSync(join(TMP, 'srv-'));
   writeFileSync(join(dir, '.env'), 'SECRET=1');
   writeFileSync(join(dir, 'a.txt'), 'ok');
   const s = await startServer({ root: dir });
@@ -238,7 +310,7 @@ test('applyData: data stays text in quoted attributes and is never a script URL'
 });
 
 test('server: symbolic links are followed, but never to hidden files or key folders; the studio only in dev', async () => {
-  const dir = mkdtempSync(join(tmpdir(), 'gm-srv-link-'));
+  const dir = mkdtempSync(join(TMP, 'srv-link-'));
   const proj = join(dir, 'proj'), shared = join(dir, 'shared'), keys = join(dir, '.ssh');
   for (const d of [proj, shared, keys]) mkdirSync(d);
   writeFileSync(join(shared, 'logo.svg'), '<svg/>');
@@ -270,7 +342,7 @@ test('injectRuntime: data cannot end the config <script> early', () => {
 });
 
 test('bundle: inlines exactly the built-in fonts the page names', () => {
-  const dir = mkdtempSync(join(tmpdir(), 'gm-bundle-'));
+  const dir = mkdtempSync(join(TMP, 'bundle-'));
   writeFileSync(join(dir, 'index.html'), '<html data-width="320" data-height="180" data-duration="1"><head><link rel="stylesheet" href="s.css"></head><body><h1 style="font-family:Inter">Hi</h1></body></html>');
   writeFileSync(join(dir, 's.css'), 'code { font-family: "JetBrains Mono", monospace }');
   const out = readFileSync(bundle(join(dir, 'index.html'), { output: join(dir, 'b') }).page, 'utf8');
@@ -282,7 +354,7 @@ test('bundle: inlines exactly the built-in fonts the page names', () => {
 });
 
 test('bundle: copies only files the server would serve (no hidden files, nothing outside the project)', () => {
-  const dir = mkdtempSync(join(tmpdir(), 'gm-bundle-sec-'));
+  const dir = mkdtempSync(join(TMP, 'bundle-sec-'));
   const proj = join(dir, 'proj');
   mkdirSync(join(proj, 'img'), { recursive: true });
   mkdirSync(join(dir, 'outside'));
@@ -300,7 +372,7 @@ test('bundle: copies only files the server would serve (no hidden files, nothing
 });
 
 test('gm-include: reads HTML/SVG blocks, never hidden or other files', () => {
-  const dir = mkdtempSync(join(tmpdir(), 'gm-inc-sec-'));
+  const dir = mkdtempSync(join(TMP, 'inc-sec-'));
   writeFileSync(join(dir, '.env'), 'SECRET=1');
   writeFileSync(join(dir, 'notes.txt'), 'SECRET=2');
   mkdirSync(join(dir, '.hidden'));
@@ -319,7 +391,7 @@ test('gm-include: reads HTML/SVG blocks, never hidden or other files', () => {
 });
 
 test('server: the audio analysis page cannot be used to inject a script', async () => {
-  const dir = mkdtempSync(join(tmpdir(), 'gm-srv2-'));
+  const dir = mkdtempSync(join(TMP, 'srv2-'));
   const s = await startServer({ root: dir });
   try {
     const body = await (await fetch(s.origin + '/__gm_analyze?src=' + encodeURIComponent('</script><script>alert(1)</script>'))).text();

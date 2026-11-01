@@ -51,6 +51,8 @@ Without a GPU, every big element that moves on its own, every `<canvas>`, and ev
 
 Memory: Chrome draws each layer in tiles, and a 4K frame with many big layers (crossfading full-frame sections, opacity or filter animations, large `overflow` boxes) needs a lot of tile memory. The engine gives each render browser up to 4 GB for tiles (more above `--scale 2`), so no tile of a frame is left out; a page that needs less uses less. If you override Chrome's flags with `GIVEMOTION_CHROME_ARGS`, do not lower `--force-gpu-mem-available-mb`: past that limit frames come out with blank rectangles or pieces of an earlier frame.
 
+Several renders at once (other projects, other agents): all givemotion processes on the computer share one budget, so do not lower `--workers` for that. A render alone uses up to one browser per performance core (8 on a 12-core M4 Pro), within half the memory. Renders running together split that evenly: one that starts takes workers from the others between parts, and one that finishes gives them back. Bytes do not depend on the split. `--workers N` takes N regardless, and `GIVEMOTION_MAX_BROWSERS=N` sets the computer's total.
+
 ## Overlays with transparency
 
 Leave `<html>` and `<body>` without a background, then `npx givemotion render overlay.html -o out/overlay.mov --transparent` (ProRes 4444) or `-o out/overlay.webm --transparent` (VP9 with alpha). `check` and `snapshot` detect a transparent page automatically: contrast is not judged against nothing, and the sheet shows a checkerboard. Pass `--transparent` to `still` for a PNG with alpha. Good for lower thirds, captions and logo bugs placed over footage in an editor.

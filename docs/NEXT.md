@@ -238,6 +238,12 @@ layers (whole scenes with filter passes); still blur blobs bake to an image. Com
 examples, -34% with still blobs. Next: wall time on a quiet machine, a GPU machine and 8-16 cores; the second render
 pass most frames take; cheaper gradient-bg/grid-bg (their cost is part of their look); raster cost of an SVG with
 `drop-shadow` that redraws (data-story). Files: `src/browser.js`, `src/render.js`, `src/bench.js`, blocks.
+Machine budget (2026-10-31, `src/machine.js`): several projects rendering at once froze a 24 GB Mac (each render
+took 12 browsers as if alone; 3 renders: 222 processes, 17.8 GB, 22.2 s). Now all givemotion processes share one
+budget (performance cores, half the memory, free memory now) through `<cache>/run/<pid>.json`, split evenly and
+re-split between parts: 3 renders 6.4 GB, 19.0 s; 1 render 8 workers 8.9 s (12 workers was 10.3 s); x264 has 4
+threads. Measured on an M4 Pro only: check on Linux whether every logical core helps (the cap there is all cores).
+The 4 GB tile ceiling per browser is left as is (a ceiling, not used by normal pages; lowering it gives blank tiles).
 
 ## N5. `analyze` accuracy
 Measured: `node bench/analyze/score.mjs` renders 13 videos with known scene changes (from `inspect`) and scores

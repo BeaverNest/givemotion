@@ -2,7 +2,7 @@
 name: givemotion
 description: Makes videos from HTML + CSS + JS with givemotion and renders MP4/WebM/GIF/ProRes. Use for any request to create, edit, check or render a video, animation, motion graphic, explainer, promo, logo sting, title card, lower third, animated chart or data story, captions, whiteboard/hand-drawn video, UI or product demo, or vertical social clip, or when a givemotion composition is open.
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 # givemotion: HTML in, video out
