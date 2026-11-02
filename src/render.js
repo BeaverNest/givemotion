@@ -617,58 +617,82 @@ export async function velocityBlur(t, dt, o = {}) {
     memo.set(h, v);
     return v;
   };
-  const snap = (lay) => {
+  // An SVG group's box is the union of its children's boxes: it grows, shrinks and shifts when one child moves (a bird
+  // flying off a street), with no move of its own. So SVG groups and the SVG elements' parents are measured by their
+  // transforms (screen CTM), not by their boxes.
+  const isGroup = (el) => el instanceof SVGGElement || el instanceof SVGAElement || el instanceof SVGSwitchElement;
+  const snap = (lay, ctm) => {
     const m = new Map(), memo = new Map();
     for (let i = 0; i < all.length; i++) {
       const el = all[i];
       if (SKIP.has(el.tagName.toUpperCase()) || el === document.documentElement || el === document.body || el === st.svg) continue;
       const r = el.getBoundingClientRect();
-      if (r.width > 0 && r.height > 0) { m.set(el, r); if (lay) lay.set(el, layoutOf(el, memo)); }
+      if (r.width > 0 && r.height > 0) {
+        m.set(el, r);
+        if (lay) lay.set(el, layoutOf(el, memo));
+        if (el instanceof SVGSVGElement || isGroup(el)) { const q = /** @type {SVGGraphicsElement} */ (el).getScreenCTM(); if (q) ctm.set(el, DOMMatrix.fromMatrix(q)); }
+      }
     }
     return m;
   };
   const r0 = await seek(t - dt / 2);
-  const layA = new Map(), layB = new Map();
-  const A = snap(layA);
+  const layA = new Map(), layB = new Map(), ctmA = new Map(), ctmB = new Map();
+  const A = snap(layA, ctmA);
   const mo = new MutationObserver(() => {});
   mo.observe(document.documentElement, { subtree: true, childList: true, characterData: true });
   let r1, reflow = false;
   try { r1 = await seek(t); } finally { reflow = mo.takeRecords().length > 0; mo.disconnect(); }
   // when text or children changed, boxes whose layout moved are not motion (layout boxes read only then)
-  const B = snap(reflow ? layB : null);
+  const B = snap(reflow ? layB : null, ctmB);
   const seen = (q) => q.right > 0 && q.bottom > 0 && q.left < W && q.top < H;
   const parentOf = (el) => { for (let p = el.parentElement; p; p = p.parentElement) if (A.has(p) && B.has(p)) return p; return null; };
+  // where a transform change (from mA to mB) takes a point, and how much it scales x and y
+  const carry = (mA, mB, x, y) => { const q = mB.multiply(mA.inverse()).transformPoint(new DOMPoint(x, y)); return [q.x, q.y]; };
+  const scales = (mA, mB) => [Math.hypot(mB.a, mB.b) / Math.hypot(mA.a, mA.b), Math.hypot(mB.c, mB.d) / Math.hypot(mA.c, mA.d)];
   const cand = [];
   for (const [el, b] of B) {
     const a = A.get(el);
     if (!a || (a.left === b.left && a.top === b.top && a.width === b.width && a.height === b.height)) continue;
+    const ca = [(a.left + a.right) / 2, (a.top + a.bottom) / 2];
+    // an SVG group moves only by its transform (its box follows its children, which are judged on their own)
+    const gA = isGroup(el) ? ctmA.get(el) : null, gB = gA ? ctmB.get(el) : null;
     // (a filter on a layer whose scale is changing is rastered at a scale Chrome picks by timing: not the same bytes
     // every render, so what grows or shrinks is not smeared)
-    if (Math.abs(b.width / a.width - 1) > 1e-4 || Math.abs(b.height / a.height - 1) > 1e-4) continue;
+    if (gA && gB) { const [sx, sy] = scales(gA, gB); if (Math.abs(sx - 1) > 1e-4 || Math.abs(sy - 1) > 1e-4) continue; }
+    else if (Math.abs(b.width / a.width - 1) > 1e-4 || Math.abs(b.height / a.height - 1) > 1e-4) continue;
     if (!seen(a) && !seen(b)) continue;
     if (reflow) { const p = layA.get(el), q = layB.get(el); if (!(p === q || (p && q && p[0] === q[0] && p[1] === q[1] && p[2] === q[2] && p[3] === q[3]))) continue; }
     // own move: where the centre went, against where the parent's move+scale would have taken it
-    const ca = [(a.left + a.right) / 2, (a.top + a.bottom) / 2];
     let px = ca[0], py = ca[1], psx = 1, psy = 1;
     const p = parentOf(el);
-    if (p) {
+    const pA = p && ctmA.get(p), pB = p && ctmB.get(p);
+    if (pA && pB) {
+      [px, py] = carry(pA, pB, ca[0], ca[1]);
+      [psx, psy] = scales(pA, pB);
+    } else if (p) {
       const pa = A.get(p), pb = B.get(p);
       psx = pb.width / pa.width; psy = pb.height / pa.height;
       px = pb.left + (ca[0] - pa.left) * psx;
       py = pb.top + (ca[1] - pa.top) * psy;
     }
-    const cx = (b.left + b.right) / 2, cy = (b.top + b.bottom) / 2;
+    const [cx, cy] = gA && gB ? carry(gA, gB, ca[0], ca[1]) : [(b.left + b.right) / 2, (b.top + b.bottom) / 2];
     const vx = 2 * (cx - px), vy = 2 * (cy - py);
     const L = Math.hypot(vx, vy);
     // own zoom: how far the farthest visible point of the box moves while the shutter is open
     const ex = Math.max(Math.abs(Math.max(0, b.left) - cx), Math.abs(Math.min(W, b.right) - cx));
     const ey = Math.max(Math.abs(Math.max(0, b.top) - cy), Math.abs(Math.min(H, b.bottom) - cy));
-    const zx = 2 * Math.abs(b.width / a.width / psx - 1) * ex, zy = 2 * Math.abs(b.height / a.height / psy - 1) * ey, Z = Math.max(zx, zy);
+    const [osx, osy] = gA && gB ? scales(gA, gB) : [b.width / a.width, b.height / a.height];
+    const zx = 2 * Math.abs(osx / psx - 1) * ex, zy = 2 * Math.abs(osy / psy - 1) * ey, Z = Math.max(zx, zy);
     // a smear costs about in proportion to the area it covers on screen: a big element (a camera world, a whole
     // scene) needs a longer smear (up to 4x) before it is drawn
     const area = (Math.max(0, Math.min(W, b.right) - Math.max(0, b.left)) * Math.max(0, Math.min(H, b.bottom) - Math.max(0, b.top))) / (W * H);
     const min = MIN * (1 + 3 * area);
-    if (L >= min || Z >= 4 * min) cand.push({ el, vx, vy, L, zx: Z >= 4 * min ? zx : 0, zy: Z >= 4 * min ? zy : 0, Z: Z >= 4 * min ? Z : 0, b, w: Math.max(L, Z / 2) * Math.sqrt(area) });
+    // the smear fades in: none at the threshold, its full length at twice the threshold. A move hovering around the
+    // threshold (a camera speeding up, a gallop) would otherwise switch a full smear on and off between frames, which
+    // reads as the picture shaking
+    const ramp = (v, lo) => (v >= 2 * lo ? 1 : v > lo ? 2 * (v - lo) / v : 0);
+    const kL = ramp(L, min), kZ = ramp(Z, 4 * min);
+    if (kL > 0 || kZ > 0) cand.push({ el, vx: vx * kL, vy: vy * kL, L: L * kL, zx: zx * kZ, zy: zy * kZ, Z: Z * kZ, b, w: Math.max(L * kL, Z * kZ / 2) * Math.sqrt(area) });
   }
   cand.sort((x, y) => y.w - x.w);
   const ns = 'http://www.w3.org/2000/svg';

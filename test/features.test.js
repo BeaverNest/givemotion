@@ -1030,6 +1030,48 @@ test('motion blur: auto draws a smooth smear along the move (no stepped copies),
   assert.ok(Math.max(...ha.map((v, i) => Math.abs(v - ho[i]))) <= 12, 'HUD unchanged');
 });
 
+// an SVG street: a wide band of houses that never moves, and a bird in the same group that flies up fast (the
+// group's box grows as the bird rises; that is not the houses moving)
+const streetPage = () => page(`<svg width="640" height="360" viewBox="0 0 640 360" style="position:absolute;inset:0">
+  <g id="street">
+    <g id="houses"><rect x="-200" y="150" width="1040" height="90" fill="#c86"/><rect x="100" y="170" width="60" height="40" fill="#fff"/><rect x="300" y="170" width="60" height="40" fill="#fff"/></g>
+    <g id="bird"><rect x="480" y="250" width="24" height="16" fill="#fff"/></g>
+  </g>
+</svg>
+<script>gm.timeline().fromTo('#bird', { y: 0 }, { y: -250, duration: 0.5, ease: 'none' }, 0.3);</script>`, 'data-width="640" data-height="360" data-fps="30" data-duration="1"');
+
+test('motion blur: in an SVG group, a child flying off does not smear its still siblings (the group box growing is not a move)', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  writeFileSync(f, streetPage());
+  const a = join(d, 'a.mp4'), o = join(d, 'off.mp4');
+  const sa = await render(f, { output: a, motionBlur: 'auto', cache: false, ...quiet });
+  await render(f, { output: o, motionBlur: 'off', cache: false, ...quiet });
+  // the bird is smeared while it flies (frames 10-24), nothing else is
+  assert.ok(sa.motionBlur.blurred >= 13 && sa.motionBlur.blurred <= 17, `blurred ${sa.motionBlur.blurred}`);
+  // every frame while the bird flies: the houses' windows and the top edge of the band are as sharp as without blur
+  for (const n of [12, 15, 18, 21]) {
+    const col = (v) => [...execFileSync(ffmpegPath(), ['-hide_banner', '-loglevel', 'error', '-i', v, '-vf', `select=eq(n\\,${n}),crop=2:120:128:130,format=gray`, '-frames:v', '1', '-f', 'rawvideo', '-'])].filter((_, i) => i % 2 === 0);
+    const ca = col(a), co = col(o);
+    assert.ok(Math.max(...ca.map((v, i) => Math.abs(v - co[i]))) <= 12, `frame ${n}: houses column differs from the unblurred frame by ${Math.max(...ca.map((v, i) => Math.abs(v - co[i])))}`);
+  }
+});
+
+test('motion blur: a world that speeds up gets a smear that grows frame by frame, never one that switches on at full length', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  // a full-screen world with tall white bars, speeding up smoothly from still to 30 px/frame
+  writeFileSync(f, page(`<div id="w" style="position:absolute;left:0;top:0;width:4000px;height:360px;background:repeating-linear-gradient(90deg,#fff 0 40px,#000 40px 120px)"></div>
+<script>gm.timeline().fromTo('#w', { x: 0 }, { x: -900, duration: 1.5, ease: 'power2.in' }, 0);</script>`, 'data-width="640" data-height="360" data-fps="30" data-duration="1.5"'));
+  const a = join(d, 'a.mp4');
+  await render(f, { output: a, motionBlur: 'auto', cache: false, ...quiet });
+  // per frame: the pixels between black and white along a row (how soft the bar edges are)
+  const soft = [];
+  for (let n = 1; n < 45; n++) { const g = [...grayFrame(a, n, 640, 0, 180)]; soft.push(g.filter((v) => v > 40 && v < 215).length); }
+  const first = soft.findIndex((v) => v > 0);
+  assert.ok(first > 3 && first + 4 < soft.length, `slow start is sharp, the fast end smeared: ${soft.join(' ')}`);
+  // the first smeared frame is a light smear (well under the one 4 frames later), not a full one switching on
+  assert.ok(soft[first] <= 0.5 * soft[first + 4], `smear onset ${soft[first]} vs ${soft[first + 4]} four frames later (${soft.join(' ')})`);
+});
+
 test('timeline: color tweens to var(--x) and color-mix() resolve against the element (no black, no snap); gm.burst colors too', { skip }, async () => {
   const d = tmp(), f = join(d, 'v.html');
   writeFileSync(f, page(`<style>:root{--accent:#ff0000;--mix:color-mix(in srgb, var(--accent) 50%, #0000ff)}</style>
