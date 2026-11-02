@@ -1,6 +1,6 @@
 {
   "name": "givemotion",
-  "description": "givemotion: make videos from HTML + CSS + JS with AI agents (free, MIT).",
+  "description": "givemotion: your AI agent makes motion graphics and videos, and edits them exactly (free, MIT).",
   "owner": {
     "name": "Leonardo Grigorio",
     "url": "https://github.com/leonardogrig"
@@ -9,7 +9,7 @@
     {
       "name": "givemotion",
       "source": "./",
-      "description": "Skill pack for making, checking and rendering videos with givemotion (HTML in, video out)."
+      "description": "Skill pack for making, checking and rendering videos with givemotion."
     }
   ]
 }

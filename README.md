@@ -5,40 +5,75 @@
 
 # givemotion: make videos with AI, free and open source
 
-**Ask your AI for a video. Get an MP4.** givemotion is a free, open-source (MIT) video engine made for AI
-coding agents like Claude Code, Cursor and Codex. Your agent writes the video as a web page, checks it, looks at
-it, fixes it and renders it. When you want one thing changed, the agent changes that one thing and only that part
-of the video is rendered again. No license fees, no seats, no per-render costs, no account, and you can fork it
-and make it your own.
+**Ask your AI agent for a video and get a finished MP4.** givemotion lets AI agents like Claude Code, Codex and
+Cursor make motion graphics for you: launch videos, explainers, animated charts, social shorts, title sequences. You
+describe the video in plain words. The agent builds it, looks at its own frames, fixes what's off and renders the
+file. Then you ask for changes the way you'd ask a motion designer, and only what you asked about changes.
+
+It's free and open source (MIT): no account, no seats, no fee per video, and you can fork it and make it your own.
 
 Created by [Leonardo Grigorio](https://github.com/leonardogrig) as an independent project. Website:
 [givemotion.org](https://givemotion.org). (Formerly called motionwright.)
 
-If you are looking for a **free, open-source way to make videos with code**, to **make videos with Claude Code**, or an
-**AI motion graphics tool you can run in your own project**, this is it.
+If you are looking for a way to **make videos with Claude Code**, an **AI motion graphics tool you can run in your own
+project**, or a **free, open-source way to make videos with code**, this is it.
 
 <p>
   <img src="docs/media/data-story.gif" width="49%" alt="Data story made by an AI agent with givemotion: the camera rides a growing line chart">
-  <img src="docs/media/code-explainer.gif" width="49%" alt="Code explainer made by an AI agent with givemotion: retry with back-off drawn as a timeline">
+  <img src="docs/media/lighthouse-opus.gif" width="49%" alt="The last lighthouse, a cinematic title sequence made by an AI agent with givemotion: a light beam sweeps a night sea and carries into the title">
 </p>
 <p>
   <img src="docs/media/vertical-short.gif" width="24%" alt="Vertical short for social media made by an AI agent with givemotion, with word-by-word captions">
 </p>
 
-*All three were made by a Claude agent from a one-paragraph brief, using only this project's docs.
-The data story is in [`examples/data-story`](examples/data-story); more compositions are in [`examples/`](examples).*
+*Each of these was made by a Claude agent from a one-paragraph brief, using only this project's docs.
+The data story is in [`examples/data-story`](examples/data-story); more are in [`examples/`](examples).*
 
 ---
 
+## How it differs from AI video generators
+
+AI video generators (the models that turn a prompt into a clip) paint every frame from scratch. That's what you want
+for footage of things that were never filmed. It gets hard when you need one specific video: ask for one word to be
+fixed and the model makes the whole clip again, and something else comes out different. Text gets misspelled, logos
+get warped, and every attempt is paid for.
+
+givemotion works the way a motion designer works. The agent builds the video out of real pieces (your logo file,
+your fonts, your exact words and numbers, shapes, illustrations, a camera, your music), and givemotion plays it back
+and records it frame by frame. For you that means:
+
+- **The same video every time.** Render it again tomorrow and you get the same video. Nothing drifts between
+  versions.
+- **Change one thing and only that changes.** "Make the title blue" turns the title blue and leaves the rest exactly
+  as you approved it. Only the stretch of video the change touches is rendered again, so a small fix usually takes
+  seconds.
+- **Text and logos come out right.** Words are typeset, not drawn by a model, so they're sharp and spelled the way
+  you wrote them. Your logo is your actual file.
+- **Cheap to make and to change.** It renders on your own computer, with no fee per second of video. You pay
+  for your AI agent as you already do; givemotion itself costs nothing to run.
+- **Many versions from one video.** Swap the name, the numbers or the language and render as many copies as you
+  need.
+- **You keep the source.** The video is saved as a project file. Your agent can open it next month and change the
+  price, the date or the ending.
+
+Under the hood, the agent writes the video as code, the same kind web pages are made of. That's why every change can
+be exact. You never have to read it or touch it; the agent does that part. (If you're a developer: it's plain HTML,
+CSS and JavaScript, and [For developers](#for-developers) has the details.)
+
+What it doesn't do is generate footage. It can't film a photorealistic dog on a beach. It makes designed motion:
+type, shapes, illustrations, charts, app screens, and the photos and video clips you give it. If you need generated
+footage, make it with a video model and have the agent put the clip into a givemotion video.
+
 ## Try it in 1 minute
 
-In your project folder:
+In your project folder, run:
 
 ```bash
 npx givemotion init my-video
 ```
 
-This creates a starter video and installs the instructions your agent needs. Then just ask your agent:
+If you'd rather not use the terminal, ask your agent to do it: "Set up givemotion in this folder." Either way you get
+a starter video and the instructions your agent needs. Then ask for the video you want:
 
 > "Make a 20-second launch video for our app. Use our logo and colors, and put music under it."
 
@@ -46,7 +81,7 @@ The agent writes the video, runs the checks, looks at the frames, fixes what is 
 `out/video.mp4`. You can watch and scrub it live with `npx givemotion dev my-video`.
 
 Then ask for changes the way you would ask a motion designer: "make the title blue", "hold the chart two seconds
-longer". The agent edits the page and renders again, and only the parts of the video that changed are redone.
+longer". The agent edits the video and renders again, and only the parts that changed are redone.
 
 Already have a project? `npx givemotion skill` adds just the agent instructions: a skill pack (a short
 `SKILL.md` plus topic files the agent reads when it needs them) in `.claude/skills/givemotion/` for Claude Code and
@@ -65,29 +100,29 @@ Other ways to install the skill:
 - Product launch videos and app promos (with a cursor that really clicks the right button)
 - Explainers with a camera that moves over a map, a diagram or a whole UI
 - Hand-drawn whiteboard (Excalidraw-style) explainers: sketchy shapes and arrows that draw themselves on, handwriting
-- Animated charts and data stories, from your own JSON data
+- Animated charts and data stories, from your own numbers
 - Vertical shorts for TikTok, Reels and YouTube Shorts, with word-by-word captions
 - Code explainers for developer channels
 - Logo stings, title cards, lower thirds, end cards
 - Many personalized videos from one template (a different name, number or logo in each)
 - Transparent overlays to drop into Premiere, DaVinci Resolve or Final Cut
 
-## Same brief, four models
+## Same brief, different models
 
-Claude Opus 5.5, Sonnet 5.5, Haiku 5.5 and Fable 5.1 each got the same brief ("Code in, motion out": 20 s in one
-continuous take, a typed `<motion>` that breaks into 3D shapes, a tilted orbiting ring, a collapse into the title) and
-only this project's docs ([the experiment](docs/experiments/2026-10-models-showcase.md)).
-
-<img src="docs/media/models-showcase.gif" width="100%" alt="The same brief made by Claude Opus 5.5, Sonnet 5.5, Haiku 5.5 and Fable 5.1 with givemotion, playing side by side in a 2x2 grid">
-
-An earlier round, "The last lighthouse" (a 15 s cinematic title sequence, night sea, a light beam that carries into
-the title):
+Each model got the same brief and only this project's docs. "The last lighthouse" asked for a 15 s cinematic title
+sequence: a night sea, and a light beam that carries into the title.
 
 | Claude Opus 5.5 | Claude Sonnet 5.5 |
 |---|---|
 | <img src="docs/media/lighthouse-opus.gif" width="100%" alt="The last lighthouse, made by Claude Opus 5.5 with givemotion"> | <img src="docs/media/lighthouse-sonnet.gif" width="100%" alt="The last lighthouse, made by Claude Sonnet 5.5 with givemotion"> |
 | **Claude Haiku 5.5** | **Gemini 4 Argon** |
 | <img src="docs/media/lighthouse-haiku.gif" width="100%" alt="The last lighthouse, made by Claude Haiku 5.5 with givemotion"> | <img src="docs/media/lighthouse-gemini.gif" width="100%" alt="The last lighthouse, made by Gemini 4 Argon with givemotion"> |
+
+A later round with Claude Opus 5.5, Sonnet 5.5, Haiku 5.5 and Fable 5.1, "Code in, motion out": 20 s in one
+continuous take, a typed `<motion>` that breaks into 3D shapes, a tilted orbiting ring, a collapse into the title
+([the experiment](docs/experiments/2026-10-models-showcase.md)).
+
+<img src="docs/media/models-showcase.gif" width="100%" alt="The same brief made by Claude Opus 5.5, Sonnet 5.5, Haiku 5.5 and Fable 5.1 with givemotion, playing side by side in a 2x2 grid">
 
 ## Why it exists
 
@@ -122,8 +157,8 @@ report says why.
 Models have seen billions of web pages, so they write them well. In our test, 12 Claude agents made the same 4 videos
 in plain HTML, in HTML with ready-made blocks, and in React; blind AI judges ranked plain HTML first in 6 of 8 cases,
 with React a little behind ([the experiment](docs/experiments/2026-10-format-test.md)). That's a small test, and
-it agrees with outside research (DesignBench, 2025) that models do best with plain HTML and CSS. React still works
-if you want it. HyperFrames also uses plain HTML; Remotion uses React.
+it agrees with outside research (DesignBench, 2025) that models do best with plain HTML and CSS. HyperFrames also
+uses plain HTML; Remotion uses React.
 
 **3. The agent can check its own work.** An agent can't watch a video, so the engine does it for them:
 - `check` finds text that is cut off, off screen, covered, overlapping, too small or hard to read, lines running
@@ -154,7 +189,7 @@ measure whether viewers see the difference; so far our AI judges, who look at st
 **7. The know-how of a motion designer, in the agent's docs.** The skill pack has a short core plus files the
 agent reads only when it needs them: 15 technique recipes (kinetic type, camera moves, scene transitions, logo
 reveals, charts, UI demos, hand-drawn...), each checked by rendering it; 8 ready-made looks (palette, fonts,
-background, motion personality); and guides for 9 kinds of video. Six fonts are built in (Inter, JetBrains Mono,
+background, motion personality); and guides for 9 kinds of video. Seven fonts are built in (Inter, JetBrains Mono,
 Playfair Display, Space Grotesk, Bebas Neue, Nunito, Caveat), so a video looks the same on every machine.
 
 **8. Built from what agents struggled with.** We give fresh agents only the docs and a real brief, read their
@@ -196,7 +231,7 @@ changed.
 | License | MIT | Apache 2.0 | Source-available, its own license (not open source by the OSI definition)¹ |
 | Free for companies | Yes, any size | Yes, any size | Up to 3 people; at 4 or more people (all staff, not only users) a paid license, per seat or per render¹ |
 | Fork it and sell your fork | Yes | Yes | No, selling or licensing your own derivative is not allowed¹ |
-| You write | HTML, CSS, JavaScript (React optional) | HTML, CSS, JavaScript | React |
+| Videos are written in | HTML, CSS, JavaScript | HTML, CSS, JavaScript | React |
 | Instructions for agents | Skill pack, Claude Code plugin, `AGENTS.md`, `llms.txt` | 7 skills, Claude Code plugin, hosted MCP server (beta), `llms.txt` | 12 Agent Skills, Claude Code plugin, WebMCP in Studio, docs as Markdown |
 | Agent checks its own video | `check`: cut-off, covered, overlapping, tiny and low-contrast text, lines through labels, smudged transitions, broken files, script errors, pacing | `lint` and `check`: script errors, layout (overflow, clipping, occlusion), motion assertions, WCAG contrast, craft warnings, audio | ESLint plugin; we found no layout checker |
 | Agent looks at frames | `snapshot` picks the key moments from the timeline into one image; frame strips of one move; `analyze` and `--compare` for any video | `snapshot` at times you give, an onion-skin image of one element's motion, side by side with a reference | `still`, or chosen frames as images |
@@ -305,12 +340,18 @@ requests are welcome.
 
 ## Questions people ask
 
+**Is this an AI video generator?** No. It doesn't generate footage from a prompt. Your agent builds the video from
+real pieces (your text, logo, fonts, images, clips, data) and givemotion renders it. That's why the result is the
+same every time, a change touches only what you asked about, and text is spelled the way you wrote it. See
+[How it differs from AI video generators](#how-it-differs-from-ai-video-generators).
+
 **Is there a free, open-source way to turn code into video?** Yes. givemotion (MIT) and HyperFrames (Apache 2.0) are
 both free for any use, including big companies. Remotion is free for individuals and companies of up to 3 people.
 See [How it compares](#how-it-compares).
 
 **Is it a free alternative to Remotion?** It does the same job (code in, video out) with HTML instead of React,
-under MIT for everyone. In our test it rendered about 2× faster and scored a little higher; see
+under MIT for everyone, and it's built for AI agents to write. In our test it rendered about 2× faster and scored a
+little higher; see
 [How it compares](#how-it-compares).
 
 **How is it different from HyperFrames?** Both are free and both use HTML. givemotion re-renders only what changed,
@@ -325,8 +366,13 @@ project) and ask Claude Code for a video. It also works with Cursor, Codex and o
 second pieces of the video that changed are rendered again. The result is the same file you would get from a full
 render.
 
-**Do I need to know how to code?** No. You talk to your agent; the agent writes the code. If you do know HTML
-and CSS, you can open the file and change anything.
+**Do I need to know how to code?** No. You talk to your agent in plain words and it does the rest, including the
+setup if you ask it to. The code is there so that every change is exact; you don't have to look at it. If you do know
+HTML and CSS, you can open the file and change anything.
+
+**How much does it cost?** givemotion is free. You pay for your AI agent as you already do (a subscription or
+tokens), and rendering runs on your own computer. A change re-renders only the part of the video it touches,
+so revisions stay cheap.
 
 **Can I use it for client work or commercially?** Yes, for free, at any company size. MIT license.
 

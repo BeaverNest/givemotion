@@ -1,6 +1,6 @@
 # givemotion
 
-> Make videos with AI, free and open source (MIT). A free code-to-video engine built for AI coding agents (Claude Code, Cursor, Codex): the agent writes one HTML/CSS/JS page, checks it (`check`), looks at key frames (`snapshot`) and renders MP4/WebM/ProRes/GIF. After an edit, a new render redoes only the 1-2 s parts that changed, byte-identical to a full render. Free for any use, including companies (MIT, zero npm dependencies, no telemetry, no account). Needs Node 20+, ffmpeg and Chrome.
+> Make videos with AI, free and open source (MIT). A video engine built for AI coding agents (Claude Code, Cursor, Codex) to make motion graphics; it is not a generative video model: the agent writes one HTML/CSS/JS page, checks it (`check`), looks at key frames (`snapshot`) and renders MP4/WebM/ProRes/GIF. After an edit, a new render redoes only the 1-2 s parts that changed, byte-identical to a full render. Free for any use, including companies (MIT, zero npm dependencies, no telemetry, no account). Needs Node 20+, ffmpeg and Chrome.
 
 Created by Leonardo Grigorio (https://github.com/leonardogrig) as an independent open-source project. Website: https://givemotion.org. Compared with HyperFrames and Remotion in the README ("How it compares").
 

@@ -1,7 +1,7 @@
 {
   "name": "givemotion",
   "version": "0.1.1",
-  "description": "Make videos with AI, free and open source (MIT). A code-to-video engine built for AI agents like Claude Code, Cursor and Codex: the agent writes HTML/CSS, checks and previews its own video, and renders MP4.",
+  "description": "Make videos with AI, free and open source (MIT). Lets AI agents like Claude Code, Codex and Cursor make motion graphics: the agent builds the video, checks its own frames and renders an MP4. Same input, same video; a change touches only what you asked for.",
   "type": "module",
   "license": "MIT",
   "author": "Leonardo Grigorio (https://github.com/leonardogrig)",

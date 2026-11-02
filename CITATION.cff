@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use givemotion in your work, you can cite it like this."
 title: "givemotion"
-abstract: "A free, open-source (MIT) engine that turns HTML, CSS and JavaScript into video, built for AI coding agents."
+abstract: "A free, open-source (MIT) video engine built for AI agents: the agent writes a video as HTML, CSS and JavaScript, checks its own frames and renders it deterministically, so edits change only what was asked."
 type: software
 authors:
   - family-names: "Grigorio"
