@@ -472,21 +472,27 @@
   // boxes or strikes a piece of text. Both are measured on the first frame they are visible (fonts loaded, layout done).
   // ---------------------------------------------------------------------------
   const marks = [];
-  function startTime(el, attr) {
-    const v = el.getAttribute(attr);
-    if (v != null && v !== '') return parseFloat(v) || 0;
-    // default: right after the element's own entrance (data-enter="name dur delay")
-    const en = (el.closest('[data-enter]') || el).getAttribute('data-enter');
-    if (!en) return 0;
-    const nums = en.trim().split(/\s+/).slice(1).map((x) => parseFloat(x)).filter((x) => isFinite(x));
-    return (nums[1] || 0) + (nums[0] ?? 0.6);
+  // When a mark starts drawing, in seconds after its element's clip start (m.base). Read once the timeline and the
+  // entrances are built: data-sketch-mark-at takes every time syntax ("2.5", "500ms", "45f", and a word "@two",
+  // "@two#2", "@two.end", "@two+0.3", which is a moment of the whole video); with none, right after the element's
+  // own entrance as it was resolved (its word, delay, stagger and duration).
+  function startTime(m) {
+    const el = m.el, attr = 'data-sketch-mark-at', v = (el.getAttribute(attr) || '').trim();
+    if (v) {
+      const t = I.parseTime(v, el, attr);
+      if (t == null) return 0;
+      return v[0] === '@' ? t - m.base : t;
+    }
+    for (let a = el; a && a !== document.body; a = a.parentElement) if (a.__gmEnterEnd != null) return a.__gmEnterEnd - m.base;
+    return 0;
   }
   function addMark(el, kind) {
     const svg = document.createElementNS(SVGNS, 'svg');
     svg.setAttribute('data-check', 'ignore');
     svg.setAttribute('class', 'gm-sketch-mark');
     svg.style.cssText = 'position:absolute;left:0;top:0;width:1px;height:1px;overflow:visible;pointer-events:none;z-index:1' + (kind === 'highlight' ? ';mix-blend-mode:multiply' : '');
-    marks.push({ el, kind, svg, seed: (el.id || 'm') + ':' + marks.length, at: startTime(el, 'data-sketch-mark-at'), dur: parseFloat(el.getAttribute('data-sketch-mark-duration')) || (kind === 'highlight' || kind === 'underline' || kind === 'strike' ? 0.5 : 0.7) });
+    const dv = (el.getAttribute('data-sketch-mark-duration') || '').trim(), dur = dv ? I.parseTime(dv, el, 'data-sketch-mark-duration') : null;
+    marks.push({ el, kind, svg, seed: (el.id || 'm') + ':' + marks.length, at: 0, dur: dur > 0 ? dur : (kind === 'highlight' || kind === 'underline' || kind === 'strike' ? 0.5 : 0.7) });
   }
   function addBorder(el) {
     const svg = document.createElementNS(SVGNS, 'svg');
@@ -618,7 +624,7 @@
     }
     return changed;
   }
-  I.hooks.init.push(() => { for (const m of marks) if (!m.built) m.built = buildMark(m); });
+  I.hooks.init.push(() => { for (const m of marks) if (!m.built) { m.built = buildMark(m); if (m.built && m.base != null) m.at = startTime(m); } });
   I.hooks.seek.push(updateMarks);
 
   function setupSketch() {

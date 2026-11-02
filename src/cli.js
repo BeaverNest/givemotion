@@ -30,6 +30,8 @@ Look (for AI review)
   inspect [file]                Timeline as JSON: size, fps, duration, clips, media
   audio <file>                  Tempo, beats, bar starts and big hits of a sound file
   captions <file.json|.srt>     How the captions block will page the words (--words 3)
+  words <page.html|voice.json>  Every word of the voice-over, the times it is said and the token
+                                to write for each (@say, @say#2); --near 145: the words around 145 s
   analyze <video.mp4>           Report on any video: cuts, shot lengths, transitions,
                                 camera, pacing, colors, beat sync, contact sheets;
                                 --motion: smoothness (natural vs robotic), --strips
@@ -106,12 +108,14 @@ const CMD_HELP = {
   --at 7.5          Check one moment only (fast, after a fix)
   --from 6 --to 9   Check part of the video
   --fast            Fewer samples (quicker, may miss short problems)
+  --workers 4       Browsers for a long video (default: what the computer can spare; the report is the same for any number)
   --safe-zone shorts   Warn about text where the app covers vertical video (shorts | reels | tiktok, or "top,right,bottom,left" px);
                     or put data-safe-zone="shorts" on <html>
   --data f.json / --props '{…}'   Data for {{data.…}} (default: data.json next to the HTML)
   The report starts with a motion strip: how much of the picture changes, one mark per half second.
   Moving or fading text is skipped automatically; problems must last ~0.25s to count.
   Mark decorative copies with data-check="ignore" (or aria-hidden="true"), and text meant to be cut by the frame with data-check="crop-ok".
+  data-check="pace-ignore" leaves an area (captions) out of the still-picture measure.
   Exit code 1 when there are errors. Warnings do not fail.
   Guide: references/check-codes.md in the givemotion skill.`,
   bundle: 'givemotion bundle [file.html] [-o dir] [--data f.json] [--props \'{…}\'] [--json]\n  Writes a standalone page (runtime inlined, blocks expanded, assets copied), gm-player.js and player.html.\n  Embed: <script src="gm-player.js"></script> <gm-player src="index.html" controls autoplay loop muted></gm-player>\n  Guide: references/output.md in the givemotion skill.',
@@ -130,6 +134,7 @@ const CMD_HELP = {
   --strips [n]      Also write strip-1.png … strip-n.png (default 4): the busiest 1 s moments at 10 frames
                     per second, to judge smoothness from pictures (implies --motion; --out <dir> = -o)
   Guide: references/review.md in the givemotion skill.`,
+  words: 'givemotion words [page.html | voice.json] [--near 145] [--span 5] [--json]\n  Lists every word of the voice-over transcript (a page\'s <html data-words>, or the .json itself) in the order\n  first said, each with every time it is said and the exact token that names that occurrence (@say, @say#2, @say#3),\n  so you never count occurrences by hand. --near 145: the words said 140–150 s (--span sets the ±seconds), in order.\n  --json: [{word, start, end, token}]. Guide: references/media-audio.md in the givemotion skill.',
   captions: 'givemotion captions captions.json|captions.srt [--words 5] [--json]\n  Prints the caption pages the captions block will show (times and words), so you can pick --words before rendering.\n  Guide: references/media-audio.md in the givemotion skill.',
   audio: 'givemotion audio music.mp3 [--json] [--fps 30]\n  Prints tempo (BPM), beat times, downbeats (bar starts), big hits and loudness per second, so you can plan cuts on the beat.\n  Guide: references/media-audio.md in the givemotion skill.',
   inspect: 'givemotion inspect [file.html]\n  Prints JSON: width, height, fps, duration, frames, clips (selector, start, end), transitions, media, issues.\n  --at 12.3 [--el "#logo"]   Where elements are at that moment (screen box, opacity, transform, visible), and which clips are on screen with their local time.\n  --at 2 --to 3 --el "#logo" [--every 1f]   One element over time, frame by frame (position, size, opacity).\n  --data f.json / --props \'{…}\'   Data for {{data.…}}',
@@ -153,7 +158,7 @@ async function main() {
   if (args.help && cmd !== 'help') return console.log(CMD_HELP[cmd] || HELP);
   // an option the command does not read is easy to miss (snapshot --at 1,2 used to give the automatic times): say so.
   // What a command reads is taken from its own code (and commonOpts when it uses it), so this list never goes stale.
-  const fns = { render: cmdRender, still: cmdStill, snapshot: cmdSnapshot, check: cmdCheck, inspect: cmdInspect, bundle: cmdBundle, export: cmdBundle, audio: cmdAudio, beats: cmdAudio, analyze: cmdAnalyze, analyse: cmdAnalyze, captions: cmdCaptions };
+  const fns = { render: cmdRender, still: cmdStill, snapshot: cmdSnapshot, check: cmdCheck, inspect: cmdInspect, bundle: cmdBundle, export: cmdBundle, audio: cmdAudio, beats: cmdAudio, analyze: cmdAnalyze, analyse: cmdAnalyze, captions: cmdCaptions, words: cmdWords };
   if (fns[cmd]) {
     const src = fns[cmd].toString(), reads = (code) => [...code.matchAll(/args\.([a-zA-Z]+)/g)].map((m) => m[1]);
     const helpers = { commonOpts, loadData }, seen = new Set(), all = [];
@@ -179,6 +184,7 @@ async function main() {
     case 'audio': case 'beats': return cmdAudio(args);
     case 'analyze': case 'analyse': return cmdAnalyze(args);
     case 'captions': return cmdCaptions(args);
+    case 'words': return cmdWords(args);
     case 'dev': case 'preview': case 'studio': return cmdDev(args);
     case 'init': return cmdInit(args);
     case 'blocks': return cmdBlocks(args);
@@ -287,7 +293,7 @@ async function cmdSnapshot(args) {
 async function cmdCheck(args) {
   const { check, formatReport } = await import('./check.js');
   try {
-    const rep = await check(inputOf(args), { ...commonOpts(args), transparent: args.transparent, contrastSamples: args.samples ? +args.samples : undefined, at: args.at, from: args.from, to: args.to, fast: args.fast, safeZone: args.safeZone });
+    const rep = await check(inputOf(args), { ...commonOpts(args), transparent: args.transparent, contrastSamples: args.samples ? +args.samples : undefined, at: args.at, from: args.from, to: args.to, fast: args.fast, safeZone: args.safeZone, workers: args.workers ? +args.workers : undefined });
     if (args.json) console.log(JSON.stringify(rep, null, 2));
     else console.log(formatReport(rep, { file: inputOf(args) }));
     const note = staleSkillNote(dirname(resolve(inputOf(args))));
@@ -370,6 +376,19 @@ async function cmdCaptions(args) {
     console.log(`${pages.length} caption pages with words="${words}":`);
     for (const p of pages) console.log(`  ${p.start.toFixed(2).padStart(6)}–${p.end.toFixed(2).padEnd(6)} ${p.words.map((w) => w.word).join(' ')}`);
   } catch (e) { fail(e, args); } finally { if (ctx) { await ctx.page.close(); await ctx.server.close(); } try { rmSync(tmp, { recursive: true, force: true }); } catch {} }
+}
+
+async function cmdWords(args) {
+  const { loadWords, wordTokens, formatWords } = await import('./words.js');
+  try {
+    const t = loadWords(inputOf(args));
+    const near = args.near != null ? parseFloat(args.near) : undefined, span = args.span != null ? parseFloat(args.span) : undefined;
+    if (args.json) {
+      const toks = wordTokens(t.words).filter((w) => near == null || Math.abs(w.start - near) <= (span ?? 5));
+      return console.log(JSON.stringify(toks.map((w) => ({ word: w.word, start: w.start, end: w.end, token: w.token })), null, 2));
+    }
+    console.log(formatWords(t, { near, span }));
+  } catch (e) { fail(e, args); }
 }
 
 async function cmdAnalyze(args) {

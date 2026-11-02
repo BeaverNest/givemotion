@@ -143,7 +143,7 @@ Also built in (tables in `references/api.md`): `data-enter`/`data-exit` presets,
 | `gm.camera` worlds, shots, `gm.path.travel`, riding, parallax | `references/camera.md` |
 | `gm.chart.*`, chart blocks | `references/charts.md` |
 | Diagrams, arrows, `data-sketch`, `gm.connect`, `gm.shape`, path morphs | `references/diagrams.md` |
-| Music, beats, voice-over, video clips, captions files | `references/media-audio.md` |
+| Music, beats, voice-over + `givemotion words`, video clips, captions | `references/media-audio.md` |
 | Data/templates, `<gm-include>` (scope, scenes, brand kit), blocks, highlight, cursor | `references/data-templates.md` |
 | `gm.onFrame`, canvas, three.js, `gm.burst`, springs, noise, random, Lottie | `references/javascript.md` |
 | Render options, transparency, cache | `references/output.md` |

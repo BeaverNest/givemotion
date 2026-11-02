@@ -244,6 +244,10 @@ budget (performance cores, half the memory, free memory now) through `<cache>/ru
 re-split between parts: 3 renders 6.4 GB, 19.0 s; 1 render 8 workers 8.9 s (12 workers was 10.3 s); x264 has 4
 threads. Measured on an M4 Pro only: check on Linux whether every logical core helps (the cap there is all cores).
 The 4 GB tile ceiling per browser is left as is (a ceiling, not used by normal pages; lowering it gives blank tiles).
+Calls into the page (2026-11-01): `FramePage.evaluate` in screenshot mode (macOS) waited in 5 ms timer steps, so every
+call cost ~6 ms (Chrome answers in ~0.1 ms); now it waits for the answer. A render seek went 5.7 → 1.9 ms. beginFrame
+mode (Linux) still pumps a frame and sleeps 2 ms while it waits: measure there and shorten it if it costs as much.
+`check` runs on several browsers: units of ~4 s of video, same report for any number (tested in beginFrame mode too).
 
 ## N5. `analyze` accuracy
 Measured: `node bench/analyze/score.mjs` renders 13 videos with known scene changes (from `inspect`) and scores

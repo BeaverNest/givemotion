@@ -153,7 +153,12 @@ export async function openComposition(input, opts = {}) {
   return { page, info, server, chrome, url, config, file, root, rel };
 }
 
-async function newWorker(ctx, opts) {
+/**
+ * Another browser on an open composition (same page, same size and capture mode): render's and check's workers.
+ * @param {Composition} ctx
+ * @param {any} opts
+ */
+export async function openWorker(ctx, opts) {
   const page = new FramePage({ chrome: ctx.chrome, width: ctx.info.width, height: ctx.info.height, scale: opts.scale || 1, capture: ctx.page.mode, gl: opts.gl, transparent: opts.transparent, timeoutMs: opts.timeoutMs });
   try {
     await page.start();
@@ -353,7 +358,7 @@ export async function render(input, opts = {}) {
     const setDurations = Object.keys(media.durations).length ? `(() => { const d = ${JSON.stringify(media.durations)}; gm.__setVideoDurations && gm.__setVideoDurations(d); })()` : null;
     // Start other workers in parallel
     // (the ones that opened are closed below even when another failed to: they would keep their browsers running)
-    const started = todoFrames ? await Promise.allSettled(Array.from({ length: nWorkers - 1 }, () => newWorker(ctx, opts))) : [];
+    const started = todoFrames ? await Promise.allSettled(Array.from({ length: nWorkers - 1 }, () => openWorker(ctx, opts))) : [];
     for (const r of started) if (r.status === 'fulfilled') pages.push(r.value);
     const failed = started.find((r) => r.status === 'rejected');
     if (failed) throw /** @type {PromiseRejectedResult} */ (failed).reason;
@@ -504,7 +509,7 @@ export async function render(input, opts = {}) {
           if (g.n) {
             spawning += g.n;
             const add = (async () => {
-              const opened = await Promise.allSettled(Array.from({ length: g.n }, () => newWorker(ctx, opts)));
+              const opened = await Promise.allSettled(Array.from({ length: g.n }, () => openWorker(ctx, opts)));
               g.release();
               spawning -= g.n;
               for (const r of opened) {

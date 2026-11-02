@@ -74,7 +74,7 @@ gm.camera('#world')
 
 ## Variations
 - Preset version: `data-enter="draw 1.2 3"` on a sketched shape draws outline + fill together; `data-enter="write 0.8 11.9"` writes a label later in the scene.
-- Highlight on text: `<span data-sketch-mark="highlight" data-sketch-mark-at="4.2">key word</span>` (also `underline`, `circle`, `box`, `strike`).
+- Highlight on text: `<span data-sketch-mark="highlight" data-sketch-mark-at="4.2">key word</span>` (also `underline`, `circle`, `box`, `strike`); with a voice-over, draw it as the word is said: `data-sketch-mark-at="@cheaper"`. With no `-at`, it draws once the element's entrance is done.
 - Own path data: `<path d="${gm.sketch.arrow(200, 400, 700, 380, { curve: .2 })}">` then `pen('#myArrow', t)`.
 - Something travelling the flow: `gm.path.travel('#dot', arrow, { stops: [[4, 0], [5, 1]] })` with `arrow = gm.connect(...)`.
 

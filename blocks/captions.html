@@ -5,7 +5,7 @@ hold: seconds the last line stays after its last word (default 0.8; 0 = gone wit
 Paging: lines break at sentence ends, pauses and commas, and are balanced, so a line never holds one lonely word.
 usage: <gm-include src="blocks/captions.html" file="captions.json"></gm-include>   JSON: [{"word":"Hello","start":0.2,"end":0.5}, …] (times in seconds, relative to the block's start)
 -->
-<div class="gmb-cap gmb-cap--{{position|bottom}} gmb-cap--shadow-{{shadow|dark}}" style="--accent:{{accent|#ffd23f}};--cap-color:{{color|#fff}};--size:{{size|64}};--weight:{{weight|800}}" data-file="{{file}}" data-fit="{{fit}}" data-words="{{words|5}}" data-offset="{{offset}}" data-upper="{{upper}}" data-hold="{{hold|0.8}}"><div class="gmb-cap__line"></div></div>
+<div data-check="pace-ignore" class="gmb-cap gmb-cap--{{position|bottom}} gmb-cap--shadow-{{shadow|dark}}" style="--accent:{{accent|#ffd23f}};--cap-color:{{color|#fff}};--size:{{size|64}};--weight:{{weight|800}}" data-file="{{file}}" data-fit="{{fit}}" data-words="{{words|5}}" data-offset="{{offset}}" data-upper="{{upper}}" data-hold="{{hold|0.8}}"><div class="gmb-cap__line"></div></div>
 <script>
 (() => {
   const root = document.currentScript.previousElementSibling;

@@ -1,7 +1,8 @@
 // `check` and `snapshot`: let an AI (or a human) see problems without watching the video.
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { join, resolve, basename, dirname } from 'node:path';
-import { openComposition } from './render.js';
+import { openComposition, openWorker } from './render.js';
+import { reserve, browserMB } from './machine.js';
 
 /** @typedef {import('./types/api.js').Input} Input */
 
@@ -209,12 +210,109 @@ const PAGE_ANALYZE = String.raw`((dt, opt) => {
     if (p && dt > 0 && (Math.hypot(c.x - p.x, c.y - p.y) / dt > 60 * PX || Math.abs(Math.log(c.s / p.s)) / dt > 0.03)) camMoving.add(wEl);
   }
   window.__gmPrevCam = nextCam;
+  // A gradient mask (a world that fades out at its edges, a vignette): how opaque it is at a point of the screen, as
+  // a function (x, y) → 0..1, or null when check cannot tell (an image, a luminance mask, a sized or placed mask, a
+  // composite other than add): such a mask counts as fully shown, as before. Linear and radial gradients, in the
+  // masked element's own border box (a scale or translate of it is followed; a rotation is not).
+  const splitTop = (s) => { const a = []; let d = 0, cur = ''; for (const ch of s) { if (ch === '(') d++; else if (ch === ')') d--; if (ch === ',' && d === 0) { a.push(cur.trim()); cur = ''; } else cur += ch; } if (cur.trim()) a.push(cur.trim()); return a; };
+  const lenOf = (s, full) => { s = String(s).trim(); if (s.endsWith('%')) return parseFloat(s) / 100 * full; if (s.endsWith('px')) return parseFloat(s); return parseFloat(s) === 0 ? 0 : NaN; };
+  const COLOR_RE = /^((?:rgba?|color|oklch|oklab|lab|lch|hsla?|hwb)\([^()]*\)|transparent|currentcolor|[a-z]+)(?:\s+(.*))?$/i;
+  // color stops along a gradient line of length L → alpha at a distance along it
+  const stopsFn = (parts, L) => {
+    const st = [];
+    for (const p of parts) {
+      const cm = /^[\d.-]/.test(p) ? null : COLOR_RE.exec(p);
+      if (cm) {
+        const pos = cm[2] ? cm[2].trim().split(/\s+/).map((x) => lenOf(x, L)) : [];
+        if (pos.some((x) => !isFinite(x))) return null;
+        const a = cssAlpha(cm[1]);
+        if (!pos.length) st.push({ a, p: null }); else for (const q of pos) st.push({ a, p: q });
+      } else { const h = lenOf(p, L); if (!isFinite(h)) return null; st.push({ a: null, p: h }); } // a color hint
+    }
+    if (st.length < 2 || st[0].a == null || st[st.length - 1].a == null) return null;
+    if (st[0].p == null) st[0].p = 0;
+    if (st[st.length - 1].p == null) st[st.length - 1].p = L;
+    for (let i = 1; i < st.length; i++) if (st[i].p != null) st[i].p = Math.max(st[i].p, st[i - 1].p ?? -Infinity);
+    for (let i = 1; i < st.length; i++) if (st[i].p == null) { let j = i; while (st[j].p == null) j++; const p0 = st[i - 1].p; for (let k = i; k < j; k++) st[k].p = p0 + (st[j].p - p0) * (k - i + 1) / (j - i + 1); }
+    // a color hint: the halfway color sits at the hint, the curve on each side is a power curve
+    for (let i = st.length - 2; i > 0; i--) if (st[i].a == null) {
+      const A = st[i - 1], B = st[i + 1], span = B.p - A.p, hh = span > 0 ? (st[i].p - A.p) / span : 0.5;
+      const sub = [];
+      for (let k = 1; k < 24; k++) { const x = k / 24, e = hh <= 0 ? 1 : hh >= 1 ? 0 : Math.pow(x, Math.log(0.5) / Math.log(hh)); sub.push({ a: A.a + (B.a - A.a) * e, p: A.p + span * x }); }
+      st.splice(i, 1, ...sub);
+    }
+    return (d) => {
+      if (d <= st[0].p) return st[0].a;
+      for (let i = 1; i < st.length; i++) if (d <= st[i].p) { const s = st[i].p - st[i - 1].p; return s > 0 ? st[i - 1].a + (st[i].a - st[i - 1].a) * (d - st[i - 1].p) / s : st[i].a; }
+      return st[st.length - 1].a;
+    };
+  };
+  const gradientFn = (layer, w, h) => {
+    const g = /^(linear|radial)-gradient\((.*)\)$/s.exec(layer);
+    if (!g) return null;
+    const parts = splitTop(g[2]);
+    if (g[1] === 'linear') {
+      let ang = Math.PI, m;
+      if ((m = /^(-?[\d.]+)(deg|rad|turn|grad)$/.exec(parts[0]))) { const v = +m[1]; ang = m[2] === 'deg' ? v * Math.PI / 180 : m[2] === 'rad' ? v : m[2] === 'turn' ? v * 2 * Math.PI : v * Math.PI / 200; parts.shift(); }
+      else if (/^to\s/.test(parts[0])) { const k = parts.shift().slice(3).trim().split(/\s+/); const sx = k.includes('right') ? 1 : k.includes('left') ? -1 : 0, sy = k.includes('bottom') ? 1 : k.includes('top') ? -1 : 0; ang = Math.atan2(sx * h, -sy * w); }
+      const dx = Math.sin(ang), dy = -Math.cos(ang), L = Math.abs(w * dx) + Math.abs(h * dy), f = stopsFn(parts, L);
+      return f && ((x, y) => f((x - w / 2) * dx + (y - h / 2) * dy + L / 2));
+    }
+    // radial: [circle|ellipse] [size] [at x y]
+    let shape = 'ellipse', size = 'farthest-corner', cx = w / 2, cy = h / 2;
+    if (!COLOR_RE.test(parts[0]) || /^(circle|ellipse|closest|farthest|at)\b/.test(parts[0])) {
+      const [a, b] = parts.shift().split(/\s*\bat\b\s*/);
+      const k = (a || '').trim().split(/\s+/).filter(Boolean);
+      if (k.includes('circle')) shape = 'circle';
+      const sz = k.filter((x) => x !== 'circle' && x !== 'ellipse');
+      if (sz.length === 1 && /^(closest|farthest)-(side|corner)$/.test(sz[0])) size = sz[0];
+      else if (sz.length) size = sz;
+      if (b) {
+        const KW = { left: 0, top: 0, center: 0.5, right: 1, bottom: 1 }, q = b.trim().split(/\s+/);
+        const pos = (s, full) => (s in KW ? KW[s] * full : lenOf(s, full));
+        if (q.length === 1) { if (q[0] === 'top' || q[0] === 'bottom') cy = pos(q[0], h); else cx = pos(q[0], w); }
+        else if (q.length === 2) { const swap = q[0] === 'top' || q[0] === 'bottom' || q[1] === 'left' || q[1] === 'right'; cx = pos(swap ? q[1] : q[0], w); cy = pos(swap ? q[0] : q[1], h); }
+        else return null;
+        if (!isFinite(cx) || !isFinite(cy)) return null;
+      }
+    }
+    const sides = [cx, w - cx, cy, h - cy].map(Math.abs), corners = [[cx, cy], [w - cx, cy], [cx, h - cy], [w - cx, h - cy]].map(([a, b]) => [Math.abs(a), Math.abs(b)]);
+    let rx, ry;
+    if (Array.isArray(size)) {
+      rx = lenOf(size[0], w); ry = shape === 'circle' ? rx : lenOf(size[1] ?? size[0], h);
+      if (!isFinite(rx) || !isFinite(ry)) return null;
+    } else {
+      const far = /farthest/.test(size), pick = (arr) => (far ? Math.max(...arr) : Math.min(...arr));
+      if (shape === 'circle') rx = ry = /side/.test(size) ? pick(sides) : pick(corners.map(([a, b]) => Math.hypot(a, b)));
+      else {
+        const sx = pick(sides.slice(0, 2)), sy = pick(sides.slice(2));
+        if (/side/.test(size)) { rx = sx; ry = sy; }
+        else { const c = corners.reduce((best, cn) => (far ? Math.hypot(...cn) > Math.hypot(...best) : Math.hypot(...cn) < Math.hypot(...best)) ? cn : best); const kk = sy / Math.max(1e-6, sx); rx = Math.hypot(c[0], c[1] / Math.max(1e-6, kk)); ry = rx * kk; }
+      }
+    }
+    if (!(rx > 0) || !(ry > 0)) return null;
+    const f = stopsFn(parts, rx);
+    return f && ((x, y) => f(Math.hypot((x - cx) / rx, (y - cy) / ry) * rx));
+  };
+  const maskFnOf = (anc, acs) => {
+    const img = acs.maskImage && acs.maskImage !== 'none' ? acs.maskImage : acs.webkitMaskImage;
+    if (!(anc instanceof HTMLElement) || !anc.offsetWidth || !anc.offsetHeight) return null;
+    const layers = splitTop(img), n = layers.length;
+    const each = (v, ok) => splitTop(v || '').every((x) => ok.test(x));
+    if (!each(acs.maskSize, /^auto( auto)?$/) || !each(acs.maskPosition, /^0(%|px)? 0(%|px)?$/) || !each(acs.maskComposite, /^add$/) || !each(acs.maskMode, /^(match-source|alpha)$/) || !each(acs.maskOrigin, /^border-box$/)) return null;
+    const w = anc.offsetWidth, h = anc.offsetHeight, fns = layers.map((l) => gradientFn(l, w, h));
+    if (!n || fns.some((f) => !f)) return null;
+    const b = anc.getBoundingClientRect(), kx = b.width / w, ky = b.height / h;
+    if (!(kx > 0) || !(ky > 0)) return null;
+    return (x, y) => { const lx = (x - b.left) / kx, ly = (y - b.top) / ky; if (lx < 0 || ly < 0 || lx > w || ly > h) return 0; let none = 1; for (const f of fns) none *= 1 - Math.max(0, Math.min(1, f(lx, ly))); return 1 - none; };
+  };
   // Visible part of the text: inside the frame and inside every clipping ancestor (overflow or clip-path inset).
   const clipBoxOf = (el) => {
     let r = { left: -1e9, top: -1e9, right: 1e9, bottom: 1e9 }, by = null, masked = false;
+    const masks = [];
     for (let anc = el; anc && anc !== document.body; anc = anc.parentElement) {
       const acs = getComputedStyle(anc);
-      if (acs.maskImage && acs.maskImage !== 'none' || acs.webkitMaskImage && acs.webkitMaskImage !== 'none') masked = true;
+      if (acs.maskImage && acs.maskImage !== 'none' || acs.webkitMaskImage && acs.webkitMaskImage !== 'none') { masked = true; const mf = maskFnOf(anc, acs); if (mf) masks.push(mf); }
       if (acs.clipPath && acs.clipPath !== 'none') {
         const m = /inset\(([^)]*)\)/.exec(acs.clipPath);
         if (m) {
@@ -231,7 +329,7 @@ const PAGE_ANALYZE = String.raw`((dt, opt) => {
         if (b.width > 0 && b.height > 0) { const n = inter(r, b); if (area(n) < area(r) - 1 && !by) by = anc; r = n; }
       }
     }
-    return { r, by, masked };
+    return { r, by, masked, masks };
   };
   // Is the text covered by something drawn on top of it (another layer, a wipe, an iris)?
   const paintsSolid = (c) => {
@@ -350,6 +448,8 @@ const PAGE_ANALYZE = String.raw`((dt, opt) => {
     t.hidden = area(shown) < Math.max(4, 0.03 * area(tu)) || cb.masked && t.moving;
     // (a clip-path shape that leaves none of the text showing: hidden too)
     if (!t.hidden && clipFn(el)) { const f = clipFn(el); let any = false; for (let iy = 0; iy < 3 && !any; iy++) for (let ix = 0; ix < 7 && !any; ix++) any = f(shown.left + (shown.right - shown.left) * (ix + 0.5) / 7, shown.top + (shown.bottom - shown.top) * (iy + 0.5) / 3); if (!any) t.hidden = true; }
+    // (under the clear part of a gradient mask, a world that fades out at its edges: hidden too; partly faded is shown)
+    if (!t.hidden && cb.masks.length) { let any = false; for (let iy = 0; iy < 3 && !any; iy++) for (let ix = 0; ix < 7 && !any; ix++) { const x = shown.left + (shown.right - shown.left) * (ix + 0.5) / 7, y = shown.top + (shown.bottom - shown.top) * (iy + 0.5) / 3; any = cb.masks.reduce((v, f) => v * f(x, y), 1) > 0.06; } if (!any) t.hidden = true; }
     const cov = t.hidden ? { n: 0, hits: 0 } : coverOf(t);
     t.covered = cov.n > 0 && cov.hits === cov.n;
     // Text of a camera world under a screen overlay (a caption band, a title card outside the world) while the camera
@@ -669,7 +769,22 @@ const PAGE_ANALYZE = String.raw`((dt, opt) => {
   let maxFont = 0;
   for (const t of texts) { if (t.hidden || t.covered) continue; const k = t.el.offsetHeight ? t.el.getBoundingClientRect().height / t.el.offsetHeight : 1; maxFont = Math.max(maxFont, parseFloat(getComputedStyle(t.el).fontSize) * (isFinite(k) && k > 0 ? k : 1)); }
   window.__gmTexts = texts; window.__gmTransitioning = transitioning;
-  return { issues: out, textCount: texts.length, maxFont: maxFont / PX, boxes: window.__gmTextBoxes.length, busy: animating.size > 0 || texts.some((t) => t.moving && !t.hidden) };
+  // For the still measure: how much of the frame is entering, leaving or moving right now (a small label fading in
+  // in a corner does not make a frozen picture move), and the boxes it leaves out: data-check="pace-ignore"
+  // (captions that change with every word over a picture that stands still)
+  const paceIgnored = (el) => !!(el.closest && el.closest('[data-check~="pace-ignore"]'));
+  const frameShare = (r) => area(inter(r, { left: 0, top: 0, right: W, bottom: H })) / (W * H);
+  // ([an id per element, its share]: several small things in one half second add up, a list building item by item)
+  const bIds = window.__gmBusyIds || (window.__gmBusyIds = { n: 0, m: new WeakMap() });
+  const bId = (el) => { let i = bIds.m.get(el); if (!i) bIds.m.set(el, (i = ++bIds.n)); return i; };
+  const busy = [];
+  for (const el of animating) {
+    if (!el || !el.getBoundingClientRect || paceIgnored(el) || (el.parentElement && inAnim(el.parentElement)) || !visible(el)) continue;
+    busy.push([bId(el), frameShare(el.getBoundingClientRect())]);
+  }
+  for (const t of texts) if (t.moving && !t.hidden && !inAnim(t.el) && !paceIgnored(t.el)) busy.push([bId(t.el), frameShare(t.u)]);
+  const paceOut = [...document.querySelectorAll('[data-check~="pace-ignore"]')].map((e) => e.getBoundingClientRect()).filter((r) => r.width > 0 && r.height > 0).map((r) => [r.left / W, r.top / H, r.right / W, r.bottom / H]);
+  return { issues: out, textCount: texts.length, maxFont: maxFont / PX, boxes: window.__gmTextBoxes.length, busy, paceOut };
 })`;
 
 // ---------------------------------------------------------------------------
@@ -681,7 +796,7 @@ const PAGE_ANALYZE = String.raw`((dt, opt) => {
 // ---------------------------------------------------------------------------
 const PAGE_PACING = String.raw`((dt, tNow) => {
   const W = gm.width, H = gm.height, PX = gm.px;
-  const S = window.__gmPace || (window.__gmPace = { id: 0, ids: new WeakMap(), prev: new Map(), txt: new Map(), live: new Set(), clipEls: new Map(), steps: new Map() });
+  const S = window.__gmPace || (window.__gmPace = { id: 0, ids: new WeakMap(), prev: new Map(), clipEls: new Map(), steps: new Map() });
   const out = { units: [], meta: {}, pops: [], clips: [] };
   const ignored = (el) => !!el.closest('[data-check~="ignore"],[aria-hidden="true"],[data-gm-internal]');
   // quick on purpose: captions, data-check="quick-ok"
@@ -770,15 +885,15 @@ const PAGE_PACING = String.raw`((dt, tNow) => {
       else if (r && (Math.max(0, Math.min(r.right, W) - Math.max(r.left, 0)) * Math.max(0, Math.min(r.bottom, H) - Math.max(r.top, 0))) < 0.7 * (r.right - r.left) * (r.bottom - r.top)) why = 'cropped';
       if (why) { state = 1; reason = reason || why; }
     }
-    // text that changes while on screen (a counter, a clock, typing) is not judged for its hold
+    // text that changes while on screen (a counter, a clock, typing) is not judged for its hold: its text, as a short
+    // hash, goes with every sample (the pass compares them in time order)
     const tc = u.textContent;
-    if (S.txt.has(id) && S.txt.get(id) !== tc) S.live.add(id);
-    S.txt.set(id, tc);
+    let hh = 5381; for (let k = 0; k < tc.length; k++) hh = (hh * 33 + tc.charCodeAt(k)) | 0;
     // (its box: where its letters are, not the box around them: a caption's box can be much taller than its line)
     const rect = parts.reduce((a, t) => ({ left: Math.min(a.left, t.u.left), top: Math.min(a.top, t.u.top), right: Math.max(a.right, t.u.right), bottom: Math.max(a.bottom, t.u.bottom) }), { left: Infinity, top: Infinity, right: -Infinity, bottom: -Infinity });
     rect.width = rect.right - rect.left; rect.height = rect.bottom - rect.top;
     now.set(id, { el: u, state, rect, op: Math.min(...parts.map((t) => t.op)), anc: state === 2 ? layers(u) : null });
-    out.units.push([id, state, reason, big ? 1 : 0, S.live.has(id) ? 1 : 0, ...(state === 2 ? [rect.left, rect.top, rect.width, rect.height].map(Math.round) : [])]);
+    out.units.push([id, state, reason, big ? 1 : 0, (hh >>> 0).toString(36) + ':' + tc.length, ...(state === 2 ? [rect.left, rect.top, rect.width, rect.height].map(Math.round) : [])]);
   }
   // 2. Marks: an icon, a logo, a picture (an <img> or an outer <svg>) between ~40 px square and a fifth of the frame
   for (const el of document.body.querySelectorAll('img,svg')) {
@@ -895,7 +1010,6 @@ const PAGE_PACING = String.raw`((dt, tNow) => {
 })`;
 
 // Collected once at the end of the pass: big things stepped by a steps() ease.
-const PAGE_PACING_END = String.raw`(() => { const S = window.__gmPace; return S ? [...S.steps.values()] : []; })()`;
 
 // ---------------------------------------------------------------------------
 // Robotic motion (page side): where the things that move are, per sample, and which easing curves the page uses
@@ -1432,13 +1546,16 @@ export async function check(input, opts = {}) {
   const issues = [];
   await autoTransparent(ctx, opts);
   const push = (arr, t) => { for (const i of arr) issues.push({ time: t == null ? i.time ?? null : Math.round(t * 100) / 100, ...i }); };
+  /** @type {any[]} the other browsers of a long pass */
+  const extraPages = [];
   try {
     const info = ctx.info;
     push(info.issues);
     const fps = info.fps;
     const lastT = Math.max(0, info.duration - 1 / fps);
-    // One forward pass over the video (works for stateful pages too). Elements that are moving
-    // (seen by comparing samples) are skipped; problems must last 2 samples to count.
+    // A pass over the video, split over browsers for a long one (a seek gives the same page whatever came before, as
+    // for a render's workers). Elements that are moving (seen by comparing samples) are skipped; problems must last
+    // 2 samples to count.
     const from = opts.from != null ? Math.max(0, +opts.from) : 0, to = opts.to != null ? Math.min(lastT, +opts.to) : lastT;
     const step = opts.at != null ? 1 / fps : Math.max(1 / fps, Math.min(opts.fast ? 0.25 : 0.12, info.duration / 300));
     const planned = new Set();
@@ -1449,54 +1566,177 @@ export async function check(input, opts = {}) {
     }
     const times = [...planned].sort((a, b) => a - b);
     const contrastEvery = opts.at != null ? 0 : Math.max((to - from) / (opts.contrastSamples || 10), 0.4);
-    let lastContrast = -Infinity, prevT = null;
-    const perSample = [];
+    const full = opts.at == null;
     // Pacing: a tiny grey picture of the frame every half second finds long stretches where nothing moves.
     const GW = 192, GH = 108;
-    const pace = opts.at == null && opts.pacing !== false;
-    if (pace) await ctx.page.evaluate(`window.__gmGrid = async (src) => { const im = new Image(); im.src = src; await im.decode(); const c = document.createElement('canvas'); c.width = ${GW}; c.height = ${GH}; const g = c.getContext('2d'); g.drawImage(im, 0, 0, ${GW}, ${GH}); const d = g.getImageData(0, 0, ${GW}, ${GH}).data; const o = new Array(${GW * GH}); for (let i = 0, j = 0; i < d.length; i += 4, j++) o[j] = (54 * d[i] + 183 * d[i + 1] + 19 * d[i + 2]) >> 8; return o; }`);
-    let lastGrid = null, lastGridT = -Infinity, busy = false;
-    let motion = null;
-    const openFrames = []; // the first half second: is anything on screen?
-    const emptyGrid = []; // [t, almost nothing on screen] every half second
-    const change = []; // [t, fraction of the picture that changed since the previous grid]
+    const pace = full && opts.pacing !== false;
+    const GRID_JS = `window.__gmGrid = async (src) => { const im = new Image(); im.src = src; await im.decode(); const c = document.createElement('canvas'); c.width = ${GW}; c.height = ${GH}; const g = c.getContext('2d'); g.drawImage(im, 0, 0, ${GW}, ${GH}); const d = g.getImageData(0, 0, ${GW}, ${GH}).data; const o = new Array(${GW * GH}); for (let i = 0, j = 0; i < d.length; i += 4, j++) o[j] = (54 * d[i] + 183 * d[i + 1] + 19 * d[i + 2]) >> 8; return o; }`;
+    // (the samples that take a grid picture: every ~0.5 s, fixed by the sample times alone)
+    const gridAt = new Set();
+    if (pace) { let lg = -Infinity; times.forEach((t, i) => { if (t - lg >= 0.49) { gridAt.add(i); lg = t; } }); }
     // robotic motion: where the moving things are at every sample, and the easing curves in use
-    const watchMotion = opts.at == null && opts.motion !== false;
-    let moSetup = null;
-    const moSamples = [], moNames = {};
-    const layoutSamples = [], layoutNames = {}; // where each text sits in the layout at every sample
-    const paceSamples = [], paceMeta = {}, pops = []; // pacing per element (short holds, cuts with no exit, slivers)
-    if (watchMotion) { try { moSetup = await ctx.page.evaluate(PAGE_EASES); } catch (e) { moSetup = null; } }
-    if (opts.at == null) { try { push(await ctx.page.evaluate(PAGE_CSS_VS_TWEEN)); } catch (e) {} }
-    for (const t of times) {
-      await ctx.page.seek(t);
-      const a = await ctx.page.evaluate(`(${PAGE_ANALYZE})(${prevT == null ? 0 : t - prevT}, ${JSON.stringify({ safeZone: opts.safeZone || null, t })})`);
-      if (opts.at == null) { try { const pc = await ctx.page.evaluate(`(${PAGE_PACING})(${prevT == null ? 0 : t - prevT}, ${t})`); paceSamples.push({ t, units: pc.units, clips: pc.clips }); Object.assign(paceMeta, pc.meta); pops.push(...pc.pops); } catch (e) {} }
-      prevT = t;
-      if (opts.at == null) { try { const l = await ctx.page.evaluate(PAGE_LAYOUT); layoutSamples.push({ t, els: l.els }); Object.assign(layoutNames, l.names); } catch (e) {} }
-      if (moSetup) { try { const m = await ctx.page.evaluate(PAGE_MOTION); moSamples.push({ t, els: m.els }); Object.assign(moNames, m.names); } catch (e) {} }
-      if (opts.at != null && Math.abs(t - +opts.at) > 0.5 / fps) continue; // warm-up samples only feed motion detection
-      perSample.push({ t, issues: a.issues });
-      busy = busy || !!a.busy; // an entrance, exit or moving text since the last grid
-      if (pace && t - lastGridT >= 0.49) {
-        const jpg = await ctx.page.capture('jpeg', 60);
-        const g = await ctx.page.evaluate(`window.__gmGrid('data:image/jpeg;base64,${jpg.toString('base64')}')`);
-        { const srt = [...g].sort((x, y) => x - y), med = srt[srt.length >> 1]; let off = 0; for (const v of g) if (Math.abs(v - med) > 10) off++;
-          // (the opening frame: empty = no readable text and almost no edges; a smooth gradient or a flat color is empty)
-          if (t < 0.6) { let edge = 0; for (let i = 0; i < g.length; i++) if ((i % GW < GW - 1 && Math.abs(g[i] - g[i + 1]) > 12) || (i + GW < g.length && Math.abs(g[i] - g[i + GW]) > 12)) edge++; openFrames.push({ t, empty: edge / g.length < 0.004 && !(a.maxFont >= 24) }); }
-          emptyGrid.push([t, off / g.length < 0.015 && !(a.maxFont >= 24)]); }
-        if (lastGrid) { let n = 0; for (let i = 0; i < g.length; i++) if (Math.abs(g[i] - lastGrid[i]) > 6) n++; change.push([t, n / g.length, busy]); }
-        lastGrid = g; lastGridT = t; busy = false;
-      }
-      if (a.boxes && t - lastContrast >= contrastEvery) {
-        lastContrast = t;
-        await ctx.page.evaluate(PAGE_HIDE_TEXT);
-        const png = await ctx.page.capture('png');
-        await ctx.page.evaluate(PAGE_SHOW_TEXT);
-        const c = await ctx.page.evaluate(contrastScript('data:image/png;base64,' + png.toString('base64'), opts.scale || 1));
-        push(c, t);
-      }
+    const watchMotion = full && opts.motion !== false;
+    const setupPage = async (page) => {
+      if (pace) await page.evaluate(GRID_JS);
+      // (also lists the tweens with a steps() ease for the pacing pass)
+      if (watchMotion) { try { return await page.evaluate(PAGE_EASES); } catch (e) { return null; } }
+      return null;
+    };
+    const moSetup = await setupPage(ctx.page);
+    if (full) { try { push(await ctx.page.evaluate(PAGE_CSS_VS_TWEEN)); } catch (e) {} }
+
+    // The pass over the video, in units: runs of neighbouring samples, ~4 s of video each. Their bounds depend on the
+    // video only, and each unit gives the same results on any browser (a unit that does not follow the one its browser
+    // just did first replays the sample before it and the samples since the last grid picture, all the page and the
+    // pass carry from one sample to the next), so 1 browser and N browsers report the same.
+    const units = [];
+    {
+      const per = full ? Math.max(24, Math.round(4 / step)) : times.length;
+      for (let i = 0; i < times.length; i += per) units.push({ i0: i, i1: Math.min(times.length, i + per) });
+      if (units.length > 1 && units[units.length - 1].i1 - units[units.length - 1].i0 < per / 2) units[units.length - 2].i1 = units.pop().i1;
     }
+    // where a unit's warm-up starts: one sample before the sample before it, or before the last grid picture before it
+    // if that is earlier (like a render part, the first frame drawn after a jump is not one that is used)
+    const warmStart = (U) => { let i = U.i0 - 1; if (pace) { let g = U.i0 - 1; while (g > 0 && !gridAt.has(g)) g--; i = Math.min(i, g); } return Math.max(0, i - 1); };
+    // Chrome keeps raster state from frames drawn before (a layer keeps the scale it was first drawn at): every browser
+    // drops it at these samples, the one that plays through and the one that jumps in alike, so grid and contrast
+    // pictures after them do not depend on which frames a browser drew before
+    const resetAt = new Set(units.filter((U) => U.i0 > 0).map(warmStart));
+    const analyzeAt = (P, t) => P.page.evaluate(`(${PAGE_ANALYZE})(${P.prevT == null ? 0 : t - P.prevT}, ${JSON.stringify({ safeZone: opts.safeZone || null, t })})`);
+    /** One unit on one page; P is that page's state from sample to sample. */
+    const runUnit = async (P, U) => {
+      /** @type {any} */
+      const R = { U, perSample: [], pace: [], layout: [], motion: [], pops: [], change: [], openFrames: [], emptyGrid: [], boxes: [], meta: {}, sigs: {}, noBox: [], steps: [], logs: [], contrast: null };
+      let i = U.i0;
+      if (P.cursor !== U.i0 - 1) {
+        // warm-up: the sample before, and back to the last grid picture (what entered or moved since it counts)
+        i = warmStart(U);
+        P.prevT = null; P.lastGrid = null; P.busy = new Map(); P.lastOut = [];
+      }
+      for (; i < U.i1; i++) {
+        const t = times[i], own = i >= U.i0 && (full || Math.abs(t - +opts.at) <= 0.5 / fps);
+        await P.page.seek(t);
+        if (resetAt.has(i)) await P.page.resetPaint(true);
+        const a = await analyzeAt(P, t);
+        if (full) {
+          try {
+            const pc = await P.page.evaluate(`(${PAGE_PACING})(${P.prevT == null ? 0 : t - P.prevT}, ${t})`);
+            for (const [id, m] of Object.entries(pc.meta)) P.meta[id] = { ...m, t };
+            if (own) { R.pace.push({ t, units: pc.units, clips: pc.clips }); R.pops.push(...pc.pops); }
+          } catch (e) {}
+        }
+        P.prevT = t;
+        if (full) { try { const l = await P.page.evaluate(PAGE_LAYOUT); Object.assign(P.layNames, l.names); if (own) R.layout.push({ t, els: l.els }); } catch (e) {} }
+        if (moSetup) { try { const m = await P.page.evaluate(PAGE_MOTION); Object.assign(P.moNames, m.names); if (i >= U.i0) R.motion.push({ t, els: m.els }); } catch (e) {} }
+        if (!own) { if (i < U.i0) for (const [id, share] of a.busy || []) P.busy.set(id, Math.max(P.busy.get(id) || 0, share)); }
+        else { R.perSample.push({ t, issues: a.issues }); R.boxes.push(a.boxes ? 1 : 0); for (const [id, share] of a.busy || []) P.busy.set(id, Math.max(P.busy.get(id) || 0, share)); }
+        if (gridAt.has(i)) {
+          const jpg = await P.page.capture('jpeg', 60);
+          const g = await P.page.evaluate(`window.__gmGrid('data:image/jpeg;base64,${jpg.toString('base64')}')`);
+          if (own) {
+            const srt = [...g].sort((x, y) => x - y), med = srt[srt.length >> 1]; let off = 0; for (const v of g) if (Math.abs(v - med) > 10) off++;
+            // (the opening frame: empty = no readable text and almost no edges; a smooth gradient or a flat color is empty)
+            if (t < 0.6) { let edge = 0; for (let k = 0; k < g.length; k++) if ((k % GW < GW - 1 && Math.abs(g[k] - g[k + 1]) > 12) || (k + GW < g.length && Math.abs(g[k] - g[k + GW]) > 12)) edge++; R.openFrames.push({ t, empty: edge / g.length < 0.004 && !(a.maxFont >= 24) }); }
+            R.emptyGrid.push([t, off / g.length < 0.015 && !(a.maxFont >= 24)]);
+            // (cells under data-check="pace-ignore", now or at the last grid, are left out)
+            const out = [...P.lastOut, ...(a.paceOut || [])].map(([l, tp, r, b]) => [Math.floor(l * GW), Math.floor(tp * GH), Math.ceil(r * GW), Math.ceil(b * GH)]);
+            if (P.lastGrid) {
+              let n = 0, all = 0;
+              for (let k = 0; k < g.length; k++) {
+                const x = k % GW, y = (k / GW) | 0;
+                if (out.length && out.some(([l, tp, r, b]) => x >= l && x < r && y >= tp && y < b)) continue;
+                all++;
+                if (Math.abs(g[k] - P.lastGrid[k]) > 6) n++;
+              }
+              let share = 0; for (const v of P.busy.values()) share += v;
+              R.change.push([t, all ? n / all : 0, Math.min(1, share)]);
+            }
+          }
+          P.lastGrid = g; P.busy = new Map(); P.lastOut = a.paceOut || [];
+        }
+        // --at: the contrast picture of that moment
+        if (!full && own && a.boxes) R.contrast = { t, issues: await contrastNow(P.page) };
+      }
+      P.cursor = U.i1 - 1;
+      // what the page gathered over the unit: contrast signatures, display: contents notes, stepped moves, logs
+      {
+        try {
+          const g = await P.page.evaluate(`(() => { const r = { sigs: window.__gmSigs || {}, noBox: [...(window.__gmNoBox || new Map()).values()], steps: window.__gmPace ? [...window.__gmPace.steps.values()] : [] }; window.__gmSigs = {}; window.__gmNoBox = new Map(); if (window.__gmPace) window.__gmPace.steps = new Map(); return r; })()`);
+          R.sigs = g.sigs; R.noBox = g.noBox; R.steps = g.steps;
+        } catch (e) {}
+      }
+      try { const lg = await P.page.evaluate(`window.gm && gm.__logs ? gm.__logs(${P.logN}) : []`); P.logN += lg.length; R.logs = lg; } catch (e) {}
+      // the page's own ids → selectors (the same element on every page)
+      const pick = (names, id) => names[id] ?? null;
+      R.pace = R.pace.map((s) => ({ t: s.t, units: s.units.map((u) => [pick(P.meta, u[0]) ? P.meta[u[0]].sel : null, ...u.slice(1)]).filter((u) => u[0] != null), clips: (s.clips || []).map((c) => [P.meta['c' + c[0]] ? P.meta['c' + c[0]].sel : null, ...c.slice(1)]).filter((c) => c[0] != null) }));
+      R.pops = R.pops.map((p) => ({ ...p, id: P.meta[p.id] ? P.meta[p.id].sel : p.id }));
+      R.meta = P.meta;
+      R.layout = R.layout.map((s) => ({ t: s.t, els: s.els.map(([id, y]) => [pick(P.layNames, id), y]).filter((e) => e[0] != null) }));
+      R.motion = R.motion.map((s) => ({ t: s.t, els: s.els.map((e) => [pick(P.moNames, e[0]), ...e.slice(1)]).filter((e) => e[0] != null) }));
+      return R;
+    };
+    const contrastNow = async (page) => {
+      await page.evaluate(PAGE_HIDE_TEXT);
+      const png = await page.capture('png');
+      await page.evaluate(PAGE_SHOW_TEXT);
+      return page.evaluate(contrastScript('data:image/png;base64,' + png.toString('base64'), opts.scale || 1));
+    };
+    const newState = (page) => ({ page, cursor: -1, prevT: null, lastGrid: null, busy: new Map(), lastOut: [], meta: {}, layNames: {}, moNames: {}, logN: 0 });
+    const pages = [newState(ctx.page)];
+    // more browsers for a long pass: what the computer can spare (shared with other givemotion processes, like a
+    // render), never more than one per two units; --workers sets it
+    const wantN = Math.max(1, Math.min(opts.workers ? +opts.workers : 8, Math.floor(units.length / 2)));
+    const queue = units.slice();
+    const results = [];
+    const work = async (P) => { for (let U = queue.shift(); U; U = queue.shift()) results.push(await runUnit(P, U)); };
+    if (wantN > 1) {
+      const grant = opts.workers ? null : reserve(wantN - 1, browserMB(info.width * info.height));
+      const n = grant ? grant.n : wantN - 1;
+      // the first browser starts while the others open
+      const firstDone = work(pages[0]);
+      const opened = await Promise.allSettled(Array.from({ length: n }, () => openWorker(ctx, opts).then(async (pg) => { extraPages.push(pg); await autoTransparent({ page: pg }, opts); await setupPage(pg); return pg; })));
+      if (grant) grant.release();
+      await Promise.all([firstDone, ...opened.filter((o) => o.status === 'fulfilled').map((o) => { const P = newState(/** @type {any} */ (o).value); pages.push(P); return work(P); })]);
+    } else await work(pages[0]);
+    results.sort((x, y) => x.U.i0 - y.U.i0);
+
+    // Merge the units in time order.
+    const perSample = results.flatMap((r) => r.perSample);
+    const openFrames = results.flatMap((r) => r.openFrames), emptyGrid = results.flatMap((r) => r.emptyGrid), change = results.flatMap((r) => r.change);
+    const layoutSamples = results.flatMap((r) => r.layout), moSamples = results.flatMap((r) => r.motion), pops = results.flatMap((r) => r.pops);
+    const ident = (rows) => { const o = {}; for (const s of rows) for (const e of s.els) o[e[0]] = e[0]; return o; };
+    const layoutNames = ident(layoutSamples), moNames = ident(moSamples);
+    // what is known of each reading unit: from the first time any browser saw it
+    const paceMeta = {};
+    for (const r of results) for (const [id, m] of Object.entries(r.meta)) {
+      const key = (id[0] === 'c' ? 'c' : '') + m.sel;
+      if (!paceMeta[key] || m.t < paceMeta[key].t) paceMeta[key] = m;
+    }
+    // text that changes while on screen (a counter, typing): from the merged samples in time order
+    const paceSamples = results.flatMap((r) => r.pace);
+    { const last = new Map(), live = new Set(); for (const s of paceSamples) for (const u of s.units) { if (typeof u[4] === 'string') { if (last.has(u[0]) && last.get(u[0]) !== u[4]) live.add(u[0]); last.set(u[0], u[4]); } u[4] = live.has(u[0]) ? 1 : 0; } }
+    // Contrast pictures: one every contrastEvery seconds, at the first sample with text on screen. Taken after the
+    // pass, spread over the browsers: each one seeks to the sample before (text that moves is left out), then there.
+    if (full) {
+      const boxes = results.flatMap((r) => r.boxes), jobs = [];
+      let lastC = -Infinity;
+      perSample.forEach((smp, k) => { if (boxes[k] && smp.t - lastC >= contrastEvery) { lastC = smp.t; jobs.push(times.indexOf(smp.t)); } });
+      const got = new Map(), q = jobs.slice();
+      await Promise.all(pages.map(async (P) => {
+        for (let k = q.shift(); k != null; k = q.shift()) {
+          P.prevT = null; P.cursor = -1;
+          // (like a render part: paint state dropped on the sample before, so the picture does not depend on this
+          // browser's earlier frames)
+          await P.page.seek(times[Math.max(0, k - 1)]);
+          await P.page.resetPaint(true);
+          if (k > 0) { await analyzeAt(P, times[k - 1]); P.prevT = times[k - 1]; }
+          await P.page.seek(times[k]);
+          await analyzeAt(P, times[k]);
+          got.set(k, await contrastNow(P.page));
+        }
+      }));
+      for (const k of jobs) push(got.get(k), times[k]);
+    } else for (const r of results) if (r.contrast) push(r.contrast.issues, r.contrast.t);
     // Keep layout problems that last at least two samples in a row (or the single --at moment).
     const key = (i) => i.code + '|' + i.selector;
     for (let k = 0; k < perSample.length; k++) {
@@ -1509,7 +1749,10 @@ export async function check(input, opts = {}) {
     if (opts.at == null) {
       const flagged = issues.filter((i) => i.code === 'low-contrast' && i.sig);
       if (flagged.length) {
-        const sigs = await ctx.page.evaluate('window.__gmSigs || {}');
+        // (each unit's signatures, in time order: the same signature goes on, a new one starts over)
+        /** @type {Record<string, any>} */
+        const sigs = {};
+        for (const r of results) for (const [k, g] of Object.entries(r.sigs)) { const cur = sigs[k]; if (cur && cur.sig === g.sig) cur.times.push(...g.times.filter((x) => !cur.times.includes(x))); else sigs[k] = { ...g, times: [...g.times] }; }
         const has = new Set(issues.filter((i) => i.code === 'low-contrast').map((i) => i.selector));
         for (const [selector, g] of Object.entries(sigs)) {
           if (has.has(selector)) continue;
@@ -1522,21 +1765,27 @@ export async function check(input, opts = {}) {
       }
     }
     for (const i of issues) delete i.sig;
-    const logs = groupLogs(await ctx.page.evaluate('window.gm && gm.__logs ? gm.__logs(0) : []'));
+    const logs = groupLogs((() => { const seen = new Set(), all = []; for (const r of results) for (const l of r.logs) { const k = l.t + '|' + l.msg; if (!seen.has(k)) { seen.add(k); all.push(l); } } return all.sort((x, y) => x.t - y.t); })());
     if (change.length) issues.push(...stillStretches(change, info, from, to));
     if (moSetup) issues.push(...motionIssues(moSamples, moNames, moSetup, info, step));
     if (opts.at == null) issues.push(...layoutShiftIssues(layoutSamples, layoutNames, step));
     if (opts.at == null) {
       issues.push(...pacingIssues(paceSamples, paceMeta, pops, { from, to, lastT, duration: info.duration }));
       try {
-        for (const s of await ctx.page.evaluate(PAGE_PACING_END)) issues.push({ severity: 'info', code: 'stepped-move', selector: s.sel, time: Math.round(s.t * 100) / 100,
+        /** @type {Map<string, any>} */
+        const steps = new Map();
+        for (const r of results) for (const st of r.steps) { const cur = steps.get(st.sel); if (!cur || cur.area < st.area) steps.set(st.sel, st); }
+        for (const s of steps.values()) issues.push({ severity: 'info', code: 'stepped-move', selector: s.sel, time: Math.round(s.t * 100) / 100,
           message: `This element covers ${Math.round(s.area * 100)}% of the frame and moves with a steps() ease (${s.how}): on something this big, stepped motion reads as dropped frames.`,
           fix: 'Keep steps() for small things (a counter, a blinking caret, text typing); give windows, cards and the camera a smooth ease (or leave ease out for the natural default).' });
       } catch (e) {}
     }
     // a tween or style on a display: contents element (a bare <gm-include> wrapper) does nothing
     try {
-      for (const b of await ctx.page.evaluate('[...(window.__gmNoBox || new Map()).values()]')) issues.push({ severity: 'warning', code: 'contents-no-box', selector: b.sel, time: b.t == null ? null : Math.round(b.t * 100) / 100,
+      /** @type {Map<string, any>} */
+      const noBox = new Map();
+      for (const r of results) for (const b of r.noBox) { const cur = noBox.get(b.sel); if (!cur || (b.t ?? Infinity) < (cur.t ?? Infinity)) noBox.set(b.sel, b); }
+      for (const b of noBox.values()) issues.push({ severity: 'warning', code: 'contents-no-box', selector: b.sel, time: b.t == null ? null : Math.round(b.t * 100) / 100,
         message: `This element has display: contents${b.inc ? ' (a <gm-include> without class or style gets it)' : ''}, so it draws no box: its ${b.props.join(', ')} ${b.props.length > 1 ? 'do' : 'does'} nothing.`,
         fix: b.inc ? 'Give the <gm-include> a class or a style (e.g. style="display:block") so it gets a box, or animate the elements inside it.' : 'Animate the elements inside it, or give it a box (display: block / flex / grid).' });
     } catch (e) {}
@@ -1550,7 +1799,7 @@ export async function check(input, opts = {}) {
       if (j > i && a0 > 0.6) issues.push({ severity: 'warning', code: 'empty-frame', time: Math.round(a0 * 100) / 100, until: Math.round(b0 * 100) / 100, ranges: [[Math.round(a0 * 100) / 100, Math.round(b0 * 100) / 100]], message: 'Almost nothing is on screen from ' + a0.toFixed(1) + ' s to ' + b0.toFixed(1) + ' s.', fix: 'Keep something in view: move the camera between parts that are closer together (or faster), start the next element sooner, or do not zoom out that far.' });
       i = j;
     }
-    motion = change.length ? { every: 0.5, from: change[0][0] - 0.5, values: change.map(([, f, b]) => Math.round((b ? Math.max(f, 0.06) : f) * 1000) / 1000) } : null;
+    const motion = change.length ? { every: 0.5, from: change[0][0] - 0.5, values: change.map(([, f, b]) => Math.round((b >= BUSY_MIN ? Math.max(f, 0.06) : f) * 1000) / 1000) } : null;
     let merged = mergeIssues(issues, step * 2.5, Math.max(step * 2.5, contrastEvery * 1.6));
     // Some problems only matter if they last (a label sliding past the frame edge during a pan is fine).
     if (opts.at == null) merged = merged.filter((i) => {
@@ -1571,6 +1820,7 @@ export async function check(input, opts = {}) {
     const notes = merged.filter((i) => i.severity === 'info').length;
     return { ok: errors === 0, errors, warnings, notes, issues: merged, info: summarizeInfo(info), motion, logs };
   } finally {
+    await Promise.all(extraPages.map((pg) => pg.close().catch(() => {})));
     await ctx.page.close();
     await ctx.server.close();
   }
@@ -1590,10 +1840,14 @@ export function groupLogs(list) {
   return out;
 }
 
+/** An entrance, exit or move counts as change on screen when what moves covers this share of the frame (about a
+ *  short headline): a small label fading in in a corner leaves the picture as still as it was. */
+const BUSY_MIN = 0.01;
+
 /** Long stretches where (almost) nothing on screen changes: viewers read these as the video stalling. */
 function stillStretches(change, info, from, to) {
   const out = [];
-  const QUIET = 0.05; // under 5% of the picture changed in half a second, and nothing entering, leaving or moving
+  const QUIET = 0.05; // under 5% of the picture changed in half a second, and nothing big entering, leaving or moving
   let start = null, prevT = from;
   const flush = (end, atEnd) => {
     if (start == null) return;
@@ -1608,7 +1862,7 @@ function stillStretches(change, info, from, to) {
     start = null;
   };
   for (const [t, f, busy] of change) {
-    if (f < QUIET && !busy) { if (start == null) start = prevT; }
+    if (f < QUIET && busy < BUSY_MIN) { if (start == null) start = prevT; }
     else flush(prevT, false);
     prevT = t;
   }
