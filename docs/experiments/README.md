@@ -13,6 +13,7 @@ Test rounds with fresh AI agents (docs only) and blind AI judges. How to run one
 | 2026-10-t7-speed.md | Where render time goes without a GPU (compositing), what did not help, a determinism fix. |
 | 2026-10-r8.md | Round 8: all 9 briefs, 2 runs each, 2 judges each (7.1); friction logs → 20 engine/docs fixes. |
 | 2026-10-analyze-accuracy.md | `analyze` scored on 13 videos with known scene changes (`bench/analyze/`): recall 66% → 95%, types 56% → 74% of found, 3x faster. |
+| 2026-10-models-showcase.md | One hard brief made by Opus 5.5, Sonnet 5.5, Haiku 5.5 and Fable 5.1 (fresh, independent SDK sessions), shown in one 2x2 video. |
 | data/ | raw results tables from `round.js results`. |
 
 Overall scores so far (blind Opus judges, 1-10): round 1 7.5 average, round 2 6.6, round-3 examples 7.9, hand-drawn

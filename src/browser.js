@@ -264,6 +264,9 @@ export class FramePage {
   }
   /** Evaluate and await a promise; keeps the compositor ticking in beginFrame mode so loads can finish. */
   async evaluate(expression, { timeoutMs = this.opts.timeoutMs || 60000 } = {}) {
+    // A page that once failed to answer is still busy in its own script: every later call would wait the whole
+    // timeout again (check makes dozens), so fail at once with the first error.
+    if (this.stuck) throw this.stuck;
     const p = this.s('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: true, userGesture: true });
     let done = false, error;
     /** @type {any} */ let result;
@@ -272,8 +275,13 @@ export class FramePage {
     // fast path
     await new Promise((r) => setImmediate(r));
     while (!done) {
-      if (Date.now() - t0 > timeoutMs) throw new Error(`Timed out after ${timeoutMs}ms evaluating: ${expression.slice(0, 80)}`);
-      if (this.mode === 'beginframe') { try { await this._beginFrame(false); } catch {} await sleep(2); }
+      if (Date.now() - t0 > timeoutMs) {
+        const at = this.lastSeek != null ? ` at ${+this.lastSeek.toFixed(3)} s` : '';
+        this.stuck = new Error(`The page did not answer within ${timeoutMs / 1000} s${at}: its own script is stuck in an endless or very slow loop (a frame callback, a canvas or particle loop, a while loop that never ends). Find the code that runs at that time, or raise the limit with --timeout <seconds> if it is only slow.`);
+        throw this.stuck;
+      }
+      // a renderer busy in page script never answers beginFrame: do not let that wait past the timeout
+      if (this.mode === 'beginframe') { await Promise.race([this._beginFrame(false).catch(() => {}), sleep(250)]); await sleep(2); }
       else await sleep(5);
     }
     if (error) throw error;
@@ -285,6 +293,8 @@ export class FramePage {
   }
   async open(url, config) {
     const s = this.s;
+    this.stuck = null;
+    this.lastSeek = null;
     this.interval = 1000 / (config.fps || 30);
     await s('Page.addScriptToEvaluateOnNewDocument', { source: `window.__GM_CONFIG = ${JSON.stringify(config)};` });
     const loaded = this.browser.once('Page.loadEventFired', this.sessionId, this.opts.timeoutMs || 60000);
@@ -309,6 +319,7 @@ export class FramePage {
   }
   /** Seek to time t (seconds). Returns {dirty, needsReload}. */
   async seek(t) {
+    this.lastSeek = t;
     return this.evaluate(`gm.seek(${t})`);
   }
   /** Capture the current frame. format: 'jpeg' | 'png' */

@@ -207,7 +207,9 @@ class FrameExtractor {
     let job = jobs.find((j) => !j.done && idx >= j.start && idx <= j.start + Math.ceil(fps * 4) + (j.reached || 0));
     if (!job) job = this._spawn(file, fps, idx, dir, jobs);
     for (;;) {
-      if (job.failed) throw new Error(job.failed);
+      // ffmpeg fails when asked to start at or past the end of the file: that is the past-the-end case below
+      if (job.failed && (existsSync(p(job.start)) || !existsSync(p(idx - 1)))) throw new Error(job.failed);
+      if (job.failed) break;
       if (complete(idx) || job.done) break;
       await new Promise((r) => setTimeout(r, 3));
     }

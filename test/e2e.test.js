@@ -237,6 +237,13 @@ test('video frames are exact and <video> keeps its CSS', { skip }, async () => {
   const p = probe(out);
   assert.ok(p.hasAudio, 'video audio is mixed in');
   assert.equal(s.pageErrors.length, 0);
+
+  // A clip that starts between two frames and plays to the end of its file: the last frames round up to one
+  // past the file's last frame (150 of a 5 s, 30 fps clip). They show the last frame instead of failing.
+  const g = comp(d, 'end.html', `<video src="media/clip.mp4" data-start="0.51" data-from="2" style="position:absolute;left:0;top:0;width:640px;height:360px;object-fit:fill"></video>`, 'data-width="640" data-height="360" data-fps="30" data-duration="3.6"');
+  const e = await stills(g, [3.4, 3.5]);
+  assert.deepEqual([...(e.info.issues || []).filter((i) => i.severity === 'error'), ...(e.errors || [])].map((i) => i.message), []);
+  assert.ok(e.buffers[1].length > 1000);
 });
 const md5Buf = (b) => createHash('md5').update(b).digest('hex');
 
@@ -245,6 +252,14 @@ test('check finds the classic layout problems', { skip }, async () => {
   const codes = new Set(rep.issues.map((i) => i.code));
   for (const c of ['text-clipped', 'text-offscreen', 'low-contrast', 'tiny-text', 'text-overlap', 'text-overflows-box', 'image-broken', 'bad-enter']) assert.ok(codes.has(c), 'missing ' + c);
   assert.equal(rep.ok, false);
+});
+
+test('check fails fast with a clear message when the page script never returns', { skip }, async () => {
+  const d = tmp();
+  const f = comp(d, 'spin.html', `<h1>Hello</h1><script>setTimeout(() => { for (;;) {} }, 1000)</script>`, 'data-width="640" data-height="360" data-fps="30" data-duration="3"');
+  const t0 = Date.now();
+  await assert.rejects(check(f, { timeoutMs: 2000 }), /did not answer within 2 s at 1(\.\d+)? s: its own script is stuck/);
+  assert.ok(Date.now() - t0 < 20000, `check took ${Date.now() - t0} ms`);
 });
 
 test('snapshot writes a contact sheet', { skip }, async () => {

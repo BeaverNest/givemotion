@@ -74,8 +74,14 @@ Other ways to install the skill:
 
 ## Same brief, four models
 
-Each model got the same one-page brief ("The last lighthouse": a 15 s cinematic title sequence, night sea, a light
-beam that carries into the title) and only this project's docs.
+Claude Opus 5.5, Sonnet 5.5, Haiku 5.5 and Fable 5.1 each got the same brief ("Code in, motion out": 20 s in one
+continuous take, a typed `<motion>` that breaks into 3D shapes, a tilted orbiting ring, a collapse into the title) and
+only this project's docs ([the experiment](docs/experiments/2026-10-models-showcase.md)).
+
+<img src="docs/media/models-showcase.gif" width="100%" alt="The same brief made by Claude Opus 5.5, Sonnet 5.5, Haiku 5.5 and Fable 5.1 with givemotion, playing side by side in a 2x2 grid">
+
+An earlier round, "The last lighthouse" (a 15 s cinematic title sequence, night sea, a light beam that carries into
+the title):
 
 | Claude Opus 5.5 | Claude Sonnet 5.5 |
 |---|---|

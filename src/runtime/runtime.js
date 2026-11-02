@@ -1563,7 +1563,9 @@
       if (TT < tm.start || TT >= tm.end) continue;
       const lt = videoTimeAt(v, TT);
       if (v.bg) {
-        const fi = Math.round(lt * comp.fps);
+        // a clip that starts between frames rounds up to one past the file's last frame near its end
+        let fi = Math.round(lt * comp.fps);
+        if (v.duration) fi = Math.min(fi, Math.max(0, Math.ceil(v.duration * comp.fps - 1e-6) - 1));
         if (fi === v.lastKey) continue;
         v.lastKey = fi;
         changed = true;
