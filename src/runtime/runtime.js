@@ -1160,6 +1160,11 @@
           }
           // a stagger's pieces also differ a little in duration (never longer than asked)
           if (jrnd) m.dur = Math.round(m.dur * (1 - 0.07 * jrnd()) * 1000) / 1000;
+          // when the entrance is over, in video time (a word, a stagger, a natural duration: as resolved), for what
+          // starts after it (a sketch mark)
+          const done = cStart + m.delay + extra + (el.__gmEnterAt || 0) + m.dur;
+          tg.__gmEnterEnd = Math.max(tg.__gmEnterEnd ?? -Infinity, done);
+          el.__gmEnterEnd = Math.max(el.__gmEnterEnd ?? -Infinity, done);
           if (isBand(m.name)) bandEnter(tg, m, m.delay + extra + (el.__gmEnterAt || 0), cStart);
           else if (!PRESETS[m.name]) { report('error', 'bad-enter', `Unknown data-enter "${m.name}".`, el, 'Use one of: ' + Object.keys(PRESETS).filter((k) => !/^(zoom-near|flip-in|dip-in|clock|diagonal)$/.test(k)).join(', ')); }
           else {

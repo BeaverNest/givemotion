@@ -209,6 +209,11 @@ export interface CheckOptions extends OpenOptions {
   pacing?: boolean;
   /** false: skip the motion checks and the motion strip. */
   motion?: boolean;
+  /**
+   * Browsers for the pass over the video (default: what the computer can spare, shared with other givemotion
+   * processes, up to 8; a long video only). The report is the same for any number; 1 = one browser.
+   */
+  workers?: number;
 }
 
 /** Motion strip data: how much of the picture changes, one value per `every` seconds from `from`. */

@@ -8,6 +8,7 @@ import { createHash } from 'node:crypto';
 import { spawn } from 'node:child_process';
 import { CACHE_DIR } from './browser.js';
 import { ffmpegPath } from './ffmpeg.js';
+import { wordList } from './words.js';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const RUNTIME_DIR = join(HERE, 'runtime');
@@ -131,9 +132,8 @@ export function inlineWords(html, fileDir, rootDir) {
   else {
     try {
       const j = JSON.parse(readFileSync(safe, 'utf8'));
-      const list = Array.isArray(j) ? j : Array.isArray(j.words) ? j.words : Array.isArray(j.segments) ? j.segments.flatMap((x) => x.words || []) : null;
-      if (!list) error = `data-words: ${m[1]} is not a list of {word, start, end}.`;
-      else words = list.map((w) => ({ word: String(w.word ?? w.text ?? ''), start: +w.start, end: +(w.end ?? w.start) })).filter((w) => w.word && isFinite(w.start));
+      words = wordList(j);
+      if (!words) error = `data-words: ${m[1]} is not a list of {word, start, end}.`;
     } catch (e) { error = `data-words: ${m[1]} is not valid JSON (${e.message}).`; }
   }
   const tag = `<script type="application/json" id="gm-words">${scriptJSON({ file: m[1], words, error })}</script>`;

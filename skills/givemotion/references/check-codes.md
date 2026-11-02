@@ -30,7 +30,7 @@ Contents
 
 | Code | Meaning / fix |
 |---|---|
-| `still` | Little changes on screen for 2.5 s or more (1.9 s at the very end: a dead end card): nothing enters, leaves or moves, and a slow float or a faint glow does not count. Viewers read it as the video stalling. Cut the hold, start the next beat sooner, or end earlier. |
+| `still` | Little changes on screen for 2.5 s or more (1.9 s at the very end: a dead end card): nothing enters, leaves or moves, and a slow float or a faint glow does not count. Small things do not count either: what enters, leaves or moves in half a second must cover ~1% of the frame together (about a short headline), so a small label fading in in a corner every couple of seconds leaves the picture still. Viewers read it as the video stalling. Cut the hold, start the next beat sooner, give the beat something bigger (a camera move, a card, a highlight across a line), or end earlier. Captions (the captions block) and anything in `data-check="pace-ignore"` are left out of this measure. |
 | `empty-frame` | Almost nothing on screen for a second or more in the middle of the video (a camera crossing empty space between parts, a gap between scenes, a zoom so far out that everything is a speck). |
 | `empty-start` | The first half second shows only the background. The first frame is often the thumbnail and the hook: show something from frame 0. |
 | `camera-stop` | A camera world brakes to a halt and sets off again within 0.45 s: start the next shot as the previous one arrives (they then blend into one move) or hold it ≥ 0.5 s on purpose. A move that turns straight around (zoom in, then back out) without dwelling is not a stop. |
@@ -79,7 +79,7 @@ Inside a `gm.camera` world, text sliding past the frame edge while the camera mo
 
 - It compares frames, so anything moving or fading (CSS, timeline, React, onFrame, a camera follow) is skipped by the layout checks while it moves, and a problem must last ~0.2-0.3 s to count. "Moving" means: an entrance/exit/short animation is running on it or a parent, it moves more than ~40 px/s (at 1080p) inside the biggest moving layer around it, or it moves faster than ~600 px/s on screen whatever carries it (a full-frame panel pushed in, a fast camera move). A slow camera drift does not make text "moving". Only `moving-overlap` and `ghost-overlap` look at moving text.
 - `short-hold` and `cut-exit` follow each reading unit (a line with its inline parts or its word spans, a split headline, an SVG label) over the whole pass: it is readable while what is on screen of it is above 40% opacity, not fading, not covered, mostly in frame and slower than ~600 px/s (at 1080p) in its layer, so a camera drift, a slow travel or a small emphasis pop does not end its hold (breaks under 0.5 s while it stays on screen are bridged). Something that keeps moving on screen (a cursor, a ball) is not leaving.
-- Text that is fully hidden (outside the frame, behind a mask or clip-path, waiting to slide in) or covered by something solid is not judged (except camera-world text under an overlay, see `text-covered`). Overlap tests use each text's visible part (its own and its parents' `clip-path`: inset, polygon, circle, ellipse).
+- Text that is fully hidden (outside the frame, behind a mask or clip-path, waiting to slide in, under the clear part of a gradient `mask-image` such as a world that fades out at its top or a vignette) or covered by something solid is not judged (except camera-world text under an overlay, see `text-covered`). Overlap tests use each text's visible part (its own and its parents' `clip-path`: inset, polygon, circle, ellipse).
 - `data-check` takes one or more space-separated values, on the element or any parent (its whole subtree):
 
 | Value | What it does |
@@ -89,6 +89,8 @@ Inside a `gm.camera` world, text sliding past the frame edge while the camera mo
 | `overlap-ok` | Overlapping is the point (a pile of cards, a collage): no `text-covered`, `text-overlap`, `moving-overlap`, `ghost-overlap` or `text-over-line` for text inside it, or for things inside it covering other text. Every other check still runs. |
 | `safe-ok` | Text meant to sit in a vertical-video safe zone: no `unsafe-zone`. |
 | `quick-ok` | Meant to flash by (a rapid word montage, a subliminal frame): no `short-hold` or `cut-exit`. |
+| `pace-ignore` | Changes in there do not count as the picture moving for `still` (captions that change with every word, a ticking clock in a corner): the rest of the frame is measured. The captions block has it. Every other check still runs. |
 
+- A long video is checked on several browsers at once (what the computer can spare; `--workers 2` sets it). The report is the same for any number.
 - Re-check one moment fast with `check --at 7.5`, or part of the video with `--from 6 --to 9`. Problems list every time range they happen in, and times also say how far into the scene the problem is. (`snapshot --times` with `--from/--to` keeps only the times inside that range.)
 - Exit code 1 when there are errors; warnings do not fail.

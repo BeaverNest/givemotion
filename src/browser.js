@@ -274,6 +274,13 @@ export class FramePage {
     const t0 = Date.now();
     // fast path
     await new Promise((r) => setImmediate(r));
+    // Chrome draws on its own (screenshot mode): wait for the answer itself, not in timer steps (a 5 ms sleep cost
+    // every call ~6 ms, while most answers come back in a tenth of a millisecond: half of what check spends per sample)
+    if (!done && this.mode !== 'beginframe') {
+      /** @type {any} */ let timer;
+      await Promise.race([p.catch(() => {}), new Promise((r) => { timer = setTimeout(r, timeoutMs + 1); })]);
+      clearTimeout(timer);
+    }
     while (!done) {
       if (Date.now() - t0 > timeoutMs) {
         const at = this.lastSeek != null ? ` at ${+this.lastSeek.toFixed(3)} s` : '';

@@ -314,6 +314,60 @@ test('check: a line through text is found (also dashed), not when an opaque pane
   assert.deepEqual(by('low-contrast'), []);
 });
 
+test('check: text under the clear part of a gradient mask is hidden (a world fading out at the top, a vignette); text the mask shows is still judged', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  // one world, scaled down by a camera-like transform, with a fade at the top and a round vignette on a card in it
+  writeFileSync(f, page(`<div style="position:absolute;left:0;top:0;width:1280px;height:720px;transform:scale(0.5);transform-origin:0 0;mask-image:linear-gradient(to bottom,transparent 0,transparent 160px,#000 260px)">
+      <svg style="position:absolute;left:0;top:0" width="1280" height="720"><path d="M40 80 L1240 80 M40 440 L1240 440" stroke="#ddd" stroke-width="6"/></svg>
+      <p id="faded" style="position:absolute;left:200px;top:52px;margin:0;font-size:56px;color:#fff">Faded away</p>
+      <p id="shown" style="position:absolute;left:200px;top:412px;margin:0;font-size:56px;color:#fff">Crossed out</p>
+      <div style="position:absolute;left:760px;top:180px;width:440px;height:500px;mask-image:radial-gradient(circle at 50% 50%, #000 120px, transparent 160px)">
+        <svg style="position:absolute;left:0;top:0" width="440" height="500"><path d="M0 40 L440 40" stroke="#ddd" stroke-width="6"/></svg>
+        <p id="corner" style="position:absolute;left:10px;top:12px;margin:0;font-size:56px;color:#fff">Corner</p>
+      </div></div>`, 'data-width="640" data-height="360" data-fps="30" data-duration="2"'));
+  const rep = await check(f);
+  assert.deepEqual(rep.issues.filter((i) => i.code === 'text-over-line').map((i) => i.selector), ['#shown']);
+});
+
+test('check on several browsers gives the same report as on one (units, warm-ups, merged state)', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  // 20 s: five units; scenes with moving and fading text, a counter, a clip-path reveal, low contrast, a cut with no
+  // exit, a display: contents include, logs, a mask, and a stepped move on something big
+  const scene = (k) => `<section class="scene" data-duration="4" style="background:${k % 2 ? '#123' : '#eee'}">
+      <h1 style="position:absolute;left:40px;top:40px;margin:0;font-size:44px;color:${k % 2 ? '#fff' : '#ddd'}" data-enter="rise 0.5 ${0.2 + k * 0.1}">Scene ${k} title</h1>
+      <p style="position:absolute;left:40px;top:120px;margin:0;font-size:30px;color:#888" data-count="0 ${100 * k}" data-start="1" data-duration="2">0</p>
+      <div style="position:absolute;left:300px;top:110px;width:280px;height:120px;background:#c33;clip-path:inset(0 100% 0 0)" data-enter="wipe-right 0.6 1.2"><p style="margin:10px;font-size:28px;color:#fff">Revealed ${k}</p></div>
+      <span id="gone${k}" style="position:absolute;left:40px;top:250px;font-size:34px;color:#fff;background:#000" data-start="0.5" data-duration="${1.5 + k * 0.3}">Gone without exit</span>
+      <div style="position:absolute;left:0;top:280px;width:640px;height:80px;mask-image:linear-gradient(to right,transparent 0,transparent 300px,#000 400px)"><p style="margin:0;font-size:30px;color:#fff;background:#000;padding:4px 40px">masked away … shown here</p></div>
+    </section>`;
+  writeFileSync(f, page(`<main data-sequence data-transition="slide-left 0.4">${[0, 1, 2, 3, 4, 5].map(scene).join('')}</main>
+    <div id="big" style="position:absolute;left:0;top:0;width:640px;height:200px;background:rgba(0,0,0,.02);animation:jump 2s steps(4) infinite"></div>
+    <style>@keyframes jump { to { transform: translateX(100px) } }</style>
+    <script>gm.onFrame((t) => { if (Math.abs(t - 7.5) < 0.05) gm.log('half way'); });</script>`, 'data-width="640" data-height="360" data-fps="30"'));
+  const one = await check(f, { workers: 1 }), three = await check(f, { workers: 3 });
+  assert.ok(one.issues.length >= 3, 'a report with something in it: ' + one.issues.map((i) => i.code).join(', '));
+  assert.deepEqual(three, one);
+  // (the pacing issues still name their element after the merge)
+  assert.ok(one.issues.filter((i) => /^(short-hold|cut-exit|sliver-start)$/.test(i.code)).every((i) => typeof i.selector === 'string'), 'pacing issues keep their selectors');
+});
+
+test('check still: small labels fading in do not keep a frozen picture moving, a card entering does; data-check="pace-ignore" leaves captions out', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  const still = async (body) => {
+    writeFileSync(f, page(`<h1 style="position:absolute;left:40px;top:120px;font-size:48px;margin:0">A big still page</h1>${body}`, 'data-width="640" data-height="360" data-fps="30" data-duration="9"'));
+    return (await check(f)).issues.filter((i) => i.code === 'still').map((i) => [i.time, i.until]);
+  };
+  const notes = [2.2, 4.4, 6.6].map((t, i) => `<span style="position:absolute;left:520px;top:${300 + i * 18}px;font-size:12px" data-start="${t}" data-enter="fade 0.3">note ${i}</span>`).join('');
+  assert.deepEqual(await still(notes), [[0, 9]], 'three small notes: still all along');
+  const card = `<div style="position:absolute;left:330px;top:40px;width:260px;height:200px;background:#2a6" data-start="4.4" data-enter="rise 0.5"></div>`;
+  const r = await still(notes + card);
+  assert.ok(r.length === 2 && r[0][1] <= 4.6 && r[1][0] >= 4.4, 'the card breaks the stretch in two: ' + JSON.stringify(r));
+  // a caption line that changes every 0.3 s over the still picture
+  const caps = (attr) => `<p ${attr} style="position:absolute;left:0;right:0;bottom:20px;text-align:center;font-size:40px;margin:0"><span id="cap"></span></p><script>gm.onFrame((t) => { document.getElementById('cap').textContent = ['so', 'this', 'is', 'how', 'it', 'works'][Math.floor(t / 0.3) % 6]; });</script>`;
+  assert.deepEqual(await still(caps('')), [], 'captions change the picture');
+  assert.deepEqual(await still(caps('data-check="pace-ignore"')), [[0, 9]], 'pace-ignore: the picture under them is still');
+});
+
 test('timeline: a tween starting on a frame shows its start values there, even when float error puts the frame a hair early', { skip }, async () => {
   const d = tmp(), f = join(d, 'a.html');
   // 0.1 + 0.2 = 0.30000000000000004: the third scene starts just after the frame at 0.3 s
@@ -1291,6 +1345,40 @@ test('word times inside a scene are video times: data-start="@word" and data-ent
   const op = (t) => evalAt(f, t, `+getComputedStyle(document.querySelector('#p')).opacity`);
   assert.equal(await op(3.5), 0, 'hidden until the word');
   assert.equal(await op(4.2), 1, 'in after the word');
+});
+
+test('givemotion words: every token it prints names the very time it prints next to it (repeats, accents, apostrophes, numbers)', { skip }, async () => {
+  const d = tmp(), f = join(d, 'w.html');
+  const said = 'So the engine works. The engine renders it, and THE Engine… Café don’t 3.5 2026 the'.split(' ');
+  writeFileSync(join(d, 'voice.json'), JSON.stringify(said.map((word, i) => ({ word, start: 0.2 + i * 0.4, end: 0.5 + i * 0.4 }))));
+  writeFileSync(f, page('', 'data-width="320" data-height="180" data-fps="30" data-duration="8" data-words="voice.json"'));
+  const toks = JSON.parse(execFileSync(process.execPath, [join(ROOT, 'src', 'cli.js'), 'words', f, '--json'], { encoding: 'utf8' }));
+  assert.equal(toks.length, said.length);
+  assert.deepEqual(toks.filter((w) => /^@the/.test(w.token)).map((w) => w.token), ['@the', '@the#2', '@the#3', '@the#4']);
+  const got = await evalAt(f, 0, `${JSON.stringify(toks.map((w) => w.token))}.map((k) => Math.round(gm.word(k) * 100) / 100)`);
+  assert.deepEqual(got, toks.map((w) => Math.round(w.start * 100) / 100));
+  const near = execFileSync(process.execPath, [join(ROOT, 'src', 'cli.js'), 'words', f, '--near', '1.9', '--span', '0.3'], { encoding: 'utf8' });
+  assert.match(near, /1\.80\s+The\s+@the#2/);
+  assert.doesNotMatch(near, /@so\b/);
+});
+
+test('sketch marks take word times: data-sketch-mark-at="@two", and the default waits for an entrance timed to a word', { skip }, async () => {
+  const d = tmp(), f = join(d, 'wm.html');
+  writeFileSync(join(d, 'voice.json'), JSON.stringify([['one', 0.5], ['two', 3.0], ['three', 5.0]].map(([word, start]) => ({ word, start, end: start + 0.3 }))));
+  writeFileSync(f, page(`<section class="scene" data-start="1" data-duration="5">
+    <p style="position:absolute;left:20px;top:20px;font-size:30px;margin:0"><span id="a" data-enter="fade 0.4 @two" data-sketch-mark="underline">enter on two</span></p>
+    <p style="position:absolute;left:20px;top:100px;font-size:30px;margin:0"><span id="b" data-sketch-mark="underline" data-sketch-mark-at="@two">mark at two</span></p>
+    <p style="position:absolute;left:20px;top:180px;font-size:30px;margin:0"><span id="c" data-sketch-mark="underline" data-sketch-mark-at="30f" data-sketch-mark-duration="500ms">a second in</span></p></section>`, 'data-width="640" data-height="360" data-fps="30" data-words="voice.json"'));
+  // how much of each mark is drawn: hidden, part of it (a dash), or all of it
+  const drawn = (t) => evalAt(f, t, `['#a', '#b', '#c'].map((s) => { const sv = document.querySelector(s + ' .gm-sketch-mark'), p = sv && sv.querySelector('path'); if (!p || sv.style.visibility === 'hidden') return 0; const da = p.style.strokeDasharray; return da && da !== 'none' ? Math.round(parseFloat(da) * 100) / 100 : 1; })`);
+  assert.deepEqual(await drawn(1.5), [0, 0, 0], 'nothing drawn before the word');
+  const at32 = await drawn(3.2);
+  assert.equal(at32[0], 0, 'A waits for its entrance (on "two", 0.4 s) to finish');
+  assert.ok(at32[1] > 0 && at32[1] < 1, 'B is being drawn from "two" (3.0 s): ' + at32[1]);
+  assert.equal(at32[2], 1, 'C: 30 frames into its clip (2.0 s), over 500 ms');
+  const at36 = await drawn(3.6);
+  assert.ok(at36[0] > 0 && at36[0] < 1, 'A is drawn right after the entrance (3.4 s): ' + at36[0]);
+  assert.deepEqual(await drawn(4.2), [1, 1, 1]);
 });
 
 test('a scene file whose script calls gm.timing still becomes the sequence child (transitions work, no stale errors)', { skip }, async () => {
