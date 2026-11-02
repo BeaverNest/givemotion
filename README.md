@@ -145,6 +145,23 @@ continuous take, a typed `<motion>` that breaks into 3D shapes, a tilted orbitin
 
 <img src="docs/media/models-showcase.gif" width="100%" alt="The same brief made by Claude Opus 5.5, Sonnet 5.5, Haiku 5.5 and Fable 5.1 with givemotion, playing side by side in a 2x2 grid">
 
+### Same model, four effort levels
+
+Claude Opus 5.5 at effort low, medium, high and xhigh, each in a fresh session with the same prompt, made one
+illustrated 20 s short: a dog's morning walk with a walk cycle, a gallop, a leap over a puddle and a title. Eight
+blind AI judges scored them ([the experiment](docs/experiments/2026-11-efforts-showcase.md)).
+
+<img src="docs/media/efforts-showcase.gif" width="100%" alt="Biscuit's morning walk made by Claude Opus 5.5 at effort low, medium, high and xhigh with givemotion, playing side by side in a 2x2 grid, then a scoreboard">
+
+| | low | medium | high | xhigh |
+|---|---|---|---|---|
+| Judges' overall (1-10) | 5.3 | 6.9 | 6.6 | **8.0** |
+| Tokens / tool calls | **0.6M / 13** | 5.1M / 39 | 5.0M / 34 | 30.8M / 110 |
+| Cost at API prices / minutes | **$1.15 / 5** | $4.06 / 17 | $4.43 / 20 | $14.46 / 53 |
+
+xhigh was first for 7 of 8 judges. Medium was the best value. Low framed the dog too small to read and looked at
+its own frames only four times. One brief and one run per level, so read it as a showcase, not a benchmark.
+
 ## Why it exists
 
 I started givemotion because of how AI video models handle changes. When one detail is wrong, you ask again and

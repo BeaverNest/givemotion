@@ -19,6 +19,9 @@ page (`docs/experiments/2026-11-tools-showcase.md`). Its tiles have a `scale: 0.
   +14–18% (data-story) render time, but it breaks the features test "idle enter/exit … 1 worker equals 3". Hiding a
   parent recreates its siblings' layers too, which gives them new real-time history. Hiding only the element itself
   passes that test, but 8 of 12 still differ.
+- Also seen 2026-11-02 on a quiet machine, with no scale tween: two renders of the effort-comparison page (a 2x2 grid of
+  four playing videos, tiles entering with opacity + y) differed in frames 13-359, invisibly (lowest PSNR 44.8 dB);
+  the rest of the 120 s matched. So it is not only load + scale; layers showing video frames are a second suspect.
 - Next idea: a virtual clock on macOS (so Chrome draws only when the render asks), or a way to drop exactly one
   element's layer. `--run-all-compositor-stages-before-draw` breaks screenshot capture.
 

@@ -15,6 +15,7 @@ Test rounds with fresh AI agents (docs only) and blind AI judges. How to run one
 | 2026-10-analyze-accuracy.md | `analyze` scored on 13 videos with known scene changes (`bench/analyze/`): recall 66% → 95%, types 56% → 74% of found, 3x faster. |
 | 2026-10-models-showcase.md | One hard brief made by Opus 5.5, Sonnet 5.5, Haiku 5.5 and Fable 5.1 (fresh, independent SDK sessions), shown in one 2x2 video. |
 | 2026-11-tools-showcase.md | One hard brief made with givemotion, HyperFrames and Remotion by Opus 5.5 (effort medium, independent sessions, each with only its own docs), 6 blind judges, one 2x2 video: Remotion 7.7, givemotion 7.5, HyperFrames 6.2. |
+| 2026-11-efforts-showcase.md | One illustrated brief (a dog's walk) made with givemotion by Opus 5.5 at effort low, medium, high and xhigh (independent sessions), 8 blind judges, one 2x2 video: xhigh 8.0, medium 6.9, high 6.6, low 5.3; xhigh cost 3.5x medium. |
 | data/ | raw results tables from `round.js results`. |
 
 Overall scores so far (blind Opus judges, 1-10): round 1 7.5 average, round 2 6.6, round-3 examples 7.9, hand-drawn
