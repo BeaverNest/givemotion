@@ -144,6 +144,9 @@ export function openSegmentWriter({ fps, inputCodec, out, plan, motionBlur }) {
     proc.on('exit', (code) => (code === 0 ? resolve() : reject(new Error(`ffmpeg failed (${code}): ${err.trim().split('\n').slice(-3).join(' ')}`))));
     proc.on('error', reject);
   });
+  // a writer killed before end() (a worker's own error, or another worker's) has no one waiting on it; without this the
+  // rejection is unhandled and the process dies with ffmpeg's exit instead of the error that stopped the render
+  done.catch(() => {});
   proc.stdin.on('error', () => {});
   // Frames are queued so capturing the next frame overlaps with encoding this one.
   // Back-pressure kicks in when ~16 MB are waiting (dozens of JPEG frames, a few 4K PNGs): a worker has up to three

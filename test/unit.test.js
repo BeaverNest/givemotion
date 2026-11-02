@@ -82,6 +82,21 @@ test('hardware encoder: auto on macOS for H.264/HEVC MP4 only; reproducibility c
   assert.equal(encoderIsReproducible({ ...plan, vargs: ['-c:v', 'no_such_encoder'] }, real, { cacheFile }), false);
 });
 
+test('segment writer: killing one that was never ended does not crash the process (the real error is what surfaces)', async () => {
+  const { spawnSync } = await import('node:child_process');
+  const { ffmpegInfo } = await import('../src/ffmpeg.js');
+  if (!ffmpegInfo()) return;
+  const out = join(mkdtempSync(join(TMP, 'kill-')), 'part.mp4');
+  const src = `import { openSegmentWriter } from ${JSON.stringify(new URL('../src/ffmpeg.js', import.meta.url).href)};
+    const w = openSegmentWriter({ fps: 30, inputCodec: 'mjpeg', out: ${JSON.stringify(out)}, plan: { vargs: ['-c:v', 'libx264'] } });
+    w.kill();
+    await new Promise((r) => setTimeout(r, 500));
+    console.log('alive');`;
+  const r = spawnSync(process.execPath, ['--input-type=module', '-e', src], { encoding: 'utf8' });
+  assert.equal(r.status, 0, r.stderr);
+  assert.match(r.stdout, /alive/);
+});
+
 test('encoders: software encoders get a fixed thread count (not 1.5 per core in every part encoder), the same whatever the worker count', async () => {
   const { encoderPlan } = await import('../src/ffmpeg.js');
   const info = { version: 'x', encoders: { libx264: true, libvpx_vp9: true, prores_ks: true, libsvtav1: true, libx265: true } };
