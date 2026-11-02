@@ -263,7 +263,7 @@ and [repository](https://github.com/remotion-dev/remotion).
 Fresh Claude Opus agents made the same 9 briefs (promo, explainer, data story, UI demo, whiteboard, code explainer,
 logo sting, year recap, vertical short), twice each, once with givemotion and once with Remotion 4.0.538, in
 October 2026. 27 blind AI judges scored the 36 videos, 4 at a time per brief. HyperFrames has not been through this
-test yet; it's next.
+full test yet; it has been through a one-brief showcase (below).
 
 | | givemotion | Remotion |
 |---|---|---|
@@ -284,7 +284,27 @@ tokens at list prices), which we are working to bring down. The test used Remoti
 The same GSAP animation (10 s at 1080p) on a small cloud machine with 2 CPUs and no GPU: givemotion 22.2 s,
 HyperFrames 0.8.188 36.8 to 40.0 s at the same quality. That's one animation on one machine, and HyperFrames has faster
 capture paths we could not test there. The script is in [`benchmarks/vs-hyperframes`](benchmarks/vs-hyperframes)
-so you can run it yourself. We have not yet run all three tools on the same machine, or on a Mac.
+so you can run it yourself. On a Mac with a GPU (M4 Pro) the order changes: rendering the 20 s showcase video below
+with each tool's defaults took HyperFrames 11.1 s, givemotion 15.4 s and Remotion 50.6 s.
+
+### One brief, three tools
+
+The same 20-second brief (a festival opener: a bouncing ball, a pen line the camera follows, three kinetic words, a
+3D tile wave with counters, an iris into the title), made by Claude Opus 5.5 at effort medium in three independent
+sessions, each with only its own tool's docs. Six blind AI judges scored them
+([the experiment](docs/experiments/2026-11-tools-showcase.md)).
+
+<img src="docs/media/tools-showcase.gif" width="100%" alt="The same brief made with givemotion, HyperFrames and Remotion, playing side by side in a 2x2 grid with a scoreboard">
+
+| | givemotion | HyperFrames | Remotion |
+|---|---|---|---|
+| Judges' overall (1-10) | 7.5 | 6.2 | **7.7** |
+| Tokens / tool calls | 2.6M / 32 | 3.4M / 36 | **1.9M / 26** |
+| Code the agent wrote | **446 lines** | 1183 lines | 1017 lines |
+| Render time (20 s, M4 Pro) | 15.4 s | **11.1 s** | 50.6 s |
+
+givemotion and Remotion tied on rank (each was first for 3 of 6 judges); Remotion's film was the more continuous,
+givemotion's had fewer visible mistakes. One brief and one run per tool, so read it as a showcase, not a benchmark.
 
 ### Which one to pick
 
