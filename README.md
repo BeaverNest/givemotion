@@ -199,8 +199,9 @@ vertical short); blind AI judges gave them 7.1 out of 10 on average, none below 
 engine fixes. Every round and what it changed is in [`docs/experiments/`](docs/experiments/).
 
 **9. Same input, same video.** Frames are a pure function of time, and 1 worker and N workers produce the same bytes;
-the test suite checks it. That is what makes the reuse in point 1 safe. One known case still differs on macOS (a fade
-combined with a move on text can be one color level off between worker counts), and it's on the fix list.
+the test suite checks it. That is what makes the reuse in point 1 safe. One known case still differs on macOS: there
+Chrome draws on its own clock, and on a busy machine a layer whose scale keeps changing (with text moving nearby)
+can come out slightly different between renders. On an idle machine renders match. It's on the fix list.
 
 **10. Small and private.** givemotion has zero npm dependencies (installing it adds one package), sends no usage
 data, and never needs an account. It renders wherever Node runs, and once Chrome is installed it works offline.

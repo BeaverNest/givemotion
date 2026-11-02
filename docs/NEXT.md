@@ -7,6 +7,21 @@ named after the task (`git checkout -b task/anchors`), pull `main` and run `npm 
 merge often. If two tasks touch the same file, keep the changes small and merge the first one before starting the
 second. Do not reformat files you are not changing.
 
+## Open: macOS renders differ under load (found 2026-11-02)
+
+Touches `src/browser.js`, `src/render.js`, `src/runtime/runtime.js`. With screenshot capture (macOS), Chrome runs on
+the real clock and keeps per-layer raster state (the raster scale of a layer whose scale keeps changing, and text's raster
+phase for ~1 s after a move). On a busy machine that state differs between renders. Repro: the three-tools comparison
+page (`docs/experiments/2026-11-tools-showcase.md`). Its tiles have a `scale: 0.94` entrance and its rows slide in.
+3–5 of 9 renders under load (3 at once) differ from one rendered alone. Without the scale tween it's 0 of 9.
+- Tried, not merged: at each seek the runtime lists the elements whose scale changed and the moved elements with text,
+  and the render hides their parents' content for one drawn frame. 0 of 12 differ, at +8% (comparison page) and
+  +14–18% (data-story) render time, but it breaks the features test "idle enter/exit … 1 worker equals 3". Hiding a
+  parent recreates its siblings' layers too, which gives them new real-time history. Hiding only the element itself
+  passes that test, but 8 of 12 still differ.
+- Next idea: a virtual clock on macOS (so Chrome draws only when the render asks), or a way to drop exactly one
+  element's layer. `--run-all-compositor-stages-before-draw` breaks screenshot capture.
+
 ## Done in the October 2026 session (for context)
 
 - **Test harness** `bench/agents/` (briefs, maker/judge prompts, friction template, `round.js setup/render/sheets/add/pack/results`,

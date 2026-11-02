@@ -153,10 +153,19 @@ scored against givemotion.
 
 Sorted by where the fix belongs (CLAUDE.md, "How to handle feedback"):
 
-- **Engine.** Rendering the comparison video showed a frame bug: with the default render (unchanged parts kept in
-  `.gm-parts`, 60-frame parts), two renders of the same page could differ, and in one of them four
-  `backdrop-filter` labels over video tiles came out as empty dark boxes for about 1.5 s. Renders with `--no-cache`
-  were byte-identical every time, and the video in this round was made that way. This is being fixed on its own branch.
+- **Engine.** Rendering the comparison video showed a frame bug: two renders of the same page could differ, and in
+  one of them four `backdrop-filter` labels over video tiles came out as empty dark boxes for about 1.5 s. It
+  looked tied to the parts cache at first, but it isn't. On macOS givemotion captures with screenshots, so Chrome
+  runs on the real clock and draws between seeks. Chrome keeps some raster state per layer (the raster scale of a
+  layer whose scale keeps changing, and text's raster phase for about a second after a move), and how much of it
+  carries over depends on timing. On a busy machine (other renders running), the tiles' `scale: 0.94` entrance plus
+  text sliding in gave a different frame in 3–5 of 9 renders; without the scale tween it was 0 of 9. The other
+  causes were ruled out one by one: the video frame cache, the parts cache, `--no-cache`, the encoder and the
+  inline styles. The video in this round was rendered on an idle machine, twice, with identical bytes.
+  A partial fix (redraw only the layers whose scale changed, at each seek) brought it to 0 of 12 under load at +8–18%
+  render time, but it broke the existing 1-vs-3-worker test for delayed `data-enter`. It was not merged. A real fix
+  likely needs a virtual clock on macOS (`docs/NEXT.md`). The same work found a crash: an encoder killed before it
+  finished left a promise rejection unhandled, which hid the real error. That is fixed.
 - **Skill.** The givemotion maker hand-built its camera with `gm.onFrame` instead of using givemotion's camera, path
   and travel tools, as all three makers did with their own tools. The skill should show how to build one continuous
   camera world (a follow-cam on a path, a pull-back) from the built-in parts, because that is where Remotion's maker
