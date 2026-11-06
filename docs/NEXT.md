@@ -52,23 +52,19 @@ scale3d; the grid section went from 23 s to 17 s per 15 frames), and `check` dra
   before rendering, mask rises fade in, prefer the engine's drawing tools, what `onFrame` draws gets no auto blur.
 - Fair rounds on random briefs: `docs/experiments/2026-11-agent-rounds.md`.
 
-## Open: motion blur on fast text and small objects (found 2026-11-06)
+## Decided: motion blur off by default (2026-11-06)
 
-Touches `src/render.js` (`velocityBlur`, `AUTO_BLUR`). In one random brief (`docs/experiments/2026-11-agent-rounds.md`)
-judges called givemotion's automatic smear on rolling counter digits, slamming words and a small fast bee "a glowing
-blob" and "smeared type"; no judge in the other briefs of that round complained about blur. The smear is physical (the distance moved
-while a 180° shutter is open). Before changing the default, run an A/B: the same pages rendered with the smear as now
-and with the smear on text capped at ~0.3 em (and on objects under ~40 px), judged blind from motion strips.
-Status (2026-11-06): the text cap at 0.3 of the font size is in (`AUTO_BLUR.textCap`, v3). In brief F, digits caught
-mid-roll were still soft after it. The blind A/B (smear on text vs none) has not been run yet; the cap on small objects
-is not in.
+Touches `src/render.js` (`resolveMotionBlur`, `velocityBlur`, `AUTO_BLUR`). Across the agent rounds
+(`docs/experiments/2026-11-agent-rounds.md`), blind judges flagged the automatic smear as ghosting, doubled text or
+"a glowing blob" in four briefs and never credited it, even after capping it (0.3 em on text, 0.15 of the smaller side
+on objects under 15% of the frame). It is now opt-in (`--motion-blur auto`). Open: a blind A/B on fast camera moves
+only, where a smear may still help.
 
 ## Next from round 5 (2026-11-06)
 
 - Done: `check` warns `stray-mark` for a small solid mark inside big text or just under its baseline (round 5 brief E).
 - Done: `check` warns `no-expect` when the shot list has timed beats but nothing carries `data-expect` (brief G ran ~1.3 s late).
 - Not done: brief G's overlap was canvas particles under a blurred word, which `check` cannot see as text; a rule there needs pixel-level detection.
-- [engine] Run the blind A/B on motion blur with the new caps (text 0.3 em, shapes 0.15 of their smaller side).
 
 ## Ideas from the gap research (2026-11-06), not started
 

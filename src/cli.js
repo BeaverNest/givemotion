@@ -73,7 +73,7 @@ Render options
                          with the other givemotion processes running; GIVEMOTION_MAX_BROWSERS sets the total)
   --transparent          Keep transparency (use --format mov or webm)
   --muted                No audio track
-  --motion-blur <mode>   auto (default): a smear on what moves fast in each frame; off: every frame sharp
+  --motion-blur <mode>   off (default): every frame sharp; auto: a smear on what moves fast in each frame
                          (also data-motion="classic"); or a number of sub-frames for every frame (e.g. 8)
   --shutter <0-1>        Motion blur shutter (default 0.5 = 180°)
   --data <file.json>     Data for data-bind / gm.data

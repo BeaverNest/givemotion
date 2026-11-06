@@ -1259,7 +1259,9 @@ export function layoutShiftIssues(samples, names, step) {
 const PAGE_EASES = String.raw`(async () => {
   const I = gm.__internal, html = document.documentElement, classic = gm.motion === 'classic';
   const off = (v) => v != null && /^(off|0|none|false|no)$/i.test(String(v).trim());
-  const blurOff = classic || off(html.getAttribute('data-motion-blur')) || off(I.CONFIG && I.CONFIG.motionBlur);
+  const on = (v) => v != null && /^(auto|on|[2-9]|[1-3][0-9])$/i.test(String(v).trim());
+  // motion blur is off unless the page asks for it (data-motion-blur="auto" or a number)
+  const blurOff = classic || off(html.getAttribute('data-motion-blur')) || off(I.CONFIG && I.CONFIG.motionBlur) || !(on(html.getAttribute('data-motion-blur')) || on(I.CONFIG && I.CONFIG.motionBlur));
   const blurExplicitOff = !classic && blurOff;
   const canon = (name) => { try { return I.cssEasing(name); } catch (e) { return String(name); } };
   const list = []; // { ease: canonical or 'natural', name }
@@ -1419,7 +1421,7 @@ export function motionIssues(samples, names, setup, info, step) {
     const ranges = runsOf(fast.map((f) => f.t).sort((a, b) => a - b), 0.25).filter(([a, b]) => b - a >= 0.05 || fast.filter((f) => f.t >= a - 0.01 && f.t <= b + 0.01).length >= 2);
     if (ranges.length) out.push({ severity: 'warning', code: 'fast-no-blur', selector: names[worst.id], time: ranges[0][0], until: ranges[ranges.length - 1][1], ranges,
       message: `Moves ${Math.round(worst.d / PX)} px per frame (at 1080p) with no motion blur: it strobes${classicNote}.`,
-      fix: setup.blurExplicitOff ? 'remove data-motion-blur="off" (fast moves get motion blur by default), or slow the move down.' : 'render with --motion-blur 8, or drop data-motion="classic" (natural motion blurs fast moves).' });
+      fix: 'slow the move or shorten its distance (a fast move reads better as a short, eased one), or render with --motion-blur auto for a smear and check the motion strips in review.' });
   }
   if (straight.length) {
     const seen = new Set(), list = straight.filter((s) => (seen.has(s.id) ? false : seen.add(s.id)));

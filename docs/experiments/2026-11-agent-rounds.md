@@ -62,4 +62,20 @@ catches. So the next change is general, not per-genre:
   frames before motion, then review twice, with a fresh sub-agent as critic when possible
   (`skills/givemotion/references/direction.md`).
 
-Round 6 tests that change on new random briefs.
+## Round 6: the review loop
+
+Three new random briefs (a deep-sea product teaser in vertical format, a jazz-festival poem in a sketch look with a UI
+and a route map, a recycling-program manifesto with a map). Every maker, givemotion and reference, had every tool on:
+any shell command, web search, sub-agents. givemotion's makers followed the new loop: they ran `review` about 18-20
+times per video, called a fresh critic sub-agent twice, and looked at 24-29 of their own frames (the reference makers
+8-22). They took 18-28 minutes, in line with the reference makers (16-30). No maker used web search.
+
+| | givemotion | reference tools (each) |
+|---|---|---|
+| Judges' overall, mean of 3 briefs | **7.11** (6.33, 7.33, 7.67) | 7.22 and 6.83 |
+| Judges ranking it first | 5 of 18 | 13 of 36 |
+
+Up from 6.76 over the previous seven briefs, and within 0.1 of the best reference tool. Its lowest brief (6.33) lost
+almost all of its points to one engine default: the judges read the automatic motion blur as ghosting and doubled text
+("the counter overlapping itself", "cards breaking up"). That was the fourth brief where blur cost points and none
+where it earned any, so motion blur is now off by default (`--motion-blur auto` turns it on).

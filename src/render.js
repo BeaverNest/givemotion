@@ -71,16 +71,16 @@ export function scaledSize(w, h, scale, format) {
 export const AUTO_BLUR = { v: 4, min: 3, maxEls: 48, textCap: 0.3, shapeCap: 0.15 };
 
 /**
- * --motion-blur: unset = off (auto is opt-in until the smear blur is validated) (data-motion="classic"); "auto"; "off" (also
+ * --motion-blur: unset = off; "auto" (or "on"): a smear on what moves fast in each frame; "off" (also
  * 0, false, none); a number = that many samples on every frame (averaged).
  */
 export function resolveMotionBlur(value, { motion = 'natural' } = {}) {
   const v = value == null || value === true ? '' : String(value).trim().toLowerCase();
   if (v === 'off' || v === 'false' || v === 'none' || v === 'no' || v === '0') return { mode: 'off', samples: 1 };
   if (v === '' || v === 'auto' || v === 'on') {
-    // natural motion (the default): fast moves get a camera's smear, measured per frame (0-3% render time on the
-    // examples); classic motion stays sharp
-    if (v === '' && motion === 'classic') return { mode: 'off', samples: 1, why: 'classic' };
+    // Off unless asked for: in blind judging across many agent-made videos, the automatic smear read as ghosting and
+    // doubled text more often than as motion, even with its caps. `auto` (or `on`) turns it on.
+    if (v === '') return { mode: 'off', samples: 1, why: motion === 'classic' ? 'classic' : 'default' };
     return { mode: 'auto', samples: 1 };
   }
   const n = parseInt(v, 10);

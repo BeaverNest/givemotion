@@ -1102,7 +1102,8 @@ const TMP = mkdtempSync(join(tmpdir(), 'gm-feat-'));
 after(() => rmSync(TMP, { recursive: true, force: true }));
 
 test('motion blur: flag values', () => {
-  assert.deepEqual(resolveMotionBlur(undefined), { mode: 'auto', samples: 1 }); // on by default in natural motion
+  assert.deepEqual(resolveMotionBlur(undefined), { mode: 'off', samples: 1, why: 'default' }); // off unless asked for
+  assert.equal(resolveMotionBlur('on').mode, 'auto');
   assert.equal(resolveMotionBlur(undefined, { motion: 'classic' }).mode, 'off');
   assert.equal(resolveMotionBlur('auto', { motion: 'classic' }).mode, 'auto');
   assert.equal(resolveMotionBlur('off').mode, 'off');
