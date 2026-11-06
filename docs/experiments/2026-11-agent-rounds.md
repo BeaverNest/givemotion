@@ -73,7 +73,7 @@ times per video, called a fresh critic sub-agent twice, and looked at 24-29 of t
 | | givemotion | reference tools (each) |
 |---|---|---|
 | Judges' overall, mean of 3 briefs | **7.11** (6.33, 7.33, 7.67) | 7.22 and 6.83 |
-| Judges ranking it first | 5 of 18 | 13 of 36 |
+| Judges ranking it first (18 in all) | 5 | 9 and 4 |
 
 Up from 6.76 over the previous seven briefs, and within 0.1 of the best reference tool. Its lowest brief (6.33) lost
 almost all of its points to one engine default: the judges read the automatic motion blur as ghosting and doubled text
