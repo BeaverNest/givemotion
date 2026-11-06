@@ -156,7 +156,8 @@ export async function review(input, opts = {}) {
   md.push('List, with times: every place the video departs from the brief (a beat late, missing or incomplete; a wrong');
   md.push('number, label, state, colour, size or position; anything on screen the brief did not ask for); every visible');
   md.push('error (stray or leftover marks, something cut by an old container, doubled or ghosted shapes, overlaps while one');
-  md.push('thing leaves and the next arrives, text too close to the edge, unreadable moving text); and the weakest holds as');
+  md.push('thing leaves and the next arrives, text too close to the edge or smaller than the brief asks, unreadable moving');
+  md.push('text, half-rolled digits); and the weakest holds as');
   md.push('designs. Then score brief, spec, motion, craft and errors from 1 to 10, harshly, and name the five fixes that would');
   md.push('raise the score most.', '```');
   writeFileSync(join(dir, 'REVIEW.md'), md.join('\n') + '\n');

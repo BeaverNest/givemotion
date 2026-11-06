@@ -2,6 +2,7 @@
 Use for: stats, KPIs, growth stories, bar or line charts, "one number matters" moments, before/after comparisons.
 
 ## What makes it look premium
+- **Counters and readouts.** A number counting from A to B: `data-count` (add `data-count-roll` for an odometer). A readout that jumps between values at set times (a depth meter, a score, "1 IN 10" → "1 IN 100"): `data-roll="0: 0200 M; 6.5: 1000 M"`. Both keep every frame readable (each character clipped to its own line, only what changed moves); a hand-built digit wheel shows half digits and neighbours bleeding in.
 - **To scale, always.** One px-per-unit constant for every bar (`height = v * pxPerUnit`); the counter says what the bar shows. Grow bars with `scaleY` from `transform-origin: 50% 100%`, never `height`.
 - **Rise, overshoot, settle.** Bars 0.8-1.0 s `back.out(1.3-1.5)` (about 4% past, settles in ~0.3 s), stagger 70-100 ms left to right. The number counts on the same clock with `expo.out` so it never shows a value above the real one.
 - **Count only when the brief allows it.** A count-up shows every number on the way. When the brief lists the exact copy and says nothing else may appear, those in-between numbers break it (judges marked it down): reveal the final number instead (a mask wipe, a slot roll that lands, a scramble that settles), unless the brief says in-between values may show.

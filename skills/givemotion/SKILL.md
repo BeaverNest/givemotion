@@ -16,10 +16,10 @@ This file is the core (read it all). Then read **only** the 1-3 technique recipe
 0. **Direct.** Decide how a top studio would make this look. Start from what you have (brand kit, earlier videos, references, a detailed brief); research only what is still open, with a web search if you have one. Then write at the top of the HTML: the look, type system, motion language and shot list (time, on screen, move, hand-over). How: `references/direction.md`.
 1. **Style frames.** Build the 2-3 key holds first, still, and `still` each: judge them as posters (one focal point, hierarchy, margins). Then animate.
 2. **Write** the motion; `npx givemotion check video.html` as you go: fix every ✖; ⚠ are real faults unless meant; ℹ are style hints.
-3. **Review twice.** `npx givemotion review video.html` (reads `brief.md` beside the page, or `--brief`) shows what a viewer sees: overview, the frames people read, motion strips, `beats.png` (each brief beat at its times). Check each beat word by word, score per `review/REVIEW.md`, fix the five worst problems, review again. Give a sub-agent the critic prompt in REVIEW.md. Put the brief's times in `data-expect`.
+3. **Review twice.** `npx givemotion review video.html` (reads `brief.md` beside the page, or `--brief`) shows what a viewer sees: overview, the frames people read, motion strips, `beats.png` (each brief beat at its times). Check each beat word by word, score per `review/REVIEW.md`, fix the five worst, review again. Give a sub-agent the critic prompt in REVIEW.md. Put the brief's times in `data-expect`.
 4. **Render:** `npx givemotion render video.html -o out/video.mp4`.
 
-`--json` for machine output, `<command> --help` for options. `still video.html -t 3.2 -o f.png` renders one moment; `inspect --at 4.5 --el "#logo"` says where an element is.
+`--json` for machine output, `--help` for options. `still video.html -t 3.2 -o f.png` renders one moment; `inspect --at 4.5 --el "#logo"` says where an element is.
 
 ## How good motion is made here
 
@@ -112,7 +112,7 @@ gm.fly('#event', { from: '#slot2', at: 7.5, duration: 0.8 });      // fly from a
 ```
 `from()`/`fromTo()` show their start values from the clip's start (hidden until they enter). Overlapping tweens on one property: the latest start wins. Positions, all props and options, labels, keyframes, `gm.fly` and SVG caveats: `references/timeline.md`.
 
-Also built in (tables in `references/api.md`): `data-enter`/`data-exit` presets, `data-split`, `data-stagger`, `data-count` (`-roll`), `data-type` (typewriter), `data-scramble`, `data-camera` (push, float, shake…), `data-parallax`, `data-morph`, `data-fit`, `data-pulse`, easing names (GSAP names work), preset CSS keyframes and `var(--px)`, and ready-made blocks (`npx givemotion blocks`: captions, code-window, cursor, browser-window, charts…).
+Also built in (tables in `references/api.md`): `data-enter`/`data-exit` presets, `data-split`, `data-stagger`, `data-count` (`-roll`), `data-roll`, `data-type` (typewriter), `data-scramble`, `data-camera` (push, float, shake…), `data-parallax`, `data-morph`, `data-fit`, `data-pulse`, easing names (GSAP names work), preset CSS keyframes and `var(--px)`, and ready-made blocks (`npx givemotion blocks`: captions, code-window, cursor, browser-window, charts…).
 
 ## Technique recipes (read the ones your video needs)
 

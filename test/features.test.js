@@ -1878,3 +1878,19 @@ test('review: overview, holds and motion strips from the page, plus REVIEW.md wi
   assert.match(md, /\| Errors: /);
   assert.ok(!readdirSync(join(d, 'rv')).some((x) => x.startsWith('.tmp')), 'no temp folders left');
 });
+
+test('data-roll: a readout that changes value at given times; only the changed part rolls, each slot clipped to one line', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  writeFileSync(f, page(`<p id="r" style="font:700 60px/1 monospace" data-roll="0: 1 IN 10; 1: 1 IN 100; 2: 0200 M"></p>`, 'data-width="640" data-height="360" data-fps="30" data-duration="3"'));
+  const ctx = await openComposition(f, { mode: 'render' });
+  const read = `(() => { const cells = [...document.querySelectorAll('#r .gm-roll')]; const box = (e) => e.getBoundingClientRect();
+    return { text: cells.map((c) => c.children[0].textContent).join(''), moving: cells.filter((c) => c.children[0].style.transform).length,
+      clean: cells.every((c) => { const cb = box(c); const vis = (r) => Math.max(0, Math.min(r.bottom, cb.bottom) - Math.max(r.top, cb.top)); return vis(box(c.children[0])) + vis(box(c.children[1])) <= cb.height + 1; }) }; })()`;
+  try {
+    await ctx.page.seek(0.5); assert.equal((await ctx.page.evaluate(read)).text, '1 IN 10');
+    await ctx.page.seek(1.1); const mid = await ctx.page.evaluate(read);
+    assert.equal(mid.moving, 1, 'only the new digit rolls (the shared "1 IN 10" stays still)'); assert.ok(mid.clean);
+    await ctx.page.seek(1.9); assert.equal((await ctx.page.evaluate(read)).text, '1 IN 100');
+    await ctx.page.seek(2.9); assert.equal((await ctx.page.evaluate(read)).text, '0200 M');
+  } finally { await ctx.page.close(); await ctx.server.close(); }
+});

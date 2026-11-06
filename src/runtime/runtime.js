@@ -1351,6 +1351,7 @@
   // ---------------------------------------------------------------------------
   const counters = [];
   const typers = [];
+  const rollers = [];
   function setupCountersAndTypers() {
     for (const el of document.querySelectorAll('[data-count]')) {
       if (el.__gmCount) continue;
@@ -1387,6 +1388,32 @@
         group, fixed,
         last: null,
       });
+    }
+    // data-roll="0: 0000 M; 3: 0200 M; 6.5: 1000 M": a readout that changes value at given times (seconds from the
+    // element's start). Each character sits in its own slot clipped to one line; a changed character rolls up out of its
+    // slot as the new one rolls in (right to left, staggered), so every frame reads cleanly. Works for any text.
+    for (const el of document.querySelectorAll('[data-roll]')) {
+      if (el.__gmRoll) continue;
+      el.__gmRoll = true;
+      const steps = [];
+      for (const part of el.getAttribute('data-roll').split(';')) {
+        const i = part.indexOf(':');
+        if (i < 0) { if (part.trim()) report('error', 'bad-roll', `data-roll needs "time: value" pairs, got "${part.trim()}".`, el, 'Write data-roll="0: 0000 M; 3: 0200 M; 6.5: 1000 M".'); continue; }
+        const t = parseTime(part.slice(0, i).trim(), el, 'data-roll');
+        if (t == null) continue;
+        steps.push({ t, v: part.slice(i + 1).trim() });
+      }
+      if (!steps.length) continue;
+      steps.sort((a, b) => a.t - b.t);
+      el.textContent = '';
+      const box = document.createElement('span');
+      box.className = 'gm-num';
+      el.appendChild(box);
+      if (naturalMotion() && getComputedStyle(el).fontVariantNumeric === 'normal') el.style.fontVariantNumeric = 'tabular-nums';
+      rollers.push({ el, box, steps, k: -1, cells: [],
+        dur: parseTime(el.getAttribute('data-roll-duration'), el, 'data-roll-duration') ?? 0.45,
+        stagger: parseTime(el.getAttribute('data-roll-stagger'), el, 'data-roll-stagger') ?? 0.04,
+        ease: easing(el.getAttribute('data-roll-ease') || 'power3.out') });
     }
     for (const el of document.querySelectorAll('[data-type]')) {
       if (el.__gmType) continue;
@@ -1503,8 +1530,55 @@
     }
     return changed;
   }
-  function updateCounters(T) {
+  // Lay out the slots for one change (prev → cur): what both values share at the start and the end stays still, the
+  // part in between rolls, right-aligned (so 0200 → 1000 and 1 IN 10 → 1 IN 10,000 roll only what changed).
+  function layRoll(r, prev, cur) {
+    const A = [...(prev ? prev.v : cur.v)], B = [...cur.v];
+    let pre = 0; while (pre < A.length && pre < B.length && A[pre] === B[pre]) pre++;
+    let suf = 0; while (suf < A.length - pre && suf < B.length - pre && A[A.length - 1 - suf] === B[B.length - 1 - suf]) suf++;
+    const am = A.slice(pre, A.length - suf), bm = B.slice(pre, B.length - suf), n = Math.max(am.length, bm.length);
+    while (am.length < n) am.unshift(''); while (bm.length < n) bm.unshift('');
+    const slots = [...B.slice(0, pre).map((c) => [c, c]), ...am.map((c, i) => [c, bm[i]]), ...B.slice(B.length - suf).map((c) => [c, c])];
+    r.box.textContent = '';
+    r.cells = slots.map(([from, to]) => {
+      const cell = document.createElement('span');
+      cell.className = (/\d/.test(from + to) ? 'gm-dg ' : '') + 'gm-roll';
+      const a = document.createElement('span'), b = document.createElement('span');
+      cell.append(a, b); r.box.appendChild(cell);
+      return { a, b, from, to, last: '' };
+    });
+  }
+  function updateRollers(T) {
     let changed = false;
+    for (const r of rollers) {
+      const lt = mapT(r.el, T) - clipStartOf(r.el);
+      let k = 0;
+      for (let i = 0; i < r.steps.length; i++) if (lt >= r.steps[i].t) k = i;
+      const cur = r.steps[k], prev = k > 0 ? r.steps[k - 1] : null;
+      if (r.k !== k) { layRoll(r, prev, cur); r.k = k; changed = true; }
+      // changed slots roll right to left, one stagger apart
+      const order = [];
+      for (let i = r.cells.length - 1; i >= 0; i--) if (r.cells[i].from !== r.cells[i].to) order.push(i);
+      for (let i = 0; i < r.cells.length; i++) {
+        const C = r.cells[i], j = order.indexOf(i);
+        let f = 1;
+        if (j >= 0 && prev) f = r.dur > 0 ? r.ease(Math.min(1, Math.max(0, (lt - cur.t - j * r.stagger) / r.dur))) : 1;
+        const done = f >= 1 || j < 0 || !prev;
+        const ta = done ? C.to : C.from, tb = done ? '' : C.to;
+        const key = ta + '|' + tb + '|' + f.toFixed(4);
+        if (key === C.last) continue;
+        C.last = key; changed = true;
+        if (C.a.textContent !== ta) C.a.textContent = ta;
+        if (C.b.textContent !== tb) C.b.textContent = tb;
+        const fr = done ? 0 : f;
+        C.a.style.transform = fr ? `translateY(calc(${(-fr).toFixed(4)} * (100% + .2em)))` : '';
+        C.b.style.transform = `translateY(calc(${(1 - fr).toFixed(4)} * (100% + .2em)))`;
+      }
+    }
+    return changed;
+  }
+  function updateCounters(T) {
+    let changed = updateRollers(T);
     for (const c of counters) {
       const lt = mapT(c.el, T) - clipStartOf(c.el) - c.delay;
       if (c.roll) { if (updateRoll(c, lt)) changed = true; continue; }
