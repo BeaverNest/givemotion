@@ -13,10 +13,10 @@ This file is the core (read it all). Then read **only** the 1-3 technique recipe
 
 ## The loop
 
-0. **Direct.** Before code, decide how a top studio would make this brief look: research the genre (search the web for real examples when you can, else recall them), then write at the top of the HTML: the look in words, the type system, the motion language (easing families, rhythm, how scenes hand over) and the shot list (one line per moment: time, what is on screen, the move, the hand-over). How: `references/direction.md`.
+0. **Direct.** If you have a web search tool, first run 2-3 searches for top work in this genre and subject and note what they share; else recall such work. Then write at the top of the HTML: the look, the type system, the motion language (easing families, rhythm, hand-overs) and the shot list (time, what is on screen, the move, the hand-over). How: `references/direction.md`.
 1. **Style frames.** Build the 2-3 key holds first, still, and `still` each: judge them as posters (one focal point, hierarchy, margins). Then animate.
 2. **Write** the motion; `npx givemotion check video.html` as you go: fix every ✖; ⚠ are real faults unless meant; ℹ are style hints.
-3. **Review twice.** `npx givemotion review video.html` writes what a viewer sees (overview, the frames people read, motion strips at the busy moments) and `review/REVIEW.md`: score it harshly, fix the five worst problems, review again. Fresh eyes find more: give a sub-agent only the brief and the review folder. Put the brief's times in `data-expect`.
+3. **Review twice.** `npx givemotion review video.html` (it finds `brief.md` next to the page, or `--brief f.md`) writes what a viewer sees: an overview, the frames people read, motion strips, and `beats.png`, each brief beat at its own times. Check every beat word by word, score per `review/REVIEW.md`, fix the five worst problems, review again. Then give a sub-agent the critic prompt in REVIEW.md. Put the brief's times in `data-expect`.
 4. **Render:** `npx givemotion render video.html -o out/video.mp4`.
 
 `--json` for machine output, `<command> --help` for options. `still video.html -t 3.2 -o f.png` renders one moment; `inspect --at 4.5 --el "#logo"` says where an element is.

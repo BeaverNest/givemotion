@@ -17,6 +17,9 @@ Contents
 - `holds.png`: the middle of every calm stretch, large. These are the frames people read: judge each as a poster.
 - `motion-N.png`: one second at 10 fps around each scene hand-over and the busiest moments. Easing, smears, the old
   thing still there when the new one lands, unreadable moving text.
+- `beats.png` (with `brief.md` next to the page, or `--brief f.md`): every beat the brief times, a frame in its middle
+  and one just before it ends, plus each "at 4.2 s" moment it names. Check each beat word by word: on time, complete,
+  the stated numbers and states, nothing extra, nothing left from the last beat.
 - `REVIEW.md`: the check report, what to look for in each image, and a scoring table. Score harshly, list the five
   worst problems with their times, fix them, run it again (two passes). A sub-agent given only the brief and this
   folder is a better critic than you are of your own page: it sees the frames, not the intent.

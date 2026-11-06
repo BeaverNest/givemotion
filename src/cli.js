@@ -299,7 +299,7 @@ async function cmdSnapshot(args) {
 async function cmdReview(args) {
   const { review } = await import('./review.js');
   try {
-    const r = await review(inputOf(args), { ...commonOpts(args), output: args.output, onStep: args.json ? null : (s) => process.stderr.write(`  ${s}\n`) });
+    const r = await review(inputOf(args), { ...commonOpts(args), output: args.output, brief: args.brief, onStep: args.json ? null : (s) => process.stderr.write(`  ${s}\n`) });
     if (args.json) console.log(JSON.stringify({ ...r, report: undefined }, null, 2));
     else {
       console.log(`review: ${shortPath(r.dir)}  (${r.errors} error${r.errors === 1 ? '' : 's'}, ${r.warnings} warning${r.warnings === 1 ? '' : 's'})`);

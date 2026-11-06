@@ -459,3 +459,23 @@ test('independence policy backstop: no tracked file or path names a listed produ
   HASHES.delete(hash('zqxjkvtest'));
   assert.deepEqual(scanRepo(), [], 'see CONTRIBUTING.md, "Independence and clean-room policy"');
 });
+
+test('review: briefBeats reads the beats a brief times, with the moments inside them, and ignores ranges that are not times', async () => {
+  const { briefBeats } = await import('../src/review.js');
+  const brief = `# Brief: Test
+**Format:** 1920x1080, exactly 12 s
+Fees are 10-25 kg per hive.
+## Beats
+### Beat 1 — Open · 0.0–4.0 s
+The title draws on. At 2.5 s the dot turns red.
+### Beat 2 — Middle · 4.0–8.0 s
+- 4.0-5.2 s: cards slide in
+- 6.0-7.5 s: counter rolls
+### Beat 3 — End · 8.0–12.0 s
+Hold the lock-up.`;
+  const b = briefBeats(brief, 12);
+  assert.deepEqual(b.map((x) => [x.from, x.to]), [[0, 4], [4, 8], [8, 12]]);
+  assert.deepEqual(b[0].moments, [2.5]);
+  assert.deepEqual(b[1].moments, [6]);
+  assert.match(b[2].text, /lock-up/);
+});
