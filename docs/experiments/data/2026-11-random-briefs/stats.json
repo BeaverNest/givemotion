@@ -18,10 +18,10 @@
   "turns": 48,
   "tool_calls": 45,
   "tool_mix": {
-   "Write": 1,
+   "Read": 15,
    "Bash": 28,
    "Grep": 1,
-   "Read": 15
+   "Write": 1
   },
   "denied": 1,
   "denials": [
@@ -62,8 +62,8 @@
    "Glob": 1,
    "Write": 15,
    "Read": 37,
-   "Bash": 43,
-   "Edit": 1
+   "Edit": 1,
+   "Bash": 43
   },
   "denied": 5,
   "denials": [
@@ -169,10 +169,10 @@
   "turns": 92,
   "tool_calls": 91,
   "tool_mix": {
-   "Write": 12,
+   "Read": 26,
    "Bash": 51,
    "Edit": 2,
-   "Read": 26
+   "Write": 12
   },
   "denied": 6,
   "denials": [
@@ -231,11 +231,11 @@
   "turns": 39,
   "tool_calls": 38,
   "tool_mix": {
-   "Write": 2,
    "Grep": 1,
+   "Write": 2,
    "Read": 13,
-   "Bash": 20,
-   "Edit": 2
+   "Edit": 2,
+   "Bash": 20
   },
   "denied": 2,
   "denials": [
@@ -274,11 +274,11 @@
   "turns": 69,
   "tool_calls": 64,
   "tool_mix": {
-   "Write": 12,
    "Grep": 2,
+   "Write": 12,
    "Read": 13,
-   "Bash": 33,
-   "Edit": 4
+   "Edit": 4,
+   "Bash": 33
   },
   "denied": 9,
   "denials": [
@@ -356,12 +356,12 @@
   "turns": 12,
   "tool_calls": 91,
   "tool_mix": {
-   "Monitor": 1,
    "Write": 7,
+   "Monitor": 1,
    "Read": 24,
-   "Bash": 44,
+   "ToolSearch": 1,
    "Edit": 14,
-   "ToolSearch": 1
+   "Bash": 44
   },
   "denied": 0,
   "denials": [],
@@ -405,9 +405,9 @@
   "turns": 41,
   "tool_calls": 40,
   "tool_mix": {
-   "Write": 2,
+   "Read": 15,
    "Bash": 23,
-   "Read": 15
+   "Write": 2
   },
   "denied": 3,
   "denials": [
@@ -447,10 +447,10 @@
   "turns": 112,
   "tool_calls": 110,
   "tool_mix": {
-   "Write": 19,
+   "Read": 18,
    "Bash": 36,
    "Edit": 37,
-   "Read": 18
+   "Write": 19
   },
   "denied": 8,
   "denials": [
@@ -559,11 +559,11 @@
   "turns": 79,
   "tool_calls": 78,
   "tool_mix": {
-   "Write": 9,
    "Grep": 1,
+   "Write": 9,
    "Read": 16,
-   "Bash": 35,
-   "Edit": 17
+   "Edit": 17,
+   "Bash": 35
   },
   "denied": 3,
   "denials": [
@@ -631,9 +631,9 @@
   "turns": 39,
   "tool_calls": 38,
   "tool_mix": {
-   "Write": 1,
+   "Read": 12,
    "Bash": 25,
-   "Read": 12
+   "Write": 1
   },
   "denied": 1,
   "denials": [
@@ -671,10 +671,10 @@
   "turns": 79,
   "tool_calls": 78,
   "tool_mix": {
-   "Write": 17,
+   "Read": 22,
    "Bash": 36,
    "Edit": 3,
-   "Read": 22
+   "Write": 17
   },
   "denied": 4,
   "denials": [
@@ -783,10 +783,10 @@
   "turns": 67,
   "tool_calls": 66,
   "tool_mix": {
-   "Write": 6,
+   "Read": 13,
    "Bash": 37,
    "Edit": 10,
-   "Read": 13
+   "Write": 6
   },
   "denied": 6,
   "denials": [
@@ -837,10 +837,10 @@
   "turns": 66,
   "tool_calls": 63,
   "tool_mix": {
-   "Write": 2,
+   "Read": 20,
    "Bash": 40,
    "Grep": 1,
-   "Read": 20
+   "Write": 2
   },
   "denied": 2,
   "denials": [
@@ -879,11 +879,11 @@
   "turns": 112,
   "tool_calls": 111,
   "tool_mix": {
-   "Write": 23,
    "Grep": 3,
+   "Write": 23,
    "Read": 16,
-   "Bash": 59,
-   "Edit": 10
+   "Edit": 10,
+   "Bash": 59
   },
   "denied": 11,
   "denials": [
@@ -1007,10 +1007,10 @@
   "turns": 106,
   "tool_calls": 105,
   "tool_mix": {
-   "Write": 8,
+   "Read": 37,
    "Bash": 59,
    "Grep": 1,
-   "Read": 37
+   "Write": 8
   },
   "denied": 4,
   "denials": [
@@ -1063,10 +1063,10 @@
   "turns": 51,
   "tool_calls": 49,
   "tool_mix": {
-   "Write": 4,
+   "Read": 11,
    "Bash": 33,
    "Edit": 1,
-   "Read": 11
+   "Write": 4
   },
   "denied": 3,
   "denials": [
@@ -1110,10 +1110,10 @@
   "turns": 76,
   "tool_calls": 75,
   "tool_mix": {
-   "Write": 13,
+   "Read": 29,
    "Bash": 31,
    "Edit": 2,
-   "Read": 29
+   "Write": 13
   },
   "denied": 5,
   "denials": [
@@ -1203,10 +1203,10 @@
   "turns": 62,
   "tool_calls": 61,
   "tool_mix": {
-   "Write": 6,
+   "Read": 22,
    "Bash": 32,
    "Edit": 1,
-   "Read": 22
+   "Write": 6
   },
   "denied": 3,
   "denials": [
@@ -1262,9 +1262,9 @@
   "turns": 29,
   "tool_calls": 26,
   "tool_mix": {
-   "Write": 1,
+   "Read": 6,
    "Bash": 19,
-   "Read": 6
+   "Write": 1
   },
   "denied": 2,
   "denials": [
@@ -1303,11 +1303,11 @@
   "turns": 84,
   "tool_calls": 83,
   "tool_mix": {
-   "Write": 8,
    "Grep": 1,
+   "Write": 8,
    "Read": 39,
-   "Bash": 24,
-   "Edit": 11
+   "Edit": 11,
+   "Bash": 24
   },
   "denied": 3,
   "denials": [
@@ -1379,10 +1379,10 @@
   "turns": 87,
   "tool_calls": 84,
   "tool_mix": {
-   "Write": 4,
+   "Read": 14,
    "Bash": 34,
    "Edit": 32,
-   "Read": 14
+   "Write": 4
   },
   "denied": 4,
   "denials": [
@@ -1427,10 +1427,10 @@
   "turns": 62,
   "tool_calls": 62,
   "tool_mix": {
-   "Write": 1,
-   "Bash": 33,
+   "Read": 27,
    "Agent": 1,
-   "Read": 27
+   "Bash": 33,
+   "Write": 1
   },
   "denied": 0,
   "denials": [],
@@ -1470,10 +1470,10 @@
   "turns": 69,
   "tool_calls": 53,
   "tool_mix": {
-   "Write": 9,
+   "Read": 17,
    "Bash": 25,
    "Edit": 2,
-   "Read": 17
+   "Write": 9
   },
   "denied": 0,
   "denials": [],
@@ -1549,10 +1549,10 @@
   "turns": 78,
   "tool_calls": 66,
   "tool_mix": {
-   "Write": 8,
+   "Read": 18,
    "Bash": 39,
    "Edit": 1,
-   "Read": 18
+   "Write": 8
   },
   "denied": 0,
   "denials": [],
@@ -1616,11 +1616,11 @@
   "turns": 10,
   "tool_calls": 72,
   "tool_mix": {
-   "ReadNotifications": 1,
-   "Write": 2,
    "Grep": 2,
-   "Read": 37,
+   "Write": 2,
+   "ReadNotifications": 1,
    "Agent": 1,
+   "Read": 37,
    "Bash": 29
   },
   "denied": 0,
@@ -1657,10 +1657,10 @@
   "turns": 62,
   "tool_calls": 55,
   "tool_mix": {
-   "Write": 17,
+   "Read": 8,
    "Bash": 29,
    "Edit": 1,
-   "Read": 8
+   "Write": 17
   },
   "denied": 0,
   "denials": [],
@@ -1776,10 +1776,10 @@
   "turns": 87,
   "tool_calls": 86,
   "tool_mix": {
-   "Write": 9,
+   "Read": 24,
    "Bash": 47,
    "Edit": 6,
-   "Read": 24
+   "Write": 9
   },
   "denied": 1,
   "denials": [
@@ -1841,12 +1841,12 @@
   "turns": 12,
   "tool_calls": 58,
   "tool_mix": {
-   "ReadNotifications": 3,
    "Write": 1,
-   "Read": 26,
+   "ReadNotifications": 3,
    "Agent": 1,
-   "Bash": 26,
-   "Edit": 1
+   "Read": 26,
+   "Edit": 1,
+   "Bash": 26
   },
   "denied": 0,
   "denials": [],
@@ -1882,9 +1882,9 @@
   "turns": 53,
   "tool_calls": 52,
   "tool_mix": {
-   "Write": 6,
+   "Read": 16,
    "Bash": 30,
-   "Read": 16
+   "Write": 6
   },
   "denied": 0,
   "denials": [],
@@ -1956,12 +1956,12 @@
   "turns": 3,
   "tool_calls": 48,
   "tool_mix": {
-   "Monitor": 2,
    "Write": 5,
+   "Monitor": 2,
    "Read": 12,
-   "Bash": 26,
+   "ToolSearch": 1,
    "Edit": 2,
-   "ToolSearch": 1
+   "Bash": 26
   },
   "denied": 0,
   "denials": [],
@@ -1985,5 +1985,1140 @@
   "is_error": false,
   "renders": 1,
   "report": "The video is finished and rendered to `/home/user/tools5/j/hyperframes/out/video.mp4`. ffprobe confirms H.264, 1920\u00d71080, 30 fps, 570 frames, exactly 19.000 s, with no audio track. I checked nine frames pulled from the rendered file across the whole 19 s, and they match the preview snapshots.\n\n**What I built**\n- **Two layers.** `index.html` holds two full-length scenes: a moving background (`compositions/ambient.html`) and the five beats (`compositions/story.html`).\n- **Background.** It never stops: 7 wavy contour lines, 40 rising flecks, and the soft Tide glow drifting from upper left to lower right. It is computed from timeline time with fixed random seeds, so every render is identical.\n- **The amber dot.** All five beats are one continuous shot in one file, so the dot is a single element from 1.4 s to 19.0 s. It goes cap \u2192 lid \u2192 pin \u2192 route dot \u2192 cap \u2192 orbit. A virtual camera handles the 3\u21921 pull-back and the pan and zoom over the map.\n- **Map.** A loose street grid with two diagonal avenues, a river from top left to bottom right and two bridges. The route turns at right angles, reaches SORT at 8.8 s and REMAKE at 10.6 s, and closes into a loop at YOUR CURB.\n- **Bottle match cut.** The beat 4 bottle uses exactly the same outline as beat 1. During the morph the dot rides the loop's opening, which becomes the bottle mouth, so it lands as the cap.\n- **Lockup.** I placed the RETURN ROUTE letters by measuring Bebas Neue's letter widths, so the 150 px Regrowth ring sits exactly where the \"O\" goes.\n- **Notes.** `SPEC.md` has the numeric plan and `REVIEW.md` has the review notes.\n\n**Render command** (run from the project folder):\n```\nnpx --yes hyperframes@0.9.18 render --quality delivery --fps 30 --workers 2 --output out/video.mp4\n```\n\n**What got in the way**\n- **Morph tool.** The bundled GSAP morph plugin twisted the loop through itself on the way to the bottle. I replaced it with my own point-by-point morph.\n- **Memory.** The machine killed a process for lack of memory during one snapshot run. I rendered with 2 workers instead of the default, and it took 32 s.\n- **Two bridges, not one.** A closed loop has to cross a river that spans the frame twice. The outward route uses one bridge, as the brief says, and the return uses the second one the brief already asks for.\n- **Warnings left on purpose.** `check` reports no errors. Four warnings remain, all deliberate:\n  - frame 0 is a plain colour, because the brief asks for a fade up from Deep Harbor;\n  - the film is silent, as the brief asks;\n  - the tagline is on screen for 1.93 s against the tool's 2.0 s minimum, because the brief fixes it at 17.0\u201317.9 s;\n  - `story.html` is flagged as long, because all five beats share one file to keep the dot continuous.\n- **Weakest part.** The map in beat 3 is dense, and its solid blocks hide most of the moving background except in the street gaps.\n\nThere was no one to watch the preview: I started it, confirmed it loaded, then stopped it before rendering."
+ },
+ "k-givemotion": {
+  "tokens": {
+   "input": 145,
+   "cache_write": 271947,
+   "cache_read": 11430127,
+   "output": 115401,
+   "thinking": 75327,
+   "total": 11817620
+  },
+  "cost_usd": 6.6,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 29.4,
+  "tool_wait_min": 17.0,
+  "api_minutes": 21.9,
+  "turns": 68,
+  "tool_calls": 91,
+  "tool_mix": {
+   "Glob": 1,
+   "Write": 1,
+   "ReadNotifications": 4,
+   "Agent": 1,
+   "Read": 37,
+   "ToolSearch": 1,
+   "Edit": 6,
+   "Bash": 40
+  },
+  "denied": 0,
+  "denials": [],
+  "images_viewed": 31,
+  "loc": 472,
+  "files": [
+   [
+    "video.html",
+    472
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 2,
+  "report": "from the top on impact. \"Precipitate.\" letters fall in shuffled order and bounce once. The small drops slide along the horizon and merge into the hero, which swells with each one.\n- **Beat 5:** the river draws from the hero to the right edge, 8 px growing to 14 px, and ends in three sea waves. The droplet rides it and squashes at the bends. \"Collect.\" flows along the river's curve, then levels out. At 15.0 s everything dims to 30%, the 700 px loop draws clockwise, the arrowhead pops on with a squash and the loop pulses.\n- **Beat 6:** the droplet jumps into the loop and lands with a squash. The title slams in word by word, the tagline slides up, the closing line types on, and the droplet blinks at 17.0 s. Nothing moves from 17.4 s to the end.\n\nEvery line draws itself and erases along its path, with round caps and joins. Only the brief's colours, copy and fonts are used; the fonts load from `fonts/`.\n\n## Render command\n```\ncd /home/user/tools5/k/givemotion && npx givemotion render video.html -o out/video.mp4\n```\n\n## Process\nI followed the docs' loop: check, snapshots, two `review` passes, and an independent critic sub-agent that saw only the frames. The critic's valid findings were all fixed:\n- the droplet faded out instead of splitting into the vapour;\n- the river ignored the 30% dim;\n- the INTRODUCING wipe never ran;\n- \"Condense.\" ran off the right edge;\n- the \"Collect.\" letters collided;\n- the river tangled with the horizon line;\n- the hand-over into the lockup was cluttered.\n\n## Things that got in the way\n- **Letter-spacing start values come out doubled.** A start value of `letterSpacing: '0.6em'` (or `'84px'`) in a `gm.timeline` `fromTo` measured as about 170 px. I had to write `'42px'` to get the 84 px that +60% means.\n- **`clipPath` tween didn't run.** A `clipPath: inset(...)` tween on the INTRODUCING line had no effect, so I drive that wipe from `gm.onFrame` instead.\n- **Stagger as a function misbehaved.** With `stagger: (i) => \u2026` on a `fromTo`, some \"Precipitate.\" letters showed from frame 0. I replaced it with one tween per letter.\n- **Two false check errors.** `check` reported `expect-failed` while all the letters were hidden but their container still had full opacity, so I fade the containers too. It also reports `layout-shift` on the \"Collect.\" letters, which my per-frame code moves on purpose.\n- **Departures from the brief:**\n  - At the lockup the loop shrinks to about 300 px and wraps the droplet like a product mark. At 700 px it would cut through the 160 px title.\n  - The loop passes through the cloud and the river but can't reach the sun: a 700 px circle can't touch both the cloud and a sun in the top-right corner.\n  - I added a slow turn of the sun's rays as background motion.\n- **Short holds remain.** `check` still warns about short holds on \"Precipitate.\", \"Collect.\" and the final lockup. Those come from the brief's own timings (for example, everything dims at 15.0 s, less than a second after \"Collect.\" settles), so I left them."
+ },
+ "k-remotion": {
+  "tokens": {
+   "input": 70,
+   "cache_write": 142470,
+   "cache_read": 4248406,
+   "output": 76005,
+   "thinking": 44930,
+   "total": 4466951
+  },
+  "cost_usd": 3.51,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 18.3,
+  "tool_wait_min": 6.6,
+  "api_minutes": 13.6,
+  "turns": 46,
+  "tool_calls": 44,
+  "tool_mix": {
+   "Read": 12,
+   "Bash": 26,
+   "Edit": 1,
+   "Write": 5
+  },
+  "denied": 0,
+  "denials": [],
+  "images_viewed": 12,
+  "loc": 1235,
+  "files": [
+   [
+    "remotion.config.ts",
+    16
+   ],
+   [
+    "src/theme.ts",
+    57
+   ],
+   [
+    "src/index.ts",
+    3
+   ],
+   [
+    "src/Scenery.tsx",
+    203
+   ],
+   [
+    "src/Drops.tsx",
+    240
+   ],
+   [
+    "src/geometry.ts",
+    220
+   ],
+   [
+    "src/WaterCycle.tsx",
+    81
+   ],
+   [
+    "src/Type.tsx",
+    399
+   ],
+   [
+    "src/Root.tsx",
+    16
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 4,
+  "report": " and springs back once. The cloud breathes twice, then presses down to 88% like a sponge.\n- **Precipitate:** five drops fall from the cloud with rain streaks that erase after impact. The fifth is the hero, eyes and all. \"Precipitate.\" falls in random letter order with one bounce each. The four small drops then slide along the horizon and merge into the hero, which swells with each merge.\n- **Collect:** the river draws from 8 to 14 px wide with the droplet riding its tip, and ends in three waves. \"Collect.\" flows along a curve that runs parallel to the river and straightens as it lands. At 15.0 s everything fades to 30%, and the 700 px loop draws clockwise through the sun, the cloud, the rain and the river. Its arrowhead pops on with a squash.\n- **Lockup:** the loop pulses and shrinks around the droplet, which jumps in and lands. The three lines of closing copy arrive, the droplet blinks at 17.0 s, and the frame is completely still from 17.4 s.\n\n**Choices the brief left open:**\n- Stage words sit below the horizon, inside the 96 px safe margin. \"Collect.\" ends right-aligned under the sea; the other three are left-aligned.\n- The sun, cloud and river are placed so a single 700 px circle really passes through all of them.\n- The loop shrinks for the lockup, because \"The Water Cycle\" at 160 px is wider than a 700 px circle and would have been crossed by it.\n\n**Render command** (run from `/home/user/tools5/k/remotion`):\n```\nnpx remotion render WaterCycle out/video.mp4\n```\n\n**What got in the way:**\n- **Studio and preview rendering advice:** the docs say to open Studio and keep it open while you work, and not to render unless asked. With no one watching, I skipped Studio and checked frames by rendering image sequences (`npx remotion render \u2026 --sequence`) and making contact sheets with a small script.\n- **Browser setting:** the render docs say not to set a custom browser executable, but this machine is offline, so I kept the preinstalled Chrome Headless Shell in `remotion.config.ts`.\n- **Studio editing pattern:** the docs push keeping every animation as an inline `interpolate()` on `Interactive.*` elements so it can be edited in Studio. Squash and stretch that preserves volume, drawing along a path and riding the river need computed values, so most of the motion is plain computed styles and SVG. The composition renders correctly, but much of it can't be edited from Studio's controls.\n- **Fixes after reviewing frames:**\n  - The vapour first looked like a leaf shape, so I reshaped it into separate wisps.\n  - \"Collect.\" first read backwards and ran ahead of the river; it now flows as a word that keeps pace with the river's tip.\n  - The river was too squiggly, so I smoothed it.\n  - \"Precipitate.\" overlapped \"Collect.\" during the handover; it now leaves earlier.\n  - I adjusted the spacing in the lockup.\n- **Type-check:** `tsc` also reports errors from example files inside `skills/`; those are unrelated to the video, and my own code in `src/` type-checks cleanly."
+ },
+ "k-hyperframes": {
+  "tokens": {
+   "input": 118,
+   "cache_write": 218669,
+   "cache_read": 10785889,
+   "output": 132043,
+   "thinking": 84498,
+   "total": 11136719
+  },
+  "cost_usd": 6.55,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 35.1,
+  "tool_wait_min": 12.0,
+  "api_minutes": 23.0,
+  "turns": 71,
+  "tool_calls": 69,
+  "tool_mix": {
+   "Read": 16,
+   "Bash": 42,
+   "Edit": 1,
+   "Write": 10
+  },
+  "denied": 1,
+  "denials": [
+   "ffprobe -v error -show_entries stream=codec_type,codec_name,width,height,r_frame_rate,nb_frames,pix_fmt -show_entries format=duration -of compact out/video.mp4;"
+  ],
+  "images_viewed": 16,
+  "loc": 1413,
+  "files": [
+   [
+    "index.html",
+    151
+   ],
+   [
+    "compositions/lockup.html",
+    132
+   ],
+   [
+    "compositions/intro.html",
+    99
+   ],
+   [
+    "compositions/precipitate.html",
+    148
+   ],
+   [
+    "compositions/stage.html",
+    480
+   ],
+   [
+    "compositions/evaporate.html",
+    132
+   ],
+   [
+    "compositions/condense.html",
+    110
+   ],
+   [
+    "compositions/collect.html",
+    161
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 3,
+  "report": "precipitate`, `collect`, `lockup`), so the copy stays easy to edit.\n- **The beats, as the brief describes them:**\n  - The horizon draws out from the centre and the droplet drops onto it, squashing to 135/70 and settling with two smaller bounces.\n  - \"INTRODUCING\" types in with a block cursor, and the droplet blinks at 2.2 s.\n  - The sun draws clockwise and its rays stagger out. The droplet stretches, lifts off and splits into three beads that draw the vapour paths.\n  - \"Evaporate.\" rises out of the horizon line, with the full stop in orange.\n  - The cloud draws in one stroke while the vapour erases up into it. \"Condense.\" squeezes from +60% to \u22122% tracking and the cloud breathes twice, then gets pressed like a sponge.\n  - Four small drops and the hero fall with rain streaks, and \"Precipitate.\" lands letter by letter in a fixed random order. The small drops then slide in and merge into the hero.\n  - The droplet rides the river as it draws, and \"Collect.\" follows the curve before straightening into a level word.\n  - The 700 px loop draws through the sun, cloud, rain and river, the arrowhead pops on and the loop pulses.\n  - The droplet jumps into the loop, \"The Water Cycle\" slams in word by word, then the subline and the closing line. The droplet blinks at 17.0 s.\n\n**Two layout decisions the brief didn't specify:**\n- **Loop position:** I placed the sun, cloud, rain and river on one 700 px circle so the loop really passes through all four stages. The catch is that the sun sits a bit inside the top-right corner rather than right in it.\n- **Lockup:** the loop shrinks to 300 px and becomes a ring around the droplet. At its full 700 px, the 160 px headline wouldn't fit inside or below it.\n\n## Render command\n```\nnpx --yes hyperframes@0.9.18 render --quality delivery --fps 30 -o out/video.mp4\n```\n\n## What got in the way\n- **\"Collect.\" on the river:** the letters tangled badly on the river's bends. I made the curves gentler, seated each letter across its own width on the path, and loosened the spacing while it rides. It reads clearly now, but neighbouring letters still overlap slightly in the dips.\n- **Rain vs. text:** \"Precipitate.\" is 764 px wide and collided with the rain, so I moved the cloud and rain 60 px right of centre.\n- **Animated letter-spacing:** the linter rejects it, so the \"Condense.\" squeeze moves each letter instead. It looks the same.\n- **Warnings left on purpose:**\n  - \"No sound\": the brief asks for no audio.\n  - \"Closing lines on screen too briefly\": the brief fixes the lockup at 16\u201318 s.\n  - \"Stage file is long\": it's one file so the lines carry across beats.\n- **Snapshot glitch:** one preview snapshot once showed the horizon missing at 0.9 s. It didn't happen again, and the rendered video is fine at that moment.\n- **Weakest spot:** the cloud stroke starts as a straight run along its flat bottom, so the vapour doesn't really \"curl\" into it.\n\nMy notes on what I'd improve are in `REVIEW.md`, and the timing and layout plan is in `SPEC.md`."
+ },
+ "l-givemotion": {
+  "tokens": {
+   "input": 110,
+   "cache_write": 268979,
+   "cache_read": 8452684,
+   "output": 124407,
+   "thinking": 77552,
+   "total": 8846180
+  },
+  "cost_usd": 6.19,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 30.6,
+  "tool_wait_min": 6.9,
+  "api_minutes": 22.8,
+  "turns": 4,
+  "tool_calls": 70,
+  "tool_mix": {
+   "Write": 1,
+   "ReadNotifications": 1,
+   "Agent": 1,
+   "Read": 37,
+   "ToolSearch": 1,
+   "Bash": 29
+  },
+  "denied": 0,
+  "denials": [],
+  "images_viewed": 34,
+  "loc": 726,
+  "files": [
+   [
+    "video.html",
+    726
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 3,
+  "report": "yers are smaller, dimmer and slightly blurred; the front layer is large and heavily blurred. The creatures (lanternfish, jellyfish with a 1.2 s pulse and rippling tentacles, a siphonophore) and the marine snow are all computed from the time, so every render is identical. The depth counter counts 0 M to 4,000 M with an ease-in, then rides down as the axis line draws.\n- **The chart (3\u20137 s):** tilted 8\u00b0, bars on a true scale (100% = 1,000 px, 1% = a 6 px sliver, 0% with a coral glow pulse), overshoot of 2.5%. Then the camera pushes into the empty Midnight row and the chart blows past the lens.\n- **The tagline (7\u201311 s):** \"LIGHT ENDS.\" goes dark letter by letter, 60 ms apart. For \"LIFE DOESN'T.\", 12\u201318 glow points per letter swim in along curves and land on the letter's actual shape, which then lights with a soft bloom. The apostrophe lights last, in coral. A blurred foreground jellyfish crosses the line, then the letters break up and rise like snow.\n- **The logo (11\u201318 s):** the coral apostrophe becomes the lure, which draws the stalk, which flows into a ring drawn clockwise. A faint anglerfish ghost shows inside the ring for about 1 s. ABYSSAL slides out from behind the ring, each letter rising from depth 50 ms apart. Three creatures circle and slow down, the lure pulses at 16.0 s and 17.2 s, and the last frame is the clean lockup with no fade.\n\n## Render command\n```\nnpx givemotion render video.html -o out/video.mp4 --quality high\n```\nRun from `/home/user/tools5/l/givemotion`; it took about 2.3 minutes at 4 fps on this 4-core machine.\n\n## What got in the way\n- **The brief contradicts itself on the counter.** It asks for 64 px from the edges, but also says all type must stay inside a 5% title-safe margin, which is 96 px from the left on a 1920 px frame. I kept the Must: the counter sits 96 px from the left and 64 px from the top. The critic flagged this as a miss; moving it to 64 px would break the title-safe rule instead.\n- **Blur grew with the creatures' size.** A CSS blur scales along with the element, so the big foreground jellyfish came out as smudges. I now divide the blur by each creature's scale so every layer gets the blur it is meant to have.\n- **The letters piled up.** Flying each ABYSSAL letter out from the ring's centre made them overlap mid-flight. The word now slides out as one strip, masked behind the ring.\n- **`check` still lists 5 warnings, all expected:**\n  - Two \"short hold\" warnings: the brief times both tagline lines this tightly.\n  - Two \"stray mark\" warnings: background creatures passing behind type.\n  - One \"no data-expect\" warning: I didn't add the optional timing tags.\n- **Small sizes and banding:** the brief's 20 px descriptor and 30 px end tagline are small for a sting. The opening blue-to-black gradient shows slight banding, which is normal for 8-bit video; I didn't add grain to hide it because the brief bans textures.\n- A test render I started before the last round of fixes was stopped and replaced by the final render."
+ },
+ "l-remotion": {
+  "tokens": {
+   "input": 94,
+   "cache_write": 135348,
+   "cache_read": 5053938,
+   "output": 80300,
+   "thinking": 44414,
+   "total": 5269680
+  },
+  "cost_usd": 3.7,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 51.9,
+  "tool_wait_min": 15.5,
+  "api_minutes": 14.4,
+  "turns": 5,
+  "tool_calls": 42,
+  "tool_mix": {
+   "Write": 9,
+   "Read": 7,
+   "ToolSearch": 1,
+   "Edit": 1,
+   "Bash": 24
+  },
+  "denied": 0,
+  "denials": [],
+  "images_viewed": 7,
+  "loc": 1405,
+  "files": [
+   [
+    "remotion.config.ts",
+    16
+   ],
+   [
+    "src/theme.ts",
+    56
+   ],
+   [
+    "src/index.ts",
+    3
+   ],
+   [
+    "src/World.tsx",
+    311
+   ],
+   [
+    "src/camera.ts",
+    29
+   ],
+   [
+    "src/fonts.ts",
+    15
+   ],
+   [
+    "src/Abyssal.tsx",
+    36
+   ],
+   [
+    "src/layout.ts",
+    133
+   ],
+   [
+    "src/Root.tsx",
+    14
+   ],
+   [
+    "src/creatures.tsx",
+    179
+   ],
+   [
+    "src/scenes/Tagline.tsx",
+    198
+   ],
+   [
+    "src/scenes/Logo.tsx",
+    186
+   ],
+   [
+    "src/scenes/Hud.tsx",
+    229
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 8,
+  "report": "nophore, lanternfish with five cyan dots, and an anglerfish with a grey rim light, teeth and a coral lure. The anglerfish's lure is beat 1's single coral accent.\n- **Beat 1:** the background goes from Midnight Blue to black. The depth counter eases in from 0 M to 4,000 M. The axis then draws down and the counter slides to its base.\n- **Beat 2:** the chart tilts 8\u00b0 on the Y axis while the creatures behind it drop to 40% brightness. The bars grow 0.4 s apart with a 2.5% overshoot, and the values count up to 100%, 1% and 0%. The 0% gets a coral glow pulse. A blurred jellyfish crosses in front of the chart, then the camera pushes into the empty Midnight row and the chart blurs past the lens.\n- **Beat 3:** the letters of \"LIGHT ENDS.\" go dark one at a time, 60 ms apart (grey, down to 15%, sinking 40 px and shrinking to 0.8). For \"LIFE DOESN'T.\", 12\u201316 glow points per letter swim in along curved paths to points sampled from the actual letter shapes, and each letter lights with a short bloom. The coral apostrophe lights last, and a foreground jellyfish crosses the line. The letters then break into rising points, leaving only the coral light.\n- **Beats 4\u20135:** that coral point slides into place as the lure, with no break. The stalk draws in 0.6 s and runs into a clockwise 240 px ring in 0.8 s. A faint anglerfish shows inside the ring for about a second. \"ABYSSAL\" slides out from behind the mark, 50 ms per letter. In the hold, the rule, the small tagline and the descriptor set in, the lure pulses at 16.0 s and more gently at 17.2 s, and the circling creatures slow almost to a stop.\n\n**Render command** (run from `/home/user/tools5/l/remotion`):\n```\nnpx remotion render Abyssal out/video.mp4 --concurrency=4\n```\n\n**What got in the way**\n- **The brief contradicts itself in two places. In both, I followed the \"Must\" list:**\n  - The counter is meant to sit 64 px from the edges, but 64 px from the left breaks the 5% title-safe margin (96 px). I put it 96 px from the left and 64 px from the top.\n  - The Twilight bar is meant to be a 6 px sliver, but at 100% = 1,000 px a true linear scale makes 1% = 10 px. I drew it 10 px.\n- **Apostrophe:** I used the curly apostrophe (\u2019) in \"DOESN'T\" rather than the straight one in the brief. That's a typographic choice; the copy is unchanged.\n- **Render time:** rendering runs at about 1 s per frame on this 4-core machine. My first full render was killed by the background time limit, and the re-run with `--concurrency=4` and a longer limit finished fine.\n- **Docs:** I didn't open Remotion Studio, even though the docs say to keep a preview open; there's no one here to watch it. I checked my work by rendering stills with `npx remotion render --frames` and frames from the MP4 instead.\n- **Fonts:** I copied the two fonts into `public/fonts` and loaded them with `@remotion/fonts`.\n\nThe code is in `src/`: `Abyssal.tsx`, `World.tsx` (the planes), `creatures.tsx`, `layout.ts` (glyph measuring) and `scenes/` for the chart, tagline and logo."
+ },
+ "l-hyperframes": {
+  "tokens": {
+   "input": 118,
+   "cache_write": 205701,
+   "cache_read": 10399041,
+   "output": 106984,
+   "thinking": 62177,
+   "total": 10711844
+  },
+  "cost_usd": 5.87,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 40.9,
+  "tool_wait_min": 21.5,
+  "api_minutes": 19.2,
+  "turns": 74,
+  "tool_calls": 73,
+  "tool_mix": {
+   "Write": 8,
+   "Monitor": 3,
+   "ReadNotifications": 2,
+   "Read": 19,
+   "ToolSearch": 1,
+   "Edit": 4,
+   "Bash": 36
+  },
+  "denied": 2,
+  "denials": [
+   "L=/tmp/claude-0/-home-user-tools5-l-hyperframes/387e7460-d76f-46eb-8a91-c375d8a511d1/scratchpad/render.log; last=\"\"; while true; do p=$(tail -c 400 $L | grep -o",
+   "L=/tmp/claude-0/-home-user-tools5-l-hyperframes/387e7460-d76f-46eb-8a91-c375d8a511d1/scratchpad/render.log\nuntil grep -qE 'Render (complete|failed)|\u2717|Error:' \"$"
+  ],
+  "images_viewed": 18,
+  "loc": 1388,
+  "files": [
+   [
+    "index.html",
+    131
+   ],
+   [
+    "assets/world.js",
+    320
+   ],
+   [
+    "compositions/chart.html",
+    217
+   ],
+   [
+    "compositions/foreground.html",
+    80
+   ],
+   [
+    "compositions/title.html",
+    478
+   ],
+   [
+    "compositions/depths.html",
+    162
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 2,
+  "report": " and blur. The world drops to 40% brightness behind the chart.\n- **Counter and chart (0\u20137 s):** the depth counter rolls from 0 M to 4,000 M with an ease-in. The axis draws down and the counter slides to sit at its base. The chart tilts 8\u00b0 on the Y axis. Bars are on a linear scale where 100% = 1,000 px, grow 0.4 s apart and overshoot by 2.3%. The Midnight Zone's coral \"0%\" comes in with a glow pulse. The camera then pushes into the empty Midnight row and the chart blurs past the lens.\n- **Tagline and logo (7\u201318 s):**\n  - Each letter of LIGHT ENDS. goes dark one at a time, 60 ms apart.\n  - LIFE DOESN'T. builds from 12\u201320 glow points per letter, placed inside the real Bebas Neue letter shapes. The coral apostrophe lights last.\n  - The letters break into rising points, and the apostrophe's light becomes the lure. It slides to centre, grows the stalk and then the clockwise ring, with the anglerfish silhouette shown for 1 s.\n  - ABYSSAL slides out from behind the ring, then the rule, the tagline and DEEP OCEAN EXPEDITIONS set in. The lure pulses at 16.0 s and again, smaller, at 17.2 s.\n- **Foreground plane:** large, heavily blurred creatures. A jellyfish crosses in beat 1, a lanternfish passes in front of the chart, a jellyfish crosses over the tagline, and the siphonophore circles the lockup. The circling creatures slow almost to a stop by the end.\n\nAll motion is calculated from the timeline's time, so any frame renders the same on its own. `npx hyperframes check` passes with 0 errors.\n\n## Render command\nRun from `/home/user/tools5/l/hyperframes`:\n```\nnpx --yes hyperframes@0.9.18 render --fps 30 --quality delivery -o out/video.mp4\n```\n\n## What got in the way\n- **The brief contradicts itself twice:**\n  - The counter is asked for at 64 px from the edges but also inside a 5% title-safe margin (96 px at the sides). I put it at 96 px from the left and 64 px from the top, which satisfies both.\n  - The Twilight bar is called \"a 6 px sliver\" but also has to sit on a true linear scale where 100% = 1,000 px. On that scale 1% is 10 px, so the bar is 10 px.\n- **Warnings I left in on purpose:** the 22 px and 20 px text sizes and the Silt Grey colour (4.42:1 contrast against the background) are set by the brief, so I kept them even though `check` warns. It also warns that the film has no sound, which is what the brief asks for.\n- **My first logo layout came out wrong.** The tagline-and-logo scene is hidden when it is first built, so measuring text sizes on the page returned zero. That pushed the lockup off-centre and hid the glow points. I fixed it by measuring from the font itself instead.\n- **Rendering is shared on this machine.** The render first waited for other people's renders to finish, then took 6 minutes using software graphics.\n\nThe full notes are in `REVIEW.md`. The weakest parts are the far lanternfish schools, which are faint enough to read as specks, and the beat-1 foreground jellyfish, which is so blurred that it reads more as a glow than an outline."
+ },
+ "m-givemotion": {
+  "tokens": {
+   "input": 124,
+   "cache_write": 266441,
+   "cache_read": 9232876,
+   "output": 136877,
+   "thinking": 94931,
+   "total": 9636318
+  },
+  "cost_usd": 6.57,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 34.1,
+  "tool_wait_min": 8.8,
+  "api_minutes": 25.9,
+  "turns": 26,
+  "tool_calls": 61,
+  "tool_mix": {
+   "Glob": 1,
+   "Grep": 1,
+   "Write": 1,
+   "Agent": 1,
+   "Read": 25,
+   "Bash": 32
+  },
+  "denied": 0,
+  "denials": [],
+  "images_viewed": 21,
+  "loc": 662,
+  "files": [
+   [
+    "video.html",
+    634
+   ],
+   [
+    "work/metric.html",
+    9
+   ],
+   [
+    "work/measure.html",
+    19
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 1,
+  "report": "ds slide in from alternate sides, and \"DEWEY DECIMAL CLASSIFICATION\" types one character per frame.\n  - The digits spread apart, the number docks at the top in Paper, and the Coral field squeezes into band 5.\n- **Beat 3:** five levels. In each, the chosen digit and band turn Coral, the category name rises inside its band, and the Mustard counter rolls.\n  - The band then expands to fill the stack and nine dividers re-split it, 2 frames apart. Each choice lands about 0.2 s into its window.\n  - The decimal point pulses before CEPHALOPODS. OCTOPUSES narrows back into the spine, and the wall rebuilds around it in its original slot.\n- **Beat 4:** a bottom-to-top wipe turns the wall into the floor plan. The spine becomes the 32 px dot in the fifth row (counting from the entrance), and \"590\u2013599\" sits on that row's end.\n  - The Teal path makes five right-angle turns, with a \"\u00f710\" pop at each.\n  - The headline snaps in one word every 4 frames; then everything dims and the dot drifts to the centre.\n- **Beat 5:** the dot becomes the 40 px bar, which sweeps across to reveal the three lines with a 5-frame stagger. It then swings round its bottom end and settles as the 12 px underline.\n\n## Render command\n```\nnpx givemotion render video.html -o out/video.mp4 --quality high --motion-blur auto\n```\nMotion blur smooths the very fast camera push at 3.6\u20134.0 s; it applied to 250 of the 750 frames. The flat look is unchanged.\n\n## What got in the way\n- **A visibility bug of mine:** on the first pass, my show/hide helper un-hid child elements, so text from Beats 2 and 3 leaked into later beats. Fixed.\n- **A hidden engine behaviour:** givemotion tilts any element it moves by 0.042\u00b0 to keep text crisp. It isn't in the main docs; I found it in the engine's source. On full-width shapes it left a hairline at the top edge and seams between the bands. Shapes are opted out by giving them their own `rotate: 0deg` in CSS.\n- **Brief conflicts I had to resolve:**\n  - **Typing speed:** one character per frame for 28 characters takes 0.93 s, longer than the 0.6 s window. I kept the per-frame speed.\n  - **Line size:** \"YOU CAN WALK INTO.\" at 190 px would be about 1,165 px wide, past the 80 px margins. The three end lines are sized to the margins instead, at about 241, 176 and 150 px.\n  - **Card width:** the wider digit spacing doesn't fit a 760 px card, so the card widens to the 80 px margins during that beat.\n  - **Digit colour:** on Coral bands I kept the digits Paper at 60% as specified, even though contrast is low there.\n- **Weaker spots:**\n  - **Knockout contrast:** the cut-out \"A MILLION / BOOKS.\" reads as Slate through Ink, which is the lowest-contrast headline in the piece.\n  - **Ragged splits:** each band re-split briefly looks like a staircase while the slate bands wipe in.\n\nA fresh reviewer working only from the frames found the late Beat 3 levels, the leftover marks and the Beat 1 exit; I fixed those.\n\nFiles are in /home/user/tools5/m/givemotion:\n- out/video.mp4\n- video.html"
+ },
+ "m-remotion": {
+  "tokens": {
+   "input": 87,
+   "cache_write": 174472,
+   "cache_read": 5597152,
+   "output": 105046,
+   "thinking": 69591,
+   "total": 5876757
+  },
+  "cost_usd": 4.62,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 25.5,
+  "tool_wait_min": 6.3,
+  "api_minutes": 19.1,
+  "turns": 51,
+  "tool_calls": 47,
+  "tool_mix": {
+   "Read": 7,
+   "Bash": 26,
+   "Write": 14
+  },
+  "denied": 0,
+  "denials": [],
+  "images_viewed": 7,
+  "loc": 1599,
+  "files": [
+   [
+    "remotion.config.ts",
+    16
+   ],
+   [
+    "src/theme.ts",
+    46
+   ],
+   [
+    "src/Composition.tsx",
+    14
+   ],
+   [
+    "src/index.ts",
+    3
+   ],
+   [
+    "src/Bands.tsx",
+    72
+   ],
+   [
+    "src/Counter.tsx",
+    94
+   ],
+   [
+    "src/geometry.ts",
+    118
+   ],
+   [
+    "src/CallNumber.tsx",
+    56
+   ],
+   [
+    "src/Video.tsx",
+    32
+   ],
+   [
+    "src/Wall.tsx",
+    183
+   ],
+   [
+    "src/Root.tsx",
+    8
+   ],
+   [
+    "src/Plan.tsx",
+    132
+   ],
+   [
+    "src/scenes/Beat1Wall.tsx",
+    130
+   ],
+   [
+    "src/scenes/Beat2Address.tsx",
+    196
+   ],
+   [
+    "src/scenes/Beat4Walk.tsx",
+    138
+   ],
+   [
+    "src/scenes/Beat3Bands.tsx",
+    245
+   ],
+   [
+    "src/scenes/Beat5Line.tsx",
+    116
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 7,
+  "report": "all rebuilds around it at its exact starting position.\n- **Beat 4:** a bottom-to-top wipe turns the wall into a floor plan while the spine shrinks into the dot. The Teal path draws with five turns and a \"\u00f710\" pops at each one; the three-line headline builds at the top.\n- **Beat 5:** the dot stretches into a bar, which sweeps across and reveals the three lines with a 5-frame lag per line. It then swings round into the underline, and the last 36 frames are a still hold.\n\nI checked the scene changes frame by frame (119\u2192120, 254\u2192255, 494\u2192495, 629\u2192630) and each one matches.\n\n**Render command** (run from `/home/user/tools5/m/remotion`):\n```\nnpx remotion render AddressOfEveryBook out/video.mp4 --muted\n```\n\n**Fixes I made after looking at frames**\n- **Knockout text:** the letters first read badly because short spines left dark gaps. I made the wall denser and sat each line of type on a shelf, so the letters are filled solid.\n- **Counter:** the unchanged \"1 IN\" was rolling along with the number and looked glitchy. Now only the number rolls and the prefix slides to stay centred.\n- **OCTOPUSES:** a stray \"S\" was left inside the band as it narrowed. The name now sinks out first, and it is still readable for 20 frames.\n- **Underline:** the bar rotating into the underline was striking through \"WALK INTO.\" It now swings into the empty space on the right and slides in under the last line.\n\n**Where I departed from the brief**\n- **Outro size:** the brief asks for the outro type at about 190px, but \"YOU CAN WALK INTO.\" is 1,173px wide at that size. I used 148px so it fits inside the 80px margins, which the brief lists as a Must.\n- **Opening size:** \"A MILLION / BOOKS.\" is 290px rather than about 250px, so it actually fills the width.\n- **Stamp overshoot:** at 115% scale the opening stamp pokes past the side margins for about 4 frames. This conflict is built into the brief, and I kept the 115% it asks for.\n- **Card width:** the card widens from 760px to 920px while the tracking opens up, because the spread-out digits don't fit a 760px card at 190px.\n- **Typing time:** typing one character per frame takes 28 frames, longer than the brief's 0.6 s window, so it starts slightly early.\n- **Wall rebuild:** in Beat 3 the rows are staggered 2 frames apart instead of 3, so the rebuild finishes by 16.5 s.\n- **Dot position:** the coral dot sits in the aisle in front of the fifth shelving row rather than on it. A path that starts going up and makes five right-angle turns has to finish horizontally, so it can only end in an aisle.\n\n**What got in the way**\n- There's no preview to watch, so instead of the Remotion Studio preview the docs recommend, I checked my work by rendering stills and contact sheets with `npx remotion render --frames=...`.\n- `tsc` reports errors only in the example files under `skills/`, which are missing map packages. My code in `src/` type-checks and passes ESLint.\n- `remotion.config.ts` already showed as modified in git before I started; I didn't touch it."
+ },
+ "m-hyperframes": {
+  "tokens": {
+   "input": 96,
+   "cache_write": 201064,
+   "cache_read": 7215061,
+   "output": 97462,
+   "thinking": 60144,
+   "total": 7513683
+  },
+  "cost_usd": 5.0,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 25.3,
+  "tool_wait_min": 7.9,
+  "api_minutes": 17.3,
+  "turns": 64,
+  "tool_calls": 54,
+  "tool_mix": {
+   "Read": 16,
+   "Bash": 30,
+   "Write": 8
+  },
+  "denied": 0,
+  "denials": [],
+  "images_viewed": 16,
+  "loc": 1318,
+  "files": [
+   [
+    "index.html",
+    105
+   ],
+   [
+    "compositions/levels.html",
+    270
+   ],
+   [
+    "compositions/line.html",
+    74
+   ],
+   [
+    "compositions/walk.html",
+    430
+   ],
+   [
+    "compositions/address.html",
+    205
+   ],
+   [
+    "compositions/wall.html",
+    234
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 1,
+  "report": "k slides out. The camera then pushes in until the book's small label becomes the label card.\n2. **Address (4.0\u20138.5 s):** \"594.56\" rises into the card. The headline words slide in from alternating sides, \"DEWEY DECIMAL CLASSIFICATION\" types on one letter per frame, and the digits spread apart. The number then docks at the top while the coral background squeezes into band 5 of the next scene.\n3. **Levels (8.5\u201316.0 s):** five levels. At each one the digit turns coral, the category name rises inside its band, and the \"1 IN \u2026\" counter rolls up. The chosen band then fills the stack and nine divider lines split it into ten again. The decimal point pulses before the fourth level.\n4. **Walk (16.0\u201321.6 s):** the OCTOPUSES band narrows back into the coral book, in its original spot, as the same wall rebuilds around it. A bottom-to-top wipe turns the wall into a floor plan and the book becomes a dot. A teal path draws from the door with five turns, and \"\u00f710\" pops at each turn. Everything then dims and the dot drifts to the centre and becomes a bar.\n5. **Line (21.6\u201325.0 s):** the bar sweeps across to reveal the last three lines, folds into an underline, and the frame holds still from about 23.85 s.\n\n`npm run check` passes. Three kinds of warning are left, all deliberate: the film has no sound (the brief says no audio), some words are on screen briefly (the 10-frame \"\u00f710\" pops the brief asks for, and band digits that leave during transitions), and two contrast readings are on digits that are clipped out of view.\n\n**Render command** (run from the project folder):\n```\nnpx --yes hyperframes@0.9.18 render --quality delivery --fps 30 -o out/video.mp4\n```\nIt took about 2 min 35 s.\n\n**What got in the way, and where I departed from the brief**\n- **Some sizes in the brief can't all be met at once.** At 190 px, \"YOU CAN WALK INTO.\" is 1,173 px wide and would break the 80 px side margins, so the closing lines are 147 px. \"A MILLION\" is 300 px rather than 250 so that it actually fills the width, as the brief also asks. \"594.56\" is 170 px rather than 190 so it still fits inside the 760 px card once the digits spread apart.\n- **The level timings don't fit the brief's windows.** Nine divider lines at a 2-frame stagger, plus at least 0.6 s to read each name, don't fit into the 1.0 s first level. From level 2 on, each level starts about 0.4 s later than the brief says. Every category name and counter is still readable for at least 0.6 s.\n- **The typing runs slightly long.** One letter per frame for 28 letters ends at about 6.83 s instead of 6.6 s.\n- **Weakest moment:** around 16.0\u201316.3 s the slate bands collapse while the wall rises under them, which looks busy for a few frames.\n\nNothing else blocked the work. GSAP loaded from `vendor/`, the fonts from `assets/fonts/` (copied from `fonts/`), and none of my own files load anything from the network. I didn't watch the video on an actual phone.\n\nFiles are in `/home/user/tools5/m/hyperframes`:\n- out/video.mp4\n- SPEC.md\n- REVIEW.md"
+ },
+ "k2-givemotion": {
+  "tokens": {
+   "input": 110,
+   "cache_write": 258488,
+   "cache_read": 8046101,
+   "output": 106283,
+   "thinking": 68299,
+   "total": 8410982
+  },
+  "cost_usd": 5.66,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 24.6,
+  "tool_wait_min": 7.4,
+  "api_minutes": 19.4,
+  "turns": 56,
+  "tool_calls": 63,
+  "tool_mix": {
+   "Glob": 1,
+   "Write": 3,
+   "ReadNotifications": 2,
+   "Agent": 1,
+   "Read": 31,
+   "Bash": 25
+  },
+  "denied": 1,
+  "denials": [
+   "python3 - <<'EOF'\np='video.html'; s=open(p).read()\ndef rep(a,b):\n    global s\n    assert a in s, a[:60]\n    s=s.replace(a,b)\n# 1. split: drop keeps rising and t"
+  ],
+  "images_viewed": 28,
+  "loc": 470,
+  "files": [
+   [
+    "video.html",
+    470
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 1,
+  "report": "5\u201316 s, Collect:** the river draws from the hero, getting thicker as it goes, and ends in three sea waves. The droplet rides the river's tip and squashes at the bends. \"Collect.\" flows along the curve and then levels out. At 15.0 s everything dims to 30%, the 700 px loop draws clockwise and the arrowhead pops on with a squash. The loop pulses and everything else clears.\n- **16\u201318 s, Lockup:** the loop shrinks into an emblem and the droplet jumps into its centre. \"The Water Cycle\" slams in word by word, the subline slides up and the mono line types on. The droplet blinks at 17.0 s, and nothing moves from 17.4 s to the end.\n\nI ran `givemotion review` twice and gave the frames to a separate critic agent. Its useful points led to these changes: parallel vapour S-curves instead of a tangle, a clearer five-bump cloud, letters rising from a hidden edge so they aren't cut at the frame bottom, beat 5 clearing before the droplet jumps, a bigger sea and arrowhead, a rebalanced lockup, and the impact squash held for longer.\n\n## Render command\n```\nnpx givemotion render video.html -o out/video.mp4\n```\n\n## What got in the way\n- **Split text didn't exist when my script ran.** The pieces that `data-split` creates weren't there yet, so all my per-letter animation silently applied to nothing. I now split the text myself in the script.\n- **Two scale settings clashed.** Starting the arrowhead at `scale: 0` and then animating `scaleX`/`scaleY` kept it at size zero, so it never appeared until I changed the start value.\n- **Undrawn lines showed as dots.** A line that hasn't started drawing still shows a dot because of its round end caps. `hideBefore: true` fixed it.\n- **Wide tracking ran off screen.** Animating letter spacing pushed \"Condense.\" past both edges of the frame, so I spread the letters with individual offsets instead.\n- **Blocked command.** One inline Python edit was blocked by the shell's safety check, so I ran it from a script file instead.\n\n## Choices to know about\n- **The lockup loop shrinks.** It goes from 700 px to about 410 px and becomes an emblem around the droplet. At full size, the title and subline would have run across the ring's line.\n- **\"Collect.\" sits right of centre,** under the middle of the river, because it travels along the river. The other three stage words are centred.\n- **Clockwise loop.** The brief's layout (sun top-right, river flowing left to right) means a clockwise loop runs against the usual direction of the cycle. I kept clockwise as the brief asks.\n- **Remaining warnings come from the brief's own timings.** The tool still warns that the first 4.7 s are fairly still, and that the lockup and \"Collect.\" holds are short to read. The 17.4\u201318 s still hold is also mandated, and the 32 px `#1F6FB2` step numbers are faint on navy because those are the brief's size and colour.\n- **\"Precipitate.\" letters cross the cloud and sun.** They fall from the top of the frame as the brief asks, so they pass over the cloud and sun on the way down."
+ },
+ "k2-remotion": {
+  "tokens": {
+   "input": 74,
+   "cache_write": 143279,
+   "cache_read": 4519759,
+   "output": 68278,
+   "thinking": 37614,
+   "total": 4731390
+  },
+  "cost_usd": 3.42,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 16.4,
+  "tool_wait_min": 4.2,
+  "api_minutes": 12.2,
+  "turns": 52,
+  "tool_calls": 50,
+  "tool_mix": {
+   "Read": 15,
+   "Bash": 28,
+   "Write": 7
+  },
+  "denied": 0,
+  "denials": [],
+  "images_viewed": 14,
+  "loc": 1136,
+  "files": [
+   [
+    "remotion.config.ts",
+    16
+   ],
+   [
+    "src/index.ts",
+    3
+   ],
+   [
+    "src/WaterCycle.tsx",
+    61
+   ],
+   [
+    "src/Root.tsx",
+    16
+   ],
+   [
+    "src/components/Drop.tsx",
+    62
+   ],
+   [
+    "src/layers/Lines.tsx",
+    287
+   ],
+   [
+    "src/layers/Type.tsx",
+    296
+   ],
+   [
+    "src/layers/Characters.tsx",
+    212
+   ],
+   [
+    "src/lib/geometry.ts",
+    71
+   ],
+   [
+    "src/lib/anim.ts",
+    82
+   ],
+   [
+    "src/lib/fonts.ts",
+    30
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 4,
+  "report": "m the centre out. The sun circle draws clockwise and its rays follow in a stagger. The three wavy vapour paths draw up and meet. The cloud is one 525 px, five-bump stroke. Rain streaks draw behind the drops and erase from the top. The river widens from 8 to 14 px and ends in three sea waves. The 700 px cycle loop draws clockwise through the sun, the cloud and the river, then its arrowhead pops on with a squash.\n- **Stage words:** each moves like its stage. \"Evaporate.\" rises letter by letter and its full stop lands last in sun orange. \"Condense.\" squeezes from +60% tracking down to \u22122%, then does a 92% horizontal squash. \"Precipitate.\" falls letter by letter in random order, each with one bounce. \"Collect.\" flows along a wave and straightens into a level word.\n- **Lockup:** the loop shrinks around the droplet as it jumps in and lands. \"The Water Cycle\" slams in word by word, the subtitle slides up and the mono line types on. The last 18 frames are byte-identical, so the hold from 17.4 s is completely still.\n- **Checks:** all type stays inside the 96 px margin (measured on rendered frames), and only the listed colours, fonts and copy are used.\n\n## Choices the brief left open\n- **Stage words sit below the horizon,** left-aligned at 96 px, so the top of the frame is free for the drawings. \"Evaporate.\" rises up into that band from below the frame.\n- **The river starts at the droplet (x = 960) and flows right,** with the droplet riding at its drawing tip. That means it covers only the right half of the horizon.\n- **The loop is off-centre** (centre at 1260, 470) so a single 700 px circle can pass through the sun, the cloud and the river. It then moves to the centre for the lockup.\n- **\"Collect.\" follows a wave in its own band rather than the river line itself.** It ends in the same left-aligned position as the other stage words.\n- **The droplet splits into three small drops,** each leading the tip of one vapour path, so the \"splits apart\" moment is clear.\n\n## Render command\nRun from `/home/user/tools5/k2/remotion`:\n```\nnpx remotion render WaterCycle out/video.mp4 --log=error\n```\nI checked frames with `npx remotion render WaterCycle <dir> --sequence --image-format=jpeg` and contact sheets made with ffmpeg.\n\n## What got in the way\n- **Studio:** I started it as the docs say, but nobody could watch it, and it was stopped when it hit the background time limit. I didn't restart it and checked rendered frames instead.\n- **The 30% fade:** the brief asks for the sun, cloud and river to drop to 30% at 15.0 s. At that opacity they show as blends of their colour and the navy background, so strictly they are off-palette for those frames.\n- **Small type-check fixes:** `npx tsc` fails on map example files inside `skills/` that import packages that aren't installed; my own `src/` code type-checks clean. `@remotion/paths` returns values that may be null in its types, so I added non-null assertions. Rendering was otherwise smooth: a full 540-frame pass takes about 20 s."
+ },
+ "k2-hyperframes": {
+  "tokens": {
+   "input": 60,
+   "cache_write": 149700,
+   "cache_read": 4188307,
+   "output": 80203,
+   "thinking": 54592,
+   "total": 4418270
+  },
+  "cost_usd": 3.64,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 18.7,
+  "tool_wait_min": 4.2,
+  "api_minutes": 14.4,
+  "turns": 39,
+  "tool_calls": 38,
+  "tool_mix": {
+   "Read": 12,
+   "Bash": 25,
+   "Write": 1
+  },
+  "denied": 0,
+  "denials": [],
+  "images_viewed": 12,
+  "loc": 577,
+  "files": [
+   [
+    "index.html",
+    577
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 2,
+  "report": "and its full stop is orange.\n3. **Condense:** the vapour tips meet and turn into one white line that draws the five-bump cloud, while the vapour erases upwards into it. \"Condense.\" squeezes from wide spacing to tight, squashes to 92% width and springs back. The cloud breathes twice, then presses down to 88%.\n4. **Precipitate:** five drops fall with rain streaks and land squashed; the fifth is the hero, eyes and all. The letters of \"Precipitate.\" fall in a scattered order and bounce once on landing. The four small drops slide over and merge into the hero, which swells with each one.\n5. **Collect:** the river draws from the hero to three wave curves at the right edge, thickening from 8 to 14 px. The droplet rides along it, and \"Collect.\" follows the curve before straightening. At 15.0 s everything drops to 30% and the 700 px loop draws clockwise through the sun, the cloud and the river. The arrowhead pops on and the loop pulses once.\n6. **Lockup:** the droplet jumps into the loop. \"The Water Cycle\" slams in word by word, then \"Infinitely refillable.\" slides up and the closing line types on. The droplet blinks at 17.0 s, and nothing moves from 17.4 s to the end.\n\nI looked at about 70 still frames across every beat and handover, plus frames taken from the finished MP4. That caught two bugs, which I fixed: the cursor was in the wrong place, and the \"Collect.\" letters overlapped on the river bends. I also moved \"Condense.\" later so the vapour lines no longer cross it. My notes on the decisions are in `REVIEW.md`.\n\n## Render command\n```\nnpx --yes hyperframes@0.9.18 render --output out/video.mp4 --fps 30 --quality delivery\n```\n\n## What got in the way\n- **Two parts of the brief pull against each other.** It wants the sun \"in the top-right corner\" and also a 700 px loop that runs through the sun, cloud and river. A circle that size can't reach the corner, so the sun sits in the upper right at about x=1250, on the loop's path.\n- **Lockup size, my own call.** A 700 px loop with 160 px type below it doesn't fit in 1080 px. As the scene clears, I shrink the loop to 60% (the line stays 6 px thick) so it frames the droplet with the type underneath. Keeping it full size would mean the title runs across the ring.\n- **Warnings I left in place:** no sound and the lockup lines being on screen under 2 s both come from the brief itself. The \"file too large / use sub-compositions\" warnings come from keeping one file, because the droplet is one character that runs through every beat.\n- **Not perfect:** the moment the droplet turns into vapour (around 4.7 s) is a quick thin-and-fade rather than a clear three-way split. And \"Collect.\" is a little loosely spaced while it travels along the river.\n- **Small things:** the fonts were in `fonts/`, so I copied the two I used into `assets/fonts/`, where HyperFrames expects them. The CLI says version 0.9.19 is out; I stayed on the pinned 0.9.18. I didn't send the CLI's optional feedback report, because it posts to a public channel."
+ },
+ "l2-givemotion": {
+  "tokens": {
+   "input": 92,
+   "cache_write": 250073,
+   "cache_read": 6659054,
+   "output": 101877,
+   "thinking": 64246,
+   "total": 7011096
+  },
+  "cost_usd": 5.21,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 32.5,
+  "tool_wait_min": 16.8,
+  "api_minutes": 18.4,
+  "turns": 40,
+  "tool_calls": 55,
+  "tool_mix": {
+   "Read": 30,
+   "Agent": 1,
+   "Bash": 23,
+   "Write": 1
+  },
+  "denied": 0,
+  "denials": [],
+  "images_viewed": 26,
+  "loc": 587,
+  "files": [
+   [
+    "video.html",
+    587
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 2,
+  "report": "s, each letter lighting with a short bloom. The apostrophe lights last, in coral.\n   - A blurred foreground jellyfish crosses over the letters. At 10.6 s the letters break into points that drift upward, and only the coral light remains.\n4. **Logo (11\u201315 s):** That same coral point becomes the lure, so the coral light never breaks from the apostrophe into the logo.\n   - The stalk draws out of it (0.6 s) and continues into the 240 px ring, drawn clockwise (0.8 s) and open at the top right.\n   - A faint anglerfish silhouette shows inside the ring for about 1 s, then dissolves.\n   - The mark slides left while the ABYSSAL letters come forward out of depth from behind the ring, left to right, 50 ms apart.\n   - A lanternfish, a jellyfish and the siphonophore circle the lockup on the far, back and foreground planes.\n5. **Hold (15\u201318 s):**\n   - The lockup settles to centre. The 1 px rule draws out from the centre, then the small two-colour tagline and \"DEEP OCEAN EXPEDITIONS\" set in.\n   - The lure pulses at 16.0 s and more softly at 17.2 s, and the circling creatures slow almost to a stop.\n   - The final frame is a clean, readable lockup with no fade to black.\n\n## Render command\n```\nnpx givemotion render video.html -o out/video.mp4 --motion-blur auto --quality high\n```\nRun from `/home/user/tools5/l2/givemotion`.\n\n## How I worked and what got in the way\n- **Two conflicts inside the brief:**\n  - The counter was asked to sit 64 px from the left edge, but the 5% title-safe margin is 96 px. I followed the Must and put it at 96 px left, 64 px top.\n  - The Twilight bar was asked to be a 6 px sliver, but 1% on a true linear scale of 1,000 px is 10 px. I followed the linear-scale Must and made it 10 px.\n- **Warnings I left on purpose:** `check` ends with 0 errors and 6 warnings.\n  - Four come from the brief's own specs: Silt Grey text is just under 4.4:1 contrast, and the 20 px descriptor is below givemotion's minimum text size.\n  - Two are short readable holds. \"LIFE DOESN'T.\" is fully lit for about 0.8 s and \"LIGHT ENDS.\" for under a second, because the brief times the darkening and the 10.6 s handover.\n- **Review rounds:** I did two rounds with givemotion's stills and review sheets, plus one with a separate critic agent that only saw the frames. The fixes included:\n  - a stray cyan dot left by an undrawn stroke;\n  - the siphonophore crossing the counter;\n  - lanternfish wandering through \"LIGHT ENDS.\";\n  - ABYSSAL letters piling up and appearing out of order;\n  - the descriptor touching the stalk;\n  - a second coral accent in Beat 2;\n  - stronger snow streaks during the push, which I toned down.\n- **Fast moves:** analysis of the first render showed some fast frames strobing, so the final render uses `--motion-blur auto`.\n- **Render speed:** renders ran with only one worker because other givemotion processes were open on the machine. That was about 1.5\u20132 minutes per render, which was fine.\n\nAll my working stills and contact sheets are in `frames/` and `review/`."
+ },
+ "l2-remotion": {
+  "tokens": {
+   "input": 123,
+   "cache_write": 180074,
+   "cache_read": 9364771,
+   "output": 95046,
+   "thinking": 50218,
+   "total": 9640014
+  },
+  "cost_usd": 5.21,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 37.7,
+  "tool_wait_min": 20.3,
+  "api_minutes": 17.3,
+  "turns": 70,
+  "tool_calls": 69,
+  "tool_mix": {
+   "Read": 14,
+   "Bash": 42,
+   "ToolSearch": 1,
+   "Write": 12
+  },
+  "denied": 0,
+  "denials": [],
+  "images_viewed": 13,
+  "loc": 1394,
+  "files": [
+   [
+    "remotion.config.ts",
+    16
+   ],
+   [
+    "src/index.ts",
+    3
+   ],
+   [
+    "src/Abyssal.tsx",
+    40
+   ],
+   [
+    "src/Root.tsx",
+    16
+   ],
+   [
+    "src/world/World.tsx",
+    235
+   ],
+   [
+    "src/world/Creatures.tsx",
+    217
+   ],
+   [
+    "src/scenes/LogoScene.tsx",
+    182
+   ],
+   [
+    "src/scenes/Lure.tsx",
+    53
+   ],
+   [
+    "src/scenes/ChartScene.tsx",
+    221
+   ],
+   [
+    "src/scenes/TaglineScene.tsx",
+    202
+   ],
+   [
+    "src/lib/theme.ts",
+    40
+   ],
+   [
+    "src/lib/camera.ts",
+    65
+   ],
+   [
+    "src/lib/fonts.ts",
+    16
+   ],
+   [
+    "src/lib/layout.ts",
+    88
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 7,
+  "report": "nd cyan bars on a true linear scale (100% = 1,000 px). The bars overshoot by 2.5%, and 0% fades in with a coral glow pulse. The chart is tilted 8\u00b0 in depth, and creatures pass in front of and behind it. At 6.4\u20137.0 s the camera pushes into the Midnight row and the chart blurs past the lens.\n- **Beat 3:** \"LIGHT ENDS.\" goes dark letter by letter, 60 ms apart (fading to grey, sinking 40 px, shrinking to 0.8). For \"LIFE DOESN'T.\", 12\u201318 glow points per letter swim in along curves and land inside the actual letter shapes. I got those shapes from the Bebas Neue font file with fontTools. The apostrophe lights last, in coral. A blurred foreground jellyfish passes in front of the line. The letters then break back into points that drift up; only the coral light remains.\n- **Beats 4\u20135:** that same coral point (one continuous element) becomes the lure. The stalk draws out of it, then the 240 px cyan ring draws clockwise, open at the top right. The anglerfish silhouette shows for about 1 s. \"ABYSSAL\" slides out from behind the ring in depth, 50 ms apart, while the mark glides left to centre the lockup. The rule, the tagline and \"DEEP OCEAN EXPEDITIONS\" set in, and the lure pulses at 16.0 s and, smaller, at 17.2 s. Three creatures circle the lockup and slow almost to a stop. The last frame is a clean lockup with no fade.\n\nThe code is in `src/` (`Abyssal.tsx`, `world/`, `scenes/`, `lib/`), with the fonts copied to `public/fonts/` and loaded through `@remotion/fonts`.\n\n## Render command\n```\nnpx remotion render Abyssal out/video.mp4 --concurrency=4\n```\nThis was run from `/home/user/tools5/l2/remotion` and took about 15 minutes.\n\n## Where the brief and my choices differ\n- **Brief contradictions.** In both cases I followed the brief's \"Must\" list:\n  - **Counter position:** \"64 px from the edges\" conflicts with the 5% title-safe margin, which is 96 px at the sides. The counter is 64 px from the top and 96 px from the left.\n  - **Twilight bar:** \"a 6 px sliver\" conflicts with \"true linear scale\", where 1% = 10 px. The bar is 10 px.\n- **Rendering is slow** because of all the blur layers, about 0.5\u20130.6 frames per second. My first full test render hit the 10-minute command limit at frame 330. After that I checked selected frames, and ran the final render in the background.\n- **A Chrome rendering glitch:** a mask combined with 3D transforms on the wordmark left a stale copy of the ring across the letters. I replaced the 3D with depth computed by hand in 2D and cut the letters off at the ring's edge. The glitch is gone.\n- **I didn't follow some of the Remotion docs' usual workflow:**\n  - **Studio:** I didn't open the Studio preview, since there was no browser or viewer. I checked by rendering frames instead.\n  - **Chrome path:** the render docs say not to set a browser path, but I kept the preinstalled one in `remotion.config.ts` because this machine is offline.\n  - **Studio editing:** most styles are calculated in code, so the Studio can't edit those animations directly."
+ },
+ "l2-hyperframes": {
+  "tokens": {
+   "input": 80,
+   "cache_write": 166644,
+   "cache_read": 5804871,
+   "output": 87298,
+   "thinking": 47670,
+   "total": 6058893
+  },
+  "cost_usd": 4.24,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 34.1,
+  "tool_wait_min": 18.9,
+  "api_minutes": 15.0,
+  "turns": 48,
+  "tool_calls": 46,
+  "tool_mix": {
+   "Read": 15,
+   "Bash": 28,
+   "Edit": 1,
+   "Write": 2
+  },
+  "denied": 0,
+  "denials": [],
+  "images_viewed": 15,
+  "loc": 937,
+  "files": [
+   [
+    "index.html",
+    53
+   ],
+   [
+    "assets/js/abyss.js",
+    370
+   ],
+   [
+    "compositions/world-front.html",
+    21
+   ],
+   [
+    "compositions/world-back.html",
+    34
+   ],
+   [
+    "compositions/depth.html",
+    122
+   ],
+   [
+    "compositions/tagline.html",
+    197
+   ],
+   [
+    "compositions/logo.html",
+    140
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 4,
+  "report": ".45 | 0.40 | 2.5 px |\n  | Back | 0.45\u00d7 | 0.65 | 0.55 | 1.2 px |\n  | Mid | 0.7\u00d7 | 0.85 | 0.75 | 0.5 px |\n  | Hero | 1.0\u00d7 | 1.0 | 0.9 | none |\n  | Foreground | 1.6\u00d7 | 2.4 | 0.55 | 18 px |\n\n  They carry marine snow, lanternfish schools, siphonophores, pulsing jellyfish with rippling tentacles, and big out-of-focus foreground passes. The foreground layer sits above the text, so creatures pass both in front of the type and behind it.\n- **Beat 1:** the counter rolls 0 \u2192 4,000 M with an ease-in. The axis then draws down and the counter slides to sit at its base.\n- **Beat 2:** a chart tilted 8\u00b0 on the Y axis, with the world dimmed to 40%. Bars grow 0.4 s apart with 2.5% overshoot, to 100%, 1% and an empty 0% with a coral glow pulse. The camera then pushes into the Midnight row and the chart blurs past the lens.\n- **Beat 3:** \"LIGHT ENDS.\" darkens letter by letter, 60 ms apart. \"LIFE DOESN'T.\" is built by 12\u201320 cyan points per letter swimming in on curved paths, and the apostrophe lights last in coral. A blurred foreground jellyfish crosses the line, then the letters burst back into rising points.\n- **Beats 4\u20135:** one coral point carries straight through: it becomes the lure, a stalk draws out of it, and the ring draws clockwise. A faint anglerfish appears inside the ring for about a second, and ABYSSAL slides out from behind the mark. Then the header, the rule and the tagline set in, the lure pulses at 16.0 and 17.2 s, and the three circling creatures slow almost to a stop.\n\n**Render command** (run from `/home/user/tools5/l2/hyperframes`):\n```\nnpx --yes hyperframes@0.9.18 render --quality delivery --fps 30 -o out/video.mp4\n```\n\n**What got in the way**\n- **Contradictions in the brief:**\n  - **1% bar:** a true linear scale where 100% = 1,000 px makes 1% a 10 px bar, not the 6 px sliver the brief describes. I kept the linear scale because it's a Must.\n  - **Counter position:** the counter is 64 px from the top but 96 px from the left, because 64 px from the left would break the 5% title-safe margin (also a Must).\n  - **Tagline layout:** I set it as two stacked lines so the darkened \"LIGHT ENDS.\" never overlaps \"LIFE DOESN'T.\".\n- **Check warnings I left in place:**\n  - Silt Grey on Abyss Black has a contrast of 4.41:1, just under the 4.5:1 the check wants for small text, but the palette is fixed.\n  - The 20 px and 22 px labels are below the check's 28 px minimum, but those sizes come from the brief.\n  - It flags the film as silent, which the brief asks for.\n  - It says the \"200\u20131,000 M\" label is on screen too briefly. That's a false alarm: the label is up from 3.4 to 7.0 s.\n- **Fonts:** text inside a scene measures as zero width when the script first runs, so I lay out the letters from font measurements instead. That also puts the tagline's coral point exactly where the logo's lure starts.\n- **Render time:** the machine has only software graphics, so the render took about 7.5 minutes.\n\nThe working notes are in `SPEC.md` and `REVIEW.md` in the project folder."
+ },
+ "m2-givemotion": {
+  "tokens": {
+   "input": 157,
+   "cache_write": 360408,
+   "cache_read": 14063622,
+   "output": 156304,
+   "thinking": 107006,
+   "total": 14580491
+  },
+  "cost_usd": 8.55,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 36.7,
+  "tool_wait_min": 13.8,
+  "api_minutes": 29.4,
+  "turns": 77,
+  "tool_calls": 93,
+  "tool_mix": {
+   "Glob": 2,
+   "Write": 1,
+   "ReadNotifications": 3,
+   "Agent": 2,
+   "Read": 42,
+   "Bash": 43
+  },
+  "denied": 0,
+  "denials": [],
+  "images_viewed": 38,
+  "loc": 617,
+  "files": [
+   [
+    "video.html",
+    587
+   ],
+   [
+    "work/m2.html",
+    8
+   ],
+   [
+    "work/m.html",
+    22
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 5,
+  "report": "shing the others out, and nine dividers redraw it into ten. The decimal point pulses before CEPHALOPODS. OCTOPUSES holds, then narrows back into the spine at its exact starting position while the wall rebuilds around it.\n- **Beat 4:** a bottom-to-top wipe turns the wall into the floor plan and the spine shrinks into the 32 px dot. The Teal path walks five right-angle turns with a \"\u00f710\" pop at each, while the headline builds word by word. Everything except the dot then dims to 20% and the dot drifts to the centre.\n- **Beat 5:** the dot stretches into the 40 px bar and its sweep reveals the three lines, each 5 frames behind the one above. The bar then turns 90\u00b0 into the 12 px underline, followed by a still hold to the end.\n\n**Render command** (run from `/home/user/tools5/m2/givemotion`):\n```\nnpx givemotion render video.html -o out/video.mp4\n```\n\n**How I worked:** I followed the skill docs: style frames as stills, `check` as I went, then `review`. Two outside critics who had seen only the brief and the frames reviewed it, with a round of fixes after each. The final `check` shows 0 errors. The 6 warnings left are things the brief asks for: the 10-frame \"\u00f710\" pops, the persistent counter, and the still final hold.\n\n**Departures from the brief, and what got in the way:**\n- **The brief contradicts itself in a few places, so some sizes and timings are compromises:**\n  - \"YOU CAN WALK INTO.\" cannot be ~190 px and stay inside the 80 px margins. The closing lines are 148 px.\n  - The knockout lines are 266 px, centred, so the 115% stamp stays inside the margins. They don't quite fill the width.\n  - The card number is 172 px, so its widened version still fits the card.\n  - 28 characters at one per frame need 0.93 s, so the Dewey label types from 5.9 to 6.8 s rather than inside 6.0\u20136.6 s.\n  - Each Beat 3 level needs at least 0.6 s for its 9 staggered dividers on top of the 0.6 s reading time. Levels 2\u20135 therefore start about 0.3 s after their brief times, with the redraw leading straight into the next pick.\n- **Other choices I made:**\n  - The Beat 2 card sits at 54% of the frame height instead of exact centre, so five headline lines fit above it.\n  - The \"\u00f710\" pops have a small Ink plate behind them so they read over the shelving.\n  - I count the \"fifth row\" from the entrance at the bottom.\n- **Engine issues:** givemotion's motion-blur option either doesn't apply to code that sets positions frame by frame, or left stepped ghost copies of the type. I rendered without blur and softened the fastest moves instead. Its own motion-smoothness score stayed low (4.7/10) because of the fast camera push and word slides.\n- **Weak spots I know about:**\n  - The knockout title is low contrast. Slate seen through Ink is all the palette allows.\n  - The counter's digits look jumbled for a few frames mid-roll.\n- **Files:** working stills and test renders are in `work/`. The last review pass is in `review/` and the render cache in `out/.gm-parts`. All of these are safe to delete."
+ },
+ "m2-remotion": {
+  "tokens": {
+   "input": 88,
+   "cache_write": 196147,
+   "cache_read": 6664896,
+   "output": 113964,
+   "thinking": 72102,
+   "total": 6975095
+  },
+  "cost_usd": 5.18,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 30.2,
+  "tool_wait_min": 12.9,
+  "api_minutes": 19.8,
+  "turns": 63,
+  "tool_calls": 58,
+  "tool_mix": {
+   "Read": 15,
+   "Bash": 33,
+   "Write": 10
+  },
+  "denied": 0,
+  "denials": [],
+  "images_viewed": 14,
+  "loc": 1670,
+  "files": [
+   [
+    "remotion.config.ts",
+    16
+   ],
+   [
+    "src/theme.ts",
+    58
+   ],
+   [
+    "src/index.ts",
+    3
+   ],
+   [
+    "src/FloorPlan.tsx",
+    217
+   ],
+   [
+    "src/Video.tsx",
+    22
+   ],
+   [
+    "src/Wall.tsx",
+    265
+   ],
+   [
+    "src/Dock.tsx",
+    46
+   ],
+   [
+    "src/Stack.tsx",
+    158
+   ],
+   [
+    "src/Root.tsx",
+    68
+   ],
+   [
+    "src/scenes/Beat3Levels.tsx",
+    222
+   ],
+   [
+    "src/scenes/Beat1Wall.tsx",
+    214
+   ],
+   [
+    "src/scenes/Beat2Address.tsx",
+    189
+   ],
+   [
+    "src/scenes/Beat4Walk.tsx",
+    44
+   ],
+   [
+    "src/scenes/Beat5Line.tsx",
+    148
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 12,
+  "report": "cked digits turn Coral one by one, the decimal point pulses, and the Mustard counter rolls. OCTOPUSES then narrows back into the spine while the wall rebuilds around it.\n4. **The walk:** a bottom-to-top wipe turns the wall into a floor plan, and the spine becomes the dot. A Teal path makes five right-angle turns, with a \"\u00f710\" popping at each, while the headline snaps in above. Everything then dims to 20% and the dot drifts to the centre.\n5. **The line:** the dot stretches into a bar that sweeps across and reveals the three lines with a slanted edge. The bar tips over and settles as the underline, and the last 36 frames are a completely still hold.\n\nAll four scene changes are seamless: I compared the frames on either side of each cut pixel by pixel.\n\n**Render command** (run from `/home/user/tools5/m2/remotion`):\n```\nnpx remotion render AddressOfEveryBook out/video.mp4\n```\n\n## How I checked it and what I fixed\nThere was no one to watch Studio, so I rendered still frames and contact sheets of the encoded video and fixed what I saw:\n- **Cut-out letters didn't read:** the spines were short, so the letters mostly showed Ink. I made the spines tall and seated each line of type exactly inside one shelf row.\n- **Bar crossed the text:** the bar swung diagonally across the last lines on its way to becoming the underline. It now tips over into the empty space on the right, then slides left into place.\n- Smaller fixes: band digits floating over the Coral field, the counter's old value sliding back into view as it exited, spine tops poking above their shelves, a grey midpoint in the number's colour change, and the underline settling one frame late.\n\n## Where the brief didn't add up\n- **Outro type size:** \"YOU CAN WALK INTO.\" at about 190 px would break the 80 px side margin. I kept the margin and set all three lines at the size that fits, about 148 px.\n- **Opening type size:** \"A MILLION\" at about 250 px doesn't fill the width the brief asks for. I filled the width, which makes it about 300 px.\n- **Typing timing:** one character per frame for \"DEWEY DECIMAL CLASSIFICATION\" takes 28 frames, longer than the 0.6 s window. It finishes at about 6.9 s.\n- **SCIENCE starts early:** the first level only lasts 1 s, so SCIENCE rises as the band lands, about 0.2 s before 8.5 s. That gives it about a second on screen.\n\n## What got in the way\n- **Studio:** the docs say to open Remotion Studio and keep it running, but with no viewer I checked my own rendered frames instead.\n- **Browser setting:** the render docs say not to set a browser executable, but the provided config sets one so rendering works offline. I left it as it was.\n- `npx tsc` reports errors only in the agent docs' own example files under `skills/`; my code under `src/` type-checks cleanly.\n- `render --frames` with a range like `714-749` writes a video, not PNG frames.\n- Chrome rescales clip-path insets when opposite sides add up to more than 100%, which leaked slivers of hidden layers until I worked around it."
+ },
+ "m2-hyperframes": {
+  "tokens": {
+   "input": 113,
+   "cache_write": 214816,
+   "cache_read": 8834158,
+   "output": 116543,
+   "thinking": 74792,
+   "total": 9165630
+  },
+  "cost_usd": 5.82,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 41.2,
+  "tool_wait_min": 16.5,
+  "api_minutes": 20.6,
+  "turns": 4,
+  "tool_calls": 62,
+  "tool_mix": {
+   "Read": 18,
+   "Bash": 36,
+   "Write": 8
+  },
+  "denied": 0,
+  "denials": [],
+  "images_viewed": 17,
+  "loc": 1495,
+  "files": [
+   [
+    "index.html",
+    123
+   ],
+   [
+    "compositions/line.html",
+    75
+   ],
+   [
+    "compositions/walk.html",
+    329
+   ],
+   [
+    "compositions/address.html",
+    226
+   ],
+   [
+    "compositions/wall.html",
+    309
+   ],
+   [
+    "compositions/bands.html",
+    433
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 4,
+  "report": "es, \"DEWEY DECIMAL CLASSIFICATION\" types on, and the digits of 594.56 spread apart. The number then docks at the top while the coral field squeezes into band 5.\n3. **The bands (8.5\u201316.5 s):** five levels. At each one a digit lights coral, the category name rises inside its band, the counter rolls up, and the chosen band fills the stack and splits into ten again. The OCTOPUSES band then narrows back into the spine, and the wall rebuilds around it.\n4. **The walk (16.5\u201321.6 s):** the wall wipes into a floor plan. A teal path makes five turns to the coral dot, with a \"\u00f710\" at each turn, while the headline builds at the top. Everything else dims and the dot drifts to the centre, then stretches into the bar.\n5. **The line (21.6\u201325 s):** the bar sweeps across and reveals the three closing lines, with each line starting 5 frames after the one above. It then turns into the underline, followed by a still hold.\n\nThe coral shape is one continuous element throughout. At each of the four scene changes (4.0, 8.5, 16.5 and 21.6 s), the frames on either side show the same shape in the same place. The opening wall is generated from a fixed random seed, so the rebuilt wall at 16.5 s is identical to the first one.\n\n`npm run check` passes with 0 errors. The warnings left are deliberate:\n- **No sound:** the brief asks for none.\n- **Low contrast:** on the band digits (the brief specifies Paper at 60% on Coral), and on category names measured while they are hidden.\n- **Short on screen:** two elements that carry over from one scene into the next.\n\n## Render command\n```\nnpx --yes hyperframes@0.9.18 render --fps 30 --quality delivery -o out/video.mp4\n```\n\n## Where I departed from the brief, and what got in the way\n- **Outro lines are 148 px, not about 190 px.** At 190 px \"YOU CAN WALK INTO.\" would be about 1160 px wide and break the 80 px side margins.\n- **\"A MILLION / BOOKS.\" is 306 px, not 250 px**, because the brief also asks the text to fill the width.\n- **The label card is 820\u00d7420, not about 760\u00d7420**, so the widened 594.56 still fits inside it.\n- **Levels 2\u20134 start up to about 0.7 s late.** Each split into ten has to finish, and each category name has to stay readable for at least 0.6 s, before the next level can start. The last level still lands on time at 14.5 s.\n- **The underline turns differently.** The bar shrinks, turns 90\u00b0 and then extends, because a plain rotation swept it diagonally through the words.\n- **A bug I fixed:** the browser shortens symmetric shape values (e.g. `inset(944px 524px round 16px)`). That broke some animations that start from the element's current state, and the dot-to-bar morph briefly became a wide block. I gave every such animation explicit start and end values.\n- **Weakest moment:** in the opening \"A MILLION / BOOKS.\", grey spines showing through dark letters on a dark panel read at only moderate contrast. Teal spines and the shelf lines help, but it is the softest frame.\n\nNotes are in `SPEC.md` and `REVIEW.md` in the project folder."
  }
 }

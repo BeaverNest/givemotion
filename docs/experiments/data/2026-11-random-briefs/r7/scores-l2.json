@@ -1,0 +1,309 @@
+{
+ "judges": 6,
+ "mean": {
+  "givemotion": {
+   "brief": 8.0,
+   "spec": 7.33,
+   "motion": 7.33,
+   "craft": 7.67,
+   "errors": 7.67,
+   "overall": 7.67
+  },
+  "remotion": {
+   "brief": 7.33,
+   "spec": 8.0,
+   "motion": 7.0,
+   "craft": 7.5,
+   "errors": 7.33,
+   "overall": 7.33
+  },
+  "hyperframes": {
+   "brief": 7.0,
+   "spec": 8.0,
+   "motion": 6.33,
+   "craft": 7.17,
+   "errors": 6.33,
+   "overall": 6.33
+  }
+ },
+ "per": {
+  "givemotion": {
+   "brief": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "spec": [
+    8,
+    8,
+    7,
+    7,
+    7,
+    7
+   ],
+   "motion": [
+    7,
+    7,
+    8,
+    7,
+    8,
+    7
+   ],
+   "craft": [
+    8,
+    8,
+    8,
+    7,
+    8,
+    7
+   ],
+   "errors": [
+    8,
+    8,
+    8,
+    7,
+    7,
+    8
+   ],
+   "overall": [
+    8,
+    8,
+    8,
+    7,
+    8,
+    7
+   ]
+  },
+  "remotion": {
+   "brief": [
+    7,
+    7,
+    7,
+    8,
+    7,
+    8
+   ],
+   "spec": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "motion": [
+    6,
+    7,
+    7,
+    7,
+    7,
+    8
+   ],
+   "craft": [
+    8,
+    7,
+    7,
+    8,
+    7,
+    8
+   ],
+   "errors": [
+    7,
+    7,
+    7,
+    8,
+    7,
+    8
+   ],
+   "overall": [
+    7,
+    7,
+    7,
+    8,
+    7,
+    8
+   ]
+  },
+  "hyperframes": {
+   "brief": [
+    6,
+    7,
+    7,
+    7,
+    8,
+    7
+   ],
+   "spec": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "motion": [
+    6,
+    6,
+    6,
+    6,
+    7,
+    7
+   ],
+   "craft": [
+    7,
+    7,
+    7,
+    7,
+    8,
+    7
+   ],
+   "errors": [
+    6,
+    6,
+    6,
+    7,
+    7,
+    6
+   ],
+   "overall": [
+    6,
+    6,
+    6,
+    6,
+    7,
+    7
+   ]
+  }
+ },
+ "avg_rank": {
+  "givemotion": 1.33,
+  "remotion": 1.83,
+  "hyperframes": 2.83
+ },
+ "firsts": {
+  "givemotion": 4,
+  "remotion": 2,
+  "hyperframes": 0
+ },
+ "rows": [
+  {
+   "judge": "judge-1",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.7155208,
+   "overall": {
+    "givemotion": 8,
+    "remotion": 7,
+    "hyperframes": 6
+   }
+  },
+  {
+   "judge": "judge-2",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6812925999999999,
+   "overall": {
+    "givemotion": 8,
+    "hyperframes": 6,
+    "remotion": 7
+   }
+  },
+  {
+   "judge": "judge-3",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6569586,
+   "overall": {
+    "remotion": 7,
+    "givemotion": 8,
+    "hyperframes": 6
+   }
+  },
+  {
+   "judge": "judge-4",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.7227653999999999,
+   "overall": {
+    "remotion": 8,
+    "hyperframes": 6,
+    "givemotion": 7
+   }
+  },
+  {
+   "judge": "judge-5",
+   "order": [
+    "givemotion",
+    "hyperframes",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.6354592,
+   "overall": {
+    "hyperframes": 7,
+    "givemotion": 8,
+    "remotion": 7
+   }
+  },
+  {
+   "judge": "judge-6",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.7095011999999999,
+   "overall": {
+    "hyperframes": 7,
+    "remotion": 8,
+    "givemotion": 7
+   }
+  }
+ ],
+ "notes": {
+  "givemotion": [
+   "judge-1 (as A): The strongest descent: a large blurred foreground jellyfish crosses 0.2\u20132.5 s over a lanternfish school and a swaying siphonophore, the counter eases in (1,000 M at 1.3 s, 2,864 M at 2.2 s), and streaking marine snow plus the axis drawing at 2.7 s sell the handover. The tagline beat is the best of the three: letters of LIGHT ENDS. sink and dim from 7.9 s, LIFE DOESN'T. builds left to right from cyan point clusters 8.6\u20139.7 s under a crossing jelly, and the coral apostrophe carries cleanly into the lure, stalk, ring and silhouette (11.5\u201313.0 s). Weaker points: the chart has little visible Y-tilt, the push into the Midnight row (6.53\u21926.97 s) reads close to a swap, and the logo hook loop is slightly awkward next to the ring.",
+   "judge-2 (as A): The most complete delivery: a large blurred foreground jellyfish with siphonophore and lanternfish layers (1.3\u20132.2s), the counter docking at the axis base (2.92s), correct 100/1/0% bars, letters going dark one by one (7.88\u20138.32s) and a well-timed glow-point build with the coral apostrophe lit last (8.5\u20139.7s). The coral light is one unbroken thread into the lure and ring (11.03\u201312.9s), and the lockup with lure pulses (16.2\u201316.5s) is client-ready. Weaknesses: marine snow reads as rain streaks at 2.7s, the chart is small with no visible 8\u00b0 tilt, and the push into the Midnight Zone row (6.5\u20137.0s) is weak.",
+   "judge-3 (as B): Most continuous piece: the large blurred jellyfish crosses over moving siphonophore and lanternfish planes (0.2\u20132.5s), and LIFE DOESN'T. starts building at 8.5s, overlapping the ghosted LIGHT ENDS., so there is no dead air. The coral apostrophe and the jellyfish covering the letters (9.22\u201310.12s) land well. The ring and silhouette at 12.1\u201312.9s are tidy and the wordmark reveal at 13.72s is clean, with a good lure pulse at 16.3s. Weaknesses: marine snow is drawn as long streaks at 2.7s, which reads as rain rather than 1\u20133px dots and is busy and slightly off spec, and the chart's 3D tilt is barely visible.",
+   "judge-4 (as C): The richest parallax: a large out-of-focus jellyfish dominates the descent (0.23\u20132.2s) and lanternfish swim in front of the chart (4.72\u20136.08s), which sells the 3D space. The LIGHT ENDS dimming overlaps nicely with the particle build of LIFE DOESN'T (8.32\u20139.4s), and the coral apostrophe/lure thread carries cleanly into the mark (11.03\u201312.8s). Downsides: the marine snow is drawn as streaks that read like rain or speed lines and add noise (2.7s, 7.2s), the 0% glow pulse is weak (5.17s), and coral dots in beat 1 dilute the single-accent rule. At the end, the lure crowds the ring opening and a lanternfish drifting beside DEEP OCEAN EXPEDITIONS (16.1\u201317.1s) looks like a stray glyph.",
+   "judge-5 (as B): B has the strongest depth: a large blurred foreground jellyfish crosses the descent (0.2\u20132.2s), a lanternfish passes in front of the chart (4.9\u20135.8s), and creatures pass in front of the tagline (9.2\u201310.6s). The lure-on-a-hooked-stalk mark that closes into the ring (11.5\u201313.0s) is the most elegant logo idea of the three, and the 16.0s lure pulse is clearly visible. Weaknesses: the marine snow is drawn as streaks instead of 1\u20133 px dots, and at 2.7s and 7.2s it looks like noisy rain. The 0% value shows only a faint glow (4.7s), and the apostrophe glyph looks odd mid-build (9.68s). The tilt and push-through on the chart are again minimal.",
+   "judge-6 (as C): Beat 3 is timed best. 'LIFE DOESN'T.' builds from particle clusters starting at 8.6s while 'LIGHT ENDS.' is still fading, and a blurred jellyfish passes over the line at 9.2\u201310.1s. The big foreground jellyfish in beat 1 is strong, and an anglerfish with its coral lure already shows at 0.2\u20131.1s. Off spec: the marine snow is drawn as rain-like streaks (2.7s, 7.2s), not 1\u20133 px dots, which makes the frame noisy. The 0% glow is weak (4.7\u20135.8s), and the tight stalk loop crowds the lure against the ring in the lockup (17.1s)."
+  ],
+  "remotion": [
+   "judge-1 (as B): Good depth in Beat 1, with a big glowing out-of-focus jellyfish rising and crossing 1.1\u20132.5 s, and a nice focus pull bringing LIGHT ENDS. in blurred at 6.97 s. The final lockup (17.1 s) is the most balanced, with a graceful stalk and the lure hanging just outside the ring. The tagline pacing breaks down, though: from 8.5\u20139.5 s the frame is almost empty, with LIGHT ENDS. faded to nothing and only scattered particles, so LIFE DOESN'T. is crammed into about 9.6\u201310.5 s and half hidden by the jelly. The wordmark reveal at 13.28 s shows letters piled together ('BYSSAL' with S/A overlapping).",
+   "judge-2 (as C): The best Beat 1 depth: a big, softly blurred foreground jellyfish sweeps across (1.3\u20132.4s), and the final lockup (17.1s) is the cleanest, with the lure hanging naturally off its stalk. Pacing breaks in Beat 3: 8.5\u20139.1s is near-empty dead air after LIGHT ENDS. fades, and LIFE DOESN'T. is crammed into about 9.6\u201310.5s (though the jellyfish crossing the letters at 9.68\u201310.12s is nice). Wordmark letters crowd each other mid-slide at 13.28s.",
+   "judge-3 (as A): Strong descent: the big soft foreground jellyfish rises through at 1.3\u20132.5s and the counter rolls cleanly to 4,000 M. The chart is correct (100% / 1% / 0%) and the rack-focus blur into LIGHT ENDS. at 6.97s is nice. The tagline beat stalls: 8.3\u20138.9s is nearly empty because LIGHT ENDS. fades out completely before the glow points arrive. At 13.28s the wordmark letters overlap and crowd ('BYSSAL') as they slide out; the final lockup at 17.1s is clean and centred.",
+   "judge-4 (as A): Strongest descent: the big blurred foreground jellyfish crosses frame left to right (1.3\u20132.5s) with the lanternfish and siphonophore on separate planes, and the counter eases in and docks at the base of the axis by 2.92s. The chart is correct and readable (100%/1%/0% with a coral glow pulse at 5.17s), LIGHT ENDS dims letter by letter (7.88\u20138.78s), and the particle build of LIFE DOESN'T has the jellyfish passing in front (9.68\u201310.12s). The curved stalk draws into the open ring (11.47\u201312.82s) and the final lockup at 17.1s is clean and balanced. Weaknesses: the chart-to-tagline handover (6.53\u21926.97s) reads more as a blur crossfade than a push into the Midnight row, the 3D tilt is barely visible, the ABYSSAL letters bunch up behind the ring at 13.28s, and the counter sits further in than 64 px.",
+   "judge-5 (as C): C has rich 3D layering: a huge glowing foreground jellyfish rises through frame (1.3\u20132.5s) and crosses the tagline (9.1\u201310.1s), and 'LIGHT ENDS.' comes in with a focus pull (6.97s). The chart, the ring and anglerfish silhouette (12.1\u201312.9s) and the final lockup (17.1s) are all clean. Weaknesses: the tagline timing breaks. 'LIGHT ENDS.' fades almost completely by 8.6s, the frame is close to empty until about 9.1s, and 'LIFE DOESN'T.' is still incomplete at 10.1s, leaving no time to hold before the breakup. The wordmark overlaps the ring as it reveals (13.28s), and the lure hanging outside the ring crowds the 'A' of ABYSSAL.",
+   "judge-6 (as B): Its depth reads best of the three. A large blurred jellyfish crosses left to right at 1.3\u20132.2s, the same jellyfish covers 'LIFE DOESN'T.' at 9.2\u201310.1s, and 'LIGHT ENDS.' arrives soft out of the push-through at 6.97s. Beat 4 is elegant: a looped stalk turns into the ring and an anglerfish silhouette shows inside it at 12.4\u201312.8s. ABYSSAL emerges from behind the ring at 13.28s, and the lockup at 17.1s is polished, with lure pulses at 16.0s. The main flaw is a near-empty frame at 8.5\u20139.0s, between 'LIGHT ENDS.' fading out and the glow points arriving, which breaks the beat-3 rhythm."
+  ],
+  "hyperframes": [
+   "judge-1 (as C): The chart beat is solid and clear, with a well-timed coral glow pulse on 0% (5.0\u20135.4 s) and a correct linear scale, and the final lockup at 17.1 s is clean and legible. Beat 1 is thin: the foreground jellyfish is faint and small rather than a big fast blurred plane, and 2.0\u20132.9 s is a nearly empty frame with only tiny lanternfish. The lure stalk is a stiff straight line, the ring draws as a detached arc at 11.7 s, and the wordmark reveal at 12.9\u201313.0 s stacks letters into an illegible 'AB' smear, the most visible error of the three.",
+   "judge-2 (as B): Solid chart with a pleasing coral 0% glow pulse (5.0\u20135.5s), and glow points that really swim in from the layers (8.5\u20139.4s). Beat 1 is thin: the foreground jellyfish is small and 2.0\u20132.9s is nearly empty, so the descent doesn't sell. The lure stalk is a stiff straight line, and at 12.9\u201313.28s the ABYSSAL letters visibly pile on top of each other as they slide in, the clearest error of the three.",
+   "judge-3 (as C): The chart (4.28\u20136.53s, with the most visible tilt) and the LIGHT ENDS. / LIFE DOESN'T. build (8.5\u201310.57s) are solid, and jellyfish circle the lockup through the hold. Beat 1 is weak: the foreground jellyfish is small, soft and drifts upward rather than crossing fast at 1.6\u00d7, and 2.0\u20132.9s is almost empty. The logo build is rough: the stalk is a near-straight line, and at 12.9\u201313.0s the first wordmark letters pile up as 'AB' beside the ring before spreading out.",
+   "judge-4 (as B): The chart, tagline and lockup beats are near-identical in quality to the others: correct values, a visible 0% glow (5.0\u20135.4s), a tidy letter-by-letter build of LIFE DOESN'T (9.0\u20139.4s) and a clean hold with two lure pulses (16.0\u201316.4s, 17.32s). Beat 1 is the weakest of the three: the foreground jellyfish is faint and small, and 2.02\u20132.7s is nearly empty, so the descent lacks scale and depth. The lure stalk is a stiff straight stroke (11.7s) instead of an elegant curve, and the wordmark letters stack into an illegible pile as they emerge (12.9\u201313.0s). The dimmed LIGHT ENDS lingers above LIFE DOESN'T (9.22\u201310.57s); that follows the brief's 15% opacity, but it is visually busy.",
+   "judge-5 (as A): A follows the brief most closely: a clean gradient descent with the counter rolling to 4,000 M (2.7s), correct 100%/1%/0% bars with a soft coral pulse on 0% (5.1\u20135.4s), letter-by-letter dimming and particle build of the tagline with a coral apostrophe and the jellyfish crossing at 10.1s, and a tidy, well-balanced lockup (17.1s). Weaknesses: the parallax is shallow, because the foreground jellyfish is small and faint and the far, mid and hero planes feel similar in size. The chart's 8\u00b0 tilt and the push into the Midnight row barely show (6.5\u21926.97s reads as a dissolve). The wordmark letters pile up into a stacked 'ABYSSAL' at 12.9\u201313.3s.",
+   "judge-6 (as A): A solid version of every beat. The chart has a clear 100% / 1% / 0% with a coral glow pulse at 5.1\u20135.4s, the letters of 'LIGHT ENDS.' sink one by one at 7.9\u20138.3s, and the final lockup at 17.1s is clean, with the ring open at the top right where the lure hangs. Weaknesses: the foreground jellyfish in beat 1 (0.7\u20131.7s) is small and faint, so the parallax is weak. The ABYSSAL letters pile up in front of the ring at 12.9\u201313.28s instead of sliding out from behind it, and the move from chart to tagline around 6.5\u20137.0s has no clear push into the chart."
+  ]
+ }
+}

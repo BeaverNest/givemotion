@@ -19,6 +19,7 @@ changes from it; round 3 used the engine after them, on two new random briefs.
 | 4 | 2026-11-06 | F (E lost to a restart) | 0.1.3 (branch) | 4.0.541 | 0.9.18 | Opus 5.5, effort high | shell allowlist, no web, no sub-agents |
 | 5 | 2026-11-06 | E, G | 0.1.3 (branch) | 4.0.541 | 0.9.18 | Opus 5.5, effort high | shell allowlist, no web, no sub-agents |
 | 6 | 2026-11-06 | H, I, J | 0.1.3 (branch) | 4.0.541 | 0.9.18 | Opus 5.5, effort high | everything: any shell command, web, sub-agents |
+| 7 | 2026-11-06 | K, L, M (two makers per tool each) | 0.1.4 (branch) | 4.0.541 | 0.9.18 | Opus 5.5, effort high | everything: any shell command, web, sub-agents |
 
 Judges: Claude Opus 5.5 at effort high, six per brief, read-only. Machine: one 4-core Linux cloud machine without a
 GPU; all makers of a round ran at the same time on it. Remotion projects were made with `create-video` at the same
@@ -211,10 +212,10 @@ effort high; run on 2026-11-06.
 
 | Brief | givemotion | Remotion | HyperFrames |
 |---|---|---|---|
-| H: deep-sea product teaser, vertical (match cuts, UI with cursor, kinetic type) | 6.33 (1 first) | **7.5** (5) | 6.17 (0) |
+| H: deep-sea product teaser, vertical (match cuts, UI with cursor, kinetic type) | 6.0 (0 firsts) | **7.83** (6) | 6.17 (0) |
 | I: jazz-festival poem (UI with cursor, route map, sketch look) | 7.33 (2) | 6.33 (0) | **8.0** (4) |
 | J: recycling manifesto (ambient background, match cuts, route map) | 7.67 (2) | **7.83** (4) | 6.33 (0) |
-| Mean | 7.11 | **7.22** | 6.83 |
+| Mean | 7.0 | **7.33** | 6.83 |
 
 | Maker cost / time | givemotion | Remotion | HyperFrames |
 |---|---|---|---|
@@ -229,7 +230,7 @@ loop cost time and money: in this round givemotion's makers were slower and more
 briefs, though within the time the slowest tool took.
 
 What the judges said:
-- H (givemotion 6.33): the most faithful build and the best-drawn fish, but its errors score was 5.17. The judges saw
+- H (givemotion 6.0 after re-judging with correct frames, see the correction below): the most faithful build and the best-drawn fish, but its errors score was 5.17. The judges saw
   ghosting and doubled text: the counter "overlapping itself" as it glided, cards "breaking up", smears. That was
   givemotion's automatic motion blur.
 - I (7.33): the richest craft (sketchy double-stroke phone, sparkle stars), marked down for a map still clipped to the
@@ -245,9 +246,9 @@ it was capped. `--motion-blur auto` turns it on. This was not yet in effect for 
 
 | | givemotion | Remotion | HyperFrames |
 |---|---|---|---|
-| Judges' overall, mean of 10 (1-10) | 6.87 | **7.15** | 6.95 |
+| Judges' overall, mean of 10 (1-10) | 6.83 | **7.18** | 6.95 |
 | Briefs won (highest mean) | 2 (B, C) | **5** (D, F, G, H, J) | 3 (A, E, I) |
-| Judges ranking it first (60 in all) | 15 | **30** | 15 |
+| Judges ranking it first (60 in all) | 14 | **31** | 15 |
 | Tokens, all ten | **77.8M** | 90.2M | 113.1M |
 | Cost at list prices, all ten | **$53.04** | $56.13 | $65.59 |
 | Maker minutes, all ten | 216 | **210** | 246 |
@@ -257,7 +258,66 @@ it was capped. `--motion-blur auto` turns it on. This was not yet in effect for 
 givemotion was the cheapest overall and wrote far less code, and its renders were the fastest in every brief timed.
 On quality it is behind Remotion and about level with HyperFrames. The engine changed between rounds (each round's
 section says how), so this is a running record, not one fixed benchmark. In round 6, with the review loop, givemotion
-moved from last to within 0.11 of first.
+moved up from last (7.0 against 7.33 and 6.83 after the correction below).
+
+## Correction: vertical briefs were judged from squashed frames (found 2026-11-06)
+
+The judges' packs (`pack.sh`) scaled every frame to 384x216, 576x324 or 1280x720. Vertical videos (briefs H and M)
+reached the judges squashed into landscape frames, for all three tools alike; one judge wrote that the video "shares
+the landscape format", and another that a band "gets squashed". `pack.sh` now fits each frame inside the box with its
+own shape. Briefs H, M and M2 were judged again by six fresh judges each; the old scores are kept in
+`data/2026-11-random-briefs/r6/squashed-packs/` and `r7/squashed-packs/`. H moved from givemotion 6.33 / Remotion 7.5 /
+HyperFrames 6.17 to 6.0 / 7.83 / 6.17. Every table on this page uses the re-judged scores. No landscape brief was
+affected.
+
+## Round 7 (briefs K, L, M, two makers per tool each)
+
+What changed before this round:
+- Engine: motion blur off by default; `review` reads the brief (`brief.md` next to the page, or `--brief`) and adds
+  `beats.png`, every timed beat at its own moments, and a critic prompt for a fresh sub-agent in REVIEW.md.
+- Skill: research only what is still open (brand kit, earlier work, references and a detailed brief come first); the
+  full loop is for new videos.
+
+Method: three new random briefs (seed in `r7/seed-r7.txt`), each made by **two** independent makers per tool (sets 1
+and 2; 18 makers), every tool open to all makers. Each set was judged blind by six judges (36 judges). The first launch
+was killed by a machine restart before any video was made and was rerun from scratch with the same briefs
+(`r7/run-round7b.sh`). Versions: givemotion 0.1.4 at the development branch, Remotion 4.0.541, HyperFrames 0.9.18.
+
+| Set | givemotion | Remotion | HyperFrames |
+|---|---|---|---|
+| K: water-cycle launch teaser (squash and stretch, self-drawing lines, kinetic type) | 7.17 (2 firsts) | **7.33** (4) | 6.17 (0) |
+| K2 (same brief, second makers) | **7.5** (5) | 6.67 (1) | 6.67 (0) |
+| L: deep-sea logo sting (3D depth and parallax, kinetic type, a chart) | **7.67** (4) | 7.17 (1) | 6.83 (1) |
+| L2 | **7.67** (4) | 7.33 (2) | 6.33 (0) |
+| M: library science explainer, vertical (match cuts, masked reveals, kinetic type) | 6.5 (2) | **6.83** (4) | 5.5 (0) |
+| M2 | 5.67 (0) | **7.0** (6) | 5.83 (0) |
+| **Mean of six sets** | 7.03 | **7.05** | 6.22 |
+| Sets won | 3 | 3 | 0 |
+| Judges ranking it first (36) | 17 | **18** | 1 |
+| Cost / maker minutes, all six | $38.78 / 188 | **$25.64 / 180** | $31.12 / 195 |
+
+A tie with Remotion at the top, well ahead of HyperFrames. givemotion won every landscape set but one (K) and lost both
+vertical sets. Its makers now cost the most: the review passes and the critic sub-agent roughly doubled their
+tool calls (55-93 against 42-69) and images viewed (21-38 against 7-18). Render times were not measured this round.
+
+What the judges said about givemotion's vertical sets: type far smaller than the brief asked ("fills only about a
+third of the width"), a hand-built counter caught as "a jumble of half-rolled digits", ragged band wipes with divider
+lines crossing labels, and a near-empty frame at the hand-over. None of the givemotion makers used `data-count-roll`:
+the briefs asked for readouts that change value several times ("1 IN 10" to "1 IN 100"), which it did not cover.
+
+Changed after the round: `data-roll` (a readout that changes value at set times, rolling only what changed), and the
+critic prompt now names undersized type and half-rolled digits.
+
+## All sixteen judged sets (rounds 2-7)
+
+| | givemotion | Remotion | HyperFrames |
+|---|---|---|---|
+| Judges' overall, mean of 16 sets | 6.91 | **7.13** | 6.68 |
+| Sets won | 5 | **8** | 3 |
+| Judges ranking it first (96) | 31 | **49** | 16 |
+| Cost at list prices | $91.82 | **$81.77** | $96.71 |
+| Maker minutes | 404 | **390** | 442 |
+| Code the makers wrote | **9,126 lines** | 24,847 lines | 19,090 lines |
 
 ## The research: where givemotion stood
 

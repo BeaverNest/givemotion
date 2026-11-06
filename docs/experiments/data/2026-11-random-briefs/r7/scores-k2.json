@@ -1,0 +1,309 @@
+{
+ "judges": 6,
+ "mean": {
+  "givemotion": {
+   "brief": 7.67,
+   "spec": 7.67,
+   "motion": 7.17,
+   "craft": 7.67,
+   "errors": 7.5,
+   "overall": 7.5
+  },
+  "remotion": {
+   "brief": 7.33,
+   "spec": 7.5,
+   "motion": 6.83,
+   "craft": 6.5,
+   "errors": 6.67,
+   "overall": 6.67
+  },
+  "hyperframes": {
+   "brief": 7.5,
+   "spec": 7.33,
+   "motion": 7.17,
+   "craft": 6.33,
+   "errors": 6.5,
+   "overall": 6.67
+  }
+ },
+ "per": {
+  "givemotion": {
+   "brief": [
+    7,
+    8,
+    8,
+    7,
+    8,
+    8
+   ],
+   "spec": [
+    8,
+    8,
+    7,
+    7,
+    8,
+    8
+   ],
+   "motion": [
+    7,
+    7,
+    7,
+    7,
+    8,
+    7
+   ],
+   "craft": [
+    7,
+    8,
+    8,
+    7,
+    8,
+    8
+   ],
+   "errors": [
+    8,
+    8,
+    7,
+    7,
+    8,
+    7
+   ],
+   "overall": [
+    7,
+    8,
+    7,
+    7,
+    8,
+    8
+   ]
+  },
+  "remotion": {
+   "brief": [
+    7,
+    8,
+    7,
+    8,
+    8,
+    6
+   ],
+   "spec": [
+    7,
+    8,
+    7,
+    8,
+    7,
+    8
+   ],
+   "motion": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    6
+   ],
+   "craft": [
+    6,
+    6,
+    6,
+    8,
+    7,
+    6
+   ],
+   "errors": [
+    6,
+    7,
+    7,
+    8,
+    6,
+    6
+   ],
+   "overall": [
+    6,
+    7,
+    6,
+    8,
+    7,
+    6
+   ]
+  },
+  "hyperframes": {
+   "brief": [
+    8,
+    7,
+    7,
+    8,
+    8,
+    7
+   ],
+   "spec": [
+    7,
+    8,
+    6,
+    7,
+    8,
+    8
+   ],
+   "motion": [
+    7,
+    7,
+    7,
+    8,
+    7,
+    7
+   ],
+   "craft": [
+    6,
+    6,
+    5,
+    8,
+    7,
+    6
+   ],
+   "errors": [
+    6,
+    6,
+    6,
+    7,
+    8,
+    6
+   ],
+   "overall": [
+    7,
+    6,
+    5,
+    8,
+    7,
+    7
+   ]
+  }
+ },
+ "avg_rank": {
+  "givemotion": 1.33,
+  "remotion": 2.33,
+  "hyperframes": 2.33
+ },
+ "firsts": {
+  "givemotion": 5,
+  "remotion": 1,
+  "hyperframes": 0
+ },
+ "rows": [
+  {
+   "judge": "judge-1",
+   "order": [
+    "givemotion",
+    "hyperframes",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.7222682,
+   "overall": {
+    "givemotion": 7,
+    "remotion": 6,
+    "hyperframes": 7
+   }
+  },
+  {
+   "judge": "judge-2",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.7055354,
+   "overall": {
+    "givemotion": 8,
+    "hyperframes": 6,
+    "remotion": 7
+   }
+  },
+  {
+   "judge": "judge-3",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.7016366000000002,
+   "overall": {
+    "remotion": 6,
+    "givemotion": 7,
+    "hyperframes": 5
+   }
+  },
+  {
+   "judge": "judge-4",
+   "order": [
+    "remotion",
+    "hyperframes",
+    "givemotion"
+   ],
+   "images": 34,
+   "cost": 0.658956,
+   "overall": {
+    "remotion": 8,
+    "hyperframes": 8,
+    "givemotion": 7
+   }
+  },
+  {
+   "judge": "judge-5",
+   "order": [
+    "givemotion",
+    "hyperframes",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.7011928000000001,
+   "overall": {
+    "hyperframes": 7,
+    "givemotion": 8,
+    "remotion": 7
+   }
+  },
+  {
+   "judge": "judge-6",
+   "order": [
+    "givemotion",
+    "hyperframes",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.6384792,
+   "overall": {
+    "hyperframes": 7,
+    "remotion": 6,
+    "givemotion": 8
+   }
+  }
+ ],
+ "notes": {
+  "givemotion": [
+   "judge-1 (as A): The cleanest and most consistent of the three. The horizon draws on, the typewriter cursor runs at 1.5\u20132.2s, the vapour gathers into a cloud drawn in one stroke at 7.2\u20137.9s, and 'Condense.' squeezes from wide tracking at 7.88s. The centred keynote layout holds up all the way to a tidy lockup that is fully typed by 17.32s. Weak spots: 'Condense.' and the cloud sit almost still from 8.5 to 10.1s with barely any breathing. 'Evaporate.' lands without much stretch. The step numbers are tiny and faint. The cycle loop (15.5\u201316.0s) runs through the cloud and river but not the sun, then shrinks abruptly to the lockup size at 16.1\u201316.4s.",
+   "judge-2 (as A): The most balanced, centred composition, with the word sitting under the droplet in every beat. 'Evaporate.' rises with stretch and squash and the orange full stop lands last (5.0\u20135.3s), the cloud draws from the vapour in one pass (7.2\u20137.9s), the hero droplet falls last in the rain (11.47s) and 'Collect.' rides the river (14.18s). Weaknesses: a falling 'e' overlaps the cloud (11.7s), the 700px loop shrinks to a small ring (16.1\u201316.3s) instead of being kept, the cloud's breathing barely reads (8.5\u20139.4s) and the step numbers are very faint.",
+   "judge-3 (as B): This is the most balanced and centred of the three. The words sit centred under the horizon, 'Evaporate.' rises with stretch and the orange full stop lands last (5.0\u20135.3s), the 'Condense.' squeeze works at 7.9s, and 'Collect.' actually rides the river beside the droplet (13.7\u201314.6s). The droplet jumps into the shrinking loop with a visible squash at 16.5s, which gives a good handover into a clean lockup. Weak points: at 11.7s a falling 'e' collides with the cloud outline, the background reads a shade darker than #0A1A33, and the loop changes scale abruptly at 16.1\u201316.3s. The step numbers are again barely legible.",
+   "judge-4 (as C): Solid and well centred: 'Precipitate.' assembles under the five drops (12.1\u201312.4 s), the 'Condense.' squeeze reads well (7.88\u20138.32 s), and the droplet's jump into the loop with a squash landing (16.1\u201316.6 s) is the best lockup entrance of the three. But the vapour paths are three plain parallel waves, so the 'split' is weak (4.72\u20135.17 s), and a falling 'e' crosses the cloud outline (11.7 s). The background looks slightly darker than #0A1A33, and the closing line types past 17.4 s, so the lockup never fully holds.",
+   "judge-5 (as B): The most balanced composition: stage words sit centred below the horizon, the cloud is centred over the droplet, and the hero lands in the middle of the mini drops, which merge in from both sides (12.5\u201313.0s). The cloud draws in one stroke from the vapour tips at 7.42\u20137.88s, the 'Condense.' squeeze reads clearly (7.88\u21928.32s), and the loop shrinks and re-centres smoothly around the droplet into the lockup (16.1\u201316.6s). Weaknesses: the vapour paths are straight and stiff rather than S-curves bending to a point, and a falling 'e' overlaps the cloud outline at 11.7s. The 17.1s lockup is the cleanest of the three.",
+   "judge-6 (as C): The most balanced and keynote-like composition: centred stage words under the action, a clean S-curve vapour stagger (4.9\u20135.8s), a continuous vapour-to-cloud stroke (7.2\u20137.9s), 'Precipitate.' building directly under the falling drops (11.9\u201312.4s), and 'Collect.' following the curve then straightening (14.2\u201314.6s). The lockup lands well, with the droplet squash at 16.5s and words slamming in one by one. Weaknesses: a falling 'e' overlaps the cloud at 11.7s, the loop is off-centre and does not really thread the elements (15.5s), the navy reads slightly dark (possibly downscaling), and the end line is still typing close to the 17.4s hold."
+  ],
+  "remotion": [
+   "judge-1 (as B): Nearly the same piece as A. One nice touch: at 4.7\u20135.0s the droplet splits into three mini drops that trail vapour paths. But the stage words are left-aligned at the safe margin, which weakens the keynote hierarchy. The vapour forms an odd vase shape at 7.2s. 'Precipitate.' at 11.47\u201311.93s scatters letters across the whole left half, and 'P' and 'r' collide and distort. There are visible slips: a faint 'Collect.' still on screen at 16.43s, 'TheWater' missing its space at 16.88s, and a tight 'Water'/'Cycle' gap at 17.1s.",
+   "judge-2 (as C): The only version where the droplet really splits into three mini droplets that become the vapour paths (4.72\u20135.0s), and the vapour converges evenly (7.2s). The left-aligned stage words cut the type off from the action, so 'Collect.' sits far from the river and droplet (14.2\u201315.1s) and the Precipitate letters are scattered widely around the cloud (11.7s). The lockup briefly reads 'TheWater' (16.88s) and the loop's arrowhead overshoots, leaving a gap in the circle (17.1s).",
+   "judge-3 (as A): Every beat is there. The 1.5\u20132.2s typewriter with its block cursor is clean, the three vapour paths are symmetrical and converge neatly into the cloud stroke (7.2\u20137.9s), and the lockup at 17.1s is crisp and correctly coloured. The stage words are pushed hard to the left edge, so they feel cut off from the action in the centre. At 14.2\u201314.6s 'Collect.' sits far from the river and reads as scattered broken letters ('l \\ ect.') instead of a word flowing along the river path. The 01\u201304 step numbers are tiny and dim in the corner, and between 16.3 and 16.6s the loop shrinks and jumps position, which feels unmotivated.",
+   "judge-4 (as A): Faithful and clean: the horizon draws from the centre, the droplet squashes on landing, INTRODUCING types in with a cursor (1.5\u20132.0 s) and the eyes are closed at 2.2 s. The vapour paths converge symmetrically into the cloud's start point (7.2 s), and the lockup holds still from 17.32 to 17.77 s with the copy complete. Weaknesses: the left-aligned stage words feel detached from the graphics, and 'Collect.' (14.18\u201314.62 s) curves below the horizon on the left, away from the river, so it does not really travel along it. The loop at the lockup has an uneven gap by the arrowhead (17.1 s).",
+   "judge-5 (as C): Has the best character idea: the droplet literally splits into three mini droplets that trail vapour (4.72\u20134.9s), and the vapour paths converge symmetrically into the cloud (7.2s). Left-aligned stage words feel disconnected from the centred action, and 'Evaporate.' rises up from the very bottom of the frame through the safe margin (4.72s). 'Precipitate.' letters are scattered across the whole left half (11.7s), which reads messier. The lockup has errors: the words jam together as 'TheWater' at 16.88s, and the loop's arrowhead overshoots outside the circle (15.8s, 17.1s).",
+   "judge-6 (as B): Nice idea of splitting the hero into three mini droplets before the vapour (4.7\u20134.9s), and the vapour retracts into the cloud at 8.5s. But the stage words are pinned to the bottom left, cut off from the illustration; 'Collect.' does not follow the river at all (14.2\u201314.6s); 'Precipitate.' letters rain in from all over the frame and land below the horizon (11.7s); there is a word-spacing glitch at 16.88s ('TheWater'); and the loop gap and outward arrowhead (15.7\u201316.2s) read oddly."
+  ],
+  "hyperframes": [
+   "judge-1 (as C): Delivers the brief's techniques best. 'Evaporate.' rises out from behind a horizon mask (5.0\u20135.5s), the vapour bends and hooks into the cloud stroke (6.97\u20137.4s), and 'Collect.' genuinely rides the river curve before levelling (13.7\u201314.6s). The cloud and sun also draw themselves off again at 16.2\u201316.3s. But the staging is cluttered: falling 'Precipitate.' letters fly through the sun (11.47s, 11.7s), the rain drops bunch up at the hero's side, and the loop's arrowhead cuts through 'Collect.' at 15.7\u201316.0s. The closing line is still typing at 17.32s, right against the 17.4s hold.",
+   "judge-2 (as B): Its vapour handover is the strongest: the paths bend towards a shared point and curl into the cloud (7.2s), and the elements undraw neatly at 16.2\u201316.3s. But the stage words are pushed right of the action (5.6s, 12.4s), which unbalances the frame. Falling Precipitate letters cross the sun (11.47s, 11.7s) and the faded 'Collect.' sits on the loop's arrowhead (15.8\u201316.1s). The squeeze and lockup are otherwise solid.",
+   "judge-3 (as C): The motion ideas are good. At 7.2s the vapour paths curl sideways into the cloud stroke, the 'Condense.' tracking squeeze at 8.5\u20138.8s is the clearest of the three, and the lockup loop with its arrowhead at the bottom (17.1s) is the strongest final mark. The composition is weak, though. The sun sits near the centre rather than in the top-right corner, the cloud is shoved to the left, and the stage words are jammed against the horizon right of centre. At 11.5\u201311.7s letters falling for 'Precipitate.' pass over the sun. At 15.7\u201316.0s the loop cuts through 'Collect.', the cloud and sun leave half-erased fragments at 16.2\u201316.3s, and the closing mono line is still typing at 17.3s, which eats into the required still hold from 17.4s.",
+   "judge-4 (as B): The most designed staging: the vapour bends left into the cloud's starting stroke (7.2 s), 'Evaporate.' rises from behind the horizon beside the vapour (5.0\u20135.3 s), and 'Collect.' flows on the river itself (14.18\u201314.62 s). The clean-up at 16.2\u201316.3 s undraws the cloud and sun rather than fading them. Against it: the sun sits upper centre-right, not top-right; the falling 'Precipitate.' letters cross the sun (11.7 s); the blink at 2.2 s was not visible; and the closing line is still typing at 17.32 s, which breaks the 17.4 s still hold.",
+   "judge-5 (as A): Follows the brief closely: the horizon draws in at 0.23s, INTRODUCING types with a cursor from 1.5s, 'Evaporate.' rises clipped at the horizon at 5.1\u20135.5s, and 'Collect.' rides the river curve at 14.18s before levelling. The three vapour paths bend diagonally to a point and the cloud draws from there (6.97\u20137.88s), but the layout is lopsided, with the cloud far left and the right half empty around 9\u201310s. Falling 'Precipitate.' letters cross the sun at 11.47s and 11.7s. The step numbers are very small and faint. The lockup is clean and centred, typed by 17.77s.",
+   "judge-6 (as A): Strong droplet physics (landing at 1.1s, stretched lift-off at 4.7s, merge swells 12.5\u201313.0s, lockup squash at 16.6s), and the vapour paths curl convincingly into the cloud (7.2\u20137.9s). 'Collect.' rides the river at 14.2s. But the stage words sit off-centre to the right above the horizon, so the frame feels lopsided; falling 'Precipitate.' letters cross the sun at 11.7s; the loop at 15.5s is drawn off-centre; and the mono line is still typing at 17.3s, eating into the still hold."
+  ]
+ }
+}

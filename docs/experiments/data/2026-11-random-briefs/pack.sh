@@ -6,7 +6,7 @@ V=$1; O=$2; mkdir -p $O
 F=/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf
 D=$(ffprobe -v error -show_entries format=duration -of csv=p=0 $V)
 frame() { # time label width height out
-  ffmpeg -v error -y -ss $1 -i $V -frames:v 1 -vf "scale=$3:$4,drawtext=fontfile=$F:text='$2':x=8:y=8:fontsize=22:fontcolor=white:box=1:boxcolor=black@0.6:boxborderw=4" $5
+  ffmpeg -v error -y -ss $1 -i $V -frames:v 1 -vf "scale=$3:$4:force_original_aspect_ratio=decrease,pad=$3:$4:(ow-iw)/2:(oh-ih)/2:color=0x202020,drawtext=fontfile=$F:text='$2':x=8:y=8:fontsize=22:fontcolor=white:box=1:boxcolor=black@0.6:boxborderw=4" $5
 }
 TMP=$(mktemp -d)
 for s in 1 2; do

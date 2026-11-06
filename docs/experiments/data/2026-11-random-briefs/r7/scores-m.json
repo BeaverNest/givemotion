@@ -1,0 +1,309 @@
+{
+ "judges": 6,
+ "mean": {
+  "givemotion": {
+   "brief": 7.33,
+   "spec": 7.33,
+   "motion": 6.5,
+   "craft": 7.0,
+   "errors": 5.83,
+   "overall": 6.5
+  },
+  "remotion": {
+   "brief": 7.33,
+   "spec": 7.5,
+   "motion": 7.0,
+   "craft": 6.67,
+   "errors": 6.67,
+   "overall": 6.83
+  },
+  "hyperframes": {
+   "brief": 6.33,
+   "spec": 7.0,
+   "motion": 5.83,
+   "craft": 6.0,
+   "errors": 5.33,
+   "overall": 5.5
+  }
+ },
+ "per": {
+  "givemotion": {
+   "brief": [
+    8,
+    7,
+    7,
+    7,
+    8,
+    7
+   ],
+   "spec": [
+    8,
+    7,
+    7,
+    7,
+    8,
+    7
+   ],
+   "motion": [
+    7,
+    6,
+    7,
+    6,
+    7,
+    6
+   ],
+   "craft": [
+    8,
+    6,
+    7,
+    7,
+    7,
+    7
+   ],
+   "errors": [
+    7,
+    5,
+    6,
+    5,
+    7,
+    5
+   ],
+   "overall": [
+    7,
+    6,
+    7,
+    6,
+    7,
+    6
+   ]
+  },
+  "remotion": {
+   "brief": [
+    8,
+    8,
+    6,
+    7,
+    7,
+    8
+   ],
+   "spec": [
+    8,
+    7,
+    7,
+    7,
+    8,
+    8
+   ],
+   "motion": [
+    8,
+    7,
+    6,
+    7,
+    7,
+    7
+   ],
+   "craft": [
+    8,
+    7,
+    6,
+    6,
+    6,
+    7
+   ],
+   "errors": [
+    7,
+    6,
+    7,
+    7,
+    6,
+    7
+   ],
+   "overall": [
+    8,
+    7,
+    6,
+    7,
+    6,
+    7
+   ]
+  },
+  "hyperframes": {
+   "brief": [
+    6,
+    6,
+    7,
+    6,
+    7,
+    6
+   ],
+   "spec": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "motion": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    5
+   ],
+   "craft": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+   ],
+   "errors": [
+    5,
+    5,
+    6,
+    5,
+    6,
+    5
+   ],
+   "overall": [
+    5,
+    5,
+    6,
+    6,
+    6,
+    5
+   ]
+  }
+ },
+ "avg_rank": {
+  "givemotion": 1.67,
+  "remotion": 1.5,
+  "hyperframes": 2.83
+ },
+ "firsts": {
+  "givemotion": 2,
+  "remotion": 4,
+  "hyperframes": 0
+ },
+ "rows": [
+  {
+   "judge": "judge-1",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6299978,
+   "overall": {
+    "givemotion": 7,
+    "remotion": 8,
+    "hyperframes": 5
+   }
+  },
+  {
+   "judge": "judge-2",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6918614000000001,
+   "overall": {
+    "givemotion": 6,
+    "hyperframes": 5,
+    "remotion": 7
+   }
+  },
+  {
+   "judge": "judge-3",
+   "order": [
+    "givemotion",
+    "hyperframes",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.6898438,
+   "overall": {
+    "remotion": 6,
+    "givemotion": 7,
+    "hyperframes": 6
+   }
+  },
+  {
+   "judge": "judge-4",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6989846000000001,
+   "overall": {
+    "remotion": 7,
+    "hyperframes": 6,
+    "givemotion": 6
+   }
+  },
+  {
+   "judge": "judge-5",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6165524,
+   "overall": {
+    "hyperframes": 6,
+    "givemotion": 7,
+    "remotion": 6
+   }
+  },
+  {
+   "judge": "judge-6",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6818166,
+   "overall": {
+    "hyperframes": 5,
+    "remotion": 7,
+    "givemotion": 6
+   }
+  }
+ ],
+ "notes": {
+  "givemotion": [
+   "judge-1 (as A): Covers every beat. The knockout 'A MILLION / BOOKS.' over the wall works, with the Coral spine showing through the K (1.56\u20132.3s). The spine slides forward and scales up cleanly (3.8s). The band levels are crisp, with the docked number's digits turning Coral and the counter rolling (10.0s, 12.0\u201312.9s). The outro bar-sweep and underline are portfolio-clean, and the type fills the width (23.8s). The weakest moment is the Beat 3\u21924 handover: at 16.2s the wall is only one stubby row and a half-masked '\u201a000' counter fragment is left behind, and at 15.94s the OCTOPUSES label is clipped. The '\u00f710' flashes are far smaller than 70px (17.7s), and the Beat 2 card hands over at 4.06s with the number cut in half.",
+   "judge-2 (as A): The knockout 'A MILLION BOOKS.' really shows the wall through the letters, with the wall kept above and below the panel (1.56\u20132.2s). The downward wipe to 'YOU NEED / ONE.' (2.3\u20132.5s) and the push into the coral spine at 3.8s work well, and the 23.8s end card is the boldest of the three, filling the width with a clean underline. The weak points are the small Beat 2 headline (4.7\u20137.8s) and the hard-to-read category names in Beat 3. The OCTOPUSES label is garbled at 15.94s, and the 16.2s handover is a near-empty frame with a stray cut-off ',000' counter, so the spine-to-wall match cut doesn't land.",
+   "judge-3 (as B): The best Beat 1 handover: at 3.8s there is a real 2D push into the wall, with the coral spine and its paper label growing out of the shelves. The knockout at 1.56\u20132.2s keeps the wall visible above and below. Fitting each line to the width gives the strongest hierarchy ('ADDRESS' at 5.3s, final lockup at 23.8s), and the outro reads as portfolio-level. Weaknesses: the card's number is clipped mid-reveal at 4.06s, the re-split at 12.6\u201312.9s turns into messy band fragments, and at 16.2s a stray rolling ',000' counter fragment and a single half-built shelf row clutter the match cut. Teal also runs well above the brief's ~10%.",
+   "judge-4 (as C): It has the best match cut into Beat 2, a real 2D push into the coral spine at 3.8s with its small label growing, and the best final frame: at 23.8s the three lines are set to the same width, with a confident underline. The knockout over the wall (1.56\u20132.2s) and the outro bar sweep (22.0\u201322.9s) both work well. Beat 3 is the mess: the re-splits at 10.0s and 12.7\u201312.9s slide slate bars in as a ragged staircase instead of drawing divider lines, with half-hidden digits, and OCTOPUSES is clipped at 15.94s. At 16.2s a fragment of the counter (',000') is still on screen, and the spine is a squat block on a half-built wall.",
+   "judge-5 (as B): This is the most complete telling of the brief. The knockout title keeps the wall live behind it and the downward wipe to 'YOU NEED / ONE.' is clean (2.3\u20132.5s). There is a real camera push into the Coral spine and its label (3.8s), then a match cut to the card. Larger type on 'ADDRESS' adds hierarchy (5.3s). The band levels fill with staggered wipes and the counter rolls (9.69s, 10.0s, 12.7\u201312.9s). The outro type is the largest of the three and fills the width (23.8s). The faults: '594.56' is cut off mid-wipe at 4.06s, the 'OCTOPUSES' name is clipped as it masks out (15.94s), and the frame at 16.2s is nearly empty with a half-rolled counter fragment. The floor plan and the '\u00f710' pops are very small.",
+   "judge-6 (as C): Strong moments: a real 2D push into the spine at 3.8s, a larger ADDRESS that gives the Beat 2 headline real hierarchy, and a confident final lock-up at 23.8s that fills the full width. The re-splits are chaotic: at 12.7\u201312.9s and 14.69s slate bands slide back in from the sides instead of divider lines drawing across, and at 9.69s and 12.81s stray bands overlap the Coral field. At 15.94s the OCTOPUSES label is being covered, and at 16.2s a fragment of the counter (',000') is left mid-roll beside a barely started wall, a visible artifact. The final lines also differ in size rather than all sitting at about 190px as the brief asks."
+  ],
+  "remotion": [
+   "judge-1 (as B): This has the strongest shared-element continuity. At 3.8s the camera pushes into the spine with its '594.56' label already reading, a true match cut, and at 16.2s the full five-row wall rebuilds around the Coral spine in place. The band levels re-split cleanly, with the counter rolling ('1 IN 10\u2080', 10.0s), and Beat 2 builds the headline flush-left and types the label on (5.94\u20137.19s). It is let down by the downward wipe at 2.2\u20132.4s, where 'YOU NEED'/'ONE.' sit on top of the half-wiped 'A MILLION'/'BOOKS.' and the frames look muddled. A typing-cursor block appears beside the small label (5.94s), the '\u00f710' marks are tiny (17.7s), and the outro type is a bit small for the 190px spec (23.8s).",
+   "judge-2 (as C): Has the best shared-element continuity: at 3.8s the push into the spine already shows '594.56' on its label, which then becomes the card. At 16.2s the wall rebuilds cleanly around the coral spine in its original spot, and the headline correctly wipes out left before the number lifts (7.8\u20137.9s). Band wipes, counter rolls (10.0s) and the path/\u00f710 build (17.3\u201317.9s) are well timed. Weaknesses: during the knockout the full Ink panel hides the wall (1.56\u20132.9s), so the 'wall showing through' is weak. At 11.56s the previous ANIMALS band is still coral at the same moment MOLLUSKS is selected, and type stays small in Beats 2\u20133.",
+   "judge-3 (as A): A solid, continuous coral thread. The OCTOPUSES band lands cleanly back in the rebuilt wall at 16.2s, and the outro bar sweeps and settles into the underline neatly (22.0\u201323.8s). But the knockout 'A MILLION BOOKS.' at 1.56\u20132.1s is muddy slate on ink with the wall almost invisible behind it, and the type is undersized throughout: the headlines don't fill the width inside 80px margins and the Beat 2 stack is small. The re-split at 9.69s and 12.6\u201312.9s is a staircase of slate bands sliding back in, not divider lines drawing across. The push-in at 3.8s just shows a coral slab with a small label, with no sense of the camera moving through the wall.",
+   "judge-4 (as A): The most complete and consistent take. At 3.8s the camera pushes into the coral spine and its label already reads 594.56, so it becomes Beat 2's card without a break. At 16.2s the wall rebuilds around the spine in its original spot, a clean match cut, and the re-split at 12.6\u201312.9s draws its divider lines left to right as asked. The weak points are scale: 'A MILLION BOOKS.' (1.56s) is small and low in contrast instead of filling the width, Beat 2's card and headline are undersized (4.7\u20137.2s), and the 1.2s pause on 'YOU NEED ONE.' (2.5\u20132.9s) feels flat. It shows no real errors beyond the counter mid-roll ('1 IN 10\u2080' at 10.0s).",
+   "judge-5 (as C): The handovers are the strongest of the three. The push at 3.8s carries the '594.56' label straight into Beat 2, and the wall rebuilds cleanly around the spine in the same position at 16.2s, a true match cut. The band wipes and counter rolls are well staggered (10.0s, 12.6\u201312.9s). The big problem is Beat 1: the wall vanishes behind a solid Ink panel during the kinetic type (1.56\u20132.81s), so the knockout barely reads and 'YOU NEED / ONE.' sits on an empty field. The wall then pops back at 3.44s. At 11.56s the old 'ANIMALS' label lingers in band 9 while 'MOLLUSKS' is already selected, and at 15.94s bands and wall overlap mid-transition. The outro is clean but the type is undersized compared with the brief.",
+   "judge-6 (as B): Best reading of the shared element. At 3.8s the camera has truly pushed into the Coral spine and the label has grown into the 594.56 card. At 16.2s the spine lands cleanly back in its slot on the rebuilt wall. The knockout panel covers the whole frame, so the wall shows only through the letters and the Coral spine glows through the K of BOOKS (1.56\u20132.4s), which is a smart, faithful touch. The band expansions carry their category names with them (9.69s, 12.5s), and the counter rolls in real time ('1 IN 10' mid-roll at 10.0s). Weaknesses: the type in Beat 2 and Beat 4 is undersized for a vertical frame, and the floor plan is small and low-contrast. Pleasant but not striking."
+  ],
+  "hyperframes": [
+   "judge-1 (as C): Beat 1 is solid: the knockout type sits over a busy wall, and the wipe to 'YOU NEED / ONE.' reads well (2.3\u20132.9s). The outro sweep and underline also match the brief (22\u201323.8s). Beat 3 is where it falls apart. After each level the entire stack stays solid Coral with divider lines for long stretches (9.69\u201310.0s, 10.94\u201311.56s, 12.5\u201313.44s, 14.69s), and the counter and digits lag behind (still '1 IN 10' at 10.0s), so the category names get only short reads. The handovers are rough. At 3.8s and 4.06s the label card is blank, with a stray glyph at 4.06s. At 7.9s the number goes a muddy mid-tone. At 16.2s the frame is a jumble of half-collapsed bands, stray white lines, a partly drawn wall and a mis-rendered digit.",
+   "judge-2 (as B): Structurally similar to A, with proper divider lines re-splitting the band left to right (10.0s, 12.6\u201312.9s) and a correct slanted bar-sweep outro (22.0\u201322.9s). The 3.8s match cut lands on an empty Paper card, and a stray glyph sits on it at 4.06s before the number appears. At 7.9s the lifted '594.56' turns a muddy grey-on-coral, and MOLLUSKS is cut off by the band edge at 12.4s. The 16.2s handover is the messiest of the three: collapsing bands, loose white lines and the rebuilding wall overlap digit 9. The end card is smaller and less striking than A's.",
+   "judge-3 (as C): Follows the brief most closely on the band mechanic: at 10.0s and 12.6\u201312.9s nine divider lines draw left to right across the filled coral band. The knockout at 1.56s shows the spines through the letters. Weaknesses: the label card is blank at 3.8s (the number only appears around 4.06s), 'MOLLUSKS' is visibly clipped at the band's top edge at 12.4s, and the 16.2s handover is a cluttered overlap of leftover bands, shelf lines, a wall fragment and the counter. Beat 1 and Beat 2 type is small, and the final lockup is clean but less bold than B's.",
+   "judge-4 (as B): The letter knockout is the strongest of the three: the wall and teal spines read clearly through 'A MILLION BOOKS.' at 1.56\u20132.2s, and the downward wipe to 'YOU NEED ONE.' (2.3\u20132.4s) is clean. The re-split at 10.0s and 12.6\u201312.9s draws divider lines across the coral field, close to the brief, but the category name disappears during each expansion (9.69s, 12.81s). The handovers are weaker: at 3.8s there is only a blank cream card on coral with no visible push, at 7.9s the docking number turns a muddy grey on coral, and at 16.2s the digits squash and shelf lines float loose while the band turns back into a spine.",
+   "judge-5 (as A): Every beat is there in order. The wall builds well (0.3\u20130.9s), the knockout 'A MILLION / BOOKS.' shows the wall through the letters (1.56\u20132.19s), the band levels work with divider lines drawing across (10.0s, 12.6\u201312.9s), and the outro bar sweep and underline are clean (22.0\u201324.7s). The weak spots are the handovers. There is no visible camera push: the spine at 3.44s jumps to a blank label card at 3.8s, and a stray mark sits on the card at 4.06s. The number turns grey and low-contrast on Coral at 7.9s. The wall rebuild at 16.2s is a mess: half-collapsed bands, stray white lines and spines over the '9' label. The headline type is undersized throughout (about half the width at 23.8s), and the floor plan is tiny.",
+   "judge-6 (as A): All beats are there in order. The masked wipe to YOU NEED / ONE. (2.2\u20132.4s), the left-to-right divider lines re-splitting the bands (12.6\u201312.9s) and the bar-sweep outro with its underline (22.0\u201324.7s) follow the brief closely. The Beat 1\u21922 handover has no camera push: at 3.8s the frame is a flat Coral field with an empty card, so the match cut reads as a swap, not a push in. The OCTOPUSES\u2192wall handover at 16.2s is a mess of broken slate bands, floating Paper lines and a half-built shelf. The Beat 2 headline is small and the floor plan sits small and timid in the frame (17\u201320s)."
+  ]
+ }
+}

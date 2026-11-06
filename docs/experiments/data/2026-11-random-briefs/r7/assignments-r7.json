@@ -1,0 +1,65 @@
+[
+ {
+  "id": "k",
+  "genre": "product launch teaser",
+  "subject": "the water cycle",
+  "techniques": [
+   "character or object animation with squash and stretch",
+   "path animation / lines that draw themselves",
+   "kinetic typography"
+  ],
+  "format": "1920x1080",
+  "seconds": 18,
+  "fonts": [
+   "Inter",
+   "Space Grotesk",
+   "Playfair Display",
+   "Bebas Neue",
+   "JetBrains Mono",
+   "Caveat",
+   "Nunito"
+  ]
+ },
+ {
+  "id": "l",
+  "genre": "logo sting with tagline",
+  "subject": "deep-sea creatures",
+  "techniques": [
+   "3D depth and parallax",
+   "kinetic typography",
+   "an animated chart"
+  ],
+  "format": "1920x1080",
+  "seconds": 18,
+  "fonts": [
+   "Inter",
+   "Space Grotesk",
+   "Playfair Display",
+   "Bebas Neue",
+   "JetBrains Mono",
+   "Caveat",
+   "Nunito"
+  ]
+ },
+ {
+  "id": "m",
+  "genre": "science explainer",
+  "subject": "a public library",
+  "techniques": [
+   "match cuts / shared-element transitions",
+   "masked reveals and wipes",
+   "kinetic typography"
+  ],
+  "format": "1080x1920 (vertical)",
+  "seconds": 25,
+  "fonts": [
+   "Inter",
+   "Space Grotesk",
+   "Playfair Display",
+   "Bebas Neue",
+   "JetBrains Mono",
+   "Caveat",
+   "Nunito"
+  ]
+ }
+]

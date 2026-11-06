@@ -1,0 +1,309 @@
+{
+ "judges": 6,
+ "mean": {
+  "givemotion": {
+   "brief": 7.5,
+   "spec": 7.5,
+   "motion": 7.17,
+   "craft": 7.33,
+   "errors": 7.17,
+   "overall": 7.17
+  },
+  "remotion": {
+   "brief": 8.0,
+   "spec": 7.67,
+   "motion": 7.5,
+   "craft": 7.17,
+   "errors": 7.33,
+   "overall": 7.33
+  },
+  "hyperframes": {
+   "brief": 7.17,
+   "spec": 7.17,
+   "motion": 6.67,
+   "craft": 6.17,
+   "errors": 6.33,
+   "overall": 6.17
+  }
+ },
+ "per": {
+  "givemotion": {
+   "brief": [
+    8,
+    7,
+    8,
+    7,
+    7,
+    8
+   ],
+   "spec": [
+    8,
+    8,
+    8,
+    7,
+    7,
+    7
+   ],
+   "motion": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    8
+   ],
+   "craft": [
+    8,
+    7,
+    7,
+    7,
+    7,
+    8
+   ],
+   "errors": [
+    8,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "overall": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    8
+   ]
+  },
+  "remotion": {
+   "brief": [
+    9,
+    8,
+    8,
+    7,
+    8,
+    8
+   ],
+   "spec": [
+    8,
+    8,
+    8,
+    7,
+    7,
+    8
+   ],
+   "motion": [
+    8,
+    8,
+    8,
+    7,
+    7,
+    7
+   ],
+   "craft": [
+    8,
+    7,
+    8,
+    6,
+    7,
+    7
+   ],
+   "errors": [
+    8,
+    7,
+    8,
+    7,
+    6,
+    8
+   ],
+   "overall": [
+    8,
+    8,
+    8,
+    6,
+    7,
+    7
+   ]
+  },
+  "hyperframes": {
+   "brief": [
+    8,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "spec": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    8
+   ],
+   "motion": [
+    7,
+    7,
+    6,
+    7,
+    6,
+    7
+   ],
+   "craft": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    7
+   ],
+   "errors": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    8
+   ],
+   "overall": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    7
+   ]
+  }
+ },
+ "avg_rank": {
+  "givemotion": 1.67,
+  "remotion": 1.33,
+  "hyperframes": 3.0
+ },
+ "firsts": {
+  "givemotion": 2,
+  "remotion": 4,
+  "hyperframes": 0
+ },
+ "rows": [
+  {
+   "judge": "judge-1",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6600607999999999,
+   "overall": {
+    "givemotion": 7,
+    "remotion": 8,
+    "hyperframes": 6
+   }
+  },
+  {
+   "judge": "judge-2",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.7365334,
+   "overall": {
+    "givemotion": 7,
+    "hyperframes": 6,
+    "remotion": 8
+   }
+  },
+  {
+   "judge": "judge-3",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6849258,
+   "overall": {
+    "remotion": 8,
+    "givemotion": 7,
+    "hyperframes": 6
+   }
+  },
+  {
+   "judge": "judge-4",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6657656,
+   "overall": {
+    "remotion": 6,
+    "hyperframes": 6,
+    "givemotion": 7
+   }
+  },
+  {
+   "judge": "judge-5",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6986810000000001,
+   "overall": {
+    "hyperframes": 6,
+    "givemotion": 7,
+    "remotion": 7
+   }
+  },
+  {
+   "judge": "judge-6",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.666102,
+   "overall": {
+    "hyperframes": 7,
+    "remotion": 7,
+    "givemotion": 8
+   }
+  }
+ ],
+ "notes": {
+  "givemotion": [
+   "judge-1 (as A): This is the cleanest and most keynote-like composition: stage words are centred under the horizon and never collide with the art. Evaporate. rises well with an orange full stop (4.72\u20135.3s), the tracking squeeze works (7.88\u21928.78s), and Collect. curves along the river and then straightens (13.72\u201314.62s). The cloud grows straight out of the vapour tip (7.2s). The squash and stretch is weak: the 1.0s impact is barely visible because the droplet already looks settled at 1.12s. The cycle loop (15.5\u201316.0s) sits left of the sun rather than running through all the elements, the falling Precipitate letters crowd the cloud at 11.47\u201311.7s, and the closing line is still typing at 17.32s, eating into the 17.4s hold.",
+   "judge-2 (as A): Clean, centred layout: the stage words sit balanced under the horizon, the wavy 'Collect.' straightens nicely (13.7\u201314.6s), and the lockup is well organised, with the blink landing at 17.1s. The 1.0s impact squash is hard to see (at 1.12s the droplet already looks normal), and at 11.47\u201311.7s the falling 'Precipitate.' letters are scattered across the cloud and the horizon and read as noise. The step numbers are tiny. At 15.5\u201316.0s the 700px loop misses the sun, so the 'connected cycle' idea is only partly delivered before the loop shrinks into the lockup.",
+   "judge-3 (as B): Structurally almost the same as A with centred type: crisp Condense squeeze (8.5\u21928.6s), Precipitate assembles well (12.1\u201312.3s), 'Collect.' follows the river (13.7\u201314.2s), and the lockup is clean with the blink at 17.1s. The droplet does not look squashed at 1.12s, the sun's rays are unevenly spaced (key 7.2s, 8.5\u20139.4s), the scene vanishes in one frame between 16.0s and 16.1s instead of clearing, and at 11.7s a falling 'i' cuts through the cloud.",
+   "judge-4 (as C): Cleanest composition: stage words centred below the horizon, Condense. squeezes from wide tracking into a tight lockup (8.5\u20138.6 s), the cloud starts from the vapour meeting point (7.2 s), and the rays rotate gently, which gives the sun some life. Flaws: the falling Precipitate letters cross the cloud outline (11.47\u201311.7 s), Collect. enters at about 60 px from the left edge, inside the safe margin (13.72 s), the loop goes round the cloud but misses the sun (15.5\u201316.0 s), and a stray tick appears at the loop start (15.07 s). The lockup and blink at 17.1 s are good.",
+   "judge-5 (as B): The most balanced layout: stage words are centred under the horizon, the +60% squeeze on 'Condense.' reads well (7.88\u21928.6s), the 75/130 stretch shows at 4.28s, and the 17.1s lockup is clean with a visible blink. The loop misses the sun, so it doesn't tie all the stages together (15.53\u201316.0s). 'Precipitate.' scatters its letters below the horizon in a messy cluster (11.47\u201311.7s) and then scrambles again on exit (13.28s), and the river erases unevenly (16.0s). The background reads slightly darker than #0A1A33.",
+   "judge-6 (as C): Best composition: centred stage words give strong hierarchy, the droplet stretches up before evaporating (4.28s), 'Condense.' squeezes in neatly (7.88\u20138.6s), and 'Collect.' follows a curve, then levels out (13.72\u201314.62s), with a clean lockup at 17.1s. The sun rays wobble at uneven angles and look loose (7.2s, 8.5\u20139.4s), falling letters cross the cloud outline at 11.47\u201311.7s, and the background reads slightly darker than the brief's navy."
+  ],
+  "remotion": [
+   "judge-1 (as B): {}",
+   "judge-2 (as C): This has the most convincing squash and stretch of the three: the hard 135/70 pancake at 1.12s, the flattened hero landing at 11.7s, and drops that squash and merge at 12.5\u201313.0s. Letters and drops fall in a clear rain rhythm, 'Collect.' follows the river, and the clockwise loop passes through the sun, cloud and river at 15.7\u201316.2s before shrinking into a neat lockup, with the blink visible at 17.1s. The weak spot is evaporation at 5.0\u20135.2s: the droplet shrinks to a speck instead of snapping up to 75/130, so volume is not preserved. A small stray mark appears at the bottom at 16.6s, and the lockup arrives late ('The Water' at 16.88s, still typing at 17.1s).",
+   "judge-3 (as A): Most faithful and most polished: clear impact squash at 1.12s, typed INTRODUCING with cursor (1.5\u20132.2s), droplet stretches and splits into vapour (4.7\u20135.2s) while 'Evaporate.' rises letter by letter from below the horizon with an orange full stop, vapour paths meet and become the cloud stroke (7.2\u20137.9s), the hero lands squashed wide at 11.7s, drops merge (12.5\u201313.0s) and the loop draws through the faded scene (15.5\u201316.0s) into a clean lockup with the blink at 17.1s. Weaknesses: no visible cloud breathing or sponge squash (8.5\u20139.4s static), the full stop hangs at mid-height at 12.3\u201312.5s, falling letters collide at 11.7s, and 'Collect.' sits close to the right safe margin.",
+   "judge-4 (as A): Strong across the brief: the horizon draws from the centre, INTRODUCING types in with a cursor (1.5\u20132.2 s), Evaporate. squashes and stretches as it rises with an orange full stop (5.2\u20135.8 s), and the cycle loop passes through the sun, cloud and droplet (15.5\u201316.0 s) into a clean lockup with a blink at 17.1 s. Weaknesses: the droplet's split into vapour shrinks it to a tiny blip (5.1\u20135.3 s) so the volume does not look preserved, and the falling Precipitate letters look scattered and messy under the horizon (11.47\u201312.1 s). Mixing left-aligned and right-aligned stage words looks less considered.",
+   "judge-5 (as C): The strongest squash and stretch of the three: a hard 135/70 squash on the first landing (1.12s) and the hero landing (11.7s), a squash at the 16.1s jump, a clear blink at 17.1s, the hero swelling as the small drops merge (12.5\u201313.0s), and a clockwise loop through the sun, cloud and river (15.7\u201316.0s). The evaporate beat is weak, because the droplet just shrinks to nothing instead of snapping up and splitting (5.0\u20135.2s). The 'Precipitate.' letters land scattered across the horizon line (11.7s), with a full stop floating mid-air (12.3\u201312.4s). The lockup builds late, with only 'The Water' showing at 16.88s, so the hold is short.",
+   "judge-6 (as B): Clearest squash and stretch: the stretched fall is visible at 0.68s, the hard squash lands at 1.12s, the hero squashes flat on its rain landing at 11.7s, and the blink shows at 17.1s. Type placement is weak: stage words sit bottom-left under the horizon and 'Collect.' bottom-right (14.62\u201315.97s), so they don't read as a set. The evaporation split is thin (5.1\u20135.3s), and at 11.7s the 'Precipitate.' letters scatter below the line."
+  ],
+  "hyperframes": [
+   "judge-1 (as C): {}",
+   "judge-2 (as B): Most beats follow the brief: the horizon draws on, the vapour splits off with dotted tips (4.7\u20135.2s), the +60% tracking squeeze on 'Condense.' (8.5\u20138.8s) works, and the loop passes through the sun, cloud and river with a clockwise arrowhead (15.7\u201316.1s). Placing the words left-aligned above the horizon causes overlaps: at 12.1\u201313.0s the full stop of 'Precipitate.' touches the row of drops, at 14.6s 'Collect.' runs into the hero droplet, and at 15.5\u201315.9s the loop cuts through 'Collect.'. Squash on impact is mild, and the lockup is still typing 'AVAILABLE EVERYW' at 17.1s.",
+   "judge-3 (as C): Every beat is there and the lockup is strong, but the vapour paths carry cyan dot heads the brief does not ask for (4.7\u20135.2s) and lean unevenly (7.2s), and the stage words sit above the horizon instead of rising from below it. The word and the rain crowd each other: drops butt against 'Precipitate.' (12.1\u201313.0s), 'Collect.' sits on the river and droplet (14.6s), and the loop cuts through the faded 'Collect.' at 15.53s. The cloud never visibly breathes, and the eyes are open at 17.1s, so the 17.0s blink is very short or missing.",
+   "judge-4 (as B): Best evaporation of the three: the droplet becomes three dots that lead the vapour paths (4.72\u20135.2 s), and the INTRODUCING wipe-out at 2.9 s is right. Putting the stage words above the horizon causes collisions: the full stop of Precipitate. touches the drops (12.38 s), Collect. runs into the droplet and river (14.62 s), and the loop crosses straight through the dimmed Collect. (15.7\u201315.9 s). The lockup is solid but overall it looks the most crowded.",
+   "judge-5 (as A): This is the only version where the droplet splits into three dots before becoming the vapour paths (4.72s), and its 700 px loop passes cleanly through the sun, cloud and river (15.5\u201315.97s). The other droplet physics is hard to see: no impact squash shows at 1.12s or at the hero landing (11.7s), and the blink at 17.1s is not visible. The stage words sit left on the horizon, and 'Precipitate.' crowds right up against the drops (12.1\u201312.8s), while 'Collect.' gets lost under the river and loop (15.07\u201315.53s). The step numbers are tiny throughout (01 at 4.9s, 03 at 11.7s).",
+   "judge-6 (as A): Faithful build: the droplet splits into three dots that become vapour paths (4.72s), the vapour curls into the cloud stroke (7.2\u20137.42s) and 'Collect.' rides the river itself (14.18s). The impact squash is not visible (already settled at 1.12s), the left-aligned stage words with the droplet off to the side feel unbalanced, 'Collect.' overlaps the river stroke at 14.18\u201314.62s, and the eyes are open at 17.1s so the blink may be missed."
+  ]
+ }
+}

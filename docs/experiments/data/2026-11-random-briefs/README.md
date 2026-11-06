@@ -36,3 +36,11 @@ The scripts expect the round folder at `/home/user/tools5` (change `R` / the pat
 - `stats.json` / `stats.py`: tokens, cost, minutes, tool calls, images viewed and lines of code for every maker, A to J.
 - Versions: Remotion 4.0.541 (`create-video@4.0.541`), HyperFrames 0.9.18, givemotion 0.1.3 at the development branch,
   Claude Opus 5.5 at effort high.
+
+## Round 7 and the vertical re-judging (added 2026-11-06)
+
+- `r7/`: assignments, seed, judge keys and scores for sets K, K2, L, L2, M, M2 (two makers per tool per brief),
+  the round's scripts (`run-round7b.sh`, `judge-round7.sh`) and `rejudge-vertical.sh`.
+- `pack.sh` now keeps each frame's shape (vertical frames are fitted, not squashed). The earlier scores of the vertical
+  sets, judged from squashed frames, are in `r6/squashed-packs/` and `r7/squashed-packs/`.
+- Versions: givemotion 0.1.4 (development branch), Remotion 4.0.541, HyperFrames 0.9.18, Claude Opus 5.5 at effort high.
