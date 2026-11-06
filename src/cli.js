@@ -27,6 +27,8 @@ Look (for AI review)
   check [file]                  Find problems: errors, text cut off or off-screen,
                                 overlaps, tiny text, low contrast, broken assets
   snapshot [file] -o dir        Key moments as PNGs + one contact sheet (sheet.png)
+  review [file] -o dir          The video as a viewer sees it: overview, the frames people read, motion
+                                strips at the busy moments, the check report and a scoring rubric (REVIEW.md)
   inspect [file]                Timeline as JSON: size, fps, duration, clips, media
   audio <file>                  Tempo, beats, bar starts and big hits of a sound file
   captions <file.json|.srt>     How the captions block will page the words (--words 3)
@@ -100,6 +102,8 @@ const CMD_HELP = {
   --sheet-only      Only write sheet.png
   --cols 2          Columns in the sheet (fewer = bigger pictures)
   --grid            Draw thirds, the center and the safe zone (data-safe-zone / --safe-zone) over the pictures
+  --trail           Also write trail.png: the frames layered into one picture (earlier ones as fading ghosts), to see a
+                    move's path and spacing at full size (with --from/--to --every 0.1)
   --data f.json / --props '{…}'   Data for {{data.…}} (default: data.json next to the HTML)
   --transparent     Show a checkerboard behind (auto-detected when the page has no background)
   --json            Machine-readable output
@@ -158,7 +162,7 @@ async function main() {
   if (args.help && cmd !== 'help') return console.log(CMD_HELP[cmd] || HELP);
   // an option the command does not read is easy to miss (snapshot --at 1,2 used to give the automatic times): say so.
   // What a command reads is taken from its own code (and commonOpts when it uses it), so this list never goes stale.
-  const fns = { render: cmdRender, still: cmdStill, snapshot: cmdSnapshot, check: cmdCheck, inspect: cmdInspect, bundle: cmdBundle, export: cmdBundle, audio: cmdAudio, beats: cmdAudio, analyze: cmdAnalyze, analyse: cmdAnalyze, captions: cmdCaptions, words: cmdWords };
+  const fns = { render: cmdRender, still: cmdStill, snapshot: cmdSnapshot, review: cmdReview, check: cmdCheck, inspect: cmdInspect, bundle: cmdBundle, export: cmdBundle, audio: cmdAudio, beats: cmdAudio, analyze: cmdAnalyze, analyse: cmdAnalyze, captions: cmdCaptions, words: cmdWords };
   if (fns[cmd]) {
     const src = fns[cmd].toString(), reads = (code) => [...code.matchAll(/args\.([a-zA-Z]+)/g)].map((m) => m[1]);
     const helpers = { commonOpts, loadData }, seen = new Set(), all = [];
@@ -178,6 +182,7 @@ async function main() {
     case 'render': return cmdRender(args);
     case 'still': return cmdStill(args);
     case 'snapshot': return cmdSnapshot(args);
+    case 'review': return cmdReview(args);
     case 'check': return cmdCheck(args);
     case 'inspect': return cmdInspect(args);
     case 'bundle': case 'export': return cmdBundle(args);
@@ -279,13 +284,26 @@ async function cmdSnapshot(args) {
   const { snapshot } = await import('./check.js');
   try {
     const progress = args.json ? null : (i, n) => { if (n > 8 && (i === 1 || i % 10 === 0 || i === n)) process.stderr.write(`  frame ${i}/${n}\n`); };
-    const r = await snapshot(inputOf(args), { ...commonOpts(args), transparent: args.transparent, output: args.output, times: args.times ?? args.at, every: args.every, from: args.from, to: args.to, transitions: args.transitions, max: args.max ? +args.max : undefined, sheetOnly: args.sheetOnly, grid: args.grid, safeZone: args.safeZone, cols: args.cols ? +args.cols : undefined, onProgress: progress });
+    const r = await snapshot(inputOf(args), { ...commonOpts(args), transparent: args.transparent, output: args.output, times: args.times ?? args.at, every: args.every, from: args.from, to: args.to, transitions: args.transitions, max: args.max ? +args.max : undefined, sheetOnly: args.sheetOnly, grid: args.grid, trail: args.trail, safeZone: args.safeZone, cols: args.cols ? +args.cols : undefined, onProgress: progress });
     if (args.json) console.log(JSON.stringify(r, null, 2));
     else {
       console.log(`sheet: ${shortPath(r.sheet)}`);
+      if (r.trail) console.log(`trail: ${shortPath(r.trail)}`);
       console.log(`times: ${r.times.map((t) => t.toFixed(2) + 's').join(', ')}`);
       if (r.files.length) console.log(`frames (${r.files.length}): ${r.files.map((f) => shortPath(f)).slice(0, 6).join(', ')}${r.files.length > 6 ? ', …' : ''}`);
       if (r.problems && r.problems.length) console.log(`⚠ the page has ${r.problems.length} problem${r.problems.length > 1 ? 's' : ''} (run check for details): ${r.problems.slice(0, 3).map((p) => p.message).join(' | ')}`);
+    }
+  } catch (e) { fail(e, args); }
+}
+
+async function cmdReview(args) {
+  const { review } = await import('./review.js');
+  try {
+    const r = await review(inputOf(args), { ...commonOpts(args), output: args.output, onStep: args.json ? null : (s) => process.stderr.write(`  ${s}\n`) });
+    if (args.json) console.log(JSON.stringify({ ...r, report: undefined }, null, 2));
+    else {
+      console.log(`review: ${shortPath(r.dir)}  (${r.errors} error${r.errors === 1 ? '' : 's'}, ${r.warnings} warning${r.warnings === 1 ? '' : 's'})`);
+      console.log(`open ${shortPath(r.review)}, then look at overview.png, holds.png and ${r.motion.length} motion strip${r.motion.length === 1 ? '' : 's'}`);
     }
   } catch (e) { fail(e, args); }
 }

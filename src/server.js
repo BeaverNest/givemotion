@@ -202,10 +202,19 @@ class FrameExtractor {
       // in use: pruneFrames keeps it
       try { const now = new Date(); utimesSync(dir, now, now); } catch {}
     }
-    const complete = (i) => existsSync(p(i + 1)) || (existsSync(p(i)) && !jobs.some((j) => !j.done && i >= j.start && i <= j.end));
+    // A frame is ready once its file exists and ffmpeg has moved past it (the next file exists) or no running job
+    // writes it. The next file existing is not enough on its own: an earlier extraction may have started later in the
+    // video (another worker or an earlier render asked for a later frame first), leaving a gap before it.
+    const complete = (i) => existsSync(p(i)) && (existsSync(p(i + 1)) || !jobs.some((j) => !j.done && i >= j.start && i <= j.end));
     if (complete(idx)) return p(idx);
-    let job = jobs.find((j) => !j.done && idx >= j.start && idx <= j.start + Math.ceil(fps * 4) + (j.reached || 0));
-    if (!job) job = this._spawn(file, fps, idx, dir, jobs);
+    let job = jobs.find((j) => !j.done && idx >= j.start && idx <= j.end && idx <= j.start + Math.ceil(fps * 4) + (j.reached || 0));
+    if (!job) {
+      // Fill only up to the next frame already on disk, so files other readers may be reading are never rewritten.
+      let n = 1;
+      const window = Math.ceil(fps * 120);
+      while (n < window && !existsSync(p(idx + n))) n++;
+      job = this._spawn(file, fps, idx, dir, jobs, n);
+    }
     for (;;) {
       // ffmpeg fails when asked to start at or past the end of the file: that is the past-the-end case below
       if (job.failed && (existsSync(p(job.start)) || !existsSync(p(idx - 1)))) throw new Error(job.failed);
@@ -218,13 +227,13 @@ class FrameExtractor {
     for (let i = idx - 1; i >= Math.max(0, idx - 900); i--) if (existsSync(p(i))) return p(i);
     throw new Error(`No frame ${idx} for ${file}`);
   }
-  _spawn(file, fps, startIdx, dir, jobs) {
-    const window = Math.ceil(fps * 120);
-    const job = { start: startIdx, end: startIdx + window, done: false, failed: null, reached: 0 };
+  _spawn(file, fps, startIdx, dir, jobs, count = Math.ceil(fps * 120)) {
+    const window = count;
+    const job = { start: startIdx, end: startIdx + window - 1, done: false, failed: null, reached: 0 };
     jobs.push(job);
     const ss = startIdx / fps;
     const vf = `fps=${fps},scale='min(iw,${this.maxW})':'min(ih,${this.maxH})':force_original_aspect_ratio=decrease:flags=lanczos`;
-    const args = ['-hide_banner', '-loglevel', 'error', '-ss', String(ss), '-i', file, '-t', String(window / fps), '-vf', vf,
+    const args = ['-hide_banner', '-loglevel', 'error', '-ss', String(ss), '-i', file, '-t', String((window + 1) / fps), '-vf', vf, '-frames:v', String(window),
       '-q:v', '2', '-start_number', String(startIdx), join(dir, '%07d.jpg')];
     const proc = spawn(ffmpegPath(), args, { stdio: ['ignore', 'ignore', 'pipe'] });
     let err = '';

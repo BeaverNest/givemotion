@@ -431,3 +431,31 @@ test('--scale: numbers and fractions; a fractional scale must give whole, even s
   assert.deepEqual(scaledSize(1000, 1000, 1.001, 'png'), { width: 1001, height: 1001 });
   assert.throws(() => scaledSize(1000, 1000, 1.001, 'mp4'), /even/);
 });
+
+test('FramePage: never two frame requests in flight (a keep-alive tick still pending when the capture asks for its frame)', async () => {
+  const { FramePage } = await import('../src/browser.js');
+  // a fake Chrome that, like the real one, rejects a beginFrame while another is pending, and answers slowly
+  let inFlight = 0, rejected = 0, served = 0;
+  const page = Object.create(FramePage.prototype);
+  Object.assign(page, { mode: 'beginframe', interval: 1000 / 30, ticks: 0, opts: {} });
+  page.s = (method, params) => {
+    if (method !== 'HeadlessExperimental.beginFrame') return Promise.resolve({});
+    if (inFlight) { rejected++; return Promise.reject(new Error('Another frame is pending')); }
+    inFlight++;
+    return new Promise((res) => setTimeout(() => { inFlight--; served++; res(params.screenshot ? { screenshotData: Buffer.from('x').toString('base64') } : {}); }, 40));
+  };
+  const tick = page._beginFrame(false);            // a keep-alive tick sent while a slow seek runs
+  const shot = page.capture('jpeg', 98);           // the capture right after the seek answers
+  const [, buf] = await Promise.all([tick, shot]);
+  assert.equal(rejected, 0, 'no frame request was sent while another was pending');
+  assert.equal(served, 2);
+  assert.equal(buf.toString(), 'x');
+});
+
+test('independence policy backstop: no tracked file or path names a listed product, and the scanner finds a listed word', async () => {
+  const { scanRepo, scanText, HASHES, hash } = await import('./policy/independence.mjs');
+  HASHES.add(hash('zqxjkvtest'));
+  assert.deepEqual(scanText('ok line\nuses @zqxjkvtest/cli here').map((h) => h.line), [2]);
+  HASHES.delete(hash('zqxjkvtest'));
+  assert.deepEqual(scanRepo(), [], 'see CONTRIBUTING.md, "Independence and clean-room policy"');
+});

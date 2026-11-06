@@ -4,7 +4,7 @@ Use for: whiteboard / sketch / Excalidraw-style explainers, flows drawn step by 
 ## What makes it look premium
 - **Order like a hand.** Outline first (0.9-1.1 s), fill after it (0.6-0.8 s, starting ~0.8 s into the outline), label written last (0.6 s), then the arrow to the next step (0.9 s). Never draw everything at once.
 - **Pen easing.** Every stroke `power2.inOut`: the pen speeds up and slows into the end. Handwriting `sine.inOut`, ~0.1 s per letter. Linear strokes look plotted.
-- **Wobble, round caps, thick ink.** `data-sketch="1.4"` (default 1 looks too clean), `stroke-linecap: round`, 7 px outlines, 10 px accent underlines, labels ≥ 84 px in world units (they shrink in the overview).
+- **Wobble, round caps, thick ink.** `data-sketch="1.4"` (default 1 looks too clean), `data-sketch-boil="3"` on the drawing so held lines stay alive (redrawn on threes), `data-sketch-ink="0.8"` for a pen or brush line (tapered ends, pressure) instead of a marker, `stroke-linecap: round`, 7 px outlines, 10 px accent underlines, labels ≥ 84 px in world units (they shrink in the overview).
 - **Fills as separate shapes.** A copy of the shape with `stroke="none"` and its own fill style: hatched (default), `cross`, or `solid`, drawn after the outline so you see the hand go back in to color.
 - **Arrows: shaft then head.** `gm.connect(..., { sketch: true, draw: [t, 0.9] })` draws the shaft and finishes with the head. Bend them (`curve: ±0.25`); straight arrows look like software.
 - **Camera stays close and keeps drifting.** Frame two neighbours at a time (`padding: 90-110`), move 1.6 s `in-out-sine`, start each move as the next step starts drawing; pull back once at the very end.

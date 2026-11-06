@@ -35,10 +35,17 @@ function findInDir(dir, name, depth = 4) {
   return null;
 }
 
+/** @param {string} p */
+const envChrome = (p) => ({ path: p, kind: /headless[-_]shell/i.test(p) || process.env.GIVEMOTION_CHROME_KIND === 'shell' ? 'shell' : (process.env.GIVEMOTION_CHROME_KIND || 'chrome') });
+
 /** Returns { path, kind: 'shell' | 'chrome' } or null. */
 export function findChrome(explicit) {
-  const env = explicit || process.env.GIVEMOTION_CHROME || process.env.CHROME_PATH;
-  if (env) return { path: env, kind: /headless[-_]shell/i.test(env) || process.env.GIVEMOTION_CHROME_KIND === 'shell' ? 'shell' : (process.env.GIVEMOTION_CHROME_KIND || 'chrome') };
+  const env = explicit || process.env.GIVEMOTION_CHROME;
+  if (env) return envChrome(env);
+  // CHROME_PATH is a generic variable (CI and container images set it to a full Chrome for Puppeteer). A full Chrome
+  // has no BeginFrame capture and renders ~2x slower, so a chrome-headless-shell already on the machine comes first.
+  const generic = process.env.CHROME_PATH;
+  if (generic && /headless[-_]shell/i.test(generic)) return envChrome(generic);
   const own = findInDir(join(CACHE_DIR, 'chrome-headless-shell'), shellBinaryName());
   if (own) return { path: own, kind: 'shell' };
   const pup = findInDir(join(homedir(), '.cache', 'puppeteer', 'chrome-headless-shell'), shellBinaryName(), 5);
@@ -50,6 +57,7 @@ export function findChrome(explicit) {
     try { entries = readdirSync(d).filter((e) => e.startsWith('chromium_headless_shell-')).sort().reverse(); } catch {}
     for (const e of entries) { const p = findInDir(join(d, e), shellBinaryName(), 3); if (p) return { path: p, kind: 'shell' }; }
   }
+  if (generic) return envChrome(generic);
   const candidates = {
     darwin: ['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', '/Applications/Chromium.app/Contents/MacOS/Chromium', '/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary'],
     linux: ['/usr/bin/google-chrome-stable', '/usr/bin/google-chrome', '/usr/bin/chromium', '/usr/bin/chromium-browser', '/snap/bin/chromium'],
@@ -256,11 +264,17 @@ export class FramePage {
     return e;
   }
   async _beginFrame(screenshot, format = 'jpeg', quality = 92) {
+    // One frame request at a time: Chrome rejects a second one while the first is pending ("Another frame is
+    // pending"). A keep-alive tick sent while a slow seek runs could still be pending when the capture asked for its
+    // frame, and the render failed (heavy pages, several workers, motion blur on).
+    while (this._bfPending) await this._bfPending.catch(() => {});
     this.ticks += this.interval;
     const params = { frameTimeTicks: this.ticks, interval: this.interval };
     if (screenshot) params.screenshot = { format, ...(format === 'jpeg' ? { quality } : {}) };
     else params.noDisplayUpdates = true;
-    return this.s('HeadlessExperimental.beginFrame', params);
+    const p = this.s('HeadlessExperimental.beginFrame', params);
+    this._bfPending = p;
+    try { return await p; } finally { if (this._bfPending === p) this._bfPending = null; }
   }
   /** Evaluate and await a promise; keeps the compositor ticking in beginFrame mode so loads can finish. */
   async evaluate(expression, { timeoutMs = this.opts.timeoutMs || 60000 } = {}) {
@@ -288,7 +302,8 @@ export class FramePage {
         throw this.stuck;
       }
       // a renderer busy in page script never answers beginFrame: do not let that wait past the timeout
-      if (this.mode === 'beginframe') { await Promise.race([this._beginFrame(false).catch(() => {}), sleep(250)]); await sleep(2); }
+      // (a tick still pending from the last round is waited for, not doubled)
+      if (this.mode === 'beginframe') { await Promise.race([(this._bfPending || this._beginFrame(false)).catch(() => {}), sleep(250)]); await sleep(2); }
       else await sleep(5);
     }
     if (error) throw error;

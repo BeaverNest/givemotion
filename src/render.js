@@ -68,7 +68,7 @@ export function scaledSize(w, h, scale, format) {
  * by the browser in the same capture. `min`: smallest smear drawn, in px on a 1080 px screen; `maxEls`: most elements
  * smeared in one frame (the fastest and biggest first). Changing a value redoes every cached part (parts fingerprint).
  */
-export const AUTO_BLUR = { v: 2, min: 3, maxEls: 48 };
+export const AUTO_BLUR = { v: 4, min: 3, maxEls: 48, textCap: 0.3, shapeCap: 0.15 };
 
 /**
  * --motion-blur: unset = off (auto is opt-in until the smear blur is validated) (data-motion="classic"); "auto"; "off" (also
@@ -676,8 +676,23 @@ export async function velocityBlur(t, dt, o = {}) {
       py = pb.top + (ca[1] - pa.top) * psy;
     }
     const [cx, cy] = gA && gB ? carry(gA, gB, ca[0], ca[1]) : [(b.left + b.right) / 2, (b.top + b.bottom) / 2];
-    const vx = 2 * (cx - px), vy = 2 * (cy - py);
-    const L = Math.hypot(vx, vy);
+    let vx = 2 * (cx - px), vy = 2 * (cy - py);
+    let L = Math.hypot(vx, vy);
+    // Text keeps its letters: on an element of ordinary size that holds text (a word that slams, the digits rolling in a
+    // counter), the smear stops at 0.3 of its font size on screen. A full physical smear turned rolling digits and
+    // fast type into unreadable streaks (judges and makers flagged it). Big containers (a camera world) are not capped.
+    if (L > 0 && (b.width * b.height) / (W * H) < 0.2 && /\S/.test(el.textContent || '')) {
+      const fsz = parseFloat(getComputedStyle(el).fontSize) || 0, kk = el.offsetHeight ? b.height / el.offsetHeight : 1;
+      const cap = 0.3 * fsz * (isFinite(kk) && kk > 0 ? kk : 1);
+      if (cap > 0 && L > cap) { vx *= cap / L; vy *= cap / L; L = cap; }
+    }
+    // An object keeps its shape: on anything under 15% of the frame (a bee, a card, a particle, an icon), the smear
+    // stops at 0.15 of its smaller side. A full physical smear turned a fast 110 px bee into "a glowing blob" for the
+    // judges (its stripes and wings gone). Big things (a camera world, a whole scene) keep the full smear.
+    if (L > 0 && (b.width * b.height) / (W * H) < 0.15) {
+      const cap = 0.15 * Math.min(b.width, b.height);
+      if (cap > 0 && L > cap) { vx *= cap / L; vy *= cap / L; L = cap; }
+    }
     // own zoom: how far the farthest visible point of the box moves while the shutter is open
     const ex = Math.max(Math.abs(Math.max(0, b.left) - cx), Math.abs(Math.min(W, b.right) - cx));
     const ey = Math.max(Math.abs(Math.max(0, b.top) - cy), Math.abs(Math.min(H, b.bottom) - cy));

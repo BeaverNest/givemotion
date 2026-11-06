@@ -13,13 +13,13 @@ This file is the core (read it all). Then read **only** the 1-3 technique recipe
 
 ## The loop
 
-0. **Plan.** Read the brief. Pick the recipes it needs. Write a shot list as a comment at the top of the HTML, one line per moment: time range, what is on screen, how it moves, how it hands over to the next moment.
-1. **Write** the composition (`video.html`).
-2. `npx givemotion check video.html`: fix every ✖ error; fix ⚠ warnings (real faults: text cut off, overlapping, unreadable) unless you meant it. ℹ notes are style hints (a straight path, one easing everywhere, the camera pausing): look at the frames and ignore them when the move is what you meant. Do not spend rounds making check quiet; spend them making the video look better. The report starts with a motion strip, one mark per half second (`▁` little changes, `█` the whole picture changes).
-3. `npx givemotion snapshot video.html`: **open `snapshots/sheet.png` and look at it** with a designer's eye. To judge one move, `snapshot --every 0.1 --from 2 --to 3`. Fix and repeat 2-3.
-4. `npx givemotion render video.html -o out/video.mp4`.
+0. **Direct.** Before code, decide how a top studio would make this brief look: research the genre (search the web for real examples when you can, else recall them), then write at the top of the HTML: the look in words, the type system, the motion language (easing families, rhythm, how scenes hand over) and the shot list (one line per moment: time, what is on screen, the move, the hand-over). How: `references/direction.md`.
+1. **Style frames.** Build the 2-3 key holds first, still, and `still` each: judge them as posters (one focal point, hierarchy, margins). Then animate.
+2. **Write** the motion; `npx givemotion check video.html` as you go: fix every ✖; ⚠ are real faults unless meant; ℹ are style hints.
+3. **Review twice.** `npx givemotion review video.html` writes what a viewer sees (overview, the frames people read, motion strips at the busy moments) and `review/REVIEW.md`: score it harshly, fix the five worst problems, review again. Fresh eyes find more: give a sub-agent only the brief and the review folder. Put the brief's times in `data-expect`.
+4. **Render:** `npx givemotion render video.html -o out/video.mp4`.
 
-`--json` on any command for machine output; `<command> --help` for options. `still video.html -t 3.2 -o f.png` renders one moment; `inspect --at 4.5 --el "#logo"` says where an element is then.
+`--json` for machine output, `<command> --help` for options. `still video.html -t 3.2 -o f.png` renders one moment; `inspect --at 4.5 --el "#logo"` says where an element is.
 
 ## How good motion is made here
 
@@ -30,7 +30,7 @@ The engine gives you any HTML/CSS/SVG/canvas and a frame-exact timeline; the loo
 3. **Contrast in timing.** Fast in, slow settle; holds of 0.4-1 s after something lands; exits shorter than entrances. Never move everything at the same speed with the same curve.
 4. **Follow the brief exactly** for colors, fonts, copy, sizes and timing; your craft goes into how things move, not into extra content.
 5. **Frame 0 is the hook**, nothing is cut by the frame edge, text is big (titles 96-200 px, body ≥ 36 px at 1080p), one hero per moment, scenes flow into each other (push, whip, morph, match cut) rather than fading.
-6. **Things come from things.** A new element is born from one already on screen, not spawned from nowhere: three circles squeeze out of the main circle; one of the rectangles on screen slides over and becomes the underline; a card grows out of the button that was clicked; the logo's mark becomes the end card's mark. Reuse and transform before you add.
+6. **Things come from things.** A new element is born from one already on screen, not spawned from nowhere: three circles squeeze out of the main circle; one of the rectangles on screen slides over and becomes the underline; a card grows out of the button that was clicked; the logo's mark becomes the end card's mark. Reuse and transform before you add. **Plant the next set early**: already in the world (small, dim) while this beat plays, so the camera reveals it.
 7. **A camera move means "look here".** Push in only toward something the viewer should read next. Never zoom into empty space or into the old scene as a way to transition: to leave a scene, move sideways (push, whip, wipe) or carry an element across (morph, the rule above).
 8. **Animate** `transform`/`translate`/`scale`/`rotate`/`opacity`/`filter`/`clip-path`, not `width`/`top`/`left`.
 9. **Every element gets a planned life:** in, a readable hold (~1 s + 0.25 s a word), then an exit or hand-over. The shot list gives each hold.
@@ -38,10 +38,10 @@ The engine gives you any HTML/CSS/SVG/canvas and a frame-exact timeline; the loo
 ## Hierarchy: one thing matters at a time
 
 Viewers preferred videos where the eye always knew where to look.
-- **Every line has a key word.** Give the word that carries the meaning contrast: the accent color, a heavier weight, a bigger size, or a highlight/underline drawn on. The rest of the line stays quieter (ink or muted color, lighter weight). One per line, at most two per screen. If everything is accent, nothing is.
-- **Every moment has one hero:** the biggest, brightest thing with the most motion. Support is clearly smaller (hero ≥ 1.6× the next size; three levels at most: hero, support, label), dimmer (muted color or 50-70% opacity), arrives after the hero and moves less.
-- **Lead the eye in order:** the hero lands first; the key word changes color or gets its underline on its own beat (0.2-0.4 s after the line settles); support follows. When the camera or a callout focuses on something, dim or blur the rest.
-- **Use the brief's palette roles strictly:** accent colors for emphasis only, muted for secondary text.
+- **Every line has a key word.** Give the word that carries the meaning contrast (accent color, heavier weight, bigger size, or a highlight drawn on); the rest stays quieter. One per line, at most two per screen. If everything is accent, nothing is.
+- **Every moment has one hero:** the biggest, brightest thing with the most motion. Support is smaller (hero ≥ 1.6× the next size; three levels at most), dimmer (muted or 50-70% opacity), arrives after the hero and moves less. Effects (rings, sparks) frame the hero, never cross it.
+- **Lead the eye in order:** the hero lands first; the key word gets its color or underline 0.2-0.4 s after the line settles; support follows. When the camera or a callout focuses on something, dim the rest.
+- **Palette roles strictly:** accent for emphasis only, muted for secondary text.
 
 ## Easing: match the curve to the motion
 
@@ -82,7 +82,7 @@ Viewers preferred videos where the eye always knew where to look.
 </html>
 ```
 
-Built-in fonts (no files needed): `Inter`, `JetBrains Mono`, `Playfair Display`, `Space Grotesk`, `Bebas Neue`, `Nunito`, `Caveat`. Other fonts: `@font-face` from their file.
+Built-in fonts: `Inter`, `JetBrains Mono`, `Playfair Display`, `Space Grotesk`, `Bebas Neue`, `Nunito`, `Caveat`; others via `@font-face`.
 
 ## Timing model (read this)
 
@@ -99,7 +99,7 @@ Built-in fonts (no files needed): `Inter`, `JetBrains Mono`, `Playfair Display`,
 
 ## Timeline: precise choreography (GSAP-style, built in)
 
-For anything with more than a few moving parts, use `gm.timeline`: the GSAP API you know, but every value is computed from the time, so it renders frame-exact and in parallel. Times are seconds **relative to the clip that contains the scope**.
+For anything with more than a few moving parts, use `gm.timeline`: the GSAP API you know, computed from the time (frame-exact, parallel). Times are seconds **relative to the clip that contains the scope**.
 
 ```js
 gm.timeline('#scene2')                                     // scope: selectors are looked up inside it
@@ -110,20 +110,20 @@ gm.timeline('#scene2')                                     // scope: selectors a
   .to('.price', { textContent: 249, duration: 1.5 }, 2.5);          // count a number
 gm.fly('#event', { from: '#slot2', at: 7.5, duration: 0.8 });      // fly from another element's box into its own place
 ```
-`from()`/`fromTo()` show their start values from the beginning of the clip (keeps things hidden until they enter). When tweens overlap on the same property, the one that started last wins. Positions, all props and options, labels, keyframes, `gm.fly` and SVG caveats: `references/timeline.md`.
+`from()`/`fromTo()` show their start values from the clip's start (hidden until they enter). Overlapping tweens on one property: the latest start wins. Positions, all props and options, labels, keyframes, `gm.fly` and SVG caveats: `references/timeline.md`.
 
-Also built in (tables in `references/api.md`): `data-enter`/`data-exit` presets, `data-split`, `data-stagger`, `data-count`, `data-type` (typewriter), `data-scramble`, `data-camera` (push, float, shake…), `data-parallax`, `data-morph`, `data-fit`, `data-pulse`, easing names (GSAP names work), preset CSS keyframes and `var(--px)`, and ready-made blocks (`npx givemotion blocks`: captions, code-window, cursor, browser-window, charts…).
+Also built in (tables in `references/api.md`): `data-enter`/`data-exit` presets, `data-split`, `data-stagger`, `data-count` (`-roll`), `data-type` (typewriter), `data-scramble`, `data-camera` (push, float, shake…), `data-parallax`, `data-morph`, `data-fit`, `data-pulse`, easing names (GSAP names work), preset CSS keyframes and `var(--px)`, and ready-made blocks (`npx givemotion blocks`: captions, code-window, cursor, browser-window, charts…).
 
 ## Technique recipes (read the ones your video needs)
 
 | Your video has… | Read |
 |---|---|
 | A logo, brand sting, intro or end card | `references/techniques/logo-reveal.md` |
-| Big type that slams, stacks, rotates; a quote or headline as the star | `references/techniques/kinetic-type.md` |
-| Text appearing: word/char reveals, typewriter, write-on, scramble, underline or highlight | `references/techniques/text-reveals.md` |
+| Big type that slams, stacks, rotates; a headline as the star | `references/techniques/kinetic-type.md` |
+| Text reveals: words/chars, typewriter, write-on, scramble, highlight | `references/techniques/text-reveals.md` |
 | Camera moves: push, follow, whip, bank, zoom to a detail, shake | `references/techniques/camera-moves.md` |
-| Several scenes: how one hands over to the next (push, whip, morph, shape wipes) | `references/techniques/scene-transitions.md` |
-| Glow, light sweeps, gradients, grain, motion blur, depth | `references/techniques/light-and-depth.md` |
+| Several scenes handing over (push, whip, morph, shape wipes) | `references/techniques/scene-transitions.md` |
+| Glow, light sweeps, gradients, grain, blur, depth | `references/techniques/light-and-depth.md` |
 | Numbers, counters, bar/line charts, callouts | `references/techniques/numbers-and-charts.md` |
 | Lines that draw, routes, maps, pins, something travelling a path | `references/techniques/paths-and-maps.md` |
 | Flat shapes: grow, squash, split, orbit, morph | `references/techniques/shapes-and-motion-graphics.md` |

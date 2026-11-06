@@ -1257,6 +1257,15 @@
   // data-split (words / chars / lines) — gives each piece --i for staggering
   // ---------------------------------------------------------------------------
   const splitTargets = new WeakMap();
+  // What a reader sees as one character: a base letter with its marks, an emoji with its skin tone or a family joined
+  // by zero-width joiners. Splitting by code point drew the marks on dotted circles and broke emoji apart.
+  const graphemes = (() => {
+    try { const seg = new Intl.Segmenter(undefined, { granularity: 'grapheme' }); return (s) => Array.from(seg.segment(s), (x) => x.segment); }
+    catch (e) { return (s) => Array.from(s); }
+  })();
+  // Scripts whose letters join to their neighbours (Arabic, Syriac, N'Ko, Mongolian…): a letter on its own takes its
+  // isolated form, so a word in one of them stays one piece (a per-character stagger then plays word by word).
+  const JOINED = /[\u0600-\u06FF\u0700-\u074F\u0750-\u077F\u07C0-\u07FF\u0800-\u089F\u08A0-\u08FF\u1800-\u18AF\uA840-\uA87F\uFB50-\uFDFF\uFE70-\uFEFF]|\uD802[\uDEC0-\uDEFF]|\uD803[\uDD00-\uDD3F]/;
   function applySplit() {
     for (const el of document.querySelectorAll('[data-split]')) {
       if (el.__gmSplit) continue;
@@ -1278,7 +1287,7 @@
           w.style.setProperty('--i', String(wi));
           w.style.setProperty('--wi', String(wi++));
           if (mode === 'chars') {
-            for (const ch of Array.from(p)) {
+            for (const ch of JOINED.test(p) ? [p] : graphemes(p)) {
               const c = document.createElement('span');
               c.className = 'gm-char';
               c.textContent = ch;
@@ -1362,7 +1371,13 @@
         const a = fmtNumber(from, decimals, group), b = fmtNumber(to, decimals, group);
         fixed = b.length >= a.length ? b : a;
       }
+      // data-count-roll: an odometer. Every digit sits on its own wheel, clipped to exactly one line (a neighbour never
+      // shows), higher wheels turn only when the wheel to their right passes 9 (as on a real counter), and a wheel that
+      // would spin faster than the eye can follow ticks digit by digit instead of rolling (no half-glyph jumble).
+      const roll = el.hasAttribute('data-count-roll') && el.getAttribute('data-count-roll') !== 'false' && from >= 0 && to >= 0;
+      if (roll && naturalMotion() && getComputedStyle(el).fontVariantNumeric === 'normal') el.style.fontVariantNumeric = 'tabular-nums';
       counters.push({
+        roll, cells: null,
         el, from, to, decimals,
         dur: parseTime(el.getAttribute('data-count-duration'), el, 'data-count-duration') ?? 1.6,
         delay: parseTime(el.getAttribute('data-count-delay'), el, 'data-count-delay') ?? 0,
@@ -1423,10 +1438,76 @@
     el.appendChild(box);
     if (c.suffix) el.appendChild(document.createTextNode(c.suffix));
   }
+  // Odometer cells: one wheel per digit place (units first in c.cells), separators shown once a digit left of them is.
+  function buildRoll(c) {
+    const el = c.el, scale = Math.pow(10, c.decimals);
+    const top = Math.round(Math.max(c.from, c.to) * scale);
+    const n = Math.max(String(top).length, c.decimals + 1);
+    el.textContent = '';
+    if (c.prefix) el.appendChild(document.createTextNode(c.prefix));
+    const box = document.createElement('span');
+    box.className = 'gm-num';
+    const cells = [], seps = [];
+    for (let k = n - 1; k >= 0; k--) {
+      const cell = document.createElement('span');
+      cell.className = 'gm-dg gm-roll';
+      const a = document.createElement('span'), b = document.createElement('span');
+      cell.append(a, b);
+      box.appendChild(cell);
+      cells[k] = { cell, a, b, last: '' };
+      if (k === c.decimals && c.decimals > 0) { const d = document.createElement('span'); d.textContent = '.'; box.appendChild(d); }
+      else if (c.group && k > c.decimals && (k - c.decimals) % 3 === 0) {
+        const sp = document.createElement('span'); sp.textContent = ','; box.appendChild(sp); seps.push({ el: sp, k });
+      }
+    }
+    el.appendChild(box);
+    if (c.suffix) el.appendChild(document.createTextNode(c.suffix));
+    c.cells = cells; c.seps = seps; c.scale = scale;
+  }
+  // wheel position of digit place k for the scaled value q (q = value * 10^decimals): whole part = digit, fraction = roll
+  function wheel(q, k) {
+    const P = Math.pow(10, k), base = Math.floor(q / P), below = q - base * P;
+    if (k === 0) return q;
+    // the wheel turns while the one to its right goes 9 → 0, i.e. during the last tenth of its own cycle
+    const f = Math.min(1, Math.max(0, (below / P - 0.9) * 10));
+    return base + f;
+  }
+  function updateRoll(c, lt) {
+    if (!c.cells) buildRoll(c);
+    const val = x => { const p = c.dur > 0 ? Math.min(1, Math.max(0, x / c.dur)) : 1; return (c.from + (c.to - c.from) * c.ease(p)) * c.scale; };
+    const q = val(lt), q0 = val(lt - 1 / 60);
+    let changed = false;
+    const intK = c.decimals; // places at or above this are the integer part; the units place always shows
+    for (let k = 0; k < c.cells.length; k++) {
+      const C = c.cells[k];
+      const w = wheel(q, k), speed = Math.abs(w - wheel(q0, k)) * 60; // digits per second
+      const d = Math.floor(w + 1e-9), f = w - d;
+      // 6 digits/s still reads as a roll; past 12 the wheel ticks (fraction faded out, continuous in time)
+      const keep = Math.min(1, Math.max(0, (12 - speed) / 6));
+      const fr = f * keep;
+      const leading = k > intK && Math.floor(q / Math.pow(10, k)) === 0;
+      const ta = leading && d % 10 === 0 ? '' : String(d % 10);
+      const tb = String((d + 1) % 10);
+      const key = ta + '|' + tb + '|' + fr.toFixed(4);
+      if (key === C.last) continue;
+      C.last = key; changed = true;
+      if (C.a.textContent !== ta) C.a.textContent = ta;
+      if (C.b.textContent !== tb) C.b.textContent = tb;
+      C.a.style.transform = fr ? `translateY(calc(${(-fr).toFixed(4)} * (100% + .2em)))` : '';
+      C.b.style.transform = `translateY(calc(${(1 - fr).toFixed(4)} * (100% + .2em)))`;
+    }
+    for (const s of c.seps) {
+      const on = q >= Math.pow(10, s.k) * 0.95;
+      const vis = on ? '' : 'hidden';
+      if (s.el.style.visibility !== vis) { s.el.style.visibility = vis; changed = true; }
+    }
+    return changed;
+  }
   function updateCounters(T) {
     let changed = false;
     for (const c of counters) {
       const lt = mapT(c.el, T) - clipStartOf(c.el) - c.delay;
+      if (c.roll) { if (updateRoll(c, lt)) changed = true; continue; }
       const p = c.dur > 0 ? Math.min(1, Math.max(0, lt / c.dur)) : 1;
       const v = c.from + (c.to - c.from) * c.ease(p);
       const txt = c.prefix + fmtNumber(v, c.decimals, c.group) + c.suffix;

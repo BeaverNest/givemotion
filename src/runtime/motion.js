@@ -201,12 +201,113 @@
   function area(pts) { let s = 0; for (let i = 0; i < pts.length; i++) { const a = pts[i], b = pts[(i + 1) % pts.length]; s += a[0] * b[1] - b[0] * a[1]; } return s / 2; }
   function centroid(pts) { let x = 0, y = 0; for (const p of pts) { x += p[0]; y += p[1]; } return [x / pts.length, y / pts.length]; }
   function splitSub(d) { return String(d).trim().split(/(?=M)/).map((s) => s.trim()).filter(Boolean); }
+  // Area centroid of a closed polygon (the mean of the samples drifts toward detailed edges).
+  function areaCentroid(pts) {
+    let a = 0, x = 0, y = 0;
+    for (let i = 0; i < pts.length; i++) {
+      const p = pts[i], q = pts[(i + 1) % pts.length], c = p[0] * q[1] - q[0] * p[1];
+      a += c; x += (p[0] + q[0]) * c; y += (p[1] + q[1]) * c;
+    }
+    return Math.abs(a) < 1e-9 ? centroid(pts) : [x / (3 * a), y / (3 * a)];
+  }
+  // The outline as a radius per direction from its centre, when every ray from the centre crosses it once
+  // (circles, rounded rects, polygons, stars, blobs). null for anything else (letters, crescents, open paths).
+  const RAYS = 360;
+  function radialProfile(d) {
+    const M = 720, pts = samplePoly(d, M), c = areaCentroid(pts);
+    let prev = Math.atan2(pts[0][1] - c[1], pts[0][0] - c[0]), sweep = 0, dir = 0;
+    for (let i = 1; i <= M; i++) {
+      const q = pts[i % M], a = Math.atan2(q[1] - c[1], q[0] - c[0]);
+      let da = a - prev; if (da > Math.PI) da -= 2 * Math.PI; else if (da < -Math.PI) da += 2 * Math.PI;
+      if (Math.abs(da) > 1e-9) { const s = Math.sign(da); if (dir && s !== dir) return null; dir = s; }
+      sweep += da; prev = a;
+    }
+    if (Math.abs(Math.abs(sweep) - 2 * Math.PI) > 0.01) return null;
+    const r = new Float64Array(RAYS);
+    for (let k = 0; k < RAYS; k++) {
+      const t = (k / RAYS) * 2 * Math.PI, ux = Math.cos(t), uy = Math.sin(t);
+      let best = -1;
+      for (let i = 0; i < M; i++) {
+        // ray c + s·u against segment P→Q
+        const P = pts[i], Q = pts[(i + 1) % M], ex = Q[0] - P[0], ey = Q[1] - P[1];
+        const den = ux * ey - uy * ex; if (Math.abs(den) < 1e-12) continue;
+        const wx = P[0] - c[0], wy = P[1] - c[1];
+        const s = (wx * ey - wy * ex) / den, v = (wx * uy - wy * ux) / den;
+        if (s > 0 && v >= -1e-9 && v <= 1 + 1e-9 && (best < 0 || s < best)) best = s;
+      }
+      if (best < 0) return null;
+      r[k] = best;
+    }
+    return { c, r };
+  }
+  // A convex outline as its extreme point in each direction (its support points). Blending two shapes' support points
+  // direction by direction traces the boundary of their blended shape (a Minkowski mix): every in-between is convex and
+  // balanced, with the corners of the start and the end. null when the outline is not convex.
+  function supportProfile(d) {
+    const M = 720, pts = samplePoly(d, M);
+    let dir = 0;
+    for (let i = 0; i < M; i++) {
+      const a = pts[i], b = pts[(i + 1) % M], c = pts[(i + 2) % M];
+      const cr = (b[0] - a[0]) * (c[1] - b[1]) - (b[1] - a[1]) * (c[0] - b[0]);
+      const len = Math.hypot(b[0] - a[0], b[1] - a[1]) * Math.hypot(c[0] - b[0], c[1] - b[1]);
+      if (Math.abs(cr) <= 1e-3 * len) continue; // straight
+      const s = Math.sign(cr); if (dir && s !== dir) return null; dir = s;
+    }
+    const sp = [];
+    for (let k = 0; k < RAYS; k++) {
+      const t = (k / RAYS) * 2 * Math.PI, ux = Math.cos(t), uy = Math.sin(t);
+      let bi = 0, bv = -Infinity;
+      for (let i = 0; i < M; i++) { const v = pts[i][0] * ux + pts[i][1] * uy; if (v > bv + 1e-9) { bv = v; bi = i; } }
+      sp.push(pts[bi]);
+    }
+    return sp;
+  }
+  /** Overshoot (an ease past 0 or 1: back, elastic, spring) grows or shrinks the shape about its centre instead of
+   *  pushing the outline past the target, which dents and spikes it. */
+  function overshootScale(pts, p) {
+    const s = 1 + (p - Math.max(0, Math.min(1, p)));
+    if (s === 1) return pts;
+    const c = areaCentroid(pts);
+    return pts.map((q) => [c[0] + (q[0] - c[0]) * s, c[1] + (q[1] - c[1]) * s]);
+  }
   function morphInterp(dA, dB) {
     if (dA && dA.nodeType === 1) dA = dA.getAttribute('d');
     if (dB && dB.nodeType === 1) dB = dB.getAttribute('d');
     const A = tokenize(dA), B = tokenize(dB);
     if (sameShape(A, B)) return interpTokens(A, B); // same commands: exact
     const sa = splitSub(dA), sb = splitSub(dB);
+    // One closed outline each, both seen whole from their centres: match points by direction and blend the radius
+    // and the centre, so the in-betweens stay balanced (a square to a triangle no longer passes through a lopsided
+    // wedge). The first and last frames are the exact paths.
+    if (sa.length === 1 && sb.length === 1 && /z\s*$/i.test(dA) && /z\s*$/i.test(dB) && !/m/.test(dA.slice(1)) && !/m/.test(dB.slice(1))) {
+      const ca = supportProfile(dA), cb = ca && supportProfile(dB);
+      if (ca && cb) {
+        return (p) => {
+          if (p === 0) return dA;
+          if (p === 1) return dB;
+          const q = Math.max(0, Math.min(1, p));
+          let pts = ca.map((v, k) => [v[0] + (cb[k][0] - v[0]) * q, v[1] + (cb[k][1] - v[1]) * q]);
+          pts = overshootScale(pts.filter((v, k) => k === 0 || v[0] !== pts[k - 1][0] || v[1] !== pts[k - 1][1]), p);
+          return 'M' + pts.map((v) => r4(v[0]) + ' ' + r4(v[1])).join('L') + 'Z';
+        };
+      }
+      const ra = radialProfile(dA), rb = ra && radialProfile(dB);
+      if (ra && rb) {
+        return (p) => {
+          if (p === 0) return dA;
+          if (p === 1) return dB;
+          const q = Math.max(0, Math.min(1, p));
+          const cx = ra.c[0] + (rb.c[0] - ra.c[0]) * q, cy = ra.c[1] + (rb.c[1] - ra.c[1]) * q;
+          let pts = [];
+          for (let k = 0; k < RAYS; k++) {
+            const t = (k / RAYS) * 2 * Math.PI, rr = ra.r[k] + (rb.r[k] - ra.r[k]) * q;
+            pts.push([cx + Math.cos(t) * rr, cy + Math.sin(t) * rr]);
+          }
+          pts = overshootScale(pts, p);
+          return 'M' + pts.map((v) => r4(v[0]) + ' ' + r4(v[1])).join('L') + 'Z';
+        };
+      }
+    }
     const relative = /m/.test(dA.slice(1)) || /m/.test(dB.slice(1));
     const subsA = relative ? [dA] : sa, subsB = relative ? [dB] : sb;
     const n = Math.max(subsA.length, subsB.length);
@@ -232,7 +333,16 @@
       }
       pairs.push({ pa, pb, closed });
     }
-    return (p) => pairs.map(({ pa, pb, closed }) => 'M' + pa.map((q, i) => r4(q[0] + (pb[i][0] - q[0]) * p) + ' ' + r4(q[1] + (pb[i][1] - q[1]) * p)).join('L') + (closed ? 'Z' : '')).join(' ');
+    return (p) => {
+      if (p === 0) return dA;
+      if (p === 1) return dB;
+      const q = Math.max(0, Math.min(1, p));
+      return pairs.map(({ pa, pb, closed }) => {
+        let pts = pa.map((v, i) => [v[0] + (pb[i][0] - v[0]) * q, v[1] + (pb[i][1] - v[1]) * q]);
+        if (closed) pts = overshootScale(pts, p);
+        return 'M' + pts.map((v) => r4(v[0]) + ' ' + r4(v[1])).join('L') + (closed ? 'Z' : '');
+      }).join(' ');
+    };
   }
 
   // Shape generators: all return SVG path data centered on (cx, cy).
@@ -830,6 +940,36 @@
             el.style.transform = cur;
           }
           if (tf && tf !== 'none' && !/^matrix\(1, 0, 0, 1, 0, 0\)$/.test(tf)) tm.cssPrefix = tf + ' ';
+          // A part of the CSS transform that the tween animates is the tween's starting value, not a prefix it multiplies:
+          // CSS scaleX(0) and a tween to scaleX 1 ends at 1 (it stayed 0: a strike-through never drew), like rotate and
+          // px offsets with x / y. Percent offsets (translate(-50%, -50%) centering) and anything else stay as the prefix.
+          if (tm.cssPrefix) {
+            const keys = new Set(tm.props.keys()), wS = keys.has('scale') || keys.has('scaleX') || keys.has('scaleY'), wR = keys.has('rotate'), wXY = keys.has('x') || keys.has('y');
+            let tv = null;
+            if (wS || wR || wXY) {
+              const cur = el.style.transform; el.style.transform = el.__gmOwnTf;
+              try { tv = el.computedStyleMap().get('transform'); } catch (e) {}
+              el.style.transform = cur;
+            }
+            if (tv && typeof CSSTransformValue !== 'undefined' && tv instanceof CSSTransformValue) {
+              // only a trailing run, in the tween's own order (translate, rotate, scale): the kept prefix applies first,
+              // so taking anything from before a kept part would change where it lands
+              const comps = [...tv], keep = comps.map(String); let took = false, stage = 3;
+              const px = (v) => (v instanceof CSSUnitValue && v.unit === 'px' ? v.value : null);
+              for (let i = comps.length - 1; i >= 0; i--) {
+                const c = comps[i];
+                if (wS && stage >= 2 && c instanceof CSSScale && c.is2D) {
+                  const sx = +(/** @type {any} */ (c.x).value ?? c.x), sy = +(/** @type {any} */ (c.y).value ?? c.y);
+                  if (keys.has('scale') && sx === sy && !keys.has('scaleX') && !keys.has('scaleY')) tm.tfBase.scale *= sx; else { tm.tfBase.scaleX *= sx; tm.tfBase.scaleY *= sy; }
+                  stage = 2; took = true; keep.pop(); continue;
+                }
+                if (wR && stage >= 1 && c instanceof CSSRotate && c.is2D) { tm.tfBase.rotate += c.angle.to('deg').value; stage = 1; took = true; keep.pop(); continue; }
+                if (wXY && stage >= 0 && c instanceof CSSTranslate && c.is2D && px(c.x) != null && px(c.y) != null) { tm.tfBase.x += px(c.x); tm.tfBase.y += px(c.y); stage = -1; took = true; keep.pop(); continue; }
+                break;
+              }
+              if (took) tm.cssPrefix = keep.length ? keep.join(' ') + ' ' : '';
+            }
+          }
         }
         tm.hasTF = [...tm.props.keys()].some((k) => k in TF || k === 'transformPerspective');
         tm.anchor = this.opts.global ? null : (this.scope || (el instanceof Element ? el : null));
@@ -1036,7 +1176,7 @@
         const len = Math.max(0, b - a);
         // a group (a data-sketch shape becomes a <g> of rough strokes, or any <g>/<svg>): draw every stroke in it at
         // once, and let solid fills come in over the last 40%, like data-enter="draw" does
-        const parts = /** @type {any} */ (el).getTotalLength ? [el] : (tm.drawParts || (tm.drawParts = [...el.querySelectorAll('path,line,polyline,polygon,rect,circle,ellipse')].filter((n) => !n.closest('[data-gm-sketch-guide],defs,clipPath,mask,marker,pattern'))));
+        const parts = /** @type {any} */ (el).getTotalLength ? [el] : (tm.drawParts || (tm.drawParts = [...el.querySelectorAll('path,line,polyline,polygon,rect,circle,ellipse')].filter((n) => !n.closest('[data-gm-sketch-guide],defs,clipPath,marker,pattern') && (!n.closest('mask') || n.hasAttribute('data-gm-ink-reveal')))));
         // at zero length, round line caps would still paint a dot: hide the stroke then
         if (setCached(tm, k, r4(a) + ' ' + r4(len), () => {
           for (const n of parts) {
@@ -1618,6 +1758,23 @@
       // (natural) whole eighths of a pixel: a slow drift or a trailing follow moves the world by tiny amounts every frame,
       // and Chrome then rasters a moving element inside it differently in a fresh worker; on this grid it does not
       const p8 = natural ? (x) => Math.round(x * 8) / 8 : r4;
+      // A world that keeps its children in 3D (transform-style: preserve-3d) under an ancestor's perspective is zoomed
+      // in depth too, as if the camera moved: a flat scale shrinks a big tilted world's width and height but not its
+      // depth, so zoomed out to see it whole it looked as if the camera were inches from it (turns read several times
+      // stronger, a tilted floor stood up). A uniform zoom s under perspective P projects exactly like a flat zoom s
+      // under perspective P / s, so the camera keeps the flat scale (Chrome then rasters the world at the zoomed size;
+      // scale3d made it raster at full size, 1.5x slower) and sets that ancestor's perspective.
+      if (this._3d === undefined) {
+        this._3d = null;
+        if (getComputedStyle(w).transformStyle === 'preserve-3d') {
+          for (let a = w.parentElement; a && a !== document.documentElement; a = a.parentElement) {
+            const cs = getComputedStyle(a), pv = parseFloat(cs.perspective);
+            if (cs.perspective !== 'none' && pv > 0) { this._3d = { el: a, base: a.style.perspective, P: pv }; break; }
+            if (cs.transformStyle !== 'preserve-3d') break;
+          }
+        }
+      }
+      if (this._3d) { const pv = r4(this._3d.P / st.zoom) + 'px'; if (this._3d.el.style.perspective !== pv) this._3d.el.style.perspective = pv; }
       const tf = `translate(${p8(tx)}px, ${p8(ty)}px)` + (rot ? ` rotate(${r4(rot)}deg)` : '') + ` scale(${r4(st.zoom)})`;
       let changed = false;
       if (lastTf !== tf) changed = true;
@@ -1691,11 +1848,16 @@
     _getPlan() {
       if (this._plan) return this._plan;
       const S = this.shots, runs = /** @type {{ keys: number[], tau: number[], prep?: any[] }[]} */ ([]), settles = [];
+      // A long shot on the same subject as the one before (a hold, a slow push) rests: it does not flow into or out of
+      // its neighbours. Inside a run it took speed from the moves around it and drifted off its subject (200 px over a
+      // 3.8 s hold). blend: true keeps it in the run.
+      const subject = (q) => { try { return JSON.stringify([q.fit ?? null, q.center ?? null, q.follow ?? null]); } catch { return null; } };
+      const holds = (k) => k > 0 && S[k].blend !== true && (+S[k].duration || 0) >= 1 && subject(S[k]) !== null && subject(S[k]) === subject(S[k - 1]);
       let run = null;
       for (let k = 1; k < S.length; k++) {
         const s = S[k], d = Math.max(0, +s.duration || 0), prev = S[k - 1], pe = prev.at + Math.max(0, +prev.duration || 0);
-        if (d < 0.05 || s.blend === false) { run = null; continue; }
-        if (run && prev.blend !== false && s.at <= pe + CAM_GAP) {
+        if (d < 0.05 || s.blend === false || holds(k)) { run = null; continue; }
+        if (run && prev.blend !== false && !holds(k - 1) && s.at <= pe + CAM_GAP) {
           const tk = (Math.min(pe, s.at) + s.at) / 2, last = run.tau.length - 1;
           if (tk > run.tau[last - 1] + 0.05 && s.at + d > tk + 0.05) { run.tau[last] = tk; run.keys.push(k); run.tau.push(s.at + d); continue; }
         }
@@ -2138,6 +2300,80 @@
   }
 
   // ---------------------------------------------------------------------------
+  // gm.path.stream(path, { at, until, rate, trip, … }): items flowing along an SVG path (money, data, traffic, cells):
+  // emitted at a rate, each with its own speed and a little sideways spread, fading in and out at the ends. Pure
+  // function of time (seeded), so seekable and the same in every render; follows a path whose shape changes.
+  // ---------------------------------------------------------------------------
+  const streams = [];
+  function stream(path, opts = {}) {
+    const st = { path, opts, built: false, items: [] };
+    streams.push(st);
+    if (initDone) setupStream(st);
+    return st;
+  }
+  function setupStream(st) {
+    st.built = true;
+    let p = typeof st.path === 'string' ? document.querySelector(st.path) : st.path;
+    p = (I.replaced && p && I.replaced.get(p)) || p;
+    if (p && p.nodeType === 1 && !p.getTotalLength && p.querySelector) p = p.querySelector('[data-gm-sketch-guide]') || p.querySelector('path') || p;
+    if (!p || !p.getTotalLength) { I.report('error', 'stream-no-path', `gm.path.stream: "${st.path}" is not an SVG path, line or shape.`, null, 'Pass the id of an SVG <path> (or line, polyline, a sketched or gm.connect path).'); return; }
+    const o = Object.assign({ at: 0, until: Infinity, rate: 5, trip: 1.6, jitter: 0.3, spread: 0, size: 12, shape: 'dot', color: 'currentColor', stroke: 2, fade: 0.08, limit: null, seed: streams.indexOf(st) + 1 }, st.opts);
+    const c = I.nearestClip(p.closest('svg') || p);
+    const base = o.global ? 0 : c ? c.start : 0;
+    const end = Math.min(base + o.until, gm.duration || 1e9);
+    const rnd = I.makeRandom(1 + o.seed * 104729);
+    // emissions: time, trip length and sideways offset of each item, known up front
+    const t0 = base + o.at, gap = 1 / Math.max(0.01, o.rate), em = [];
+    for (let k = 0, t = t0; t < end && k < 5000; k++, t = t0 + k * gap) em.push({ e: t + (rnd() - 0.5) * gap * o.jitter, T: o.trip * (1 + (rnd() * 2 - 1) * o.jitter * 0.5), side: (rnd() * 2 - 1) * o.spread });
+    const maxT = em.reduce((m, x) => Math.max(m, x.T), 0);
+    const pool = Math.ceil((maxT + gap) * o.rate) + 2;
+    const g = document.createElementNS(SVGNS, 'g');
+    g.setAttribute('data-gm-internal', ''); g.setAttribute('data-gm-stream', '');
+    p.parentNode.insertBefore(g, p.nextSibling);
+    const color = resolveVars(p, o.color);
+    for (let i = 0; i < pool; i++) {
+      const it = typeof o.make === 'function' ? o.make(i) : document.createElementNS(SVGNS, 'circle');
+      if (typeof o.make !== 'function') {
+        it.setAttribute('r', String(o.size / 2));
+        if (o.shape === 'ring') { it.setAttribute('fill', 'none'); it.setAttribute('stroke', color); it.setAttribute('stroke-width', String(o.stroke)); }
+        else it.setAttribute('fill', color);
+      }
+      it.style.display = 'none';
+      g.appendChild(it);
+      st.items.push(it);
+    }
+    Object.assign(st, { p, o, em, pool, g, lastD: null, len: 0 });
+  }
+  function updateStreams(T) {
+    let changed = false;
+    for (const st of streams) {
+      if (!st.p) continue;
+      const d = st.p.getAttribute('d') || st.p.getAttribute('points') || '';
+      if (d !== st.lastD) { st.lastD = d; st.len = st.p.getTotalLength(); }
+      const lim = typeof st.o.limit === 'function' ? st.o.limit(T) : st.o.limit == null ? 1 : +st.o.limit;
+      const shown = new Array(st.pool).fill(null);
+      for (let k = 0; k < st.em.length; k++) {
+        const x = st.em[k], q = (T - x.e) / x.T;
+        if (q < 0) break; // emitted in time order (within jitter): the rest are later
+        if (q >= 1 || q > lim) continue;
+        shown[k % st.pool] = { x, q };
+      }
+      for (let i = 0; i < st.pool; i++) {
+        const it = st.items[i], s = shown[i];
+        if (!s) { if (it.style.display !== 'none') { it.style.display = 'none'; changed = true; } continue; }
+        const L = s.q * st.len, a = st.p.getPointAtLength(L), b = st.p.getPointAtLength(Math.min(st.len, L + 0.5)), c0 = st.p.getPointAtLength(Math.max(0, L - 0.5));
+        let nx = -(b.y - c0.y), ny = b.x - c0.x; const nl = Math.hypot(nx, ny) || 1; nx /= nl; ny /= nl;
+        const op = Math.max(0, Math.min(1, s.q / st.o.fade, (1 - s.q) / st.o.fade, (lim - s.q) / st.o.fade));
+        const tf = `translate(${r4(a.x + nx * s.x.side)}px, ${r4(a.y + ny * s.x.side)}px)`;
+        if (it.style.display === 'none') it.style.display = '';
+        if (it.style.transform !== tf) { it.style.transform = tf; changed = true; }
+        const ov = String(r4(op)); if (it.style.opacity !== ov) { it.style.opacity = ov; changed = true; }
+      }
+    }
+    return changed;
+  }
+
+  // ---------------------------------------------------------------------------
   // gm.burst(target, { at, kind, x, y, count, colors, … }): confetti, sparks, dust or bubbles
   // thrown from a point at a moment. Pure physics of time: seekable, same in every render.
   // ---------------------------------------------------------------------------
@@ -2541,7 +2777,7 @@
   // ---------------------------------------------------------------------------
   I.hooks.preinit.push(setupFit);
   I.hooks.init.push(() => { for (const c of cameras) if (c.world && c.shots.some((sh) => sh.fit === 'content' || sh.center === 'content')) { try { c._box('content', c._markers()); } catch (e) {} } });
-  I.hooks.init.push(() => { initDone = true; try { optimizeBlurs(); } catch (e) {} for (const tr of travels) if (!tr.done) setupTravel(tr); for (const b of bursts) if (!b.canvas) setupBurst(b); setupCameras(); setupMorphs(); setupScramble(); for (const tl of tlList) { tl._build(); try { tl._warnLate(); } catch (e) {} } });
+  I.hooks.init.push(() => { initDone = true; try { optimizeBlurs(); } catch (e) {} for (const tr of travels) if (!tr.done) setupTravel(tr); for (const b of bursts) if (!b.canvas) setupBurst(b); for (const st of streams) if (!st.built) setupStream(st); setupCameras(); setupMorphs(); setupScramble(); for (const tl of tlList) { tl._build(); try { tl._warnLate(); } catch (e) {} } });
   // data-parallax inside camera worlds; (natural) a world with its own opaque background keeps its edge out of view
   I.hooks.init.push(() => {
     for (const c of cameras) {
@@ -2577,6 +2813,7 @@
     if (animImgs.length && updateAnimatedImages(T)) changed = true;
     if (svgTravels.length && updateSvgTravels(T)) changed = true;
     if (bursts.length && drawBursts(T)) changed = true;
+    if (streams.length && updateStreams(T)) changed = true;
     // Elements animated by more than one timeline: merge their values, newest tween wins per property.
     const count = new Map();
     for (const tl of tlList) { tl._resolve(); for (const el of tl.tracks.keys()) count.set(el, (count.get(el) || 0) + 1); }
@@ -2653,7 +2890,7 @@
     // gm.fly('#event', { from: '#slot', at: 7.5, duration: 0.8 }): at = seconds in the element's own clip
     fly: (t, v) => { const o = Object.assign({}, v || {}), at = o.at || 0; delete o.at; return new Timeline(null, {}).fly(t, o, at); },
     color: { mix: mixColor, parse: toRGBA },
-    path: { point: pointAt, length: (d) => pathInfo(d).len, morph: morphInterp, interpolate: morphInterp, travel },
+    path: { point: pointAt, length: (d) => pathInfo(d).len, morph: morphInterp, interpolate: morphInterp, travel, stream },
     shape,
     mapRange: (v, a, b, c, d, clamp = true) => { let p = (v - a) / (b - a); if (clamp) p = Math.max(0, Math.min(1, p)); return c + (d - c) * p; },
     snap: (v, step) => Math.round(v / step) * step,

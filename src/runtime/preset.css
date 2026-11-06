@@ -41,6 +41,8 @@ code,pre,kbd,samp{font-variant-ligatures:none}
 .gm-dg>span,.gm-dg::after{grid-area:1/1}
 .gm-dg::after{content:"0\A 1\A 2\A 3\A 4\A 5\A 6\A 7\A 8\A 9";white-space:pre;height:0;overflow:hidden;visibility:hidden}
 .gm-ghost{visibility:hidden}
+.gm-roll{overflow:clip;padding:.1em 0;margin:-.1em 0}
+.gm-roll>span:empty::before{content:"\200b"}
 /* band transitions: the band is the scene's ::after (or ::before), clipped to --gm-band-clip (set only while it sweeps) */
 [data-gm-band="after"]::after,[data-gm-band="before"]::before{content:""!important;display:block!important;position:absolute!important;inset:0!important;margin:0!important;border:0!important;transform:none!important;filter:none!important;background:var(--gm-band-color,var(--transition-color,var(--accent,#ff5c7a)))!important;pointer-events:none!important;z-index:2147483647!important;clip-path:var(--gm-band-clip,polygon(0 0,0 0,0 0))!important}
 

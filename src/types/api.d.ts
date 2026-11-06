@@ -252,6 +252,8 @@ export interface SnapshotOptions extends OpenOptions {
   cols?: number;
   /** Draw thirds, the center and the safe zone over the pictures. */
   grid?: boolean;
+  /** Also write trail.png: the frames layered into one picture (an onion skin of a move). */
+  trail?: boolean;
   safeZone?: string;
   onProgress?: (done: number, total: number) => void;
 }
@@ -266,6 +268,8 @@ export interface SnapshotResult {
   errors: PageError[];
   /** Composition errors and page errors together. */
   problems: (Issue | PageError)[];
+  /** The onion-skin picture, with trail. */
+  trail?: string;
 }
 
 export interface StillOptions extends OpenOptions {
@@ -341,6 +345,8 @@ export declare function still(input: Input, t?: number, opts?: StillOptions): Pr
 export declare function check(input: Input, opts?: CheckOptions): Promise<CheckReport>;
 /** Render the key moments into PNGs and one contact sheet. */
 export declare function snapshot(input: Input, opts?: SnapshotOptions): Promise<SnapshotResult>;
+/** The video as a viewer sees it, from the page: overview.png, holds.png, motion-N.png and REVIEW.md in one folder. */
+export declare function review(input: Input, opts?: OpenOptions & { output?: string; onStep?: (step: string) => void }): Promise<{ dir: string; review: string; overview: string; holds: string; motion: string[]; errors: number; warnings: number; report: CheckReport }>;
 /** The check report as the text the CLI prints. */
 export declare function formatReport(report: CheckReport, opts?: { file?: string }): string;
 /** Load a composition and return its timeline: size, fps, duration, clips, media, issues. */

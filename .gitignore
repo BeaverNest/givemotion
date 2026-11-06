@@ -51,7 +51,5 @@ CLAUDE.local.md
 
 # Benchmarks and agent test rounds: generated or kept outside the repo
 benchmarks/**/node_modules/
-benchmarks/vs-hyperframes/gm/
-benchmarks/vs-hyperframes/hf/
 bench/agents/
 test/fixtures/media/

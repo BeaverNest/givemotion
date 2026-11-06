@@ -4,6 +4,7 @@ Use for: stats, KPIs, growth stories, bar or line charts, "one number matters" m
 ## What makes it look premium
 - **To scale, always.** One px-per-unit constant for every bar (`height = v * pxPerUnit`); the counter says what the bar shows. Grow bars with `scaleY` from `transform-origin: 50% 100%`, never `height`.
 - **Rise, overshoot, settle.** Bars 0.8-1.0 s `back.out(1.3-1.5)` (about 4% past, settles in ~0.3 s), stagger 70-100 ms left to right. The number counts on the same clock with `expo.out` so it never shows a value above the real one.
+- **Count only when the brief allows it.** A count-up shows every number on the way. When the brief lists the exact copy and says nothing else may appear, those in-between numbers break it (judges marked it down): reveal the final number instead (a mask wipe, a slot roll that lands, a scramble that settles), unless the brief says in-between values may show.
 - **Labels ride the bar end.** `data-anchor="#b3 top 18"` keeps the value 18 px above the bar top every frame while it grows. Use `font-variant-numeric: tabular-nums` so digits do not jitter while counting.
 - **Frame 0 is not empty.** Bars start as 4% stubs, the title at 30% opacity, the base line already drawn; grid lines draw from the left (`scaleX`, 0.9 s `expo.out`, 80 ms stagger).
 - **One hero.** After the build, everything else drops to 25-30% opacity in 0.5 s (`out-cubic`); the hero value scales 1.3 with `back.out(2)` and takes the accent; the hero bar gets a 40 px glow and one ring (scale 0.4 to 2.2, fading, 0.9 s).

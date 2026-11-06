@@ -50,6 +50,27 @@ const PAGE_ANALYZE = String.raw`((dt, opt) => {
     }
     return fontSeen.get(first) ? first : null;
   };
+  // Characters the text's own font does not have: the browser draws each one from another font (a "₂" or a "→" in a
+  // different face, weight and width). Measured like missingFont: the same character with two different fallbacks
+  // only differs when the font itself lacks it. Emoji (meant to come from the system's emoji font) are left out.
+  const glyphSeen = new Map();
+  const missingGlyphs = (family, text) => {
+    const first = family.split(',')[0].trim().replace(/^["']|["']$/g, '');
+    if (!first || GENERIC_FONT.test(first) || missingFont(family)) return [];
+    fontCtx = fontCtx || document.createElement('canvas').getContext('2d');
+    const out = [];
+    for (const ch of new Set(Array.from(text))) {
+      if (/\s|[\u200B-\u200D\uFEFF]|\p{Extended_Pictographic}|\p{Emoji_Modifier}|[\uFE0E\uFE0F]/u.test(ch)) continue;
+      const k = first + '|' + ch;
+      if (!glyphSeen.has(k)) {
+        const w = (f) => { fontCtx.font = '72px ' + f; return fontCtx.measureText(ch).width; };
+        glyphSeen.set(k, w('"' + first + '", monospace') !== w('"' + first + '", serif'));
+      }
+      if (glyphSeen.get(k)) out.push(ch);
+    }
+    return out;
+  };
+  const warnedGlyphs = new Set();
   // Alpha of a computed CSS color (rgb(), rgba(), color(srgb … / a), oklch(… / a)…); 'transparent' is 0.
   const cssAlpha = (c) => {
     if (!c || c === 'none' || c === 'transparent') return 0;
@@ -437,6 +458,48 @@ const PAGE_ANALYZE = String.raw`((dt, opt) => {
     return ov;
   };
   const reportedBox = new Set();
+  // The linear part of an element's transform on screen (its own and its parents': transform, translate, rotate, scale
+  // properties), and whether a backface-hidden face turns away. For mirrored and upside-down text.
+  const screenTf = (el) => {
+    const one = (c) => {
+      let m = new DOMMatrix();
+      if (c.translate && c.translate !== 'none') m = m.multiply(new DOMMatrix('translate(' + c.translate.split(' ').slice(0, 2).join(',') + ')'));
+      if (c.rotate && c.rotate !== 'none') {
+        const r = c.rotate.trim().split(/\s+/);
+        m = m.multiply(new DOMMatrix(r.length === 1 ? 'rotate(' + r[0] + ')' : r.length === 2 ? 'rotate' + r[0].toUpperCase() + '(' + r[1] + ')' : 'rotate3d(' + r.join(',') + ')'));
+      }
+      if (c.scale && c.scale !== 'none') { const q = c.scale.trim().split(/\s+/); m = m.multiply(new DOMMatrix('scale3d(' + q[0] + ',' + (q[1] ?? q[0]) + ',' + (q[2] ?? 1) + ')')); }
+      if (c.transform && c.transform !== 'none') m = m.multiply(new DOMMatrix(c.transform));
+      return m;
+    };
+    const chain = []; for (let a = el; a && a !== document.documentElement; a = a.parentElement) chain.push(a);
+    let m = new DOMMatrix(), back = false;
+    try {
+      for (let k = chain.length - 1; k >= 0; k--) {
+        const c = getComputedStyle(chain[k]);
+        m = m.multiply(one(c));
+        if (c.backfaceVisibility === 'hidden' && m.a * m.d - m.b * m.c < 0) back = true;
+      }
+    } catch (e) { m = new DOMMatrix(); }
+    return { m, back };
+  };
+  // small solid shapes on screen (for stray-mark), found once per frame when first needed
+  let marks = null;
+  const smallMarks = () => {
+    if (marks) return marks;
+    marks = [];
+    const lim = 80 * (H / 1080);
+    for (const c of document.querySelectorAll('path,circle,ellipse,rect,polygon,div,span,i,b')) {
+      if (c.closest('[data-gm-internal],defs,clipPath,mask,pattern,symbol,marker')) continue;
+      const r = c.getBoundingClientRect();
+      if (r.width < 3 || r.height < 3 || r.width > lim || r.height > lim || r.right < 0 || r.bottom < 0 || r.left > W || r.top > H) continue;
+      if (c.children.length || (!(c instanceof SVGElement) && /\S/.test(c.textContent || ''))) continue;
+      if (c.checkVisibility && !c.checkVisibility({ opacityProperty: true, visibilityProperty: true })) continue;
+      if (!paintsSolid(c)) continue;
+      marks.push({ el: c, r });
+    }
+    return marks;
+  };
   for (const t of texts) {
     const { el, u } = t;
     const cs = getComputedStyle(el);
@@ -460,12 +523,33 @@ const PAGE_ANALYZE = String.raw`((dt, opt) => {
       out.push({ severity: 'warning', code: 'text-covered', selector: sel(el), text: snippet(el), message: (t.covered ? 'This text of the camera world is hidden' : 'Part of this text of the camera world is hidden') + ' behind ' + sel(cov.by) + ', a layer over the world (a caption, a card).', minSpan: 0.3, fix: 'Frame the shot so its labels clear the overlay (more padding on that side, or a different center), or move the overlay.' });
       overlaid = true;
     }
+    // Upside-down text (also while it moves: letters riding a looping path): turned more than ~100° on screen while
+    // readable. data-check="upside-ok" when it is meant.
+    if (!t.hidden && !t.covered && t.op >= 0.5 && !(el instanceof SVGElement) && !el.closest('[data-check~="upside-ok"]') && /\S/.test(el.textContent || '')) {
+      const { m, back } = screenTf(el), det = m.a * m.d - m.b * m.c;
+      const ang = Math.abs(Math.atan2(m.b, m.a) * 180 / Math.PI);
+      if (!back && det > 0 && ang > 100) out.push({ severity: 'warning', code: 'upside-down-text', selector: sel(el), text: snippet(el), message: 'This text is turned ' + Math.round(ang) + '° on screen, so it reads upside down' + (t.moving ? ' while it moves' : '') + '.', minSpan: 0.3, fix: 'Keep letters within about ±90° of upright: on a path that loops, let them ride only the part that runs left to right, flip the ones on the return (rotate 180° more), or lay the text along a gentler curve. If it is meant, add data-check="upside-ok".' });
+    }
     if (t.moving || t.hidden || t.covered) continue;
     // Partly hidden behind a shape or box that is drawn on top of it
     // (something flying over it on its way somewhere does not count)
     const passing = (c) => inAnim(c) || texts.some((o) => o.moving && (o.el === c || c.contains(o.el)));
     if (!overlaid && cov.hits > 0 && cov.by && t.op >= 0.5 && !transitioning && !ignored(cov.by) && !overlapOk(el) && !overlapOk(cov.by) && !cov.by.closest('[data-gm-internal]') && !passing(cov.by)) {
       out.push({ severity: 'warning', code: 'text-covered', selector: sel(el), text: snippet(el), message: 'Part of the text is hidden behind ' + sel(cov.by) + ', which is drawn on top of it.', minSpan: 0.3, fix: 'Move one of them, or put the text above it (z-index, or later in the HTML).' });
+    }
+    // A small solid mark (a dot, a tick, a stray shape) showing inside big text, in front of it or through a gap between
+    // its letters: it reads as a typo in the number or word (round 5 brief E: the runner dot parked inside "42.195").
+    if (t.op >= 0.5 && !transitioning && !overlapOk(el) && tu.bottom - tu.top >= 30 * (H / 1080)) {
+      const th = tu.bottom - tu.top;
+      for (const c of smallMarks()) {
+        if (c.el === el || el.contains(c.el) || c.el.contains(el)) continue;
+        const b = c.r, cx = (b.left + b.right) / 2, cy = (b.top + b.bottom) / 2;
+        if (b.right - b.left > 0.6 * th || b.bottom - b.top > 0.6 * th) continue;
+        if (cx < tu.left + 2 || cx > tu.right - 2 || cy < tu.top || cy > tu.bottom + 0.3 * th) continue; // (just under the baseline too: it reads as a decimal point)
+        if (ignored(c.el) || overlapOk(c.el) || passing(c.el)) continue;
+        out.push({ severity: 'warning', code: 'stray-mark', selector: sel(c.el), text: snippet(el), message: 'A small mark (' + sel(c.el) + ') sits inside the text "' + snippet(el) + '": it reads as a stray dot or a typo in it.', minSpan: 0.4, fix: 'Move the mark out of the text (or hide it while the text is up), or move the text. If it is meant (a dot over an i, a marker on purpose), add data-check="overlap-ok".' });
+        break;
+      }
     }
     // Inside a camera world (or data-check="crop-ok"), being cut by the frame edge is framing, not a mistake.
     const cropOk = !!el.closest('[data-gm-camera-world],[data-check~="crop-ok"]');
@@ -528,6 +612,24 @@ const PAGE_ANALYZE = String.raw`((dt, opt) => {
     const scaleY = el.offsetHeight > 0 ? el.getBoundingClientRect().height / el.offsetHeight : 1;
     const visualFs = fs * (isFinite(scaleY) && scaleY > 0 ? scaleY : 1);
     if (visualFs < 22 * PX && lineH > 0 && !overview && !(camWorld && camMoving.has(camWorld))) out.push({ severity: 'warning', code: 'tiny-text', selector: sel(el), text: snippet(el), message: 'Text is ' + Math.round(visualFs) + 'px tall in a ' + W + 'x' + H + ' frame, which is hard to read in a video.', fix: 'Use at least ' + Math.round(24 * PX) + 'px (' + Math.round(28 * PX) + 'px+ for body text).' });
+    // 4a. Mirrored text: the text (or a card it sits on) is turned past 90° or flipped, so its back faces the camera and
+    // it reads backwards (a card flip that ends showing the front's text through the back). A reflection is faint
+    // (under half opacity) and not judged; data-check="mirror-ok" marks one that is meant.
+    if (!(el instanceof SVGElement) && t.op >= 0.5 && !el.closest('[data-check~="mirror-ok"]')) {
+      const { m, back } = screenTf(el);
+      const det = m.a * m.d - m.b * m.c, size = Math.sqrt(Math.abs(m.a * m.d) + Math.abs(m.b * m.c)) || 1;
+      if (!back && det < -0.15 * size * size) out.push({ severity: 'warning', code: 'mirrored-text', selector: sel(el), text: snippet(el), message: 'This text reads backwards: it, or a card it sits on, is turned past 90° or flipped, so its back faces the camera.', minSpan: 0.2, fix: 'Show the face that points at the camera: give the front face backface-visibility: hidden and put the back side\'s content on its own face turned 180°, or swap the content when the card is edge-on (90°). If the mirror is meant, add data-check="mirror-ok".' });
+    }
+    {
+      let own = ''; for (const n of el.childNodes) if (n.nodeType === 3) own += n.data;
+      const mg = own.trim() ? missingGlyphs(cs.fontFamily, own) : [];
+      const fam = cs.fontFamily.split(',')[0].trim().replace(/^["']|["']$/g, '');
+      const fresh = mg.filter((ch) => !warnedGlyphs.has(fam + '|' + ch));
+      if (fresh.length) {
+        for (const ch of fresh) warnedGlyphs.add(fam + '|' + ch);
+        out.push({ severity: 'warning', code: 'missing-glyph', selector: sel(el), text: snippet(el), message: 'The font "' + fam + '" has no ' + fresh.map((c) => '"' + c + '"').join(', ') + ': ' + (fresh.length > 1 ? 'these characters are' : 'this character is') + ' drawn in a fallback font (another face, weight and width).', fix: 'Use characters the font has (a smaller, lowered "2" for "₂"; "->" or an SVG arrow for "→"), add a font file that covers them (an @font-face with the latin-ext file, for example), or pick a font that has them.' });
+      }
+    }
     const mf = missingFont(cs.fontFamily);
     if (mf && !warnedFonts.has(mf)) { warnedFonts.add(mf); out.push({ severity: 'warning', code: 'font-unavailable', selector: sel(el), text: snippet(el), message: 'The font "' + mf + '" is not loaded or installed here, so this text is drawn in a fallback font (which differs from one computer to the next).', fix: 'Use a font that comes with givemotion (Inter, JetBrains Mono, Playfair Display, Space Grotesk, Bebas Neue, Caveat), or add an @font-face for a font file next to your HTML.' }); }
     t.fontPx = visualFs;
@@ -536,6 +638,38 @@ const PAGE_ANALYZE = String.raw`((dt, opt) => {
     const svgText = el instanceof SVGElement;
     t.color = svgText ? cs.fill : cs.color;
     t.clipText = cs.webkitBackgroundClip === 'text' || cs.backgroundClip === 'text' || /transparent|rgba\(\d+, \d+, \d+, 0\)/.test(cs.webkitTextFillColor || '') || (svgText && !/^(rgb|#|hsl|color|oklab|oklch|lab|lch)/.test(cs.fill));
+  }
+  // 4a2. Orphan word: a headline that wraps onto two or more lines and leaves one short word alone on the last line.
+  // (Measured per word, so a title split into words or letters counts as one block.)
+  {
+    const seen = new Set();
+    for (const t of texts) {
+      if (t.moving || t.hidden || t.covered || t.op < 0.5 || t.fading) continue;
+      const blk = t.el.closest('.gm-word, .gm-char') ? (t.el.closest('[data-split]') || t.el.parentElement) : t.el;
+      if (!blk || seen.has(blk)) continue;
+      seen.add(blk);
+      if (blk.closest('[data-check~="orphan-ok"]') || ignored(blk)) continue;
+      const k = blk.offsetHeight ? blk.getBoundingClientRect().height / blk.offsetHeight : 1;
+      const fsz = parseFloat(getComputedStyle(blk).fontSize) * (isFinite(k) && k > 0 ? k : 1);
+      if (fsz < 40 * PX) continue;
+      const words = [];
+      const wordEls = blk.querySelectorAll('.gm-word');
+      if (wordEls.length) for (const w of wordEls) { const r = w.getBoundingClientRect(); if (r.width > 0) words.push({ r, s: w.textContent.trim() }); }
+      else {
+        const walker = document.createTreeWalker(blk, NodeFilter.SHOW_TEXT);
+        while (walker.nextNode()) {
+          const n = walker.currentNode, re = /\S+/g; let m;
+          while ((m = re.exec(n.data))) { const rg = document.createRange(); rg.setStart(n, m.index); rg.setEnd(n, m.index + m[0].length); const r = rg.getBoundingClientRect(); if (r.width > 0) words.push({ r, s: m[0] }); }
+        }
+      }
+      if (words.length < 3) continue;
+      words.sort((a, b) => a.r.top - b.r.top || a.r.left - b.r.left);
+      const lines = [];
+      for (const w of words) { const L = lines[lines.length - 1]; if (L && Math.abs(w.r.top - L.top) < w.r.height * 0.5) { L.ws.push(w); L.right = Math.max(L.right, w.r.right); L.left = Math.min(L.left, w.r.left); } else lines.push({ top: w.r.top, left: w.r.left, right: w.r.right, ws: [w] }); }
+      if (lines.length < 2) continue;
+      const last = lines[lines.length - 1], widest = Math.max(...lines.map((L) => L.right - L.left));
+      if (last.ws.length === 1 && last.right - last.left < 0.35 * widest) out.push({ severity: 'warning', code: 'orphan-word', selector: sel(blk), text: snippet(blk), message: 'This title wraps and leaves one short word ("' + last.ws[0].s.slice(0, 24) + '") alone on its last line.', minSpan: 0.3, fix: 'Add text-wrap: balance to it, set a max-width that breaks it into even lines, or put a <br> where the phrase breaks. If the layout is meant, add data-check="orphan-ok".' });
+    }
   }
   // 4b. A line drawn through text (an arrow, the edge of a box): visible strokes that pass through the letters.
   //     Fills (a card behind a label, hatching) are fine; strokes still being drawn on, or hidden under something opaque, are skipped.
@@ -829,9 +963,18 @@ const PAGE_PACING = String.raw`((dt, tNow) => {
     if (kind === 'text') {
       const tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
       let last = null;
+      // (pieces on one line that touch, like letters split into their own spans by the page's script, are one word:
+      //  decided by the gap on screen, not by the display type)
+      // (layout positions, not screen boxes: letters still flying in when the text is first seen are apart on screen)
+      const touching = (a, b2) => {
+        if (!(a instanceof HTMLElement) || !(b2 instanceof HTMLElement) || a.offsetParent !== b2.offsetParent) return false;
+        const fs = parseFloat(getComputedStyle(b2).fontSize) || 16;
+        const gap = Math.min(Math.abs(b2.offsetLeft - (a.offsetLeft + a.offsetWidth)), Math.abs(a.offsetLeft - (b2.offsetLeft + b2.offsetWidth)));
+        return a.offsetWidth > 0 && b2.offsetWidth > 0 && Math.abs(a.offsetTop - b2.offsetTop) < Math.max(a.offsetHeight, b2.offsetHeight) * 0.5 && gap < 0.2 * fs;
+      };
       for (let n = tw.nextNode(); n; n = tw.nextNode()) {
         if (!n.parentElement || unitOf(n.parentElement) !== el) continue;
-        if (last && last !== n.parentElement && !last.closest('.gm-char') && getComputedStyle(last).display !== 'inline') own += ' ';
+        if (last && last !== n.parentElement && !last.closest('.gm-char') && getComputedStyle(last).display !== 'inline' && !touching(last, n.parentElement)) own += ' ';
         own += n.data; last = n.parentElement;
       }
     }
@@ -842,7 +985,7 @@ const PAGE_PACING = String.raw`((dt, tNow) => {
     const loops = (e) => { for (let c = e; c && c !== document.body && c.offsetWidth * c.offsetHeight < 0.4 * W * H; c = c.parentElement) for (const a of c.getAnimations()) { try { const it = a.effect.getTiming().iterations; if (it === Infinity || it > 1) return true; } catch (er) {} } return false; };
     const live = kind === 'text' && !!(el.closest('[data-count],[data-type],[data-scramble]') || el.querySelector('[data-count],[data-type],[data-scramble]')) || loops(el);
     const sc = sceneOf(el);
-    out.meta[id] = { sel: sel(el), kind, words, live, quick: quick(el), text: kind === 'text' ? own.trim().replace(/\s+/g, ' ').slice(0, 40) : '', scene: sc ? sel(sc) : null, sceneStart: sc ? gm.timing(sc).start : 0, overlapOk: !!el.closest('[data-check~="overlap-ok"]') };
+    out.meta[id] = { sel: sel(el), kind, words, live, quick: quick(el), text: kind === 'text' ? own.trim().replace(/\s+/g, ' ').slice(0, 40) : '', scene: sc ? sel(sc) : null, sceneStart: sc ? gm.timing(sc).start : 0, overlapOk: !!el.closest('[data-check~="overlap-ok"]'), carryOk: !!el.closest('[data-check~="carry-ok"],[data-check~="ignore"]') };
     return id;
   };
   // 1. Reading units: a line of text with its inline parts (an <em> in a headline, the words of a split line); SVG
@@ -1492,9 +1635,23 @@ function contrastScript(dataUrl, scale) {
     const partly = typical >= need && typical < need * 1.5 && low < need * 0.66;
     if (typical < need || partly) {
       const val = partly ? low : typical;
+      // a passing color in the same hue: the text color mixed toward white or black (whichever gains contrast against
+      // the typical background), so the fix is one edit
+      let suggest = null;
+      if (!partly) {
+        const mid = opaque.slice().sort((x, y) => lum(x[0], x[1], x[2]) - lum(y[0], y[1], y[2]))[opaque.length >> 1], Lb = lum(mid[0], mid[1], mid[2]);
+        const ratio = (q) => { const L = lum(q[0], q[1], q[2]); return (Math.max(L, Lb) + 0.05) / (Math.min(L, Lb) + 0.05); };
+        for (const dir of lum(r, gg, bb) >= Lb ? [1, -1] : [-1, 1]) {
+          for (let k = 1; k <= 40 && !suggest; k++) {
+            const t = k / 40, q = dir > 0 ? [r + (255 - r) * t, gg + (255 - gg) * t, bb + (255 - bb) * t] : [r * (1 - t), gg * (1 - t), bb * (1 - t)];
+            if (ratio(q) >= need * 1.05) suggest = '#' + q.map((v) => Math.round(v).toString(16).padStart(2, '0')).join('');
+          }
+          if (suggest) break;
+        }
+      }
       res.push({ severity: val < need * 0.66 ? 'error' : 'warning', code: 'low-contrast', selector: b.sel, text: b.text,
         message: (partly ? 'Parts of this text have low contrast (' + low.toFixed(1) + ':1 where the background is busiest, ' + typical.toFixed(1) + ':1 typical)' : 'Text contrast is ' + typical.toFixed(1) + ':1') + '. Target for ' + kind + ' is ' + need + ':1.',
-        fix: partly ? 'Put a solid or semi-opaque backing behind the text, or add a text-shadow.' : 'Use a lighter/darker text color, add a backing, or a text-shadow.', sig: partly ? null : b.sig });
+        fix: partly ? 'Put a solid or semi-opaque backing behind the text, or add a text-shadow.' : (suggest ? 'Use color: ' + suggest + ' (the same hue, passes here), or add a backing or a text-shadow.' : 'Use a lighter/darker text color, add a backing, or a text-shadow.'), suggest, sig: partly ? null : b.sig });
     }
   }
   return res;
@@ -1542,7 +1699,11 @@ function keyTimes(info, max = 12) {
  * @returns {Promise<import('./types/api.js').CheckReport>}
  */
 export async function check(input, opts = {}) {
+  // The pictures check takes (the pacing grid, contrast under text) are small or sampled: drawn at half the pixels they
+  // give the same report, and a heavy page (big blurs, a 3D world) checks ~3x faster. Layout is in CSS px either way.
+  if (opts.scale == null) opts = { ...opts, scale: 0.5 };
   const ctx = await openComposition(input, { ...opts, mode: 'render' });
+  /** @type {any[]} */
   const issues = [];
   await autoTransparent(ctx, opts);
   const push = (arr, t) => { for (const i of arr) issues.push({ time: t == null ? i.time ?? null : Math.round(t * 100) / 100, ...i }); };
@@ -1715,6 +1876,58 @@ export async function check(input, opts = {}) {
     // text that changes while on screen (a counter, typing): from the merged samples in time order
     const paceSamples = results.flatMap((r) => r.pace);
     { const last = new Map(), live = new Set(); for (const s of paceSamples) for (const u of s.units) { if (typeof u[4] === 'string') { if (last.has(u[0]) && last.get(u[0]) !== u[4]) live.add(u[0]); last.set(u[0], u[4]); } u[4] = live.has(u[0]) ? 1 : 0; } }
+    // data-expect: timing promises written on elements (the brief's times), checked here on every run.
+    // "in-by 2.5" visible by then; "gone-by 15" gone by then (and stays gone a moment); "hold 1.5" once in, stays in that
+    // long; "in-frame" never cut by the frame while visible. Visible = opacity >= 0.5 (with its parents), at least half
+    // of its box in the frame, not display: none / visibility: hidden. Times are video seconds.
+    // A shot list with timed beats (the skill's plan comment) but no data-expect anywhere: nothing holds the page to its
+    // own times, and beats drift late unseen (round 5 brief G ran ~1.3 s behind its brief).
+    if (full) {
+      try {
+        const n = await ctx.page.evaluate(`(() => { if (document.querySelector('[data-expect]')) return 0; const w = document.createTreeWalker(document, NodeFilter.SHOW_COMMENT); let t = ''; while (w.nextNode()) t += w.currentNode.data + '\\n';
+          for (const sc of document.scripts) { const m = sc.textContent.match(/\\/\\*[\\s\\S]*?\\*\\//g); if (m) t += m.join('\\n'); }
+          return (t.match(/(^|\\s)\\d+(?:\\.\\d+)?\\s*s?\\s*[-\u2013]\\s*\\d+(?:\\.\\d+)?\\s*s?(?=\\s)/gm) || []).length; })()`);
+        if (n >= 3) issues.push({ severity: 'warning', code: 'no-expect', time: null, message: `The shot list has ${n} timed beats, but no element carries data-expect, so nothing checks that the beats land on time.`, fix: 'Put the brief\'s times on the elements they are about: data-expect="in-by 4.2; hold 1.5; gone-by 9" on each beat\'s main text or shape. check then reports a beat that runs late as an error.' });
+      } catch (e) {}
+    }
+    if (full) {
+      try {
+        const specs = await ctx.page.evaluate(`[...document.querySelectorAll('[data-expect]')].map((el) => ({ sel: gm.__selector(el), v: el.getAttribute('data-expect') || '' }))`);
+        if (specs.length) {
+          await ctx.page.evaluate(`window.__gmVis = (sels) => sels.map((sel) => { const el = document.querySelector(sel); if (!el || !el.isConnected) return [0, 0];
+            let op = 1; for (let a = el; a && a.nodeType === 1; a = a.parentElement) { const cs = getComputedStyle(a); if (cs.display === 'none' || (a === el && cs.visibility === 'hidden')) return [0, 0]; op *= +cs.opacity; }
+            const r = el.getBoundingClientRect(), W = innerWidth, H = innerHeight, A = r.width * r.height;
+            const ix = Math.max(0, Math.min(r.right, W) - Math.max(r.left, 0)), iy = Math.max(0, Math.min(r.bottom, H) - Math.max(r.top, 0)), sh = A > 0 ? (ix * iy) / A : 0;
+            return [op >= 0.5 && sh >= 0.5 ? 1 : 0, op >= 0.5 && sh > 0 && sh < 0.995 ? 1 : 0]; })`);
+          const r2 = (x) => Math.round(x * 100) / 100, num = (x) => parseFloat(String(x).replace(/s$/, ''));
+          const rules = [];
+          for (const sp of specs) for (const part of sp.v.split(';').map((x) => x.trim()).filter(Boolean)) {
+            const m = /^(in-by|gone-by|hold)\s+([\d.]+s?)$|^(in-frame)$/.exec(part);
+            if (!m || (m[2] != null && !isFinite(num(m[2])))) { issues.push({ severity: 'warning', code: 'expect-bad', selector: sp.sel, time: null, message: `data-expect "${part}" is not one of: in-by <s>, gone-by <s>, hold <s>, in-frame.`, fix: 'Write e.g. data-expect="in-by 2.5; hold 1.5; gone-by 9; in-frame" (video seconds).' }); continue; }
+            rules.push({ sel: sp.sel, kind: m[1] || m[3], t: m[2] != null ? num(m[2]) : null });
+          }
+          // one pass over the video for hold and in-frame, every 0.1 s; single moments for in-by and gone-by
+          const swept = [...new Set(rules.filter((r) => r.kind === 'hold' || r.kind === 'in-frame').map((r) => r.sel))];
+          const sweep = new Map(swept.map((sel) => [sel, []]));
+          if (swept.length) for (let t = 0; t <= lastT + 1e-9; t = Math.round((t + 0.1) * 1000) / 1000) {
+            await ctx.page.seek(t);
+            const v = await ctx.page.evaluate(`window.__gmVis(${JSON.stringify(swept)})`);
+            swept.forEach((sel, k) => sweep.get(sel).push([t, v[k][0], v[k][1]]));
+          }
+          const at = async (sel, t) => { await ctx.page.seek(Math.min(lastT, Math.max(0, t))); return (await ctx.page.evaluate(`window.__gmVis(${JSON.stringify([sel])})`))[0]; };
+          const fail = (r, time, message) => issues.push({ severity: 'error', code: 'expect-failed', selector: r.sel, time: time == null ? null : r2(time), message, fix: 'Change the timeline so the promise holds (it is the brief\'s timing), or change data-expect if the brief allows it.' });
+          for (const r of rules) {
+            if (r.kind === 'in-by') { if (!(await at(r.sel, r.t))[0]) fail(r, r.t, `Expected to be visible by ${r.t} s (data-expect "in-by ${r.t}"), but it is not on screen then.`); }
+            else if (r.kind === 'gone-by') { for (const dt of [0, 0.25, 0.5]) { if (r.t + dt > lastT + 1e-9) break; if ((await at(r.sel, r.t + dt))[0]) { fail(r, r.t + dt, `Expected to be gone by ${r.t} s (data-expect "gone-by ${r.t}"), but it is still on screen at ${r2(r.t + dt)} s.`); break; } } }
+            else if (r.kind === 'hold') {
+              const rows = sweep.get(r.sel), i0 = rows.findIndex((x) => x[1]);
+              if (i0 < 0) fail(r, null, `Expected to stay visible for ${r.t} s (data-expect "hold ${r.t}"), but it is never on screen.`);
+              else { let j = i0; while (j + 1 < rows.length && rows[j + 1][1]) j++; const held = rows[j][0] - rows[i0][0] + 0.1; if (held + 1e-6 < r.t && rows[j][0] < lastT - 0.05) fail(r, rows[i0][0], `Expected to stay visible for ${r.t} s once in (data-expect "hold ${r.t}"), but it is visible for only ~${r2(held)} s from ${r2(rows[i0][0])} s.`); }
+            } else if (r.kind === 'in-frame') { const row = sweep.get(r.sel).find((x) => x[2]); if (row) fail(r, row[0], `Expected to stay inside the frame while visible (data-expect "in-frame"), but it is cut by the frame edge at ${r2(row[0])} s.`); }
+          }
+        }
+      } catch (e) {}
+    }
     // Contrast pictures: one every contrastEvery seconds, at the first sample with text on screen. Taken after the
     // pass, spread over the browsers: each one seeks to the sample before (text that moves is left out), then there.
     if (full) {
@@ -1799,6 +2012,28 @@ export async function check(input, opts = {}) {
       if (j > i && a0 > 0.6) issues.push({ severity: 'warning', code: 'empty-frame', time: Math.round(a0 * 100) / 100, until: Math.round(b0 * 100) / 100, ranges: [[Math.round(a0 * 100) / 100, Math.round(b0 * 100) / 100]], message: 'Almost nothing is on screen from ' + a0.toFixed(1) + ' s to ' + b0.toFixed(1) + ' s.', fix: 'Keep something in view: move the camera between parts that are closer together (or faster), start the next element sooner, or do not zoom out that far.' });
       i = j;
     }
+    // Text carried over a scene change: a big readable text stays put, unchanged, while almost the whole picture around
+    // it changes (a new beat, a camera rush), and is still there half a second later: it reads as left behind.
+    try {
+      const near = (t) => { let best = null; for (const sm of paceSamples) if (Math.abs(sm.t - t) < 0.1 && (!best || Math.abs(sm.t - t) < Math.abs(best.t - t))) best = sm; return best; };
+      const same = (sm, u) => sm && sm.units.find((x) => x[0] === u[0] && x[1] === 2 && x.length > 6 && Math.abs(x[5] - u[5]) <= 6 && Math.abs(x[6] - u[6]) <= 6);
+      const done = new Set();
+      for (const [tc, frac] of change) {
+        if (frac < 0.45) continue;
+        const A = near(tc - 0.5), B = near(tc), C = near(tc + 0.5);
+        if (!A || !B || !C || C === B) continue;
+        for (const u of B.units) {
+          if (u[1] !== 2 || !u[3] || u[4] || u.length < 7 || done.has(u[0])) continue;
+          const m = paceMeta[u[0]];
+          if (!m || m.carryOk || m.quick || m.live) continue;
+          if (!same(A, u) || !same(C, u)) continue;
+          done.add(u[0]);
+          issues.push({ severity: 'warning', code: 'text-carried-over', selector: u[0], text: m.text, time: Math.round(tc * 100) / 100,
+            message: `This text stays put while almost the whole picture changes around it (${Math.round(frac * 100)}% of the frame at ${tc.toFixed(1)} s), and is still there half a second later: it reads as left behind from the last beat.`,
+            fix: 'Let it leave with its beat (an exit that ends before the hand-over; if it then has too little time to be read, bring it in sooner rather than holding it into the next beat), or carry it across on purpose (gm.fly, a morph). If it is meant to stay (a logo bug, a chapter label), add data-check="carry-ok".' });
+        }
+      }
+    } catch (e) {}
     const motion = change.length ? { every: 0.5, from: change[0][0] - 0.5, values: change.map(([, f, b]) => Math.round((b >= BUSY_MIN ? Math.max(f, 0.06) : f) * 1000) / 1000) } : null;
     let merged = mergeIssues(issues, step * 2.5, Math.max(step * 2.5, contrastEvery * 1.6));
     // Some problems only matter if they last (a label sliding past the frame edge during a pan is fine).
@@ -2046,8 +2281,20 @@ export async function snapshot(input, opts = {}) {
     </style></head><body><header>${escapeHtml(basename(ctx.file))} · ${info.width}x${info.height} · ${info.fps}fps · ${info.duration.toFixed(2)}s</header><div class="g">${thumbs.map((x) => `<figure><img src="data:image/${x.mime};base64,${x.data}">${overlay}<figcaption><b>${x.t.toFixed(2)}s</b><span>frame ${x.frame}${x.scene ? ' · ' + escapeHtml(x.scene) : ''}</span></figcaption></figure>`).join('')}</div></body></html>`;
     const png = await renderHtmlToPng(ctx.page, html, sheetW, sheetH);
     writeFileSync(sheet, png);
+    // --trail: every frame layered into one picture (an onion skin): the earlier frames as fading ghosts under the
+    // last one, so a move's path, arc and spacing (its easing) read at full size in one image
+    let trail = null;
+    if (opts.trail && thumbs.length > 1) {
+      const tw = Math.min(1920, info.width), th = Math.round((tw * info.height) / info.width), n = thumbs.length;
+      // a running mean of all but the last frame (frame k at opacity 1/(k+1)), then the last frame over it at 0.6
+      const layers = thumbs.map((x, k) => `<img src="data:image/${x.mime};base64,${x.data}" style="opacity:${k === n - 1 ? 0.6 : (1 / (k + 1)).toFixed(4)}">`).join('');
+      const thtml = `<!doctype html><html><head><style>html,body{margin:0;width:${tw}px;height:${th}px;overflow:hidden;background:#000}img{position:absolute;left:0;top:0;width:${tw}px;height:${th}px}
+        b{position:absolute;left:12px;bottom:10px;font:600 22px Inter,Helvetica,Arial,sans-serif;color:#fff;background:#000a;padding:4px 8px}</style></head><body>${layers}<b>${times[0].toFixed(2)}s → ${times[n - 1].toFixed(2)}s · ${n} frames (last one strongest)</b></body></html>`;
+      trail = join(dir, 'trail.png');
+      writeFileSync(trail, await renderHtmlToPng(ctx.page, thtml, tw, th));
+    }
     const problems = [...info.issues.filter((i) => i.severity === 'error'), ...ctx.page.errors];
-    return { sheet, files, times, info: summarizeInfo(info), errors: ctx.page.errors, problems };
+    return { sheet, files, times, info: summarizeInfo(info), errors: ctx.page.errors, problems, ...(trail ? { trail } : {}) };
   } finally {
     await ctx.page.close();
     await ctx.server.close();

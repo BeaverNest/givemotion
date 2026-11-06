@@ -1,6 +1,7 @@
 // Public API
 export { render, stills, openComposition, resolveInput } from './render.js';
 export { check, snapshot, formatReport } from './check.js';
+export { review } from './review.js';
 export { startServer, expandIncludes, injectRuntime } from './server.js';
 export { findChrome, installChrome, ensureChrome, FramePage } from './browser.js';
 import { openComposition } from './render.js';

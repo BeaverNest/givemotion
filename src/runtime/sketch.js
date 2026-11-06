@@ -330,7 +330,7 @@
     const o = { ...inherited };
     if (/^[\d.]+$/.test(v)) o.roughness = +v;
     else for (const part of v.split(/[;,]/)) { const m = /^\s*([\w-]+)\s*[:=\s]\s*([^\s].*?)\s*$/.exec(part); if (m) o[m[1].replace(/-(\w)/g, (_, c) => c.toUpperCase())] = isNaN(+m[2]) ? m[2] : +m[2]; }
-    for (const k of ['fill', 'gap', 'angle', 'seed', 'roughness', 'passes', 'arrow', 'head']) { const a = el.getAttribute('data-sketch-' + k); if (a != null) o[k] = isNaN(+a) ? a : +a; }
+    for (const k of ['fill', 'gap', 'angle', 'seed', 'roughness', 'passes', 'arrow', 'head', 'boil', 'ink']) { const a = el.getAttribute('data-sketch-' + k); if (a != null) o[k] = isNaN(+a) ? a : +a; }
     return o;
   }
   function geometryPath(el) {
@@ -388,6 +388,26 @@
     }
     return null;
   }
+  // Ink: a stroke as a filled outline whose width tapers at both ends and varies with the pen's pressure (seeded),
+  // like a brush or a dip pen, instead of a marker's even line. Returns the outline's path data.
+  let inkN = 0;
+  function inkOutline(d, width, amount, seed) {
+    const m = measure(d), L = m.getTotalLength();
+    if (!(L > 0)) return '';
+    const n = Math.max(16, Math.min(700, Math.round(L / (3 * px()))));
+    const R = rng(seed + 'ink'), ph = R() * 100, tipLen = Math.min(0.2, (40 * px()) / L + 0.04);
+    const pts = []; for (let i = 0; i <= n; i++) { const q = m.getPointAtLength((i / n) * L); pts.push([q.x, q.y]); }
+    const left = [], right = [];
+    for (let i = 0; i <= n; i++) {
+      const a = pts[Math.max(0, i - 1)], b = pts[Math.min(n, i + 1)], s0 = i / n;
+      let nx = -(b[1] - a[1]), ny = b[0] - a[0]; const nl = Math.hypot(nx, ny) || 1; nx /= nl; ny /= nl;
+      const tip = Math.min(1, s0 / tipLen, (1 - s0) / tipLen), sm = tip * tip * (3 - 2 * tip);
+      const pressure = 1 + 0.28 * amount * (gm.noise(s0 * (L / (260 * px())) + ph, 7) * 2 - 1);
+      const w = (width / 2) * (1 - amount * 0.85 * (1 - sm)) * pressure;
+      left.push([pts[i][0] + nx * w, pts[i][1] + ny * w]); right.push([pts[i][0] - nx * w, pts[i][1] - ny * w]);
+    }
+    return 'M' + left.concat(right.reverse()).map((q) => f1(q[0]) + ' ' + f1(q[1])).join('L') + 'Z';
+  }
   function sketchOne(el, o, index) {
     const g = geometryPath(el);
     if (!g) return;
@@ -413,6 +433,12 @@
       if (arrowAt === 'end' || arrowAt === 'both' || arrowAt === 'true' || arrowAt === '1') outlines[0] += head(L, 1);
       if (arrowAt === 'start' || arrowAt === 'both') outlines[0] = 'M' + outlines[0].slice(1) + `M${f1(m.getPointAtLength(0).x)} ${f1(m.getPointAtLength(0).y)}` + head(0, -1);
     }
+    // data-sketch-boil="3" (on the shape or any container): the hand-drawn lines "boil", redrawn with a new wobble
+    // every 3 frames (on threes), cycling three drawings like hand animation. Drawing 0 is the still one.
+    const boilV = o.boil ?? (el.closest('[data-sketch-boil]') ? el.closest('[data-sketch-boil]').getAttribute('data-sketch-boil') : null);
+    const boilN = boilV == null || boilV === 'off' || boilV === 'false' || boilV === '0' ? 0 : Math.max(1, Math.round(+boilV) || 3);
+    const boilOutlines = boilN ? [outlines.slice()] : null;
+    if (boilN) for (let v = 1; v < 3; v++) { const alt = []; for (let p = 0; p < nPass; p++) alt.push(fnK(...g.args, { ...so, passes: 1, seed: seed + ':' + p + '~' + v })); boilOutlines.push(alt); }
     const grp = document.createElementNS(SVGNS, 'g');
     // keep identity and styling: id, classes, data-* (enter, exit, timing), style, presentation attributes
     for (const at of [...el.attributes]) if (!GEOM[el.tagName.toLowerCase()].includes(at.name) && at.name !== 'data-sketch' && !at.name.startsWith('data-sketch-') && at.name !== 'pathLength') grp.setAttribute(at.name, at.value);
@@ -434,7 +460,9 @@
         fp.setAttribute('d', g.kind === 'path' ? g.args[0] : g.kind === 'ellipse' ? ellipse(...g.args, { ...so, passes: 1, roughness: so.roughness * 0.4 }) : 'M' + pts.map((q) => f1(q[0] + jt()) + ' ' + f1(q[1] + jt())).join('L') + 'Z');
         fp.setAttribute('style', `fill:${fillColor};stroke:none`);
       } else {
-        fp.setAttribute('d', hachure(pts, { gap: o.gap ?? Math.max(9, sw * 3.2), angle: o.angle ?? -41, cross: mode === 'cross' || mode === 'cross-hatch', seed: seed + 'f', roughness: 0.5 * so.roughness }));
+        const hatchOpts = { gap: o.gap ?? Math.max(9, sw * 3.2), angle: o.angle ?? -41, cross: mode === 'cross' || mode === 'cross-hatch', seed: seed + 'f', roughness: 0.5 * so.roughness };
+        fp.setAttribute('d', hachure(pts, hatchOpts));
+        if (boilN) fp.__gmBoil = [fp.getAttribute('d'), hachure(pts, { ...hatchOpts, seed: seed + 'f~1' }), hachure(pts, { ...hatchOpts, seed: seed + 'f~2' })];
         // a pale fill would fade away as thin lines: the same hue, deeper (pastel yellow → a real yellow)
         // a pale fill hatched on paper would vanish: deepen it in the same hue; a white/grey one (no hue) to grey, not pink
         const rgb = gm.color && gm.color.parse(fillColor), gray = rgb && Math.max(rgb[0], rgb[1], rgb[2]) - Math.min(rgb[0], rgb[1], rgb[2]) < 16;
@@ -445,9 +473,30 @@
       grp.appendChild(fp);
     }
     const noStroke = (el.getAttribute('stroke') === 'none' || cs.stroke === 'none') && fillColor;
-    if (!noStroke) for (const d of outlines) {
+    const boilPaths = [];
+    // data-sketch-ink="0.8" (0..1, "on" = 0.8): ink strokes (tapered ends, pen pressure) instead of an even line. Each is
+    // a filled outline revealed through a mask that traces its centre line, so data-enter="draw" and a draw tween
+    // still draw it on along its direction.
+    const inkV = o.ink ?? (el.closest('[data-sketch-ink]') ? el.closest('[data-sketch-ink]').getAttribute('data-sketch-ink') : null);
+    const inkAmt = inkV == null || inkV === 'off' || inkV === 'false' || inkV === '0' ? 0 : Math.max(0.05, Math.min(1, isFinite(+inkV) && inkV !== '' && inkV !== true ? +inkV : 0.8));
+    if (!noStroke && inkAmt) {
+      const color = cs.stroke && cs.stroke !== 'none' ? cs.stroke : 'currentColor';
+      for (const [k, d] of outlines.entries()) {
+        const id = 'gm-ink-' + ++inkN, mk = document.createElementNS(SVGNS, 'mask'), mp = document.createElementNS(SVGNS, 'path'), fp = document.createElementNS(SVGNS, 'path');
+        mk.setAttribute('id', id); mk.setAttribute('maskUnits', 'userSpaceOnUse'); mk.setAttribute('x', '-100000'); mk.setAttribute('y', '-100000'); mk.setAttribute('width', '200000'); mk.setAttribute('height', '200000');
+        mp.setAttribute('d', d); mp.setAttribute('data-gm-ink-reveal', ''); mp.setAttribute('fill', 'none');
+        mp.setAttribute('style', `stroke:#fff;stroke-width:${f1(sw * 2.4)}px;stroke-linecap:round;stroke-linejoin:round`);
+        mk.appendChild(mp);
+        fp.setAttribute('d', inkOutline(d, sw * 1.15, inkAmt, seed + ':' + k)); fp.setAttribute('mask', `url(#${id})`); fp.setAttribute('data-gm-ink', '');
+        fp.setAttribute('style', `fill:${color};stroke:none`);
+        if (boilN) { fp.__gmBoil = boilOutlines.map((alt, v) => inkOutline(alt[k], sw * 1.15, inkAmt, seed + ':' + k + '~' + v)); mp.__gmBoil = boilOutlines.map((alt) => alt[k]); boilPaths.push(fp, mp); }
+        grp.appendChild(mk); grp.appendChild(fp);
+      }
+    }
+    if (!noStroke && !inkAmt) for (const [k, d] of outlines.entries()) {
       const op = document.createElementNS(SVGNS, 'path');
       op.setAttribute('d', d);
+      if (boilN) { op.__gmBoil = boilOutlines.map((alt) => alt[k]); boilPaths.push(op); }
       op.setAttribute('fill', 'none');
       op.style.strokeLinecap = 'round';
       op.style.strokeLinejoin = 'round';
@@ -465,8 +514,23 @@
     grp.style.fill = 'none';
     el.replaceWith(grp);
     replaced.set(el, grp);
+    if (boilN) { for (const q of grp.querySelectorAll('[data-gm-sketch-fill]')) if (q.__gmBoil) boilPaths.push(q); boils.push({ paths: boilPaths, n: boilN, last: 0 }); }
     return grp;
   }
+  const boils = [];
+  function updateBoils(T) {
+    let changed = false;
+    if (!boils.length) return false;
+    const frame = Math.round(T * gm.fps + 1e-6);
+    for (const b of boils) {
+      const v = Math.floor(frame / b.n) % 3;
+      if (v === b.last) continue;
+      b.last = v; changed = true;
+      for (const q of b.paths) q.setAttribute('d', q.__gmBoil[v]);
+    }
+    return changed;
+  }
+  I.hooks.seek.push(updateBoils);
   // ---------------------------------------------------------------------------
   // HTML: data-sketch on a box gives it a hand-drawn border; data-sketch-mark highlights, underlines, circles,
   // boxes or strikes a piece of text. Both are measured on the first frame they are visible (fonts loaded, layout done).

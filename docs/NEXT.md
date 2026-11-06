@@ -11,8 +11,8 @@ second. Do not reformat files you are not changing.
 
 Touches `src/browser.js`, `src/render.js`, `src/runtime/runtime.js`. With screenshot capture (macOS), Chrome runs on
 the real clock and keeps per-layer raster state (the raster scale of a layer whose scale keeps changing, and text's raster
-phase for ~1 s after a move). On a busy machine that state differs between renders. Repro: the three-tools comparison
-page (`docs/experiments/2026-11-tools-showcase.md`). Its tiles have a `scale: 0.94` entrance and its rows slide in.
+phase for ~1 s after a move). On a busy machine that state differs between renders. Repro: a comparison page (a grid of
+playing videos with a scoreboard; kept locally). Its tiles have a `scale: 0.94` entrance and its rows slide in.
 3–5 of 9 renders under load (3 at once) differ from one rendered alone. Without the scale tween it's 0 of 9.
 - Tried, not merged: at each seek the runtime lists the elements whose scale changed and the moved elements with text,
   and the render hides their parents' content for one drawn frame. 0 of 12 differ, at +8% (comparison page) and
@@ -24,6 +24,64 @@ page (`docs/experiments/2026-11-tools-showcase.md`). Its tiles have a `scale: 0.
   the rest of the 120 s matched. So it is not only load + scale; layers showing video frames are a second suspect.
 - Next idea: a virtual clock on macOS (so Chrome draws only when the render asks), or a way to drop exactly one
   element's layer. `--run-all-compositor-stages-before-draw` breaks screenshot capture.
+
+## Open: heavy 3D pages render slowly without a GPU (found 2026-11-05, partly fixed 2026-11-06)
+
+Touches `src/render.js`, `src/browser.js`. In an agent round (`docs/experiments/2026-11-agent-rounds.md`)
+givemotion's maker made a `preserve-3d` world of 24 cards (16000 px wide) with blurred layers. On 4 cores with no GPU it
+rendered in 331 s with the headless shell, about twice as long as the reference tools took for the same brief.
+Fixed since: the camera no longer makes Chrome raster a zoomed-out 3D world at full size (perspective / zoom instead of
+scale3d; the grid section went from 23 s to 17 s per 15 frames), and `check` draws its pictures at half scale (102 s →
+30 s on this page). Still open: measure where a heavy frame's time goes (layer count, raster vs composite), as in
+`docs/experiments/2026-10-t7-speed.md`. Repro: the round's page (kept locally).
+
+## Done 2026-11-06 (from the agent rounds)
+
+- Path morphs: convex shapes blend support points (balanced, convex in-betweens), star-shaped ones blend radius by
+  direction, overshoot grows the shape instead of denting it.
+- Camera: 3D worlds keep their depth proportions at any zoom (the ancestor's perspective becomes P / zoom); a 1 s+ shot on
+  the same subject rests instead of drifting with its neighbours (`blend: true` keeps the flow).
+- `data-split="chars"` keeps graphemes (emoji sequences, marks) and words of joined scripts (Arabic…) whole.
+- `check`: `mirrored-text`, a passing color on `low-contrast`, pictures at half scale.
+- `snapshot --trail` (onion skin of a move), `data-sketch-boil` (hand-drawn line boil), `data-sketch-ink` (tapered,
+  pressure-varied strokes that still draw on), `gm.path.stream` (items flowing along a path).
+- No banding on dark gradients (frames captured at JPEG 98, not 92). Renders no longer fail with "Another frame is
+  pending" on heavy pages (one beginFrame request at a time).
+- `check`: `orphan-word`, `text-carried-over`, letters split into spans count as words (`short-hold`).
+- Skill: plant the next set early, effects off the hero, holds inside their beat, audit each beat against the brief
+  before rendering, mask rises fade in, prefer the engine's drawing tools, what `onFrame` draws gets no auto blur.
+- Fair rounds on random briefs: `docs/experiments/2026-11-agent-rounds.md`.
+
+## Open: motion blur on fast text and small objects (found 2026-11-06)
+
+Touches `src/render.js` (`velocityBlur`, `AUTO_BLUR`). In one random brief (`docs/experiments/2026-11-agent-rounds.md`)
+judges called givemotion's automatic smear on rolling counter digits, slamming words and a small fast bee "a glowing
+blob" and "smeared type"; no judge in the other briefs of that round complained about blur. The smear is physical (the distance moved
+while a 180° shutter is open). Before changing the default, run an A/B: the same pages rendered with the smear as now
+and with the smear on text capped at ~0.3 em (and on objects under ~40 px), judged blind from motion strips.
+Status (2026-11-06): the text cap at 0.3 of the font size is in (`AUTO_BLUR.textCap`, v3). In brief F, digits caught
+mid-roll were still soft after it. The blind A/B (smear on text vs none) has not been run yet; the cap on small objects
+is not in.
+
+## Next from round 5 (2026-11-06)
+
+- Done: `check` warns `stray-mark` for a small solid mark inside big text or just under its baseline (round 5 brief E).
+- Done: `check` warns `no-expect` when the shot list has timed beats but nothing carries `data-expect` (brief G ran ~1.3 s late).
+- Not done: brief G's overlap was canvas particles under a blurred word, which `check` cannot see as text; a rule there needs pixel-level detection.
+- [engine] Run the blind A/B on motion blur with the new caps (text 0.3 em, shapes 0.15 of their smaller side).
+
+## Ideas from the gap research (2026-11-06), not started
+
+From the other tools' docs (features only, never their code) and our rounds. Where each belongs in brackets.
+- [engine] A deterministic effects/grade pass: `data-fx="grain .04, vignette .3"` and a grade (exposure, contrast,
+  temperature, `.cube`) on media or the whole frame, applied after capture (not Chrome filters, which double the cost).
+  The looks themselves are taste and belong in brand kits.
+- [engine] Motion expectations checked by `check` (`data-expect="in-by 2.4; in-frame; after #a"`).
+- [engine] `gm.text.measure` / `gm.text.fit(el, {min, max})` and multi-line `data-fit` with a minimum size.
+- [engine] Typed props (`type`, `min`, `max`, `color`) read by `dev`, `check` and `render --batch rows.json`.
+- [engine, optional, local] `transcribe` writing the word-timed file givemotion already reads; loudness normalisation.
+- [skill] Token cost: the maker read ~25k tokens of references against ~14k for the others; tighten the references the
+  makers read most (camera, timeline, javascript, review, techniques).
 
 ## Done in the October 2026 session (for context)
 
@@ -133,12 +191,10 @@ This is the reason people reach for React components; the answer is to have it i
 - Test: fresh Opus agents get a three-video series brief with one brand; measure how much they reuse and whether
   they still write build scripts. Files: `src/server.js` (includes), `src/runtime/runtime.js`, skill pack.
 
-## README claims that need data (2026-10-27)
-The README now promises these; do them or soften the README:
-- Publish the givemotion vs Remotion agent test (method, versions, prompts, raw scores), like `benchmarks/vs-hyperframes`.
-- Put HyperFrames through the same 9-brief agent test.
-- Benchmark givemotion, HyperFrames and Remotion on one Linux machine and on an Apple Silicon Mac; no Mac speed claim until then.
-- Re-check the comparison table (licenses, features, versions) before each release; it is dated 27 October 2026.
+## README claims that need data (updated 2026-11-06)
+The README no longer compares givemotion with named tools (see the independence policy in CONTRIBUTING.md). Still open:
+- Publish the agent-test method and a harness that runs givemotion on anyone's briefs (no third-party tools in it).
+- Benchmark render speed on an Apple Silicon Mac; no Mac speed claim until then.
 
 ## Type checking (started 2026-10-27)
 `npm run typecheck` is clean with `strict: false`. Next, one flag at a time, file by file, without behaviour changes:

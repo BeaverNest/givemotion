@@ -55,8 +55,10 @@ export function probe(file) {
 
 const QUALITY = {
   draft: { crf: 28, preset: 'ultrafast', vp9crf: 40, jpeg: 80 },
-  standard: { crf: 18, preset: 'veryfast', vp9crf: 31, jpeg: 92 },
-  high: { crf: 14, preset: 'medium', vp9crf: 24, jpeg: 97 },
+  // Frames are captured as JPEG. Chrome dithers gradients; JPEG 92 smoothed that dither into flat bands that the encoder
+  // kept (a dark glow showed 20-80 px steps). At 98 the dither survives (bands ~3 px, like lossless PNG frames) for ~3% time.
+  standard: { crf: 18, preset: 'veryfast', vp9crf: 31, jpeg: 98 },
+  high: { crf: 14, preset: 'medium', vp9crf: 24, jpeg: 99 },
   max: { crf: 10, preset: 'slow', vp9crf: 15, jpeg: 100 },
 };
 export function qualitySettings(q = 'standard') { return QUALITY[q] || QUALITY.standard; }

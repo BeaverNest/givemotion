@@ -88,9 +88,11 @@ test('shared computer: a render that starts with 1 worker, grows when another re
   const { CACHE_DIR } = await import('../src/machine.js');
   const { spawn } = await import('node:child_process');
   const d = tmp();
-  const f = comp(d, 'long.html', `<style>#b{position:absolute;left:20px;top:110px;width:40px;height:40px;background:#4af}h1{position:absolute;left:20px;top:20px;margin:0;font:32px Inter}</style>
+  // 960x540 and 40 s so the render lasts long enough to grow and then give workers back, also with the fast
+  // headless-shell capture (a 320x180 page finished before it could grow)
+  const f = comp(d, 'long.html', `<style>#b{position:absolute;left:60px;top:330px;width:120px;height:120px;background:#4af}h1{position:absolute;left:60px;top:60px;margin:0;font:96px Inter}</style>
     <h1 id="h">Sharing</h1><div id="b"></div>
-    <script>gm.timeline().to('#b', { x: 240, rotate: 720, duration: 20, ease: 'linear' }, 0).from('#h', { opacity: 0, y: 20, duration: 1 }, 0.2);</script>`, 'data-width="320" data-height="180" data-fps="30" data-duration="20"');
+    <script>gm.timeline().to('#b', { x: 720, rotate: 1440, duration: 40, ease: 'linear' }, 0).from('#h', { opacity: 0, y: 60, duration: 1 }, 0.2);</script>`, 'data-width="960" data-height="540" data-fps="30" data-duration="40"');
   const a = join(d, 'a.mp4'), b = join(d, 'b.mp4');
   await render(f, { output: a, workers: 1, cache: false, ...quiet });
   // another givemotion process (a live child standing in for it) that has 3 of the computer's 4 browsers
@@ -217,6 +219,18 @@ test('4K with many composited layers: every tile is drawn (still and render matc
   }
 });
 
+test('a dark gradient keeps its dither through capture and encoding (no flat bands)', { skip }, async () => {
+  const d = tmp();
+  const f = comp(d, 'g.html', `<div style="position:absolute;inset:0;background:radial-gradient(60% 70% at 40% 45%, #2a2350 0%, #0B0D17 75%)"></div>`, 'data-width="1920" data-height="1080" data-fps="30" data-duration="0.5"');
+  const out = join(d, 'g.mp4');
+  await render(f, { output: out, ...quiet });
+  const row = execFileSync(ffmpegPath(), ['-v', 'error', '-ss', '0.2', '-i', out, '-frames:v', '1', '-vf', 'crop=1920:1:0:480,format=gray', '-f', 'rawvideo', '-']);
+  const seg = [...row].slice(100, 1400), runs = [];
+  let n = 0; for (let i = 0; i < seg.length; i++) { n++; if (i === seg.length - 1 || seg[i + 1] !== seg[i]) { runs.push(n); n = 0; } }
+  const mean = runs.reduce((a, b) => a + b, 0) / runs.length;
+  assert.ok(mean < 8, `flat runs along the gradient average ${mean.toFixed(1)} px (bands); the dither should survive (~3 px)`);
+});
+
 test('video frames are exact and <video> keeps its CSS', { skip }, async () => {
   const d = tmp();
   mkdirSync(join(d, 'media'));
@@ -244,6 +258,15 @@ test('video frames are exact and <video> keeps its CSS', { skip }, async () => {
   const e = await stills(g, [3.4, 3.5]);
   assert.deepEqual([...(e.info.issues || []).filter((i) => i.severity === 'error'), ...(e.errors || [])].map((i) => i.message), []);
   assert.ok(e.buffers[1].length > 1000);
+
+  // Frames decoded for a later moment first (another worker, an earlier still) leave a gap before them in the frame
+  // cache. The frame just before that gap must be decoded, not taken as ready because the next file exists.
+  const h = comp(d, 'gap.html', `<video src="media/clip.mp4" style="position:absolute;left:0;top:0;width:640px;height:360px;object-fit:fill"></video>`, 'data-width="640" data-height="360" data-fps="30" data-duration="2"');
+  const late = await stills(h, [1]);
+  const early = await stills(h, [29 / 30]);
+  assert.deepEqual([...(early.info.issues || []).filter((i) => i.severity === 'error'), ...(early.errors || [])].map((i) => i.message), []);
+  assert.ok(early.buffers[0].length > 1000);
+  assert.notEqual(md5Buf(early.buffers[0]), md5Buf(late.buffers[0]), 'frame 29 shows its own picture');
 });
 const md5Buf = (b) => createHash('md5').update(b).digest('hex');
 

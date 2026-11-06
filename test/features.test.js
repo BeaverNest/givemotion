@@ -584,6 +584,176 @@ test('gm.chart.line: values and points at known times, holds, callouts enter on 
   assert.deepEqual(fa.filter((x) => !readFileSync(join(o1, x)).equals(readFileSync(join(o2, x)))), []);
 });
 
+test('data-split="chars" keeps what a reader sees as one character together: emoji sequences, letters with marks; joined scripts split by word', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  writeFileSync(f, page(`<p id="ar" data-split="chars" dir="rtl">\u0645\u0631\u062d\u0628\u0627 \u0628\u0627\u0644\u0639\u0627\u0644\u0645</p>
+    <p id="em" data-split="chars">Go \u{1F44D}\u{1F3FD} \u{1F468}\u200D\u{1F469}\u200D\u{1F467}</p><p id="hi" data-split="chars">\u0928\u092e\u0938\u094d\u0924\u0947</p>`, 'data-width="640" data-height="360" data-fps="30" data-duration="1"'));
+  const r = await evalAt(f, 0, `(() => { const t = (s) => [...document.querySelectorAll(s + ' .gm-char')].map((e) => e.textContent); return { ar: t('#ar'), em: t('#em'), hi: t('#hi') }; })()`);
+  assert.equal(r.ar.length, 2, 'Arabic: one piece per word, letters stay joined: ' + JSON.stringify(r.ar));
+  assert.deepEqual(r.em, ['G', 'o', '\u{1F44D}\u{1F3FD}', '\u{1F468}\u200D\u{1F469}\u200D\u{1F467}'], 'emoji with skin tone and a ZWJ family are one piece each');
+  assert.ok(r.hi.every((c) => !/^[\u093e-\u094d]/.test(c)), 'no Devanagari vowel sign or virama on its own: ' + JSON.stringify(r.hi));
+});
+
+test('check: mirrored-text when a card flip shows its text backwards, not with backface-visibility: hidden, not for a faint reflection', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  writeFileSync(f, page(`<style>.st{position:absolute;perspective:1000px}.card{width:260px;height:160px;background:#345;display:grid;place-items:center;transform-style:preserve-3d;font:700 48px Inter}.hide .face{backface-visibility:hidden}</style>
+    <div class="st" style="left:20px;top:60px"><div class="card" id="c1"><div id="f1">FLOW</div></div></div>
+    <div class="st hide" style="left:340px;top:60px"><div class="card" id="c2"><div class="face" id="f2">MOVE</div></div></div>
+    <p id="refl" style="position:absolute;left:20px;top:260px;margin:0;font:700 40px Inter;transform:scaleY(-1);opacity:.3">SHAPE</p>
+    <script>gm.timeline().to('#c1, #c2', { rotateY: 180, duration: 0.6, ease: 'power2.inOut' }, 0.3);</script>`, 'data-width="640" data-height="360" data-fps="30" data-duration="2.5"'));
+  const rep = await check(f);
+  const m = rep.issues.filter((i) => i.code === 'mirrored-text').map((i) => i.selector);
+  assert.deepEqual(m, ['#f1'], 'only the text showing through the back: ' + JSON.stringify(m));
+});
+
+test('data-sketch-boil: lines are redrawn every N frames, cycling three drawings; a pure function of the frame (1 worker == 2)', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  writeFileSync(f, page(`<svg width="640" height="360" viewBox="0 0 640 360" data-sketch="1.4" data-sketch-boil="3" style="stroke:#222;stroke-width:6px"><rect id="r" x="60" y="60" width="200" height="150" fill="#e9a23b"/><circle cx="440" cy="150" r="80" fill="none"/></svg>`, 'data-width="640" data-height="360" data-fps="30" data-duration="1" data-background="#f6efdf"'));
+  const ds = await seekEach(f, [0, 2 / 30, 3 / 30, 6 / 30, 9 / 30], `[...document.querySelectorAll('[data-gm-sketch] path:not([data-gm-sketch-guide])')].map((p) => p.getAttribute('d')).join('|')`);
+  assert.equal(ds[0], ds[1], 'frames 0-2 are one drawing');
+  assert.notEqual(ds[0], ds[2], 'frame 3 is a new drawing');
+  assert.notEqual(ds[2], ds[3], 'frame 6 another');
+  assert.equal(ds[0], ds[4], 'frame 9 loops back to the first drawing');
+  const o1 = join(d, 'o1'), o2 = join(d, 'o2');
+  await render(f, { output: o1, workers: 1, ...quiet });
+  await render(f, { output: o2, workers: 2, ...quiet });
+  const fa = readdirSync(o1).sort();
+  assert.deepEqual(fa.filter((x) => !readFileSync(join(o1, x)).equals(readFileSync(join(o2, x)))), []);
+});
+
+test('check: orphan-word on a wrapped headline with one short word alone on its last line (also split into words), not with text-wrap: balance', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  writeFileSync(f, page(`<h1 id="bad" style="position:absolute;left:20px;top:10px;width:900px;margin:0;font:700 72px Inter">Every frame on purpose always</h1>
+    <h1 id="good" style="position:absolute;left:20px;top:300px;width:900px;margin:0;font:700 72px Inter;text-wrap:balance">Every frame on purpose always</h1>
+    <h2 id="split" data-split="words" style="position:absolute;left:1000px;top:10px;width:560px;margin:0;font:700 60px Inter">Cities can bloom too</h2>`, 'data-width="1920" data-height="1080" data-fps="30" data-duration="1.5"'));
+  const rep = await check(f);
+  const o = rep.issues.filter((i) => i.code === 'orphan-word').map((i) => i.selector).sort();
+  assert.deepEqual(o, ['#bad', '#split']);
+});
+
+test('gm.path.stream: items flow along a path at a rate, stay behind a limit, drain after until; 1 worker == 2', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  writeFileSync(f, page(`<svg width="640" height="360" viewBox="0 0 640 360" style="position:absolute;inset:0"><path id="p" d="M20 180 L620 180" fill="none" stroke="#3d9" stroke-width="4"/></svg>
+    <script>gm.path.stream('#p', { at: 0.2, until: 2, rate: 5, trip: 1, jitter: 0.2, size: 12, color: '#fb4', limit: (t) => Math.min(1, t / 1.5) });</script>`, 'data-width="640" data-height="360" data-fps="30" data-duration="3.5"'));
+  const expr = `[...document.querySelectorAll('[data-gm-stream] circle')].filter((c) => c.style.display !== 'none').map((c) => +new DOMMatrix(getComputedStyle(c).transform).e)`;
+  const [early, mid, late] = await seekEach(f, [0.6, 1.6, 3.3], expr);
+  assert.ok(early.length >= 1 && early.every((x) => x <= 20 + 600 * 0.4 + 1), 'items stay behind the limit (40% at 0.6 s): ' + JSON.stringify(early));
+  assert.ok(mid.length >= 4, 'several items in flight: ' + mid.length);
+  assert.equal(late.length, 0, 'no items after the last emitted one finished');
+  const o1 = join(d, 'o1'), o2 = join(d, 'o2');
+  await render(f, { output: o1, workers: 1, ...quiet });
+  await render(f, { output: o2, workers: 2, ...quiet });
+  const fa = readdirSync(o1).sort();
+  assert.deepEqual(fa.filter((x) => !readFileSync(join(o1, x)).equals(readFileSync(join(o2, x)))), []);
+});
+
+test('data-sketch-ink: strokes become tapered filled outlines revealed along their direction by data-enter draw and a draw tween; 1 worker == 2', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  writeFileSync(f, page(`<svg width="640" height="360" viewBox="0 0 640 360" data-sketch="1.2" data-sketch-ink="0.8" style="stroke:#222;stroke-width:6px">
+    <path id="a" d="M40 300 C 200 100, 400 400, 600 120" fill="none" data-enter="draw 1 0.2"/><rect id="r" x="60" y="40" width="200" height="120" fill="none"/></svg>
+    <script>gm.timeline().fromTo('#r', { draw: 0 }, { draw: 1, duration: 1, ease: 'linear' }, 0.2);</script>`, 'data-width="640" data-height="360" data-fps="30" data-duration="1.6" data-background="#f6efdf"'));
+  const expr = `(() => { const ink = [...document.querySelectorAll('[data-gm-ink]')], rev = [...document.querySelectorAll('[data-gm-ink-reveal]')];
+    return { ink: ink.length, masked: ink.every((p) => p.getAttribute('mask').startsWith('url(#gm-ink-') && /./.test(p.getAttribute('mask'))), strokes: document.querySelectorAll('[data-gm-sketch] > path:not([data-gm-ink]):not([data-gm-sketch-guide])').length,
+      dash: rev.map((p) => getComputedStyle(p).strokeDashoffset + '|' + getComputedStyle(p).strokeDasharray) }; })()`;
+  const [mid, end] = await seekEach(f, [0.7, 1.5], expr);
+  assert.ok(mid.ink >= 2 && mid.masked, 'ink outlines, each under its reveal mask: ' + JSON.stringify(mid));
+  assert.equal(mid.strokes, 0, 'no even marker strokes left');
+  assert.notDeepEqual(mid.dash, end.dash, 'the reveal masks draw on over time');
+  const o1 = join(d, 'o1'), o2 = join(d, 'o2');
+  await render(f, { output: o1, workers: 1, ...quiet });
+  await render(f, { output: o2, workers: 2, ...quiet });
+  const fa = readdirSync(o1).sort();
+  assert.deepEqual(fa.filter((x) => !readFileSync(join(o1, x)).equals(readFileSync(join(o2, x)))), []);
+});
+
+test('check: letters split into their own spans by the page script count as words, not one word per letter (short-hold)', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  writeFileSync(f, page(`<style>.ch{display:inline-block;white-space:pre}</style><div id="t" style="position:absolute;left:40px;top:120px;font:600 64px Inter;white-space:nowrap" data-duration="0.9"></div>
+    <script>const el = document.getElementById('t'); for (const ch of 'The City Hive') { const sp = document.createElement('span'); sp.className = 'ch'; sp.textContent = ch; el.appendChild(sp); }
+    gm.timeline().from('#t .ch', { x: (i) => (i - 6) * 90, opacity: 0, duration: 0.3, stagger: 0.01 }, 0);</script>`, 'data-width="1280" data-height="720" data-fps="30" data-duration="3"'));
+  const rep = await check(f);
+  const sh = rep.issues.filter((i) => i.code === 'short-hold');
+  assert.ok(sh.every((i) => !/1[0-9]-word/.test(i.message)), 'counted per letter: ' + sh.map((i) => i.message).join(' | '));
+  assert.ok(sh.some((i) => /3-word/.test(i.message)), 'judged as the 3 words it is: ' + sh.map((i) => i.message).join(' | '));
+});
+
+test('check: text-carried-over when a big label stays put through a scene change, not when it leaves with its beat or is marked carry-ok', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  writeFileSync(f, page(`<div id="s1" style="position:absolute;inset:0;background:#335" data-duration="2"></div>
+    <div id="s2" style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,#c84 0 40px,#ec9 40px 80px)" data-start="2"></div>
+    <p id="left" style="position:absolute;left:40px;top:40px;margin:0;font:700 64px Inter;color:#fff" data-duration="3">3 km</p>
+    <p id="gone" style="position:absolute;left:40px;top:180px;margin:0;font:700 64px Inter;color:#fff" data-duration="1.9">Range</p>
+    <p id="bug" data-check="carry-ok" style="position:absolute;right:40px;top:40px;margin:0;font:700 40px Inter;color:#fff">CH 2</p>`, 'data-width="1280" data-height="720" data-fps="30" data-duration="4"'));
+  const rep = await check(f);
+  const c = rep.issues.filter((i) => i.code === 'text-carried-over').map((i) => i.selector);
+  assert.deepEqual(c, ['#left'], 'only the label left behind: ' + JSON.stringify(c));
+});
+
+test('check: data-expect promises (in-by, gone-by, hold, in-frame) are verified; broken ones are errors, a typo is a warning', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  writeFileSync(f, page(`<p id="a" style="position:absolute;left:30px;top:20px;margin:0;font:700 40px Inter" data-start="1" data-duration="3" data-expect="in-by 1.5; hold 2.5; gone-by 4.5">On time</p>
+    <p id="b" style="position:absolute;left:30px;top:90px;margin:0;font:700 40px Inter" data-start="2" data-expect="in-by 1.5; gone-by 5">Late, stays</p>
+    <p id="c" style="position:absolute;left:30px;top:160px;margin:0;font:700 40px Inter" data-start="1" data-duration="1" data-expect="hold 2">Too short</p>
+    <p id="e" style="position:absolute;left:560px;top:230px;margin:0;font:700 40px Inter;white-space:nowrap" data-expect="in-frame; soon 3">Cut off</p>`, 'data-width="640" data-height="360" data-fps="30" data-duration="6"'));
+  const rep = await check(f);
+  const failed = [...new Set(rep.issues.filter((i) => i.code === 'expect-failed').map((i) => i.selector))].sort();
+  assert.deepEqual(failed, ['#b', '#c', '#e']);
+  assert.ok(rep.issues.some((i) => i.code === 'expect-bad' && i.selector === '#e'), 'the typo is reported');
+  assert.equal(rep.ok, false, 'a broken promise is an error');
+});
+
+test('check: missing-glyph for characters the font lacks (drawn from a fallback), not for ones it has, nor emoji', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  writeFileSync(f, page(`<p id="a" style="position:absolute;left:20px;top:20px;margin:0;font:700 40px 'Space Grotesk'">CO\u2082 cut \u2192 now</p>
+    <p id="b" style="position:absolute;left:20px;top:120px;margin:0;font:700 40px 'Space Grotesk'">Plain 2026 \u2013 caf\u00e9 \u{1F44D}</p>`, 'data-width="640" data-height="360" data-fps="30" data-duration="1"'));
+  const rep = await check(f);
+  const g = rep.issues.filter((i) => i.code === 'missing-glyph');
+  assert.deepEqual(g.map((i) => i.selector), ['#a']);
+  assert.match(g[0].message, /\u2082/);
+});
+
+test('timeline: a tween takes the CSS transform part it animates as its start (CSS scaleX(0) to scaleX 1 ends at 1), keeps centering as the prefix', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  writeFileSync(f, page(`<style>.bar{position:absolute;left:40px;width:300px;height:20px;background:#fb0;transform-origin:0 50%} #c{transform:scaleX(0)} #e{left:320px;top:300px;width:100px;height:40px;transform:translate(-50%,-50%) scale(0.5)}</style>
+    <i class="bar" id="a" style="top:40px;transform:scaleX(0)"></i><i class="bar" id="c" style="top:100px"></i><i class="bar" id="e"></i>
+    <script>gm.timeline().fromTo('#a', { scaleX: 0 }, { scaleX: 1, duration: 0.5 }, 0.2).to('#c', { scaleX: 1, duration: 0.5 }, 0.2).to('#e', { scale: 1, duration: 0.5 }, 0.2);</script>`, 'data-width="640" data-height="360" data-fps="30" data-duration="1.5"'));
+  const v = await evalAt(f, 1.2, `['a', 'c', 'e'].map((id) => { const r = document.getElementById(id).getBoundingClientRect(); return [Math.round(r.width), Math.round(r.left)]; })`);
+  assert.deepEqual(v[0], [300, 40], 'inline scaleX(0) bar drawn full: ' + JSON.stringify(v));
+  assert.deepEqual(v[1], [300, 40], 'stylesheet scaleX(0) bar drawn full: ' + JSON.stringify(v));
+  assert.deepEqual(v[2], [100, 270], 'centered box at full size, still centered: ' + JSON.stringify(v));
+});
+
+test('check: upside-down-text for letters turned past ~100° (also while moving), not for upright or slightly tilted ones', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  writeFileSync(f, page(`<p id="up" style="position:absolute;left:60px;top:60px;margin:0;font:700 56px Inter;transform:rotate(170deg)">NEIGHBOR</p>
+    <p id="tilt" style="position:absolute;left:60px;top:200px;margin:0;font:700 56px Inter;transform:rotate(-12deg)">HIVE</p>
+    <p id="spin" style="position:absolute;left:360px;top:200px;margin:0;font:700 56px Inter">SPIN</p>
+    <script>gm.timeline().to('#spin', { rotate: 540, duration: 1.6, ease: 'linear' }, 0.2);</script>`, 'data-width="640" data-height="360" data-fps="30" data-duration="2"'));
+  const rep = await check(f);
+  const u = [...new Set(rep.issues.filter((i) => i.code === 'upside-down-text').map((i) => i.selector))].sort();
+  assert.ok(u.includes('#up') && !u.includes('#tilt'), JSON.stringify(u));
+});
+
+test('path morph: exact ends, convex shapes stay convex and balanced in between, overshoot grows the shape instead of denting it', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  writeFileSync(f, page(`<script>window.R = (() => {
+    const S = gm.shape, sq = S.rect(130, 130, { r: 30 }), tri = S.polygon(3, 95), m = gm.path.morph(sq, tri);
+    const pts = (dd) => dd.replace(/^M/, '').replace(/Z$/, '').split('L').map((s) => s.trim().split(/\\s+/).map(Number));
+    const convex = (P) => { let dir = 0; for (let i = 0; i < P.length; i++) { const a = P[i], b = P[(i + 1) % P.length], c = P[(i + 2) % P.length];
+      const cr = (b[0] - a[0]) * (c[1] - b[1]) - (b[1] - a[1]) * (c[0] - b[0]); if (Math.abs(cr) < 1e-6) continue; const s = Math.sign(cr); if (dir && s !== dir) return false; dir = s; } return true; };
+    const box = (P) => { const xs = P.map((q) => q[0]), ys = P.map((q) => q[1]); return [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)]; };
+    const mid = pts(m(0.5)), b = box(mid), over = box(pts(m(1.15))), end = box(pts(gm.path.morph(sq, tri)(0.999)));
+    return { ends: m(0) === sq && m(1) === tri, convex: [0.25, 0.5, 0.75].every((p) => convex(pts(m(p)))), sym: Math.abs(b[0] + b[1]),
+      grow: (over[1] - over[0]) / (end[1] - end[0]), dents: convex(pts(m(1.15))) && convex(pts(m(-0.15))) };
+  })();</script>`, 'data-width="320" data-height="180" data-fps="30" data-duration="1"'));
+  const r = await evalAt(f, 0, 'window.R');
+  assert.equal(r.ends, true, 'p = 0 and p = 1 are the exact paths');
+  assert.equal(r.convex, true, 'a square to a triangle stays convex in between');
+  assert.ok(r.sym < 1, `in-between is centred left to right (off by ${r.sym})`);
+  assert.ok(Math.abs(r.grow - 1.15) < 0.02, `overshoot 1.15 grows the shape by 1.15 (got ${r.grow})`);
+  assert.equal(r.dents, true, 'overshoot past either end does not dent the outline');
+});
+
 test('morph: inline pairs fly; different content hands over (old out, then new in); same content keeps both solid', { skip }, async () => {
   const d = tmp(), f = join(d, 'a.html');
   writeFileSync(f, page(`<main data-sequence data-transition="morph 1 linear">
@@ -872,6 +1042,28 @@ test('natural camera: back-to-back shots flow through without stopping, the run 
   const fa = readdirSync(o1).sort();
   assert.equal(fa.length, 165);
   assert.deepEqual(fa.filter((x) => !readFileSync(join(o1, x)).equals(readFileSync(join(o2, x)))), []);
+});
+
+test('camera: a long shot on the same subject holds still between two moves; a preserve-3d world is zoomed in depth too', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  writeFileSync(f, page(`<section class="scene" data-duration="6" style="position:absolute;inset:0;overflow:hidden">
+    <div id="world" style="position:absolute;left:0;top:0;width:2400px;height:1400px">
+      <div id="a" style="position:absolute;left:100px;top:100px;width:200px;height:120px;background:#1971c2"></div>
+      <div id="b" style="position:absolute;left:900px;top:300px;width:200px;height:120px;background:#e8590c"></div>
+      <div id="c" style="position:absolute;left:1900px;top:1100px;width:200px;height:120px;background:#2f9e44"></div>
+    </div></section>
+    <script>gm.camera('#world').shot(0, { fit: '#a' }).shot(1, { fit: '#b', duration: 0.8 }).shot(1.85, { fit: '#b', zoom: 1.15, duration: 2, ease: 'sine.inOut' }).shot(3.9, { fit: '#c', duration: 0.8 });</script>`));
+  const rows = await seekEach(f, [1.9, 2.4, 2.9, 3.4, 3.85], camExpr);
+  for (const r of rows) assert.ok(Math.abs(r.cx - 1000) < 3 && Math.abs(r.cy - 360) < 3, 'the hold stays on #b: ' + JSON.stringify([r.cx, r.cy]));
+  // 3D: a preserve-3d world under a perspective is zoomed in depth too (the perspective becomes P / zoom, which projects
+  // like a uniform 3D scale); a flat world keeps its perspective-free flat scale
+  const f3 = join(d, 'b.html');
+  writeFileSync(f3, page(`<div id="stage" style="position:absolute;inset:0;perspective:900px"><div id="world" style="position:absolute;left:0;top:0;width:2000px;height:1200px;transform-style:preserve-3d">
+    <div id="t" style="position:absolute;left:0;top:0;width:2000px;height:1200px;background:#345;transform:rotateX(40deg)"></div></div></div>
+    <script>gm.camera('#world').shot(0, { fit: '#t' });</script>`, 'data-width="640" data-height="360" data-fps="30" data-duration="1"'));
+  const [r3] = await seekEach(f3, [0.5], `(() => { const m = new DOMMatrix(document.querySelector('#world').style.transform); return { z: m.a, p: parseFloat(document.querySelector('#stage').style.perspective), flat: m.is2D }; })()`);
+  assert.ok(r3.z < 0.5 && r3.flat, 'zoomed out with a flat scale: ' + JSON.stringify(r3));
+  assert.ok(Math.abs(r3.p * r3.z / 900 - 1) < 0.002, 'perspective is 900 / zoom: ' + JSON.stringify(r3));
 });
 
 test('natural camera: follow trails a moving element and settles on it (lag: 0 and classic lock on); 1 worker == 2', { skip }, async () => {
@@ -1622,4 +1814,66 @@ test('check: a hand-made push-in that crops text is a warning (stuck text stays 
   assert.match(rep.issues.find((i) => i.code === 'contents-no-box').message, /gm-include/);
   assert.deepEqual(of('stepped-move', 'info'), ['#win']);
   assert.deepEqual(of('sliver-start'), ['#slv']);
+});
+
+test('data-count-roll: an odometer whose digits stay on their own wheels, read the right number and never show a neighbour', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  writeFileSync(f, page(`<p id="n" style="font:700 60px/0.9 monospace" data-count="0 12480" data-count-roll data-count-duration="2"></p>`, 'data-width="640" data-height="360" data-fps="30" data-duration="3"'));
+  const ctx = await openComposition(f, { mode: 'render' });
+  const read = `(() => { const n = document.querySelector('#n'); const cells = [...n.querySelectorAll('.gm-roll')];
+    const box = (e) => e.getBoundingClientRect();
+    return { text: cells.map((c) => c.firstChild.textContent).join(''), seps: [...n.querySelectorAll('.gm-num > span:not(.gm-roll)')].map((s) => s.style.visibility),
+      // the line clip: the digit not showing sits fully outside the cell's box
+      clean: cells.every((c) => { const cb = box(c), a = box(c.children[0]), b = box(c.children[1]);
+        const vis = (r) => Math.max(0, Math.min(r.bottom, cb.bottom) - Math.max(r.top, cb.top));
+        return vis(a) + vis(b) <= cb.height + 1; }) }; })()`;
+  try {
+    await ctx.page.seek(2.5);
+    const end = await ctx.page.evaluate(read);
+    assert.equal(end.text, '12480');
+    assert.deepEqual(end.seps, ['']);
+    await ctx.page.seek(0);
+    const start = await ctx.page.evaluate(read);
+    assert.equal(start.text, '0', 'leading wheels are blank at 0');
+    assert.deepEqual(start.seps, ['hidden']);
+    for (const t of [0.2, 0.5, 1, 1.5, 1.9]) { await ctx.page.seek(t); assert.ok((await ctx.page.evaluate(read)).clean, 'no neighbour bleeds in at ' + t); }
+  } finally { await ctx.page.close(); await ctx.server.close(); }
+});
+
+test('check: a timed shot list with no data-expect anywhere is a warning (no-expect); one promise is enough to clear it', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  const body = (attr) => `<!-- shot list
+    0.0-1.0  title rises
+    1.0-2.0  card slides in
+    2.0-3.0  end hold -->
+    <h1 style="position:absolute;left:40px;top:40px;margin:0;font-size:40px" ${attr}>Title</h1>`;
+  writeFileSync(f, page(body(''), 'data-width="640" data-height="360" data-fps="30" data-duration="3"'));
+  assert.ok((await check(f)).issues.some((i) => i.code === 'no-expect'), 'warned');
+  writeFileSync(f, page(body('data-expect="in-by 0.5"'), 'data-width="640" data-height="360" data-fps="30" data-duration="3"'));
+  assert.ok(!(await check(f)).issues.some((i) => i.code === 'no-expect'), 'cleared by a promise');
+});
+
+test('check: a small dot parked inside big text is a stray-mark; a dot beside it, or one marked overlap-ok, is not', { skip }, async () => {
+  const d = tmp(), f = join(d, 'a.html');
+  const mk = (left, extra = '') => page(`<h1 id="big" style="position:absolute;left:40px;top:40px;margin:0;font:700 120px/1 sans-serif">42195</h1>
+    <div id="dot" ${extra} style="position:absolute;left:${left}px;top:150px;width:14px;height:14px;border-radius:50%;background:#f60"></div>`, 'data-width="640" data-height="360" data-fps="30" data-duration="2"');
+  const codes = async (html) => { writeFileSync(f, html); return (await check(f)).issues.filter((i) => i.code === 'stray-mark').map((i) => i.selector); };
+  assert.deepEqual(await codes(mk(150)), ['#dot'], 'under the digits');
+  assert.deepEqual(await codes(mk(560)), [], 'beside the number');
+  assert.deepEqual(await codes(mk(150, 'data-check="overlap-ok"')), [], 'meant');
+});
+
+test('review: overview, holds and motion strips from the page, plus REVIEW.md with the check report and the rubric', { skip }, async () => {
+  const { review } = await import('../src/review.js');
+  const d = tmp(), f = join(d, 'a.html');
+  writeFileSync(f, page(`<h1 id="t" style="position:absolute;left:40px;top:40px;margin:0;font-size:48px">Hello there</h1>
+    <div id="b" style="position:absolute;left:40px;top:200px;width:80px;height:80px;background:#3a6"></div>
+    <script>gm.timeline().from('#t', { opacity: 0, y: 30, duration: 0.6, ease: 'expo.out' }, 0.2).to('#b', { x: 400, duration: 0.8, ease: 'power2.inOut' }, 2)</script>`, 'data-width="640" data-height="360" data-fps="30" data-duration="4"'));
+  const r = await review(f, { output: join(d, 'rv') });
+  for (const p of [r.overview, r.holds, r.review, ...r.motion]) assert.ok(readFileSync(p).length > 100, p);
+  assert.ok(r.motion.length >= 1);
+  const md = readFileSync(r.review, 'utf8');
+  assert.match(md, /## check/);
+  assert.match(md, /\| Errors: /);
+  assert.ok(!readdirSync(join(d, 'rv')).some((x) => x.startsWith('.tmp')), 'no temp folders left');
 });

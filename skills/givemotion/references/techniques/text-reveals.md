@@ -2,7 +2,7 @@
 Use for: any line of text that must arrive with care: headlines, titles, stats, captions. Mask reveals per word/char, typewriter with caret, scramble, underline/highlight/strike drawn on, number swaps, and the exit.
 
 ## What makes it look premium
-- **Mask, not fade.** Each word rises out of its own invisible edge: `yPercent` 100→0 while its `clipPath` opens in step (the clip moves opposite to the word, so the edge stays still). 0.9 s `expo.out`, 80 ms stagger, plus a 6° tilt that settles to 0: the tilt is what makes it feel hand-set.
+- **Mask, not fade.** Each word rises out of its own invisible edge: `yPercent` 100→0 while its `clipPath` opens in step (the clip moves opposite to the word, so the edge stays still). 0.9 s `expo.out`, 80 ms stagger, plus a 6° tilt that settles to 0: the tilt is what makes it feel hand-set. Fade each word in over the first fifth of its rise (`opacity` 0→1 in ~0.15 s, from the same start time): otherwise the first frames show crisp slivers of letter tops at the mask line, which read as stray dashes (judges flagged it in all three tools' titles).
 - **Lines overlap.** Line 2 starts 0.25 s after line 1 (not after it ends). The whole headline reads in ~1 s.
 - **Marks come after the words land** (+0.3–0.5 s), each with its own easing: a hand-drawn underline (SVG path, `draw` 0→1, 0.5 s `in-out-cubic`, like a pen), a marker highlight behind one word (scaleX 0→1 from the left, 0.45 s `in-out-quart`), a strike-through (0.3 s). One mark per beat, never all at once.
 - **Value swaps tell a story:** strike the old value, dim it to 45%, then the new value slides in 20 px and counts (720→38, 1.4 s `expo.out`: fast, then it settles). Use `tabular-nums` so digits do not jitter.

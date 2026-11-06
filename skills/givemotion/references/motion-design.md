@@ -25,6 +25,9 @@ Across nine rounds, fresh agents made videos from these docs and blind judges (s
 | Slide/website feel | A flat centered screenshot that just scrolls; one centered card per benefit; every scene the same "big number top-left, graphic right" template |
 | Weak first frame | Nearly empty opening, 0.5–1.5 s where nothing changes |
 | Whiteboard-specific | Thin pale ink (3 px), tiny labels in the overview, the camera crossing empty paper, lines "too clean" |
+| Effects over the hero (three-tool rounds) | A ring, sparks or shapes crossing the title's letters as it lands, so the first frames of the payoff read as clutter. Let the burst sit behind or around the hero and clear before it is read |
+| Beats that replace each other (three-tool rounds) | Three good shots joined by whips, where another version kept one world on screen (the next beat's set already visible): judges preferred the continuous one |
+| Lumpy or broken shape changes (three-tool rounds) | In-between shapes of a morph that look dented, or text showing backwards through a card that turned past 90° |
 
 Rewarded: a camera that pushes into the subject (zoom into the code with numbered callouts, dim the rest); one world with one camera route; a camera that follows a moving thing (the line head of a chart, a package on a map); tight zooms that stay readable on a phone; varied kinetic type; one strong hit (burst + shake + flash) at the key moment; things that move from frame one; an element carried from one scene into the next; live counters tied to the visual; a clear payoff at the end. Videos the judges preferred changed 26–40% of the picture per half second; slide-like ones 12–22%.
 
@@ -136,6 +139,7 @@ What each `data-transition` looks like (direction = where the motion goes; `wipe
 
 - Sizes on screen (after camera zoom), 1920×1080: titles 96–160 px, kinetic lines 120–260 px, body ≥ 36 px, captions ≥ 56 px, secondary ≥ 32 px; ≥ 96 px from the edges; ~10 words on screen at most.
 - **Fill the frame.** The subject (or the group being shown) should cover roughly 40–70% of the frame. If a UI or code window looks small in empty space, zoom the camera in or scale it up, do not shrink the text.
+- **Titles break evenly.** A title on two lines gets `text-wrap: balance` (or a `<br>` at the phrase break), so no single short word sits alone on the last line (`check`: `orphan-word`).
 - **Balance, not centering everything.** Use the thirds (`snapshot --grid`): a hero on one third with its supporting text on the other; a big number with a graphic that fills the opposite side. Vary the layout per scene. In vertical video use the whole height, not just the top half.
 - **One hero per moment.** Dim the rest (opacity 0.3–0.4 or blur) when zooming into a detail; judges liked code with the other lines dimmed.
 - **Contrast.** 4.5:1 for normal text, 3:1 for large; colored type on a colored background is the usual failure; add a backing, a shadow or change the color.

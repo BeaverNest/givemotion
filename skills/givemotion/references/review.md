@@ -3,11 +3,23 @@
 Purpose: recipes for `snapshot`, `still`, `inspect` and `check` that show you the right frames with few images, how to read a sheet, and `analyze` for reference videos and your own render.
 
 Contents
+- review: the whole video as a viewer sees it
 - Snapshot recipes
 - Inspect: where things are, frame by frame
 - Check: fast re-checks
 - Reading a sheet: what to look for
 - Learning from a reference video (and reviewing your render)
+
+## review: the whole video as a viewer sees it
+
+`npx givemotion review video.html` (about 30 s) writes `review/` next to the page:
+- `overview.png`: frames evenly spread over the whole video. Read it like a storyboard: every beat, in order, on time?
+- `holds.png`: the middle of every calm stretch, large. These are the frames people read: judge each as a poster.
+- `motion-N.png`: one second at 10 fps around each scene hand-over and the busiest moments. Easing, smears, the old
+  thing still there when the new one lands, unreadable moving text.
+- `REVIEW.md`: the check report, what to look for in each image, and a scoring table. Score harshly, list the five
+  worst problems with their times, fix them, run it again (two passes). A sub-agent given only the brief and this
+  folder is a better critic than you are of your own page: it sees the frames, not the intent.
 
 ## Snapshot recipes
 
@@ -15,6 +27,7 @@ Contents
 - **After a one-scene fix, look only at that scene:** `snapshot --times 12,13.5` (seconds, or frames like `45f`; e.g. `snapshot --times 2,5.5,9`) shows exactly the moments you choose. Use `inspect` to find the scene's start. This costs one small image instead of a whole sheet.
 - `snapshot --transitions`: the start, middle and end of every scene change (ghosted text, empty middle frames). It knows only the engine's own transitions (`data-transition`); a scene change you built yourself (overlapping clips, a band or wipe in `gm.onFrame`) is not in the automatic sheet either, so look at it with `snapshot --times 2.05,2.13,2.2` around its cut.
 - `snapshot --from 3.2 --to 3.8 --every 1f`: a frame-by-frame strip of one move (easing, overshoot, a flicker). `--every 0.5` for one frame every half second, like the judges' sheets.
+- `snapshot --from 3 --to 4 --every 0.1 --trail` also writes `trail.png`: the frames layered into one picture, earlier ones as fading ghosts under the last. One image shows a move's path, arc and spacing (bunched ghosts = slow, spread = fast), so you can judge its easing without opening a strip.
 - `snapshot --grid`: thirds, the center and the safe zone (`data-safe-zone` / `--safe-zone`) drawn over the pictures, for balance and margins.
 - `--max 12` (automatic moments, default 12), `--cols 2` (fewer columns = bigger pictures, to read small text), `--sheet-only` (only `sheet.png`), `--transparent` (checkerboard behind; auto-detected), `--data f.json` / `--props '{…}'`.
 - `npx givemotion still video.html -t 3.2 -o f.png` renders one exact moment at full size (to read small text or check a detail).
@@ -26,6 +39,8 @@ Contents
 - `inspect --at 2 --to 3 --el "#logo"` (`--every 1f`) prints its position, size and opacity frame by frame: check easing and speed without watching.
 
 ## Check: fast re-checks
+
+**Write the brief's times on the elements** and let `check` hold you to them: `data-expect="in-by 4.2; hold 1.5; gone-by 9"` on a label (visible by 4.2 s, readable 1.5 s, gone by the hand-over at 9 s), `in-frame` on anything that must never be cut. Every `check` then reports a broken promise as an error (`expect-failed`), so a later edit that pushes a label into the next beat cannot slip through.
 
 - `check --at 7.5` re-checks one moment fast after a fix; `--from 6 --to 9` part of the video; `--fast` uses fewer samples (quicker, may miss short problems); `--samples 10`; `--safe-zone shorts`.
 - Problems list every time range they happen in; times also say how far into the scene the problem is. How check decides and what each code means: `references/check-codes.md`.

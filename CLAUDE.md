@@ -53,13 +53,21 @@ highlight primitive in the engine, its looks in the user's brand); split it.
 - One format, not two. Not React, not "HTML or React". Two formats split every doc, example and `check` rule, and the
   agent spends effort choosing instead of making the video. (A small JSX input existed for a while; it was never agent
   tested or advertised, and was removed on 2026-10-30. It is in git history.)
-- React would not fix the problems seen so far: they live in Chrome's rendering, which a React-based tool uses the
-  same way (the React framework's docs tell each author to work around text snapping by hand).
-- In the agent test (`docs/experiments/2026-10-vs-remotion.md`), the same Opus agents scored higher with
-  givemotion, wrote ~40% of the code and rendered ~2x faster.
+- React would not fix the problems seen so far: they live in Chrome's rendering, which any React-based tool uses the
+  same way.
+- In our internal agent tests, the same Opus agents wrote far less code with plain HTML and rendered faster, at
+  similar quality (`docs/experiments/2026-10-format-test.md` compares the formats on our own engine).
 - The real pull toward React is reusable components (a brand, a series, many edits of one video). Answer it in
   HTML: parts with their own scope, behaviour and timing, brand kits, and scene assembly (`docs/NEXT.md`).
   Revisit only if agent tests show agents still hand-build reuse after that.
+
+## Independence (read before every commit)
+
+The repository is public. Follow the independence and clean-room policy in `CONTRIBUTING.md`: our code is written here
+from scratch (never read or reproduce other code-to-video tools' source), and nothing public (code, docs, commit
+messages, PRs, images, videos) names, pictures or characterizes comparable products or their companies. Benchmarking
+against other tools is fine, but its harness, data and videos stay outside the repo, and published results are about
+givemotion only. If something slips into an unpushed branch, rewrite that branch's history before pushing.
 
 ## When to stop and ask Leo
 

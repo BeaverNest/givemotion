@@ -2,6 +2,7 @@
 Use for: journeys, routes, deliveries, travel, timelines along a road, "from A to B" stories, any line that draws while something rides it.
 
 ## What makes it look premium
+- **Many riders: `gm.path.stream`.** A flow of items along a route (packets, coins, cars) is one call with a rate and a trip time, not a hand-built particle loop (`references/camera.md`, Moving along a path).
 - **The line is drawn by the rider.** One `gm.path.travel` drives everything; the solid line is `strokeDasharray = trip.progress(t) + ' 2'` on a `pathLength="1"` path, so the line tip is always exactly under the rider. Ahead of it, the same path as a faint dotted "plan" (`stroke-dasharray="1 24"`, round caps, 60% opacity).
 - **Stops with ease and holds.** `stops: [[0.4, 0], [3.0, 0.45], [3.7, 0.45], [6.2, 1]]` with `in-out-sine`: it gathers speed, slows into each stop, rests 0.5-0.8 s, leaves again. Never constant speed.
 - **Bank into curves.** Roll the rider by how fast its heading changes (`rotateX` up to 45 deg for a top-down plane, `rotate` 6-12 deg for a car or a person), and scale it 0.7 to 1 for take-off / landing with the shadow offset growing with altitude (6 to 22 px).
