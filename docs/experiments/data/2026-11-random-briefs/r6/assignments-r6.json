@@ -1,0 +1,44 @@
+[
+ {
+  "id": "h",
+  "genre": "product launch teaser",
+  "subject": "deep-sea creatures",
+  "techniques": [
+   "match cuts / shared-element transitions",
+   "a UI mockup with cursor interactions",
+   "kinetic typography"
+  ],
+  "format": "1080x1920 (vertical)",
+  "seconds": 18,
+  "fonts": [
+   "Inter",
+   "Space Grotesk",
+   "Playfair Display",
+   "Bebas Neue",
+   "JetBrains Mono",
+   "Caveat",
+   "Nunito"
+  ]
+ },
+ {
+  "id": "i",
+  "genre": "kinetic poem (no voice)",
+  "subject": "a jazz festival",
+  "techniques": [
+   "a UI mockup with cursor interactions",
+   "a map or route animation",
+   "a hand-drawn / sketch look"
+  ],
+  "format": "1920x1080",
+  "seconds": 20,
+  "fonts": [
+   "Inter",
+   "Space Grotesk",
+   "Playfair Display",
+   "Bebas Neue",
+   "JetBrains Mono",
+   "Caveat",
+   "Nunito"
+  ]
+ }
+]

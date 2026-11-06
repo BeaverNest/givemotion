@@ -1,0 +1,44 @@
+[
+ {
+  "id": "a",
+  "genre": "infographic",
+  "subject": "urban beekeeping",
+  "techniques": [
+   "a hand-drawn / sketch look",
+   "path animation / lines that draw themselves",
+   "3D depth and parallax"
+  ],
+  "format": "1920x1080",
+  "seconds": 23,
+  "fonts": [
+   "Inter",
+   "Space Grotesk",
+   "Playfair Display",
+   "Bebas Neue",
+   "JetBrains Mono",
+   "Caveat",
+   "Nunito"
+  ]
+ },
+ {
+  "id": "b",
+  "genre": "title sequence",
+  "subject": "a budgeting app",
+  "techniques": [
+   "particles or bursts",
+   "a living ambient background",
+   "path animation / lines that draw themselves"
+  ],
+  "format": "1920x1080",
+  "seconds": 15,
+  "fonts": [
+   "Inter",
+   "Space Grotesk",
+   "Playfair Display",
+   "Bebas Neue",
+   "JetBrains Mono",
+   "Caveat",
+   "Nunito"
+  ]
+ }
+]

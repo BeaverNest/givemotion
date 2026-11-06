@@ -1,0 +1,309 @@
+{
+ "judges": 6,
+ "mean": {
+  "givemotion": {
+   "brief": 8.17,
+   "spec": 8.33,
+   "motion": 7.5,
+   "craft": 7.67,
+   "errors": 7.67,
+   "overall": 7.5
+  },
+  "remotion": {
+   "brief": 7.67,
+   "spec": 8.0,
+   "motion": 7.33,
+   "craft": 7.67,
+   "errors": 7.83,
+   "overall": 7.33
+  },
+  "hyperframes": {
+   "brief": 8.0,
+   "spec": 7.67,
+   "motion": 7.17,
+   "craft": 6.83,
+   "errors": 6.0,
+   "overall": 6.67
+  }
+ },
+ "per": {
+  "givemotion": {
+   "brief": [
+    7,
+    8,
+    9,
+    9,
+    8,
+    8
+   ],
+   "spec": [
+    8,
+    8,
+    9,
+    9,
+    8,
+    8
+   ],
+   "motion": [
+    6,
+    7,
+    8,
+    8,
+    8,
+    8
+   ],
+   "craft": [
+    7,
+    7,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": [
+    7,
+    7,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overall": [
+    6,
+    7,
+    8,
+    8,
+    8,
+    8
+   ]
+  },
+  "remotion": {
+   "brief": [
+    8,
+    8,
+    8,
+    8,
+    7,
+    7
+   ],
+   "spec": [
+    8,
+    8,
+    7,
+    9,
+    8,
+    8
+   ],
+   "motion": [
+    7,
+    8,
+    8,
+    7,
+    7,
+    7
+   ],
+   "craft": [
+    8,
+    8,
+    8,
+    8,
+    7,
+    7
+   ],
+   "errors": [
+    8,
+    7,
+    8,
+    9,
+    7,
+    8
+   ],
+   "overall": [
+    8,
+    8,
+    7,
+    7,
+    7,
+    7
+   ]
+  },
+  "hyperframes": {
+   "brief": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "spec": [
+    8,
+    7,
+    7,
+    8,
+    8,
+    8
+   ],
+   "motion": [
+    7,
+    7,
+    7,
+    7,
+    8,
+    7
+   ],
+   "craft": [
+    7,
+    7,
+    6,
+    7,
+    7,
+    7
+   ],
+   "errors": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+   ],
+   "overall": [
+    7,
+    7,
+    6,
+    6,
+    7,
+    7
+   ]
+  }
+ },
+ "avg_rank": {
+  "givemotion": 1.5,
+  "remotion": 2.0,
+  "hyperframes": 2.5
+ },
+ "firsts": {
+  "givemotion": 4,
+  "remotion": 2,
+  "hyperframes": 0
+ },
+ "rows": [
+  {
+   "judge": "judge-1",
+   "order": [
+    "remotion",
+    "hyperframes",
+    "givemotion"
+   ],
+   "images": 34,
+   "cost": 0.8465539999999999,
+   "overall": {
+    "givemotion": 6,
+    "remotion": 8,
+    "hyperframes": 7
+   }
+  },
+  {
+   "judge": "judge-2",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.8594586,
+   "overall": {
+    "givemotion": 7,
+    "hyperframes": 7,
+    "remotion": 8
+   }
+  },
+  {
+   "judge": "judge-3",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.8384037999999999,
+   "overall": {
+    "remotion": 7,
+    "givemotion": 8,
+    "hyperframes": 6
+   }
+  },
+  {
+   "judge": "judge-4",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.8374447999999999,
+   "overall": {
+    "remotion": 7,
+    "hyperframes": 6,
+    "givemotion": 8
+   }
+  },
+  {
+   "judge": "judge-5",
+   "order": [
+    "givemotion",
+    "hyperframes",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.8888712,
+   "overall": {
+    "hyperframes": 7,
+    "givemotion": 8,
+    "remotion": 7
+   }
+  },
+  {
+   "judge": "judge-6",
+   "order": [
+    "givemotion",
+    "hyperframes",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.883656,
+   "overall": {
+    "hyperframes": 7,
+    "remotion": 7,
+    "givemotion": 8
+   }
+  }
+ ],
+ "notes": {
+  "givemotion": [
+   "judge-1 (as A): Clean opening: the coin lands at about 0.94s with a ring pulse, the words step in one by one from 1.0 to 1.5s, and the amounts count up without jitter from 4.0 to 4.9s, with tidy RENT/GROCERIES/FUN/SAVINGS labels. The handover is late, since labels and amounts are still fully visible at 6.0s. The fold is weak: from 6.56 to 7.2s everything shrinks to a tiny tangle at the center, and the mark then starts from a flat line instead of the paths bending into it. The shockwave at 9.19s is small and faint, well short of 700px, and the burst is modest; the end card (12.2\u201314.8s) is well laid out and the background keeps moving.",
+   "judge-2 (as A): Beats 1\u20132 are clean: words appear one by one (1.0\u20131.5 s), the counters ease out and land evenly (4.0\u20134.9 s), and the type sits right with good hierarchy at 14.2 s. The fold is weak: the four paths collapse into a tiny dot at 7.1 s, so the coins swirling into the pocket barely read. The mark's flap is a plain straight stroke. The shockwave at 9.19 s reaches only about 470 px instead of 700 px, stray dash marks appear under it, and the burst is moderate.",
+   "judge-3 (as B): This is the closest match to the brief. The nodes are spread at exactly x 360\u20131560 at y 820. The type is well sized (the 6.0s key frame is crisp, and the amounts and labels are clearly separated). The burst has ember-like rings and dust that drifts up and lingers as it should (9.8\u201310.9s), and the final lockup (14.2s) is polished, with a soft glow on the mark. The weak spot is the fold: at 6.56s the paths bend into odd upturned arcs, then at 7.0\u20137.1s they pinch into a single point before the mark redraws, so the hand-off feels less continuous than the brief's 'bend into new curves'. As in A, the first coin hangs alone at the top until about 8.4s.",
+   "judge-4 (as C): The most faithful to the brief: in the fold, the paths bend upward into new arcs (6.56s), gather to a point (7.1s) and redraw the mark symmetrically outward (7.2\u20138.4s). In Beat 2 the paths enter the nodes from the side, so the amounts and labels stay clean and legible (key frame at 6.0s). The burst, shockwave and letters rising from the center (9.19\u20139.56s) land well, and the final hold breathes with drifting dust. Minor issues: faint bars at the mask line before the letters appear (9.19s), and at the end the glow drifts off to the right, so the final frame (14.2s) sits slightly off-balance.",
+   "judge-5 (as B): The cleanest of the three. At 6.0s the fan paths end beside the amounts and never cross them, the fold has the paths visibly curling into arcs before the mark redraws (6.56\u20137.9s), and the burst and shockwave (9.19\u201310.3s) settle into a steady title, tagline and wave underline (11.8\u201314.8s). The mark's straight diagonal flap makes it read more like a bucket than a pocket, and it has a soft mint glow around it. The paths are closer to straight diagonals than to S-curves, and the leftover dust clusters on one side of the mark (14.2s), which breaks the symmetry a little.",
+   "judge-6 (as C): Beat 2 is the most polished of the three: the S-curves come into each node from the side, so the amounts and labels stay clean and legible (key 6.0s, 4.4\u20134.9s), and the drifting glows clearly move. The burst (9.56\u201310.7s) spreads well, with spinning ring particles, and the dust keeps floating through the hold (13\u201314.8s). The fold is the weak spot: the paths curl up into odd hooks and collapse to a point (6.56\u20137.1s) before the mark draws out from the center, which is a little cramped. The mark itself looks more like a bucket than a pocket, with a sharp top-left corner and a straight flap, and it has a faint glow halo (14.2s)."
+  ],
+  "remotion": [
+   "judge-1 (as B): This one follows the brief most closely. The word-by-word reveal (1.0\u20131.5s) and the four counters (4.0\u20134.9s) work well, the labels have already faded by the 6.0s key, and from 7.0 to 7.9s the coins visibly spiral inside the mark as it draws. The shockwave reads clearly from 9.19 to 9.8s, and the title rises from a mask from the center outward at 9.56s. The fold still collapses into a small knot at 6.56\u20136.94s instead of the lines bending smoothly into the mark. The burst at 9.8s stays tight around the mark, so the celebration feels a little held back, and the path ends at 6.0s keep stray coin dots where the nodes were.",
+   "judge-2 (as C): The best fold of the three: between 7.0 and 7.9 s the coins visibly swirl inside the U as the mark draws, and the flap clearly tucks inside the right wall (9.8 and 14.2 s). The S-curves are smooth (6.0 s) and the 700 px shockwave is right (9.19\u20139.56 s). The counters are not evenly staggered: RENT still shows $0 at 4.1 s while GROCERIES is at $267. The burst is compact and fades by about 10.3 s, so the celebration is a little muted, and the edges of the title mask show at 9.56 s.",
+   "judge-3 (as A): A clean, calm piece that covers every beat. The coin drops with a ring pulse (0.94s), the sentence comes in word by word (1.0\u20131.4s), the counters run smoothly (4.0\u20134.9s), the fold flattens the paths into a U and the coins swirl inside it (6.2\u20137.9s), and the letters rise out of the mask with a burst and a shockwave (9.2\u20139.6s). It ends on a well-ordered hold with the wavy underline. However, the delta is too tight and too high: the nodes sit around x 425\u20131495 at about y 740, not x 360\u20131560 at y 820. The first coin also stays parked at the top on its own until about 8.4s, which reads as left over. The burst is small and thin, so the celebration feels muted.",
+   "judge-4 (as A): Solid, faithful build: the coin lands with a ring pulse (0.94s), the words rise one at a time (1.0\u20131.4s), the paths fan out evenly to the four nodes and the counters land cleanly by 5.4s, and the hold at 14.2s is well balanced with the wavy underline and 'AVAILABLE NOW'. The fold is the weak spot: at 6.19s the four paths flatten into a straight horizontal line instead of bending into new curves, so it reads as a collapse rather than a fold. The burst at 9.2\u20139.8s is fairly compact and polite for the one celebratory moment. The top coin stays parked above the mark until about 8.6s, which reads as a leftover.",
+   "judge-5 (as C): The delta has the smoothest S-curves (3.2\u20135.8s), the coins swirl convincingly inside the mark during the fold (7.0\u20137.9s), and the end frame is tidy with a clean shockwave ring (9.19s). The mark is a lopsided wedge with a steep flap and an open corner, the weakest pocket shape of the three. RENT finishes counting well behind the others ($0 at 4.1s while GROCERIES is at $267), and by 6.0s the nodes are gone and the paths have pulled up to about y 740. The burst stays bunched around the mark instead of radiating outward (9.8\u201310.3s).",
+   "judge-6 (as B): Beats 1 and 2 are solid, the counters count up cleanly (4.0\u20134.9s), the dot grid is clearly visible (key 2.2s), and the handover is well judged: the labels fade before the paths pull back (6.0s). The fold reads well: the paths flatten into a bar at 6.19s and the mark draws smoothly as one stroke while the coins swirl inside (7.0\u20137.9s). The burst is the weak point: the particles stay bunched around the mark (9.19\u201310.3s) instead of flying out across the frame, so the one celebration moment is muted. The mark also carries a soft glow halo (14.2s) and its straight diagonal flap reads a little clunky."
+  ],
+  "hyperframes": [
+   "judge-1 (as C): It has the most celebratory burst: amber circles and rings fill the frame and drift like embers from 9.8 to 10.9s, with a visible shockwave and a center-out title rise at 9.19\u20139.56s. The curved flap that meets the right side of the mark is the most refined pocket of the three. The big flaw is in Beat 2: the paths come down vertically into each node and cut straight through the dollar amounts from 4.0 to 6.0s ($1,240 and $380 are struck through at 6.0s), a mistake a client would notice. The fold (6.56\u20137.3s) also scatters the coins into a loose cloud before the mark draws, and the leftover node rings at 6.19s look orphaned.",
+   "judge-2 (as B): It has the most generous burst: particles fill the frame and drift like embers (9.8\u201310.9 s), the 700 px ring is clear, the coins swirl inside the U (7.0\u20137.9 s) and the curved-flap mark is elegant. However, the paths drop straight down into the nodes and cut through the dollar amounts from about 4.5 to 6.0 s, plainly visible at 6.0 s. The paths flatten into an untidy flat line with scattered coins at 6.56 s, and the particles cross the title at 9.8 s.",
+   "judge-3 (as C): This one has the most generous burst (9.8\u201310.9s fills the frame, which really sells the celebration), and its fold looks organic, with the coins spiralling as the U draws (7.0\u20137.9s). The main error is in the delta: each path ends in a vertical hook that cuts straight through its amount ($1,240, $380, $150, $600 at 4.7\u20136.0s), making the numbers hard to read. The mark's flap is a soft curve rather than a diagonal fold, so it reads more like a rounded tile than a pocket (9.8s, 14.2s). The dense burst also scatters particles over the title letters at around 9.8\u201310.3s, which muddies the moment the title lands.",
+   "judge-4 (as B): Has the most generous, celebratory burst (9.56\u201310.3s): amber dust fills the frame with a mix of rings and dots and settles nicely. The softer curved flap gives an elegant mark. But at the 6.0s handover the S-curves run vertically through the fading amounts ('$380', '$150' and '$1,240' are crossed by the lines), and at 6.19s the four node rings are left floating on their own after the paths retract, which is a visible continuity error. The path draws at 3.19s are also lopsided (the RENT branch is far ahead of the others), so Beat 2 opens unbalanced.",
+   "judge-5 (as A): All five beats are delivered: a clean coin drop with ring pulse and line draw (0.56\u20131.9s), a calm word-by-word headline, and a wide burst that leaves well-spread dust and a soft brightness breath on the mark (9.8\u201314.8s). The mark is the most elegant of the three, with a curved fold flap. The big flaw is that the path lines run straight through the amounts $1,240/$380/$150/$600 (4.0\u20136.0s, clear at 6.0s), and the outer paths run almost flat before hooking down instead of forming S-curves. At 9.8s the mark nearly touches the top of the title.",
+   "judge-6 (as A): Beat 1 follows the brief closely: the coin drop, ring pulse, line draw and word-by-word sentence (0.9\u20131.6s) are all there. Its burst (9.2\u201310.7s) is the widest and most celebratory of the three, with spinning coin rings and lingering dust, and the end card at 14.2s is clean, with a wavy underline and a breathing mark. The weak spot is Beat 2: the paths run into the nodes from above and cut straight through '$380' and '$150' (4.4\u20136.0s, clearest in key 6.0s). The fold (6.56\u20137.31s) is also messy, with the paths squashing into a flat line and coins scattering loosely before the U draws."
+  ]
+ }
+}

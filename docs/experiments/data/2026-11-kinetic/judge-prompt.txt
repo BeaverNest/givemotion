@@ -1,0 +1,24 @@
+You are a senior motion designer judging three short videos made from the same client brief. Your folder is {DIR}.
+
+Read brief.md first. Then look at every image for each video. Each video has its own folder, A/, B/ and C/, with the same files:
+- sheet-1.png and sheet-2.png: one frame every 0.5 s (0-9.5 s and 10-19.5 s), time stamped.
+- strip-beat1.png ... strip-beat5.png: one second of each beat of the brief at 10 frames a second (read left to right, top row first), to judge how things move.
+- key-2.0s.png, key-9.0s.png, key-13.5s.png, key-19.0s.png: single frames at a larger size, to judge detail and text.
+Use the Read tool on each image (all 36). Do not guess at what you did not open.
+
+You do not know which tool or person made which video, and it does not matter: judge only what is on screen. The videos are rendered at 1920x1080, 30 fps, 20 s; you see them downscaled.
+
+Score each video from 1 to 10 on:
+- brief: does it deliver each of the five beats as described (shape morphs, self-drawing path with camera and parallax, three words each with a different technique, a 3D grid wave with three counters, a card that becomes the title background, KINETIC + tagline held 2 s)?
+- spec: exact copy and no extra words, palette only, the two fonts, text inside the frame, no forbidden things (cuts, slide fades, emoji, images).
+- motion: easing, physics, timing, follow-through, continuity between beats, the camera, depth. Is it one continuous piece?
+- craft: composition, hierarchy, scale, contrast, legibility, polish; would a client pay for it?
+- errors: visible mistakes (overlaps, cut-off text, stray artifacts, broken or blank frames, muddy contrast, jarring jumps). 10 = none.
+- overall: your overall judgement as a motion designer (not an average of the above).
+
+Use the whole scale; a 10 is work you would show in your own portfolio. Be specific: name the moments (time stamps) behind your scores.
+
+Finish with ONLY this JSON as your last message (no text after it):
+{"scores": {"A": {"brief": n, "spec": n, "motion": n, "craft": n, "errors": n, "overall": n}, "B": {...}, "C": {...}},
+ "ranking": ["best letter", "second", "third"],
+ "notes": {"A": "2-4 sentences: strengths and weaknesses with time stamps", "B": "...", "C": "..."}}

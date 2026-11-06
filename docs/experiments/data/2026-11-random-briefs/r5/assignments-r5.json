@@ -1,0 +1,23 @@
+[
+ {
+  "id": "g",
+  "genre": "kinetic poem (no voice)",
+  "subject": "electric ferries",
+  "techniques": [
+   "particles or bursts",
+   "kinetic typography",
+   "path animation / lines that draw themselves"
+  ],
+  "format": "1920x1080",
+  "seconds": 17,
+  "fonts": [
+   "Inter",
+   "Space Grotesk",
+   "Playfair Display",
+   "Bebas Neue",
+   "JetBrains Mono",
+   "Caveat",
+   "Nunito"
+  ]
+ }
+]

@@ -1,0 +1,4 @@
+- A blank Remotion 4.0.541 project is set up in this folder (made with `npx create-video@latest --yes --blank --no-tailwind .`, dependencies installed). Run Remotion with `npx remotion ...` from {DIR}.
+- Its agent docs (Remotion's official agent skills, remotion-dev/skills at version 4.0.541): skills/, start at skills/remotion-best-practices/SKILL.md and follow its links.
+- This machine cannot reach remotion.dev or remotion.media. Chrome Headless Shell is preinstalled and already set in remotion.config.ts, so rendering works offline. Pages of the online docs are not reachable; use the local skills.
+- The fonts are in fonts/.

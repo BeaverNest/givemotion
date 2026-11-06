@@ -11,8 +11,8 @@ second. Do not reformat files you are not changing.
 
 Touches `src/browser.js`, `src/render.js`, `src/runtime/runtime.js`. With screenshot capture (macOS), Chrome runs on
 the real clock and keeps per-layer raster state (the raster scale of a layer whose scale keeps changing, and text's raster
-phase for ~1 s after a move). On a busy machine that state differs between renders. Repro: a comparison page (a grid of
-playing videos with a scoreboard; kept locally). Its tiles have a `scale: 0.94` entrance and its rows slide in.
+phase for ~1 s after a move). On a busy machine that state differs between renders. Repro: the three-tools comparison
+page (`docs/experiments/2026-11-tools-showcase.md`). Its tiles have a `scale: 0.94` entrance and its rows slide in.
 3–5 of 9 renders under load (3 at once) differ from one rendered alone. Without the scale tween it's 0 of 9.
 - Tried, not merged: at each seek the runtime lists the elements whose scale changed and the moved elements with text,
   and the render hides their parents' content for one drawn frame. 0 of 12 differ, at +8% (comparison page) and
@@ -27,9 +27,10 @@ playing videos with a scoreboard; kept locally). Its tiles have a `scale: 0.94` 
 
 ## Open: heavy 3D pages render slowly without a GPU (found 2026-11-05, partly fixed 2026-11-06)
 
-Touches `src/render.js`, `src/browser.js`. In an agent round (`docs/experiments/2026-11-agent-rounds.md`)
+Touches `src/render.js`, `src/browser.js`. In the KINETIC round (`docs/experiments/2026-11-kinetic-three-engines.md`)
 givemotion's maker made a `preserve-3d` world of 24 cards (16000 px wide) with blurred layers. On 4 cores with no GPU it
-rendered in 331 s with the headless shell, about twice as long as the reference tools took for the same brief.
+rendered in 331 s with the headless shell, against 176 s and 142 s for the other two tools on their own versions of the brief
+(the KINETIC page has the details).
 Fixed since: the camera no longer makes Chrome raster a zoomed-out 3D world at full size (perspective / zoom instead of
 scale3d; the grid section went from 23 s to 17 s per 15 frames), and `check` draws its pictures at half scale (102 s →
 30 s on this page). Still open: measure where a heavy frame's time goes (layer count, raster vs composite), as in
@@ -50,12 +51,12 @@ scale3d; the grid section went from 23 s to 17 s per 15 frames), and `check` dra
 - `check`: `orphan-word`, `text-carried-over`, letters split into spans count as words (`short-hold`).
 - Skill: plant the next set early, effects off the hero, holds inside their beat, audit each beat against the brief
   before rendering, mask rises fade in, prefer the engine's drawing tools, what `onFrame` draws gets no auto blur.
-- Fair rounds on random briefs: `docs/experiments/2026-11-agent-rounds.md`.
+- Fair rounds on random briefs: `docs/experiments/2026-11-random-briefs.md` (kit in `data/2026-11-random-briefs/`).
 
 ## Decided: motion blur off by default (2026-11-06)
 
 Touches `src/render.js` (`resolveMotionBlur`, `velocityBlur`, `AUTO_BLUR`). Across the agent rounds
-(`docs/experiments/2026-11-agent-rounds.md`), blind judges flagged the automatic smear as ghosting, doubled text or
+(`docs/experiments/2026-11-random-briefs.md`), blind judges flagged the automatic smear as ghosting, doubled text or
 "a glowing blob" in four briefs and never credited it, even after capping it (0.3 em on text, 0.15 of the smaller side
 on objects under 15% of the frame). It is now opt-in (`--motion-blur auto`). Open: a blind A/B on fast camera moves
 only, where a smear may still help.
@@ -188,9 +189,10 @@ This is the reason people reach for React components; the answer is to have it i
   they still write build scripts. Files: `src/server.js` (includes), `src/runtime/runtime.js`, skill pack.
 
 ## README claims that need data (updated 2026-11-06)
-The README no longer compares givemotion with named tools (see the independence policy in CONTRIBUTING.md). Still open:
-- Publish the agent-test method and a harness that runs givemotion on anyone's briefs (no third-party tools in it).
-- Benchmark render speed on an Apple Silicon Mac; no Mac speed claim until then.
+Comparisons follow the fair-comparison rules in CONTRIBUTING.md (true, dated, versioned, reproducible). Still open:
+- Re-check every dated fact in the README comparison (versions, licenses, features) before each release.
+- Benchmark render speed of all three tools on an Apple Silicon Mac; no Mac speed claim until then.
+- Run more makers per tool per brief (one maker per tool per brief is noisy).
 
 ## Type checking (started 2026-10-27)
 `npm run typecheck` is clean with `strict: false`. Next, one flag at a time, file by file, without behaviour changes:

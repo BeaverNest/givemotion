@@ -1,0 +1,47 @@
+{
+ "a": {
+  "givemotion": 96.7,
+  "remotion": 105.0,
+  "hyperframes": 219.0
+ },
+ "b": {
+  "givemotion": 14.7,
+  "remotion": 25.6,
+  "hyperframes": 38.8
+ },
+ "c": {
+  "givemotion": 15.8,
+  "remotion": 25.0,
+  "hyperframes": 39.2
+ },
+ "d": {
+  "givemotion": 16.8,
+  "remotion": 25.1,
+  "hyperframes": 27.7
+ },
+ "e": {
+  "hyperframes": 41.1,
+  "remotion": 36.6,
+  "givemotion": 17.7
+ },
+ "g": {
+  "hyperframes": 37.4,
+  "remotion": 24.9,
+  "givemotion": 19.5
+ },
+ "h": {
+  "hyperframes": 31.9,
+  "remotion": 40.0,
+  "givemotion": 17.2
+ },
+ "i": {
+  "hyperframes": 57.0,
+  "remotion": 49.1,
+  "givemotion": 37.0
+ },
+ "j": {
+  "hyperframes": 46.5,
+  "remotion": 46.1,
+  "givemotion": 19.6
+ }
+}

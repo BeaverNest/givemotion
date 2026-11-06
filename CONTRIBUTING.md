@@ -35,7 +35,8 @@ npm test                 # type check + all tests; needs Chrome and ffmpeg
 
 ## Independence and clean-room policy
 
-givemotion is an independent project. Everything in it is written for it, and it describes itself on its own terms.
+givemotion is an independent project. Everything in it is written for it, and when it compares itself with other
+tools it does so fairly and in the open.
 This policy applies to everyone who contributes, people and AI agents alike, and to everything that lands in this
 repository or its releases: code, comments, tests and fixtures, docs, examples, images and videos, file and branch
 names, commit messages, issues and pull requests.
@@ -62,32 +63,48 @@ names, commit messages, issues and pull requests.
   in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Nothing is added without knowing where it came from.
 - Examples and docs use media made for this project or media whose license allows it.
 
-### 3. How we talk about other products
+### 3. Comparing with other tools: fair, true and transparent
 
-- Public material describes givemotion by what it does, measured on givemotion. It does not name, picture, link to
-  or characterize comparable products or the companies behind them: no comparison tables, no "alternative to",
-  no "faster than", no screenshots or renders made with them, and no statements about their licenses, prices,
-  terms or quality.
-- Naming software is fine where it is a plain technical fact needed to use givemotion: the platforms and tools it runs
-  on or works with (browsers, Node.js, ffmpeg, operating systems, AI coding assistants), and open standards.
-- If you need to refer to the field, say "other code-to-video tools", and only to explain a design choice of ours.
+Comparing givemotion with other tools is welcome. Users deserve to know how it stacks up, and an honest comparison
+is how we find our own weak spots. What makes a comparison acceptable is how it is done, not whether it names anyone:
 
-### 4. Benchmarks and experiments
+- **True and current.** Every claim about another product is a fact we checked, with the date we checked it and the
+  version it applies to, and a link to the public source (its docs, license, repository or registry page). Facts
+  that change (versions, features, prices, license terms, star counts) are re-checked before each release or marked
+  with their date.
+- **Fair method, published.** A test that compares results uses the same brief, the same model and settings, the same
+  machine and the same limits for every tool, with each tool used as an ordinary user would, through its own
+  official, public docs and under its own license and terms. Briefs are chosen so nobody can tune for them (drawn at
+  random, written blind), and judging is blind. The method, prompts, versions, dates, raw scores and the harness are
+  published next to the result, so anyone can rerun it.
+- **Losses as clearly as wins.** Report the full result, including where givemotion is behind, and the limits of the
+  test (sample size, one machine, AI judges). No cherry-picking: every round that ran is reported, including failed
+  runs. Say what is not equal and in whose favour.
+- **Facts, not attacks.** Describe what a product does, measured; do not speculate about motives, mock, or use loaded
+  words. Say what each tool is good at, including the reasons someone would pick it over givemotion.
+- **Names, not brands.** Refer to other products by their plain names to identify them. Do not use their logos,
+  visual identity or anything that suggests affiliation or endorsement, and say plainly that we are not affiliated.
+  Their trademarks belong to their owners.
+- **Licenses and terms.** Link to another product's license or terms and summarize them only in plain, attributed
+  words ("our summary, not legal advice"); never tell readers what they may or may not do under someone else's terms.
+- **Outputs, not code.** Videos made during a fair test (our briefs, rendered by each tool) may be published with each
+  tool named on them. Code, docs or assets from another tool are never copied into this repository; a harness installs
+  each tool from its public registry instead.
+- **Where it lives.** Comparisons belong in the README's comparison sections, in `docs/experiments/` (the full
+  research of each round) and in `benchmarks/`. Engine code, the skill pack, tests and examples describe givemotion on
+  its own terms and do not mention other products.
+- **Corrections.** If a fact about another tool is wrong or outdated, fix it promptly and note the correction in the
+  same place.
 
-- Testing givemotion against other tools is useful and allowed, as long as each tool is used the way an ordinary user
-  would, under its own license and terms. Those runs, their harness, raw data, prompts and any video made with another
-  tool stay outside this repository.
-- What we publish from such work is about givemotion: our own numbers, what we learned about our engine and docs, and
-  what we changed. Other tools appear, if at all, as unnamed reference points without versions, links or identifying
-  detail.
+### 4. Checking and fixing
 
-### 5. Checking and fixing
-
-- Reviewers check every pull request against this policy. `npm test` includes a backstop that fails when tracked text
-  names a product on a short, privately maintained list (it stores hashes, not names). It catches slips, not intent:
-  the policy above is the rule, the test is not a substitute for judgment.
-- If something slips into a branch, remove it in the next commit and, before it reaches a release or the default
-  branch, rewrite that branch's history so it was never there. If it is already public, tell the maintainer.
+- Reviewers check every pull request against this policy. `npm test` includes a backstop with two parts: other
+  products named on a short list (kept as hashes in `test/policy/independence.mjs`) may only appear in the places
+  listed above, and every file there that names one must carry a date and a version number. It catches slips; the
+  policy above is the rule, the test is not a substitute for judgment.
+- If something that breaks this policy slips into a branch, fix it in the next commit and, before it reaches a release
+  or the default branch, rewrite that branch's history so it was never there. If it is already public, tell the
+  maintainer.
 - When unsure whether something fits, leave it out and ask in the pull request.
 
 By contributing you agree that your contribution is licensed under the MIT license of this project, and that it

@@ -1,0 +1,23 @@
+[
+ {
+  "id": "j",
+  "genre": "brand manifesto",
+  "subject": "a recycling program",
+  "techniques": [
+   "a living ambient background",
+   "match cuts / shared-element transitions",
+   "a map or route animation"
+  ],
+  "format": "1920x1080",
+  "seconds": 19,
+  "fonts": [
+   "Inter",
+   "Space Grotesk",
+   "Playfair Display",
+   "Bebas Neue",
+   "JetBrains Mono",
+   "Caveat",
+   "Nunito"
+  ]
+ }
+]

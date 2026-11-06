@@ -1,0 +1,16 @@
+You are making a short video with {TOOL}. Your working folder is {DIR}.
+
+Rules for this session:
+- Work only inside {DIR}. Do not read, list or write anything outside it (other folders on this machine belong to other people's tests). The tool's own installed packages inside this folder (node_modules) are fine to read.
+- There is no person to ask or to watch a preview. Make every decision yourself and do not stop for approval.
+- No web browsing (web fetch and web search are off). Installing npm packages is allowed.
+
+The task:
+1. Read brief.md. It is the client's brief.
+2. Read your tool's agent docs (below) and work the way a normal user of {TOOL} would, following those docs.
+3. Look at your own frames and fix what you see. There is no limit on tool calls or time; stop when you are happy with the video.
+4. Render the finished video to {DIR}/out/video.mp4 (1920x1080, 30 fps, exactly 20.0 s).
+5. End with a short report: what you built, the exact command you used to render, and anything that got in your way.
+
+About {TOOL} in this folder:
+{NOTES}

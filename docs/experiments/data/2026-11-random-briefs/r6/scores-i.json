@@ -1,0 +1,309 @@
+{
+ "judges": 6,
+ "mean": {
+  "givemotion": {
+   "brief": 8.0,
+   "spec": 7.67,
+   "motion": 7.5,
+   "craft": 8.0,
+   "errors": 6.67,
+   "overall": 7.33
+  },
+  "remotion": {
+   "brief": 7.5,
+   "spec": 6.67,
+   "motion": 7.0,
+   "craft": 6.5,
+   "errors": 5.83,
+   "overall": 6.33
+  },
+  "hyperframes": {
+   "brief": 8.33,
+   "spec": 7.83,
+   "motion": 7.83,
+   "craft": 8.0,
+   "errors": 8.0,
+   "overall": 8.0
+  }
+ },
+ "per": {
+  "givemotion": {
+   "brief": [
+    8,
+    9,
+    8,
+    8,
+    7,
+    8
+   ],
+   "spec": [
+    8,
+    8,
+    8,
+    7,
+    8,
+    7
+   ],
+   "motion": [
+    8,
+    8,
+    8,
+    7,
+    7,
+    7
+   ],
+   "craft": [
+    8,
+    9,
+    8,
+    8,
+    8,
+    7
+   ],
+   "errors": [
+    7,
+    8,
+    7,
+    6,
+    6,
+    6
+   ],
+   "overall": [
+    8,
+    8,
+    7,
+    7,
+    7,
+    7
+   ]
+  },
+  "remotion": {
+   "brief": [
+    8,
+    8,
+    7,
+    7,
+    7,
+    8
+   ],
+   "spec": [
+    8,
+    7,
+    6,
+    7,
+    6,
+    6
+   ],
+   "motion": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "craft": [
+    7,
+    7,
+    6,
+    6,
+    6,
+    7
+   ],
+   "errors": [
+    6,
+    6,
+    6,
+    6,
+    5,
+    6
+   ],
+   "overall": [
+    7,
+    7,
+    6,
+    6,
+    6,
+    6
+   ]
+  },
+  "hyperframes": {
+   "brief": [
+    8,
+    9,
+    9,
+    8,
+    8,
+    8
+   ],
+   "spec": [
+    8,
+    8,
+    8,
+    7,
+    8,
+    8
+   ],
+   "motion": [
+    8,
+    8,
+    8,
+    7,
+    8,
+    8
+   ],
+   "craft": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": [
+    7,
+    8,
+    8,
+    8,
+    9,
+    8
+   ],
+   "overall": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ]
+  }
+ },
+ "avg_rank": {
+  "givemotion": 1.67,
+  "remotion": 3.0,
+  "hyperframes": 1.33
+ },
+ "firsts": {
+  "givemotion": 2,
+  "remotion": 0,
+  "hyperframes": 4
+ },
+ "rows": [
+  {
+   "judge": "judge-1",
+   "order": [
+    "givemotion",
+    "hyperframes",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.6452043999999999,
+   "overall": {
+    "givemotion": 8,
+    "remotion": 7,
+    "hyperframes": 8
+   }
+  },
+  {
+   "judge": "judge-2",
+   "order": [
+    "givemotion",
+    "hyperframes",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.9010232,
+   "overall": {
+    "givemotion": 8,
+    "hyperframes": 8,
+    "remotion": 7
+   }
+  },
+  {
+   "judge": "judge-3",
+   "order": [
+    "hyperframes",
+    "givemotion",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.6305714,
+   "overall": {
+    "remotion": 6,
+    "givemotion": 7,
+    "hyperframes": 8
+   }
+  },
+  {
+   "judge": "judge-4",
+   "order": [
+    "hyperframes",
+    "givemotion",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.7096709999999999,
+   "overall": {
+    "remotion": 6,
+    "hyperframes": 8,
+    "givemotion": 7
+   }
+  },
+  {
+   "judge": "judge-5",
+   "order": [
+    "hyperframes",
+    "givemotion",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.6913158,
+   "overall": {
+    "hyperframes": 8,
+    "givemotion": 7,
+    "remotion": 6
+   }
+  },
+  {
+   "judge": "judge-6",
+   "order": [
+    "hyperframes",
+    "givemotion",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.7128682,
+   "overall": {
+    "hyperframes": 8,
+    "remotion": 6,
+    "givemotion": 7
+   }
+  }
+ ],
+ "notes": {
+  "givemotion": [
+   "judge-1 (as A): The richest skyline, with a water tower and chimneys. The pen loops cleanly into a low moon right of centre (1.5\u20131.6s), and the brass window push-in at 2.75s works as a match cut into the phone. Beat 2 is crisp: SAT underline, Added states, check marks and a brass 'Plan my route' (4.0\u20137.25s). The route write-on, time stamps and the curved 'follow the brass' are well staged (9.5\u201310.4s), and the end card is clean, with sketched sparkle stars (19.0s). Weaknesses: at 8.0s the map is clipped to a rectangle, leaving bare paper strips at the left and right edges. At 13.6s the staff split reads as a thick blurred bundle for a moment, and the flood seems to come in from the right edge rather than clearly from the last note head (16.25s).",
+   "judge-2 (as A): The most polished of the three: a rich one-line skyline with a clean pen loop into the moon (1.5\u20131.6s), a good push into the window that becomes the phone (2.75s), a clear app with a filled Brass CTA and check marks (5.25\u20137.25s), times that write on as the route reaches each pin (10.0\u201310.3s) and a well-tracked end card (19.0s). Weaknesses: at 8.0s the map is still clipped to the phone's width, leaving a hard vertical edge, and the ink flood (16.25s) comes in from the right edge, not from the last note.",
+   "judge-3 (as B): The strongest sketch character: the skyline loops cleanly into a well-placed crescent (1.5\u20131.6s), the poem lines are large and follow the route curve on the map (9.5\u201313.0s), and the dimmed-map handover at 13.0s is very clean. The staff build (13.5\u201314.4s) is the most musical of the three, with words dropping in one after another. At 8.0s the map stops short in a visible rectangle, leaving bare paper bands at the left and right edges, so the map does not fill the frame. The flood comes in from the right edge (16.25s), not from the last note, the staff briefly piles up into a thick band at 13.6s, and a moon glyph sits in the app header, which is not listed copy.",
+   "judge-4 (as C): This one has the richest craft. The phone outline is drawn in a sketchy double stroke and its UI writes on at 3.0s, and the moon stroke sweeps back from the skyline (1.5s). The staff words fade in as ghosts before landing (14.3s), and the end card's tracked title and four-point stars at 19.0s look the most premium. It loses points at the phone-to-map handover: the map is still cut off at the old phone edges, with blank paper at both sides at 8.0s and stray horizontal Brass lines at 7.75s. The staff split is a thick bundle of jittered lines (13.6s). The app header adds a moon glyph, and the Brass-filled 'Plan my route' button departs from the brief's wireframe look.",
+   "judge-5 (as B): This one has strong typography and hierarchy. The Brass-filled 'Plan my route' button and the doubled, boiling phone outline at 3.0\u20137.25 s look good, and the end card at 19.0 s, with clear +40 tracking and four-point stars, is the most polished. The weak point is the phone-to-map hand-off. At 7.75 s, Brass lines show inside the phone frame, and at 8.0 s the map is still cut off by the phone's sides, leaving empty bands at the left and right instead of filling the frame. The staff at 13.6 s collapses into a muddy bundle of lines, and the app header also has an extra moon glyph.",
+   "judge-6 (as C): A graceful one-stroke moon arc (1.5 s), a real camera push (2.75 s), an app that writes on inside the phone at 3.0 s for the best handover, and an end title with the most correct tracking (19.0 s). However, the map ends at a hard vertical edge at x\u22481170 (on the 1280-wide frame) with a bare paper strip, and stray Brass bars appear during the wipe (7.75\u20138.0 s); the staff split is a muddy bundle of lines (13.6 s), the staff words fade in instead of writing on (13.9 s, 14.75 s), and the header has an extra moon glyph."
+  ],
+  "remotion": [
+   "judge-1 (as B): Hits every beat with readable UI, including a Club Red active state on 'Plan my route' at 7.25s, a good route draw with a pin pulse (10.0\u201310.4s) and a solid end card with tiny stars (19.0s). The biggest flaw: the pen loop that draws the moon stays on screen as a large hook along the right edge, with the moon jammed into the corner (1.5\u20132.4s), which looks like a mistake. Street strokes run through the 'Bridge Yard' and 'Lantern Hall' labels (13.0s), and pin 3 floats above the staff before it becomes a note (13.8\u201314.0s). The 3.0s handover lands on an empty phone outline, so the match cut feels less continuous than in A.",
+   "judge-2 (as C): Same structure and solid timing, and the window push-in (2.75s) and end card (19.0s) are clean. But the moon stroke stays on screen as a large stray hook over the buildings (1.5\u20132.4s), 'the night chooses the song' runs to the frame edge outside the safe margin (7.25s), street lines cut through 'Lantern Hall' and 'Bridge Yard' (13.0s), and pin 3 is still a pin floating above the staff after the others have become notes (13.9\u201314.0s).",
+   "judge-3 (as A): Every beat is there: the skyline write-on, the Brass window push at 2.75s, clean cursor clicks with Added and checks at 5.5\u20136.4s, a route that hits each pin with its time at 9.5\u201312.25s, and a well-set end card at 19.0s. The moon is a big hooked squiggle hanging off the right edge (1.5\u20132.25s), not a low crescent right of centre. At 7.25s 'the night chooses the song' stays on one line and runs almost to the right frame edge, breaking the 96 px safe margin. Map labels and staff words (14.0\u201315.75s) are small, and the ink flood comes in from the right edge (16.25s) instead of spreading from the last note head.",
+   "judge-4 (as A): Every beat is there in order: the skyline and poem write-on (0\u20132.4s), cursor clicks with Added and checks at 5.0/5.6/6.2s, a pressed red 'Plan my route' (7.25s), and the dashed route with times writing on (9.5\u201312.4s). The staff, the flood and a clean end card follow (19.0s). The big weakness is the pen loop to the moon: it stays as a large hook hanging off the right end of the skyline from 1.25s to 2.5s, which looks like a mistake. The phone is empty at the 3.0s match cut, and the route chip is pushed against the top edge during the pan (10.25s). The staff words barely rise, and 'LOW MOON' is set tight instead of +40 tracking.",
+   "judge-5 (as C): It covers every beat. The app beat is solid (5.5\u20136.4 s), and the pins dropping into note heads at 13.5\u201314.0 s work well. In beat 1, though, the moon is drawn from a big loop that leaves a stray hook-shaped tail hanging off the skyline's right edge from 1.5 to 2.4 s. At 7.25 s, 'the night chooses the song' is set on one line that runs to the right edge of the frame, past the 96 px safe margin. The 2.75 s push into the window is an abrupt zoom, the map labels collide with street lines (Lantern Hall at 13.0 s), and the third note head is briefly missing its stem at 14.0 s.",
+   "judge-6 (as B): Has the best camera push into the Brass window (2.75 s), a clean app UI, map labels that write on (8.25 s) and pins that slide onto the staff (13.7\u201313.9 s). But the moon loop leaves an awkward hook over the last rooftop (1.5\u20132.4 s), poem line 3 runs almost to the right edge and breaks the safe margin (7.25 s), the river is two plain lines (8.0 s), and the route line is thin and hard to see (9.5\u201310.4 s)."
+  ],
+  "hyperframes": [
+   "judge-1 (as C): The flood correctly starts from the last note head as a boiling blob and spreads across the frame (16.25\u201316.75s). The river is clearly drawn, with a tinted fill and wave hatching (8.0s), and the moon's connecting stroke retracts neatly (1.5\u20131.8s). The app beat is clean, with Club Red active states on click (5.5\u20137.25s), and the end card is well balanced (19.0s). Weaknesses: the route chip sits on top of the river strokes (13.0s), the map only partly covers the frame during the phone-to-map wipe (7.75s), and the skyline silhouette is flatter and less characterful than A's. The route also has a few hard angles near Lantern Hall.",
+   "judge-2 (as B): Follows the brief most literally: the moon loop pulls itself back in (1.5\u20131.8s) and the ink flood grows from the last note head (16.25s). The tinted River Blue band makes a strong map (8.0s), and the route drawing and pin pulses are clear (9.5\u201310.4s). Slightly less finished than A: an outline-only 'Plan my route' button, the route chip overlapping the river (13.0s), smaller poem type and tighter tracking on LOW MOON (19.0s).",
+   "judge-3 (as C): The most faithful delivery. The window push at 2.75s keeps a large poem line, the map at 8.0s fills the frame with a tinted river and clear 40 px labels, and the route, pin times and both map poem lines read well (10.25\u201313.0s). It is the only video where the ink flood starts at the last note head (16.25s) and spreads outward, as the brief asks. The pins become stemmed notes cleanly (13.7\u201313.9s), and the end card is balanced, with boiling stars at 19.0s. Weaknesses: the skyline is flat and low on detail, a moon glyph sits in the app header, the map is still a framed rectangle mid-transition at 7.75s, and the staff words are small for 84\u201396 px Caveat.",
+   "judge-4 (as B): This is the cleanest version. The pen loops into the moon and the leftover stroke clears away (1.5\u20131.9s), and the Brass hatch window leads into the phone outline (2.75\u20133.0s). The app clicks are crisp, with the ripple, Added and checks at 5.5\u20136.4s. On the map, the labels sit on a tinted river, both poem lines stay readable but faded at 13.0s, and the flood starts from the last note head (16.25s), as the brief asks. On the minus side, the app header has an extra moon glyph ('LOW MOON \u263e'), and 'the night chooses the song' breaks onto two lines. 'LOW MOON' is tightly tracked at 19.0s, and pins are hard to tell from their labels in the small 9.5\u201310.4s views.",
+   "judge-5 (as A): This is the most faithful and cleanest of the three. The skyline line loops neatly into the moon at 1.5\u20131.9 s, the Brass window match-cuts into the phone at 2.75\u20133.0 s, and the clicks, Added states and check marks at 5.5\u20136.4 s are well timed. The phone-to-map hand-off fills the frame by 8.0 s, the route and its time labels write on cleanly at 9.5\u201310.4 s, and the pins turn into note heads smoothly at 13.5\u201314.0 s. Weaknesses: there is a small \u263e glyph after LOW MOON in the app header that is not in the copy, and the pins are generic teardrop map pins. The words on the staff barely change height at 15.25 s, so the 'rising phrase' is weak.",
+   "judge-6 (as A): The most complete and polished of the three: a single-line skyline that loops into a clean crescent (1.5\u20131.9 s), a full app sequence with Added states, check marks and the red press on Plan my route (5.5\u20137.25 s), and a rich map with a tinted river and a dotted route whose stop times write on (8.0\u201310.4 s). The end card is clean (19.0 s). Weaknesses: the phone appears empty at 3.0 s, so the match cut feels like a swap; the header adds a moon glyph that is not in the copy; the staff words barely rise (15.25 s); and the end-title tracking looks tight."
+  ]
+ }
+}

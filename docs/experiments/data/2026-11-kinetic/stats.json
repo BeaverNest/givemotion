@@ -1,0 +1,190 @@
+{
+ "givemotion": {
+  "tokens": {
+   "input": 124,
+   "cache_write": 222069,
+   "cache_read": 9034316,
+   "output": 93258,
+   "thinking": 61566,
+   "total": 9349767
+  },
+  "cost_usd": 5.45,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 59.0,
+  "api_minutes": 15.9,
+  "turns": 5,
+  "tool_calls": 59,
+  "tool_mix": {
+   "Bash": 42,
+   "Write": 1,
+   "Read": 13,
+   "Monitor": 1,
+   "ToolSearch": 1,
+   "ReadNotifications": 1
+  },
+  "denied": 1,
+  "denials": [
+   "mkdir -p snapsfinal && for t in 4.0 9.9 13.0 15.6 17.2 19.9; do ffmpeg -v error -y -ss $t -i out/video.mp4 -frames:v 1 -vf scale=640:-1 snapsfinal/f_$t.png; don"
+  ],
+  "images_viewed": 13,
+  "loc": 347,
+  "files": [
+   [
+    "video.html",
+    347
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 3
+ },
+ "remotion": {
+  "tokens": {
+   "input": 122,
+   "cache_write": 191325,
+   "cache_read": 6970573,
+   "output": 96152,
+   "thinking": 58520,
+   "total": 7258172
+  },
+  "cost_usd": 4.85,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 23.9,
+  "api_minutes": 16.4,
+  "turns": 68,
+  "tool_calls": 61,
+  "tool_mix": {
+   "Edit": 1,
+   "Bash": 32,
+   "Write": 15,
+   "Read": 12,
+   "Glob": 1
+  },
+  "denied": 3,
+  "denials": [
+   "cd /home/user/tools4/remotion && npx remotion add @remotion/fonts @remotion/layout-utils 2>&1 | tail -5 && mkdir -p public/fonts && cp fonts/*.woff2 public/font",
+   "mkdir -p public/fonts out && cp fonts/*.woff2 public/fonts/ && ls public/fonts && cat node_modules/@remotion/fonts/dist/cjs/index.d.ts 2>/dev/null || ls node_mo",
+   "SP=/tmp/claude-0/-home-user-tools4-remotion/fb19ff27-273e-481f-bb09-dbd49a292c20/scratchpad && time npx remotion render Kinetic $SP/f1 --frames=0,6,20,44,60,78,"
+  ],
+  "images_viewed": 12,
+  "loc": 1252,
+  "files": [
+   [
+    "remotion.config.ts",
+    16
+   ],
+   [
+    "src/Composition.tsx",
+    27
+   ],
+   [
+    "src/index.ts",
+    3
+   ],
+   [
+    "src/Words.tsx",
+    177
+   ],
+   [
+    "src/Counter.tsx",
+    53
+   ],
+   [
+    "src/World.tsx",
+    326
+   ],
+   [
+    "src/Root.tsx",
+    16
+   ],
+   [
+    "src/Title.tsx",
+    123
+   ],
+   [
+    "src/Hero.tsx",
+    81
+   ],
+   [
+    "src/lib/theme.ts",
+    32
+   ],
+   [
+    "src/lib/timeline.ts",
+    90
+   ],
+   [
+    "src/lib/path.ts",
+    118
+   ],
+   [
+    "src/lib/math.ts",
+    33
+   ],
+   [
+    "src/lib/metrics.ts",
+    43
+   ],
+   [
+    "src/lib/layout.ts",
+    24
+   ],
+   [
+    "src/lib/shapes.ts",
+    90
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 9
+ },
+ "hyperframes": {
+  "tokens": {
+   "input": 90,
+   "cache_write": 225484,
+   "cache_read": 7119919,
+   "output": 106846,
+   "thinking": 67173,
+   "total": 7452339
+  },
+  "cost_usd": 5.37,
+  "models": [
+   "claude-opus-5-5"
+  ],
+  "minutes": 23.9,
+  "api_minutes": 18.1,
+  "turns": 59,
+  "tool_calls": 57,
+  "tool_mix": {
+   "Write": 5,
+   "Bash": 32,
+   "Read": 20
+  },
+  "denied": 4,
+  "denials": [
+   "cd /tmp/claude-0/-home-user-tools4-hyperframes/2ed18d28-e3ef-4add-bd64-4972628c8e42/scratchpad && cat > proj.js <<'EOF'\nconst P=1200,W={x:6600,y:1000},PX=1740,P",
+   "cd /tmp/claude-0/-home-user-tools4-hyperframes/2ed18d28-e3ef-4add-bd64-4972628c8e42/scratchpad && cat > cams.json <<'EOF'\n[{\"x\":7470,\"y\":1750,\"d\":-3550,\"rx\":52,",
+   "ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate,nb_frames,codec_type -show_entries format=duration -of compact out/video.mp4; D=/tmp/",
+   "ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate,nb_frames,codec_type -show_entries format=duration -of compact out/video.mp4 && mkdir"
+  ],
+  "images_viewed": 19,
+  "loc": 763,
+  "files": [
+   [
+    "index.html",
+    60
+   ],
+   [
+    "compositions/world.html",
+    703
+   ]
+  ],
+  "result": "success",
+  "is_error": false,
+  "renders": 2
+ }
+}

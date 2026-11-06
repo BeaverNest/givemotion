@@ -1,0 +1,309 @@
+{
+ "judges": 6,
+ "mean": {
+  "givemotion": {
+   "brief": 8.33,
+   "spec": 8.17,
+   "motion": 7.83,
+   "craft": 7.67,
+   "errors": 8.0,
+   "overall": 7.67
+  },
+  "remotion": {
+   "brief": 8.33,
+   "spec": 8.5,
+   "motion": 8.0,
+   "craft": 8.17,
+   "errors": 7.83,
+   "overall": 7.83
+  },
+  "hyperframes": {
+   "brief": 7.17,
+   "spec": 7.83,
+   "motion": 6.67,
+   "craft": 7.0,
+   "errors": 6.33,
+   "overall": 6.33
+  }
+ },
+ "per": {
+  "givemotion": {
+   "brief": [
+    8,
+    9,
+    8,
+    8,
+    9,
+    8
+   ],
+   "spec": [
+    8,
+    9,
+    8,
+    8,
+    8,
+    8
+   ],
+   "motion": [
+    8,
+    8,
+    8,
+    7,
+    8,
+    8
+   ],
+   "craft": [
+    8,
+    8,
+    7,
+    7,
+    8,
+    8
+   ],
+   "errors": [
+    8,
+    9,
+    8,
+    7,
+    8,
+    8
+   ],
+   "overall": [
+    8,
+    8,
+    7,
+    7,
+    8,
+    8
+   ]
+  },
+  "remotion": {
+   "brief": [
+    9,
+    8,
+    8,
+    8,
+    9,
+    8
+   ],
+   "spec": [
+    8,
+    9,
+    9,
+    8,
+    9,
+    8
+   ],
+   "motion": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "craft": [
+    8,
+    8,
+    8,
+    8,
+    9,
+    8
+   ],
+   "errors": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    7
+   ],
+   "overall": [
+    8,
+    7,
+    8,
+    8,
+    8,
+    8
+   ]
+  },
+  "hyperframes": {
+   "brief": [
+    7,
+    7,
+    7,
+    7,
+    8,
+    7
+   ],
+   "spec": [
+    7,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "motion": [
+    7,
+    7,
+    7,
+    6,
+    7,
+    6
+   ],
+   "craft": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "errors": [
+    6,
+    6,
+    6,
+    6,
+    7,
+    7
+   ],
+   "overall": [
+    6,
+    6,
+    6,
+    6,
+    7,
+    7
+   ]
+  }
+ },
+ "avg_rank": {
+  "givemotion": 1.67,
+  "remotion": 1.33,
+  "hyperframes": 3.0
+ },
+ "firsts": {
+  "givemotion": 2,
+  "remotion": 4,
+  "hyperframes": 0
+ },
+ "rows": [
+  {
+   "judge": "judge-1",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.9141126,
+   "overall": {
+    "givemotion": 8,
+    "remotion": 8,
+    "hyperframes": 6
+   }
+  },
+  {
+   "judge": "judge-2",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.7323736,
+   "overall": {
+    "givemotion": 8,
+    "hyperframes": 6,
+    "remotion": 7
+   }
+  },
+  {
+   "judge": "judge-3",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6453869999999999,
+   "overall": {
+    "remotion": 8,
+    "givemotion": 7,
+    "hyperframes": 6
+   }
+  },
+  {
+   "judge": "judge-4",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.7253002,
+   "overall": {
+    "remotion": 8,
+    "hyperframes": 6,
+    "givemotion": 7
+   }
+  },
+  {
+   "judge": "judge-5",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.7184369999999999,
+   "overall": {
+    "hyperframes": 7,
+    "givemotion": 8,
+    "remotion": 8
+   }
+  },
+  {
+   "judge": "judge-6",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.7477037999999999,
+   "overall": {
+    "hyperframes": 7,
+    "remotion": 8,
+    "givemotion": 8
+   }
+  }
+ ],
+ "notes": {
+  "givemotion": [
+   "judge-1 (as A): A faithful build. The bottle draws on from the base (0.7\u20131.4s), the cap pops in, and the three-line headline staggers cleanly; the key frame at 2.9s is a nicely balanced layout. The route keeps to the streets, crosses the river on both bridges and closes through YOUR CURB at 12.6s, and the lockup at 18.1s is tidy with the dot orbiting. Weak spots: the map reveal at 5.9\u20136.4s is a muddy, vignette-like radial bloom rather than a clean pull-back. The loop-to-bottle morph at 14.0s passes through a shapeless blob. The O ring's thin stroke is lighter than the letter weight.",
+   "judge-2 (as A): The most faithful and cleanest of the three. The bottle draws from the base up (0.7\u20131.2s), the cap pops in at 1.5s, the three headline lines stagger in cleanly (1.7\u20132.3s), and the bottle un-draws to the dot by 3.09s. The lid-to-pin pull-back reveals the streets inside a soft light around the dot (5.9\u20136.4s), and the route uses both bridges and closes into a clear loop (12.3s). The map fades away neatly so only the loop remains (13.0\u201313.5s). Weak spots: the morph passes through a lumpy, uneven shape at 14.0s, and the lockup at 18.1s is correct and tidy but not very ambitious.",
+   "judge-3 (as B): Almost as strong as A, and closest to a true camera move for the lid-to-pin reveal: the streets visibly scale out around the dot from 5.9 to 6.4 s. That reveal is lit by a radial vignette the brief doesn't ask for, and it reads as an extra gradient. Good details: the chase arrows clearly circle the lid (5.2\u20135.6 s), the bottle un-draws toward the cap (3.09 s), and the route crosses both drawn bridges and closes with a pulse at YOUR CURB (12.6 s). The loop-to-bottle morph at 14.0 s is a lumpy blob rather than a controlled shape change, and the 'IT IS SENT' mask wipe at 4.04 s looks chopped mid-reveal.",
+   "judge-4 (as C): Beat 1 and the lockup are polished, and the un-draw that leaves only the neck and cap (3.09s) is the best handover of the three. The route crosses the river on actual bridges (12.3s). The map arrives through a soft spotlight vignette centered off the pin rather than a scale pull (5.9\u20136.41s), and that reads as a reveal effect, not a camera move. The route closes with an awkward jog past the YOUR CURB pin (12.3\u201312.59s). The loop morph goes through an irregular, wobbly blob (13.7\u201314.01s) before snapping to the bottle. Pin labels are tiny in the wide shots, and the map has the same muddy contrast as A.",
+   "judge-5 (as B): A very solid execution. The bottle and headline match the spec (2.9s), and the pull-back uses a soft vignette reveal (5.9\u20136.4s), not a hard edge. The river curves and has visible bridges, and the route crosses at both of them (7.6s, 12.3s). Pins, labels, word-by-word copy and the lockup are all clean (18.1s). Weak points: the bottle un-draws early, so it is mostly gone by 3.09s, and the route's closing leg makes an awkward notch back up into YOUR CURB (12.3\u201312.59s), so the loop looks less clean. The corner-rounding at 13.7s also has slightly wobbly, hand-jittered lines before the bottle forms.",
+   "judge-6 (as C): Follows the brief most closely: the bottle un-draws correctly from the base up to the cap (3.09s), the pull-back zooms out from big blocks (5.9\u20136.4s), the route crosses both bridges and closes with a pulse at YOUR CURB (12.59s), and the wordmark reveals outward from the ring (15.91s). The final lockup at 18.1s is clean and balanced. Small faults: a soft vignette and glowing street crossings during the pull-back, a lumpy morph shape at 14.01s, and double-spaced tagline phrases."
+  ],
+  "remotion": [
+   "judge-1 (as B): The most complete reading of the brief. The bottle has a small lip/collar detail (2.9s), and the lid turns into a pin while the map fades in with a convincing scale pull-back (5.8\u20136.1s), with the text dissolving under it rather than a vignette. The route clearly uses a bridge on the river and runs along the streets; darker blocks add depth to the map. It closes at 12.8s, the fade to just the loop at 13.5s is clean, and the bottle morph reads more like a bottle on the way (14.0s). Minor issues: the pin's teardrop still hasn't formed at 6.4s, 'AND IT' fades in while the morph is still unresolved, and the orbiting dot almost touches the R at 18.1s.",
+   "judge-2 (as C): Well-built map: the river and street grid look good, and the route crosses on both bridges and closes into the loop (12.3s). The final loop is a clean, readable shape. The loop-to-bottle morph (13.7\u201314.5s) is smoother than A's, and the lockup is well balanced (18.1s). Downsides: the headline still shows dimly over the map while it dissolves in (5.8\u20135.9s), and the map arrives as a cross-dissolve rather than streets appearing around the pin, with the pin forming late (6.4s). The bottle's added lip makes the cap slightly busier (2.9s), and the dot touches the R at 18.1s.",
+   "judge-3 (as A): The most complete and polished take. The bottle draws on cleanly from the base (0.7\u20131.2 s), the headline lines rise in a neat stagger (1.7\u20132.3 s), and the map scales in smoothly under the dot (5.8\u20136.4 s). The route follows the streets, crosses the river on the drawn bridges and closes the loop (12.3 s). The loop-to-bottle morph at 14.0 s is clean, and the lockup at 18.1 s is crisp with the cap orbiting the ring. Weak points: the cap slides off the bottle mouth while the outline is still on screen at 3.09 s, the bin-lid chase arrows are barely visible after 4.0 s, and the loop is a slightly clumsy stepped shape before the morph.",
+   "judge-4 (as A): This is the most faithful version. The bottle draws on cleanly with a nice lip at the neck, the staggered NOTHING / IS THROWN / AWAY. lines rise (1.7\u20132.3s), and the bottle un-draws toward the cap (3.09s). It has the only true camera pull-back of the three: the full map fades in at scale as the lid shrinks (5.8\u20136.4s). The route uses both bridges, steps along the streets and closes back at YOUR CURB (12.3\u201312.6s). The lockup is well balanced, with the ring matched to the cap height and the dot orbiting through 18.76s. Weaknesses: the map is low-contrast, with Tide blocks on dark gaps and very faint Paper streets. The pins and labels read small in the wide shots (6.89\u20139.26s). The loop-to-bottle morph passes through a lumpy pear shape at 14.01s.",
+   "judge-5 (as C): The most polished map: a well-curved river with drawn bridges, darker accent blocks and diagonal avenues. The route crosses the river at bridges and closes as a clean loop at YOUR CURB (12.3\u201312.8s). The bottle has a small lip detail, and the type and lockup are crisp and centred (2.9s, 18.1s). The fade-out at 13.0\u201313.5s is smooth, and the corners round off evenly (13.7s). Small issues: during the handover the cap slips off the mouth while the bottle un-draws (3.09s); the map fades in under the still-fading headline, which looks a little muddy (5.8\u20135.9s); and the pear-shaped morph stage at 14.01s is a bit awkward.",
+   "judge-6 (as B): Has the best camera move: a real scale pull-back from big blocks to the full map (5.8\u20136.1s) while the headline fades, and the route uses the drawn bridges with clean right-angle legs and eased timing (9.0\u20139.9s). The bottle with a lip is matched exactly in beat 4 (14.49s). Weaker spots: at 3.09s the cap slides off the bottle mouth, the pin's teardrop forms late (still a dot at 6.41s), a misaligned dark bridge block sits beside the route at 12.3s, the 14.01s morph is a pear shape with a gap, and the tagline uses double spaces."
+  ],
+  "hyperframes": [
+   "judge-1 (as C): Beat 1, beat 2 and the lockup are competent and nearly identical in quality to the others (2.9s, 18.1s). The beat 2\u21923 handover, though, uses a hard-edged circular iris mask (6.0\u20136.4s) instead of a camera pull-back, and it looks like a wipe. On the map (7.6s, 12.3s) the route runs straight across the river at x\u2248470 and x\u2248937 with no visible bridges, which breaks the brief's 'follows the streets / crosses a bridge' idea. A dark smudge sits behind the YOUR CURB pin (7.6s). At 14.0s 'AND IT' overlaps the lumpy morph shape. The tagline's phrase spacing is tighter and less refined.",
+   "judge-2 (as B): It has the same structure as A, with good bottle and headline timing (1.4\u20132.3s) and a solid lockup at 18.1s. The handover is weaker: the map appears inside a hard-edged circle (6.0\u20136.4s), which reads as a mask rather than a camera move. 'AND IT' overlaps the morphing loop at 14.0s. The route crosses the river with no visible bridge (12.3s), and there are stray dark patches on the map next to the YOUR CURB label (7.6s, 12.3s) and at the lower right. The amber dot also sits on the R's leg in the lockup.",
+   "judge-3 (as C): Follows the same beat structure, and the type, lockup (18.1 s) and word-by-word line (9.2\u20139.9 s) are clean. The lid-to-pin handover shows the map through a hard-edged circle (6.0\u20136.41 s), which reads as a broken mask rather than a camera pull-back. The route crosses the river twice where no bridge is drawn (12.3 s). The loop-to-bottle morph at 14.0 s is an uneven blob, and its edge collides with the incoming 'AND IT' headline, the clearest layout mistake of the three.",
+   "judge-4 (as B): Beat 1, the beat 2 lid with chasing arrows (4.5\u20135.5s) and the lockup (16.4\u201318.76s) are clean and nearly identical in quality to A, with correct copy, fonts and palette. Instead of a camera pull, the map is revealed through an expanding hard-edged circular mask (6.0\u20136.41s), and the disc edge cutting across the frame is the clumsiest transition in any of the three. The river is a straight diagonal band with no visible bridges, so the route crosses open water three times (12.3s) instead of following the streets over one bridge. At 14.01s the morphing blob collides with the incoming AND IT text.",
+   "judge-5 (as A): Every beat is there and the dot carries the whole film: the bottle draw and staggered headline are clean (1.4\u20132.3s), the route loop closes (12.59s) and the lockup is neat with the dot orbiting (18.1s). The map is the weakest of the three. The river is a nearly straight diagonal band with no clear bridges, so the 'crosses one bridge' detail is lost (7.6s, 12.3s). The pull-back reveals the map through a hard-edged circle that is clearly visible at 6.41s. At 12.3s the closing dot sits just below the YOUR CURB pin rather than meeting it, and the loop-to-bottle morph at 14.01s goes through a lumpy blob.",
+   "judge-6 (as A): Beat 1 and the lockup are clean: correct three-line Bebas layout, staggered rises (1.7\u20132.3s), and a well-matched Regrowth O with the orbiting cap (18.1s). But the beat-1 handover barely happens (at 3.09s the text is still up and the bottle intact), the map arrives through a hard-edged circular iris with a stray vertical line (5.94\u20136.41s) instead of a camera pull-back, and the route crosses the river with no bridges (12.3s). At 14.01s 'AND IT' overlaps the morphing loop."
+  ]
+ }
+}

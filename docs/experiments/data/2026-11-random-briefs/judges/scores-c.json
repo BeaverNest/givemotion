@@ -1,0 +1,309 @@
+{
+ "judges": 6,
+ "mean": {
+  "givemotion": {
+   "brief": 8.0,
+   "spec": 7.17,
+   "motion": 7.67,
+   "craft": 7.67,
+   "errors": 7.5,
+   "overall": 7.5
+  },
+  "remotion": {
+   "brief": 8.17,
+   "spec": 8.0,
+   "motion": 7.33,
+   "craft": 7.33,
+   "errors": 8.0,
+   "overall": 7.33
+  },
+  "hyperframes": {
+   "brief": 8.33,
+   "spec": 7.67,
+   "motion": 7.5,
+   "craft": 7.17,
+   "errors": 6.83,
+   "overall": 7.17
+  }
+ },
+ "per": {
+  "givemotion": {
+   "brief": [
+    7,
+    8,
+    8,
+    8,
+    8,
+    9
+   ],
+   "spec": [
+    7,
+    7,
+    7,
+    7,
+    8,
+    7
+   ],
+   "motion": [
+    7,
+    7,
+    8,
+    8,
+    8,
+    8
+   ],
+   "craft": [
+    7,
+    7,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": [
+    7,
+    7,
+    8,
+    7,
+    8,
+    8
+   ],
+   "overall": [
+    7,
+    7,
+    8,
+    7,
+    8,
+    8
+   ]
+  },
+  "remotion": {
+   "brief": [
+    8,
+    9,
+    7,
+    9,
+    8,
+    8
+   ],
+   "spec": [
+    8,
+    8,
+    8,
+    9,
+    8,
+    7
+   ],
+   "motion": [
+    7,
+    8,
+    7,
+    8,
+    7,
+    7
+   ],
+   "craft": [
+    8,
+    8,
+    7,
+    8,
+    7,
+    6
+   ],
+   "errors": [
+    8,
+    8,
+    8,
+    9,
+    8,
+    7
+   ],
+   "overall": [
+    8,
+    8,
+    7,
+    8,
+    7,
+    6
+   ]
+  },
+  "hyperframes": {
+   "brief": [
+    9,
+    9,
+    8,
+    9,
+    7,
+    8
+   ],
+   "spec": [
+    8,
+    8,
+    7,
+    9,
+    6,
+    8
+   ],
+   "motion": [
+    8,
+    8,
+    7,
+    8,
+    7,
+    7
+   ],
+   "craft": [
+    8,
+    8,
+    6,
+    8,
+    6,
+    7
+   ],
+   "errors": [
+    7,
+    7,
+    7,
+    8,
+    5,
+    7
+   ],
+   "overall": [
+    8,
+    8,
+    6,
+    8,
+    6,
+    7
+   ]
+  }
+ },
+ "avg_rank": {
+  "givemotion": 2.0,
+  "remotion": 1.83,
+  "hyperframes": 2.17
+ },
+ "firsts": {
+  "givemotion": 3,
+  "remotion": 2,
+  "hyperframes": 1
+ },
+ "rows": [
+  {
+   "judge": "judge-1",
+   "order": [
+    "hyperframes",
+    "remotion",
+    "givemotion"
+   ],
+   "images": 34,
+   "cost": 0.7322116,
+   "overall": {
+    "givemotion": 7,
+    "remotion": 8,
+    "hyperframes": 8
+   }
+  },
+  {
+   "judge": "judge-2",
+   "order": [
+    "remotion",
+    "hyperframes",
+    "givemotion"
+   ],
+   "images": 34,
+   "cost": 0.7353158,
+   "overall": {
+    "givemotion": 7,
+    "hyperframes": 8,
+    "remotion": 8
+   }
+  },
+  {
+   "judge": "judge-3",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.7716597999999999,
+   "overall": {
+    "remotion": 7,
+    "givemotion": 8,
+    "hyperframes": 6
+   }
+  },
+  {
+   "judge": "judge-4",
+   "order": [
+    "remotion",
+    "hyperframes",
+    "givemotion"
+   ],
+   "images": 34,
+   "cost": 0.6642824,
+   "overall": {
+    "remotion": 8,
+    "hyperframes": 8,
+    "givemotion": 7
+   }
+  },
+  {
+   "judge": "judge-5",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6589882,
+   "overall": {
+    "hyperframes": 6,
+    "givemotion": 8,
+    "remotion": 7
+   }
+  },
+  {
+   "judge": "judge-6",
+   "order": [
+    "givemotion",
+    "hyperframes",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.7292206,
+   "overall": {
+    "hyperframes": 7,
+    "remotion": 6,
+    "givemotion": 8
+   }
+  }
+ ],
+ "notes": {
+  "givemotion": [
+   "judge-1 (as A): Clean title build (1.0\u20131.9 s typed subtitle), well-paced routes and counter (3.2\u20135.4 s) and a tidy battery fill with cell flashes (6.4\u20138.4 s); the end card at 14.2 s is pleasant. The second match cut is the weakest of the three: at 5.81 s the map simply vanishes and a lone greyed, filled ferry sits on empty water instead of a camera push. 12.4 GWh counts up through extra values (7.7 GWh at 9.94 s) and sits high in the frame.",
+   "judge-2 (as A): Covers every beat cleanly: the point draws the horizon (0.56\u20130.94s), 2026 IN REVIEW types on (1.2\u20131.8s), three teal routes with ferry glyphs and a well-eased 41,600 count (3.19\u20135.44s), cells filling one by one (7.0\u20138.4s), and a curve with a winter dip, summer peak and highest December (10.0\u201310.9s). The lime '0' in DIESEL is a nice accent. Weaknesses: 12.4 GWh counts up through values like '7.7 GWh' (9.94s), which aren't in the copy list. At 5.81s the ferry glyph becomes a flat grey filled shape before turning into the outline hull. At 6.56s the old 41,600 counter is still fully on screen and crowds the incoming headline. The end card (14.2s) is clean but plain.",
+   "judge-3 (as B): The most polished piece. The horizon visibly breaks into the coastline and island (2.2\u20132.44s), the hull has staggered cell draw-on with a teal waterline and dock post (6.0s), lime picks out the 0 and 7 in the copy, the cell flashes read clearly (7.0\u20137.9s), and the third handover keeps the lime fill line inside the fading hull (8.81s). Spec slips: 12.4 GWh counts up through numbers not in the copy list (8.7, 10.8 GWh at 10.0\u201310.3s), there is a faint grain texture with ghost shapes at the lower right of the end card (14.2s), and the wake starts with an odd hook at 12.19s.",
+   "judge-4 (as C): The most dynamic layout: diagonal coastlines and the island growing out of the point (2.44s\u20132.81s). The handover at 8.81s clearly pulls the lime fill line out of the fading hull, and the end card at 14.2s with a filled ferry and a sweeping lime wake is polished. Weaknesses: 12.4 GWh counts up through values outside the copy list (7.7, 8.7, 10.8, 11.9 GWh at 9.94s\u201310.3s), at first without its SHORE POWER label. The horizon break at 2.2s shows hard, stepped gaps rather than a smooth morph. A curled line artifact appears at the frame edge at 12.19s. 'Same' fades in at 12.56s before the wake has drawn, which muddles the beat order.",
+   "judge-5 (as B): The strongest map: diagonal coastlines, sweeping curved routes and filled ferry glyphs riding the route tips (3.2\u20135.4s). It has the clearest match cut of the three at 8.81s, where the hull fades and the lime fill line drops to become the chart baseline. Lime accents on the '0' and '7 MIN' (7.0\u20138.4s), a 12.4 GWh count-up that settles by 10.4s and a calm end card (13.7\u201315s) make it feel finished. Minor flaws: the horizon breaks into misaligned segments at 2.2s and the chart curve starts with a straight segment at 9.8s.",
+   "judge-6 (as C): The most polished and best-executed continuity. The horizon breaks and re-forms as a diagonal coastline around the island at 2.2\u20132.44s. Battery cells draw on inside the hull at 6.0s, and the 8.81s handover keeps the ghosted hull while the lime fill-edge lifts out, which is the clearest shared-element cut of the three. Lime accents on '0' and '7' and the point curling into the ferry at 12.19s add real craft, and the chart shape and fill growth (10.0\u201310.9s) are smooth. Spec slips: '12.4 GWh' counts up, showing numbers not in the copy list (7.7 and 8.7 GWh at 9.94\u201310.0s) before 'SHORE POWER' appears, and the stat sits close to the top margin. The counter also overstays into the battery beat (6.19\u20136.56s)."
+  ],
+  "remotion": [
+   "judge-1 (as B): Solid, confident execution: a real push-in at 5.81 s (terminal ring and map scaling past camera), and the trapezoid hull at 6.0 s keeps the glyph's exact shape, as the brief asks. The chart (9.9\u201311.4 s) and word-by-word sign-off (12.9\u201313.7 s) are clean, and the end card at 14.2 s has good hierarchy. The horizon breaking into the coast at 2.2 s is a disjointed jump into two offset pieces rather than a bend, and 12.4 GWh is tight to the top safe margin around 10.0 s.",
+   "judge-2 (as C): The most polished overall. The horizon breaks into two coastline pieces (2.2\u20132.44s), and the routes draw with the ferries riding their tips (3.19\u20134.4s). The angled hull glyph keeps exactly the same shape as it grows into the big hull (5.81\u20136.19s), and the cells fill from the bottom up, which looks good (7.0\u20137.9s). The counter eases out convincingly (39,144 at 3.94s settling on 41,600 at 5.44s), and the end card has a strong headline, a curving lime wake and the sign-off below (14.2s). Weaknesses: a faint giant terminal ring and a partial 'A' show during the push (5.81s), '12.4 GWh' sits close to the top margin (10.0s), and the slanted cabin is a little clumsy.",
+   "judge-3 (as A): Clean, readable and on-brief: a tidy title type-on (1.2\u20131.8s), a legible map with the counter settling on 41,600 by 5.44s, a solid lime line carrying the battery into the chart axis (8.81\u20139.19s) and a calm end card (14.2s). The horizon-to-coastline morph is abrupt (2.06\u21922.44s, the straight line simply vanishes) and the filled glyph becomes an outline hull at 5.81\u21926.0s, which weakens two match cuts. The counter lingers into Beat 3 (6.0\u20136.5s) and 12.4 GWh is jammed into the top-left corner right at the safe margin (9.94s on).",
+   "judge-4 (as A): The most faithful and cleanest of the three. The point pops in at 0.56s, the horizon draws edge to edge by 0.94s, and '2026 IN REVIEW' types on letter by letter between 1.3s and 1.8s. At 2.2s\u20132.44s the horizon bends into the coastline as a real morph. The routes draw in sequence with white ferry glyphs, the counter eases to 41,600 by 5.44s, and the push into the Asher ferry at 5.81s keeps the hull's shape. The hull-fill line drops into the chart baseline at 8.81s\u20139.19s, and the curve (winter dip, summer peak, December high, 10.0s\u201311.06s) is textbook. Weaknesses: 12.4 GWh sits tight to the top-left safe margin, the counter lingers and fades over the start of Beat 3 (6.19s\u20136.56s), and the end ferry and wake are small and a little sparse for a hero end card.",
+   "judge-5 (as C): It has the same complete beat structure. The battery beat is good: a trapezoid hull with cells that fill from the bottom up (6.9\u20138.2s), and the wake and end card are clean (13.4\u201315s). The map's quarter-circle land mass looks geometric rather than like a harbour, and the counter is front-loaded (39,144 by 3.94s), so the count loses its drama. At 6.0s the lime point floats beside the hull with no clear role, and 12.4 GWh sits right against the top of the frame (9.9\u201311.4s). The headline brings 'Same water.' in as one block rather than word by word (12.94s).",
+   "judge-6 (as B): Delivers every beat with clean typing on the title (1.3\u20131.8s), well-sequenced route draws with spark rings (4.0\u20134.9s), a nicely eased counter, and the most expressive, gently curving wake. Its end-card layout, with the headline above the wake and the tagline below (14.2s), is the best of the three. However, '12.4 GWh' and its label are pushed tight into the top-left corner (9.94\u201311.44s), right on the safe margin, and feel cramped. The lime point floats off to the left of the hull at 6.0s with no clear link to the scene. The giant terminal ring and letter fragment at 5.81s also make the push-in read messily, and the counter lingers over the battery scene again (6.19\u20136.56s)."
+  ],
+  "hyperframes": [
+   "judge-1 (as C): Most faithful one-line storytelling: the horizon dips at the lime point into the coastline (2.2\u20132.8 s), the push into ASHER ISLAND at 5.81 s is a true camera move, and the lime point rides the hull outline as it draws at 6.0 s; months type on one by one at 9.8 s. Margins and hierarchy in the chart are comfortable. Flaws: the scaled 'ASHE' label is cut off at the frame edge at 5.81 s, the large top land mass makes the map heavy, and in the sign-off the lime point sits on the cabin roof rather than at the start of the wake, with SEE YOU IN 2027 squeezed under the headline.",
+   "judge-2 (as B): Strongest first match cut: at 2.44s the horizon dips at the lime point and turns into the coastline, and the outline ferry glyph keeps the same shape as it scales into the big hull at 5.81\u20136.19s. Charging is well staged (7.0\u20137.9s): the cable runs to a dock post with a lead into the hull and the cells fill in order. 12.4 GWh lands without counting through extra values (9.94s), and the month labels arrive one by one (9.8s). Weaknesses: a huge cropped 'ASHE' label crosses the frame edge during the push (5.81s). SEE YOU IN 2027 is squeezed between the headline and the wake (14.2s), and the small outline ferry reads weakly on the end card.",
+   "judge-3 (as C): Has the most literal match cuts: the horizon dips into a V at the lime point and grows into the coastline (2.2\u20132.44s), and the glyph keeps its exact shape as it scales into the hull (5.81\u20136.0s). But the map is dark and muddy, with water and land too close in value and tiny labels (2.8\u20135.4s), and a giant cropped 'ASHE' label slides out of frame during the push (5.81s). The end card hierarchy is cramped: SEE YOU IN 2027 is squeezed under the headline, and the lime point sits on the cabin roof, cut off from the wake (14.2s).",
+   "judge-4 (as B): Almost as complete as A. The horizon dips into the coastline nicely at the point (2.2s\u20132.44s), the map has a clear layout with all routes fanning out from North Quay (3.94s\u20135.44s), and the lime point stays on the ferry's cabin from 6.0s through the end card, which is good continuity. The cell fill with flashes (7.0s\u20137.9s) and the chart (10.0s\u201310.9s) are clean. Weaknesses: the push-in at 5.81s blows up a cropped 'ASHE' label at the frame edge, and a stray grey blob appears at 12.19s before the ferry resolves. The outlined end-card ferry at 14.2s is tiny and lighter than the rest, so the sign-off has less punch.",
+   "judge-5 (as A): The opening (0\u20132.2s) follows the brief, with a clean horizon draw-on and a letter-by-letter type-on, and the battery fill (6.2\u20138.4s) and chart (9.3\u201311.2s) work. The harbour map (2.8\u20135.4s) is two flat horizontal land bands that read more like a chart than a harbour. The Beat 2\u21923 push-in at 5.81s blows the ASHER ISLAND label up into a huge grey 'ASHE' cut off at the right edge, which breaks the safe margins and is the most visible error in any of the three. The 41,600 counter is still faintly visible over '6 FERRIES' at 6.56s.",
+   "judge-6 (as A): Strong, literal match cuts: the horizon dips at the point and bends into the coastline at 2.44s, the outline ferry glyph scales into an identical outline hull with the lime point riding the cabin at 6.0s, and the lime fill-line slides down to become the chart baseline at 8.81\u20139.19s. The chart (10.0\u201311.06s) has the right winter dip, summer peak and highest December, with the copy placed comfortably inside the margins. Weaknesses: the push-in at 5.81s leaves a giant cropped 'ASHE' label fragment, the counter lingers over the battery scene and overlaps the incoming headline at 6.56s, and the sign-off is thin. Its wake covers only half the frame and 'SEE YOU IN 2027' is small and tucked in at 14.2s."
+  ]
+ }
+}

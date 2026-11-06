@@ -1,0 +1,309 @@
+{
+ "judges": 6,
+ "mean": {
+  "givemotion": {
+   "brief": 8.0,
+   "spec": 8.33,
+   "motion": 7.33,
+   "craft": 7.17,
+   "errors": 6.83,
+   "overall": 7.0
+  },
+  "remotion": {
+   "brief": 8.5,
+   "spec": 8.5,
+   "motion": 7.67,
+   "craft": 7.83,
+   "errors": 7.67,
+   "overall": 7.83
+  },
+  "hyperframes": {
+   "brief": 7.5,
+   "spec": 7.67,
+   "motion": 6.5,
+   "craft": 6.33,
+   "errors": 5.67,
+   "overall": 6.33
+  }
+ },
+ "per": {
+  "givemotion": {
+   "brief": [
+    8,
+    8,
+    7,
+    8,
+    8,
+    9
+   ],
+   "spec": [
+    9,
+    8,
+    8,
+    9,
+    8,
+    8
+   ],
+   "motion": [
+    7,
+    7,
+    7,
+    7,
+    8,
+    8
+   ],
+   "craft": [
+    7,
+    7,
+    7,
+    7,
+    8,
+    7
+   ],
+   "errors": [
+    8,
+    7,
+    6,
+    6,
+    7,
+    7
+   ],
+   "overall": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ]
+  },
+  "remotion": {
+   "brief": [
+    8,
+    9,
+    8,
+    8,
+    9,
+    9
+   ],
+   "spec": [
+    9,
+    8,
+    8,
+    9,
+    8,
+    9
+   ],
+   "motion": [
+    7,
+    8,
+    8,
+    7,
+    8,
+    8
+   ],
+   "craft": [
+    8,
+    8,
+    8,
+    7,
+    8,
+    8
+   ],
+   "errors": [
+    8,
+    8,
+    7,
+    7,
+    8,
+    8
+   ],
+   "overall": [
+    8,
+    8,
+    8,
+    7,
+    8,
+    8
+   ]
+  },
+  "hyperframes": {
+   "brief": [
+    7,
+    8,
+    7,
+    7,
+    8,
+    8
+   ],
+   "spec": [
+    8,
+    7,
+    7,
+    8,
+    8,
+    8
+   ],
+   "motion": [
+    6,
+    7,
+    6,
+    6,
+    7,
+    7
+   ],
+   "craft": [
+    7,
+    6,
+    6,
+    6,
+    7,
+    6
+   ],
+   "errors": [
+    5,
+    6,
+    5,
+    5,
+    7,
+    6
+   ],
+   "overall": [
+    6,
+    6,
+    6,
+    6,
+    7,
+    7
+   ]
+  }
+ },
+ "avg_rank": {
+  "givemotion": 2.0,
+  "remotion": 1.0,
+  "hyperframes": 3.0
+ },
+ "firsts": {
+  "givemotion": 0,
+  "remotion": 6,
+  "hyperframes": 0
+ },
+ "rows": [
+  {
+   "judge": "judge-1",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.7357198,
+   "overall": {
+    "givemotion": 7,
+    "remotion": 8,
+    "hyperframes": 6
+   }
+  },
+  {
+   "judge": "judge-2",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.7042008,
+   "overall": {
+    "givemotion": 7,
+    "hyperframes": 6,
+    "remotion": 8
+   }
+  },
+  {
+   "judge": "judge-3",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.724891,
+   "overall": {
+    "remotion": 8,
+    "givemotion": 7,
+    "hyperframes": 6
+   }
+  },
+  {
+   "judge": "judge-4",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6339897999999999,
+   "overall": {
+    "remotion": 7,
+    "hyperframes": 6,
+    "givemotion": 7
+   }
+  },
+  {
+   "judge": "judge-5",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6643778,
+   "overall": {
+    "hyperframes": 7,
+    "givemotion": 7,
+    "remotion": 8
+   }
+  },
+  {
+   "judge": "judge-6",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6538324,
+   "overall": {
+    "hyperframes": 7,
+    "remotion": 8,
+    "givemotion": 7
+   }
+  }
+ ],
+ "notes": {
+  "givemotion": [
+   "judge-1 (as A): Hits every beat in order: a clean two-band wipe (0.56s), a line that unfolds into the card mask (1.4\u20131.9s), good chip fill wipes with checkmarks (4.0\u20134.9s), and a forest circle that opens around a '0' inside the green field (6.56s). The card padding is a little tight and unbalanced (2.2s), and the green handover circle covers the freshly swapped 'Booked \u00b7 Thu 08:00' label (6.0s). The odometer digits mid-count are a jumble of half-rolled glyphs (7.0\u20137.9s). Logo build, wordmark slide, tagline mask and the still end (14.44\u201314.81s) are clean.",
+   "judge-2 (as A): It follows the brief beat for beat: a two-layer angled wipe at 0.56s, the line-to-card mask from 1.1 to 1.9s, green fills wiping through the pills with checkmarks (2.8\u20134.7s), a clean masked roll to 'Booked \u00b7 Thu 08:00' at 5.81s, and a well-built mark with the wordmark sliding out from behind it (10.3\u201311.4s). The green circle at 6.56s does not fill the whole frame (dark corners show) before the dark mask opens. From 7.0 to 8.4s the counter is a messy blur of half-rolled digits that you can't read. The 'kept out of landfill this month' label is tiny. The final lockup at 14.2s is centered, well balanced and still.",
+   "judge-3 (as B): Nearly the same build as A, with a solid split-arrow logo build (10.0-10.9s) and a clean final lockup. The hand-off is weaker: at 6.56s the dark circle opens with 0 while the green circle is still growing, so the green never fills the frame. Chip labels sit off-centre at rest (2.2s), the card is visibly larger at 6.0s than at 2.2s, and the mark is still rotating around 14.06s. The odometer at 7.0-7.9s is a heavy, illegible jumble.",
+   "judge-4 (as C): Nearly identical in structure to A: a good line-to-card unfold (1.1\u20131.9s), a clean chip sequence and a solid logo build and tagline reveal (10.0\u201313.9s), ending on a centred, still lockup. Flaws: a leftover green sliver at the frame edge at 0.94s, the card visibly growing by 6.0s, the green field not reaching the corners at 6.56s, and an odometer just as garbled from 7.0 to 7.7s. Competent, but slightly less polished than A.",
+   "judge-5 (as B): Strong opening: the two-layer wipe reads clearly at 0.56 s, and the card reveal is clean at 1.4\u20131.9 s. A subtle push-in on the card as the green circle grows (6.0 s) and the '0' already showing in the circle mask at 6.56 s give good continuity, and the digits wipe out downward by 9.56 s as asked. Weaknesses: the leftmost odometer digits run over the ring's left edge from 7.3 to 7.7 s and look messy, and the amber flash ring on the final click is not visible at 5.44 s. Logo build and tagline (10.0\u201313.9 s) are well executed and settle by 14.06 s.",
+   "judge-6 (as C): Structurally almost identical to B. It has a narrower angled band at 0.56s, a slight push-in on the card through beat 2 (the card is larger at 6.0s than at 2.2s), and a good green-field handover with a `0` at 6.56s. The unchecked chip labels at 2.2s sit off-center, offset right to leave room for the checkmark, which looks unbalanced before they are selected. I couldn't make out the amber flash on the final click at 5.44s, and mid-roll frames read as wrong numbers (8.06s shows \"85,480\"). The mark build (10.1\u201310.9s), tagline mask (13.0\u201313.4s), 360\u00b0 turn and still hold (14.2\u201314.81s) are solid."
+  ],
+  "remotion": [
+   "judge-1 (as B): The most polished of the three: well-balanced card spacing and soft shadow (2.2s), clear chip wipes and a counter that ticks up (4.0\u20134.9s), and the handover circle starts small at the click point so the action reads (6.0s). The counter is introduced as '0 kg' inside the ring in a forest circle (6.56s) and lands at 12,480 by 8.44s with the ring complete; the mid-roll digits are busy (7.0\u20137.9s) but stay inside the ring. The mark-split, chase and wordmark reveal (10.0\u201311.4s) and the underline-masked tagline (13.0\u201313.4s) are clean. The lockup is still at the end, though a bit small in frame.",
+   "judge-2 (as C): It has the cleanest beat handovers. At 6.56s the green fills the full frame and a dark circle opens with the ring and '0 kg' already inside, which is exactly the brief's intent. The counter fits inside the ring, and from 7.2 to 7.5s it reads as a credible odometer. At 9.56s the digits wipe out downward properly. The checkmarks are centered with their labels (6.0s), the button-label roll is crisp, and the mark build and tagline rise (10.2\u201313.3s) are smooth. Weaknesses: at 9.8s the ring is still large and shrinks late, so the move to the logo position is rushed, and the counter is still a mid-roll jumble from 7.6 to 8.1s.",
+   "judge-3 (as A): The most faithful and cleanest of the three. The two-layer angled wipe (0.56s), the line that unfolds into the card (1.1-1.9s), chip fills with checkmarks, the amber flash on the final click (5.44s), and a green circle that fully fills the frame before the ring opens with 0 kg (6.19-6.56s) all land as briefed, and the lockup is centred and still from 13.9s. The main flaw is the odometer at 6.94-8.06s: the digit masks are too tall, so neighbouring digits bleed in and the number can't be read. The 'kept out of landfill' label is also too small.",
+   "judge-4 (as A): Most faithful to the brief: a clean two-band wipe at 0.56s, the line-to-card unfold from 1.1 to 1.9s, chip fills with checkmarks and a rolling 0/4\u21924/4 counter from 2.8 to 4.7s, and a green circle that fully floods the frame at 6.56s before the dark mask opens. The ring-to-mark split (10.0\u201310.9s), the wordmark sliding out from behind the mark (11.06s) and the underline-to-tagline reveal (12.9\u201313.4s) are well timed, and the final lockup is centred and still. Main weakness: from 7.0 to 7.9s the odometer shows overlapping half-rolled digits (e.g. 7.4s '8,8 1 5'), so the counter can't be read until about 8.4s.",
+   "judge-5 (as C): Best beat-to-beat flow: at 6.56 s the forest circle opens in the green field with the ring and '0 kg' already in place, and the digits wipe out downward by 9.56 s. The odometer stays mostly inside the ring from 7.0 to 7.9 s, and the chip checkmarks sit with their labels as one centred group (6.0 s). The amber flash ring shows at 5.44 s, and the wordmark mask reveal at 11.06 s and the underline/tagline sequence at 12.94\u201313.7 s are tidy, with a centred, still lockup at the end. Minor issues: the button corners are squarer than the rest of the card, and the counter is still hard to read mid-roll around 7.6\u20137.8 s.",
+   "judge-6 (as B): The most controlled of the three. The `0 kg` already appears inside the circular mask at 6.56s, so the counter is born out of the green field. Digits and `kg` stay fixed and centered in the ring for the whole count (7.0\u20137.9s), the arc fills clockwise, and the digits wipe out downward at 9.56s on the way to the small ring at 9.94s. The clicks show fill wipes and inline checks (2.81s, 4.0s, 4.5s), with an amber flash ring at the button at 5.44s. The mark build (10.2\u201310.9s), the wordmark sliding from behind the mark (11.06s), the underline and the word-by-word tagline (12.19\u201313.3s) are all clean. Weaknesses: the mid-roll digits read as noise (7.69s, 8.06s) and the lockup is a little small in the frame."
+  ],
+  "hyperframes": [
+   "judge-1 (as C): The UI beat is solid, with a nice pill button and a clean card mask (1.5\u20131.9s), but the checkmarks sit at the far left of each pill, away from the labels (6.0s), and a stray ring appears by the cursor as it enters at 2.2s. The counter is the weak point: the digits drift sideways and spill over the ring stroke, and the leading digits roll past the target to show values like '89,380' (7.0\u20137.9s). No counter is visible at 6.56s, and 'kg' crowds the ring at 9.56s. The logo build and final lockup (10.0\u201314.8s) are good and still at the end.",
+   "judge-2 (as B): Its structure and timing match the brief: the wipe, the card mask, chip fills, the button roll at 5.81s, the mark split at 10.2s and the tagline reveal from 12.9 to 13.3s. The counter is too wide for its ring. At 7.0s it sits right of center with 'kg' outside the ring, at 7.2\u20137.3s the leading digits spill past the ring, and at 9.19\u20139.56s '12,480kg' touches or crosses the ring stroke while the ring shrinks. As in A, the green handover at 6.56s leaves the corners uncovered. Small touches like the checkmark sitting apart from the centered chip label make it read a bit less refined. The final lockup at 14.2s is clean.",
+   "judge-3 (as C): The nicest UI card (pill button, well-placed checks at 6.0s) and good line and logo reveals (1.1-1.9s, 10.0-10.9s). But the counter breaks its layout: digits spill across the ring and kg is pushed outside it at 7.0-7.6s, phantom extra digits appear ('89,380' at 7.6s), and kg is missing at 6.94s. An off-brief amber ring sits on the incoming cursor at 2.2s, and the green circle hasn't filled the frame at 6.56s.",
+   "judge-4 (as B): Hits the same beats with good UI typography (2.2s) and a strong final mark with bold arrowheads (14.2s). But a stray ring circles the cursor as it enters (2.2s), the green handover never fills the frame (dark corners at 6.56s), and from 7.0 to 7.4s the rolling digits spill past the ring's edge as unreadable stacked rows. Of the three, its counter beat is the least controlled and looks the least professional.",
+   "judge-5 (as A): All five beats are delivered in order with real masks: the line-to-mask card reveal (1.1\u20131.9 s), the arc split and arrowheads drawing on (10.1\u201310.4 s), the wordmark sliding out from behind the mark (11.06 s), and the underline-masked tagline with its retract and the mark turning (13.0\u201313.9 s). The final lockup is centred, legible and still from 14.06 s, and the amber flash at 5.44 s is visible. The odometer is the weak spot: digits overflow the left side of the ring and look garbled at 7.2 s and 7.69 s. The 6.56 s circle reveal is an empty hole, and at 9.56 s the digits have not started their wipe-out, so that handover looks late.",
+   "judge-6 (as A): Delivers every beat: the two-layer angled wipe (0.56s), the line that unfolds into the card (1.1\u20131.9s), chip fills with checks and the counter ticking up (2.8\u20134.7s), the amber flash and the Booked roll (5.44\u20135.81s), and the arcs splitting into the two-arrow mark (10.1\u201310.9s), with a clean, centered, still lockup (14.2\u201314.81s). The counter's layout shifts as digits are added: at 7.0s `kg` sits outside the ring and at 7.2\u20137.7s the leftmost digits overrun the ring stroke, which looks unpolished. The circle opens to an empty ring at 6.56s with no starting `0`, and at 9.56s the digits are still whole, so the downward wipe-out isn't visible."
+  ]
+ }
+}

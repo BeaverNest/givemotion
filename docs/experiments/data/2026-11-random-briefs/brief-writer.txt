@@ -1,0 +1,17 @@
+You write creative briefs for short motion-design videos. Write ONE brief for this randomly drawn assignment:
+
+- Genre: {genre}
+- Subject: {subject}
+- It must showcase these motion techniques: {techniques}
+- Format: {format}, 30 fps, exactly {seconds} seconds, no audio
+- Fonts available (pick one or two): {fonts}
+
+Rules for the brief:
+- Tool-neutral: never mention any software, code, HTML, CSS, JavaScript, React, frameworks or libraries. Say "video".
+- Everything must be drawable from shapes, lines and type: no photos, video footage, stock images, real brand logos, voice or music.
+- Give an exact palette (4-6 hex colors with their roles), the font(s), and the exact on-screen copy (every word that may appear; nothing else may appear).
+- Give 4-6 beats with time ranges that add up to exactly {seconds} s, each describing what is on screen and how it moves and hands over to the next.
+- Add short "Must" and "Must not" lists, and say the finished video goes to out/video.mp4.
+- Make it ambitious, specific and achievable in a day by a skilled motion designer. A real client would sign it off.
+
+Output only the brief, in Markdown, starting with a "# Brief:" title. No preamble.

@@ -1,0 +1,309 @@
+{
+ "judges": 6,
+ "mean": {
+  "givemotion": {
+   "brief": 6.17,
+   "spec": 6.33,
+   "motion": 6.33,
+   "craft": 6.5,
+   "errors": 5.17,
+   "overall": 6.0
+  },
+  "remotion": {
+   "brief": 6.33,
+   "spec": 6.5,
+   "motion": 6.5,
+   "craft": 6.33,
+   "errors": 5.33,
+   "overall": 6.17
+  },
+  "hyperframes": {
+   "brief": 7.83,
+   "spec": 7.67,
+   "motion": 7.83,
+   "craft": 8.0,
+   "errors": 7.5,
+   "overall": 8.0
+  }
+ },
+ "per": {
+  "givemotion": {
+   "brief": [
+    7,
+    7,
+    6,
+    6,
+    6,
+    5
+   ],
+   "spec": [
+    7,
+    7,
+    6,
+    7,
+    6,
+    5
+   ],
+   "motion": [
+    7,
+    7,
+    6,
+    6,
+    6,
+    6
+   ],
+   "craft": [
+    7,
+    7,
+    6,
+    6,
+    7,
+    6
+   ],
+   "errors": [
+    6,
+    6,
+    5,
+    5,
+    5,
+    4
+   ],
+   "overall": [
+    7,
+    7,
+    5,
+    6,
+    6,
+    5
+   ]
+  },
+  "remotion": {
+   "brief": [
+    7,
+    6,
+    7,
+    7,
+    5,
+    6
+   ],
+   "spec": [
+    6,
+    7,
+    7,
+    7,
+    6,
+    6
+   ],
+   "motion": [
+    7,
+    6,
+    7,
+    7,
+    6,
+    6
+   ],
+   "craft": [
+    6,
+    6,
+    7,
+    7,
+    6,
+    6
+   ],
+   "errors": [
+    5,
+    5,
+    6,
+    6,
+    5,
+    5
+   ],
+   "overall": [
+    6,
+    6,
+    7,
+    7,
+    5,
+    6
+   ]
+  },
+  "hyperframes": {
+   "brief": [
+    7,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "spec": [
+    8,
+    8,
+    8,
+    8,
+    7,
+    7
+   ],
+   "motion": [
+    8,
+    8,
+    7,
+    8,
+    8,
+    8
+   ],
+   "craft": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": [
+    8,
+    7,
+    7,
+    7,
+    8,
+    8
+   ],
+   "overall": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ]
+  }
+ },
+ "avg_rank": {
+  "givemotion": 2.5,
+  "remotion": 2.5,
+  "hyperframes": 1.0
+ },
+ "firsts": {
+  "givemotion": 0,
+  "remotion": 0,
+  "hyperframes": 6
+ },
+ "rows": [
+  {
+   "judge": "judge-1",
+   "order": [
+    "hyperframes",
+    "givemotion",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.6302994,
+   "overall": {
+    "givemotion": 7,
+    "remotion": 6,
+    "hyperframes": 8
+   }
+  },
+  {
+   "judge": "judge-2",
+   "order": [
+    "hyperframes",
+    "givemotion",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.703431,
+   "overall": {
+    "givemotion": 7,
+    "hyperframes": 8,
+    "remotion": 6
+   }
+  },
+  {
+   "judge": "judge-3",
+   "order": [
+    "hyperframes",
+    "remotion",
+    "givemotion"
+   ],
+   "images": 34,
+   "cost": 0.6923384,
+   "overall": {
+    "remotion": 7,
+    "givemotion": 5,
+    "hyperframes": 8
+   }
+  },
+  {
+   "judge": "judge-4",
+   "order": [
+    "hyperframes",
+    "remotion",
+    "givemotion"
+   ],
+   "images": 34,
+   "cost": 0.6251458,
+   "overall": {
+    "remotion": 7,
+    "hyperframes": 8,
+    "givemotion": 6
+   }
+  },
+  {
+   "judge": "judge-5",
+   "order": [
+    "hyperframes",
+    "givemotion",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.6388334,
+   "overall": {
+    "hyperframes": 8,
+    "givemotion": 6,
+    "remotion": 5
+   }
+  },
+  {
+   "judge": "judge-6",
+   "order": [
+    "hyperframes",
+    "remotion",
+    "givemotion"
+   ],
+   "images": 34,
+   "cost": 0.6936062,
+   "overall": {
+    "hyperframes": 8,
+    "remotion": 6,
+    "givemotion": 5
+   }
+  }
+ ],
+ "notes": {
+  "givemotion": [
+   "judge-1 (as A): The title (0.3\u20133.4s) and the rooftop beat (4.3\u20139.5s) are rich and well layered: haze skyline, hatched buildings, a near ledge, blurred leaf sprigs and bees spilling from the hive; the 9.2s key is portfolio-level. The flight map (10\u201314s) is never really tilted into a tabletop and reads as a pulled-back flat skyline with tiny labels. 'Foraging range: about / 3 km' stays on screen into the spoon close-up (15.2\u201316.1s), '3 km' sits cramped on the clover near the edge at 15.0s, and the flower doodles crowd over the hexagon at 21.8s.",
+   "judge-2 (as A): The title (0.3\u20133.4s) and rooftop beat (4.3\u20139.2s) are lovely: haze, mid and near planes are clearly separated, the foreground sprigs are blurred, the hatching is loose and 50,000 is written on in amber. Beat 3 (10\u201314.6s) is only a zoomed-out flat skyline with a circled hive, not the angled 35\u00b0 tabletop map, and the destination labels are tiny. 'Foraging range: about / 3 km' stays on screen over the spoon scene until about 16.1s, which reads as a leftover. In the closing (19.8\u201322.1s) the flower doodles pile onto the hexagon, so the paths never read as petals, though the jar-to-hexagon morph at 18.7\u201319.3s and the final fade both work.",
+   "judge-3 (as B): The Beat 2 bees are the best drawn of the three (striped ovals with wings, 9.2s), and the four planes are clear, including a patterned near parapet. The Beat 3 map is barely tilted. An ink circle around the hive is used where the brief asks for a haze-blue range circle, and the 15.0s frame is cluttered, with '3 km' crashing into the clover. '3 km' also stays in the corner of the honey scene at 15.2\u201316.1s, and 'Citi' collides with a planter at 19.8s. In the closing (20.4\u201322.1s) the flower doodles pile on top of the hexagon instead of along the paths, so the 'petals' never read and the foraging circle is nearly invisible.",
+   "judge-4 (as C): Beats 1 and 2 are attractive: the title has an amber underline (3.4s), and the large, well-drawn bees spill around the hive with good depth (6.4\u20137.3s, 9.2s). The drop visibly falls from the spoon into the jar at around 16.96s, as the brief asks. Beat 3 hardly tilts into a map. The destinations crowd into the skyline and are hard to read, the foraging circle is faint and lopsided, and '3 km' sits jammed into the bottom-right corner (11\u201314.7s). That '3 km' then carries over into the honey scene (15.2\u201316.1s). In Beat 5 the flower doodles pile onto the hexagon itself instead of running along petal paths (20.5\u201321.8s), which muddies the closing frame, and the extra row of hatched windows in the foreground adds clutter.",
+   "judge-5 (as B): The richest Beat 2 drawing (9.2s): lovely hatching, larger bees with looping wings, clear planes. But Beat 3 (10.06\u201314.66s) never becomes a tilted map; the city stays front-on and squeezed into the top third. '3 km' is pushed to the right edge (14.66s), overlaps the clover at 15.0s and stays into Beat 4 (15.24\u201316.1s). In the closing, flower doodles pile onto the hexagon (20.4\u201321.8s) and the paths don't read as petals; at 19.84s 'Citi' writes over the window box while '10\u201325 kg' is still fading.",
+   "judge-6 (as C): Has the richest rooftop illustration, with crosshatching, a deep skyline and nicely drawn bees (9.2s), plus bold closing type at spec sizes (21.8s). The map beat (10\u201314.7s) is a cramped side view with no tabletop angle, and '3 km' is written away from the circle at bottom right against the safe margin (14.66\u201315.0s), then stays on screen into the spoon beat until about 16.1s. The closing piles flower doodles on top of the hexagon, the range circle almost disappears and the place labels are missing, which makes it the muddiest ending of the three."
+  ],
+  "remotion": [
+   "judge-1 (as B): The rush through the planes at 15.0s shows real depth, and the closing paths loop back as true petals inside the haze circle (20.4\u201321.8s), the closest match to that part of the brief. The angled map is microscopic, with lots of empty paper and unreadable labels (10\u201314s). Leftover text is the biggest problem: '3 km' floats over the jar drawing (15.2\u201316.3s) and the faded '10\u201325 kg' overlaps the closing headline at 19.8s. 'Plant something that flowers.' is label-sized, not headline-sized, and a blurred sprig covers the lead bee at 9.2s.",
+   "judge-2 (as C): The title and rooftop beat are solid (6.4\u20139.2s: the write-on of 50,000 and the bee spill are clear), but the near plane is thin and the blurred foreground sprigs drift into mid-frame over the buildings and hive at 9.2s and 20.2s instead of staying at the edges. Beat 3 skews the buildings rather than tilting the city into a tabletop; the labels are tiny, and at 14.7s the '3 km' block sits on top of the skyline. 'Foraging range: about / 3 km' lingers into the honey scene until 16.3s, and 19.84s is an awkward, nearly empty frame with ghosted '10\u201325 kg' text. The figure-eight petal loops around the hexagon at 21.8s are a nice close, but a bee stuck on the hexagon looks accidental.",
+   "judge-3 (as A): Strong opening (3.4s key is clean, with an offset amber wash and a hand-drawn underline), and the rooftop at 9.2s has clear layering: blurred foreground sprigs, haze skyline, hatched mid buildings. The hand-over of the hexagon onto the hive plate at 4.3\u20135.5s works well. The Beat 3 map (10\u201314.7s) is only a mild skew, with tiny 40px-looking labels and half the frame empty paper. 'Foraging range: about / 3 km' stays on screen into the honey scene (15.2\u201316.3s), sitting over the spoon/jar layout, and faint ghost elements show at 19.8s. The closing at 21.8s reads well: amber loops around the hexagon, flower doodles on the paths, legible headline and subline.",
+   "judge-4 (as A): The title beat is clean and on-brief: the hexagon draws on, gets an offset amber wash, and the title and subtitle write on with an underline (1.8\u20133.4s). Beat 2's layered rooftop has clear planes, the bees spill out and 50,000 writes on stroke by stroke (6.4\u20137.3s, 9.2s). The closing frame works well, with petal paths, flower doodles and the circle under both lines of copy (21.8s). Beat 3 is weak: the map is a thin, barely angled strip with tiny labels in the top third and empty paper below (10\u201314s). The '3 km' text stays on top of the honey scene (15.2\u201316.3s) and the 15.0s transition stacks the numeral over the hive. The leftover '10\u201325 kg' and a ghosted layer overlap the start of Beat 5 (19.3\u201319.8s).",
+   "judge-5 (as C): Clean title (3.4s) and well-separated Beat 2 planes (6.4\u20139.2s), with a tidy closing composition at 21.8s. Beat 3 (10.06\u201313.51s) is a thin city band along the top with tiny destinations and empty lower-half paper, not a tilted map. '3 km' stays over the spoon into Beat 4 (15.24\u201316.3s), and at 19.84s the hexagon, the fading '10\u201325 kg' and 'Cities c' overlap. Ghosted half-transparent bees and blurred foreground leaves crossing mid-frame (9.2s, 21.8s) look muddy.",
+   "judge-6 (as B): The title and rooftop beat are well drawn and readable (3.4s, 9.2s), but the flight map at 10\u201314.7s is a thin, barely tilted strip with half the frame left as empty paper, so the diorama idea never lands. 'Foraging range: about / 3 km' stays on screen over the spoon into Beat 4 (15.2\u201316.3s), a clear continuity error. The closing redraws the scene from scratch (19.8\u201320.4s) and at 21.8s drops the place labels, with a bee overlapping the hexagon and the ground line running through it."
+  ],
+  "hyperframes": [
+   "judge-1 (as C): The hand-overs are the cleanest: the hexagon flies into the hive (3.7\u20135.5s), the camera tilts into a tabletop map sheet, and at 15.0s it rushes in to the hexagon through haze planes. Beat 4 is clean with no leftover text, and the drop falls into the jar; the closing at 21.8s is legible, well spaced and fully inside the frame. Weaknesses: the map adds a grid and pushes the city out to the edges, so the depth planes are weak in beats 3 and 5, the closing hexagon is small, and the city vanishes abruptly at 9.5s.",
+   "judge-2 (as B): B follows the brief most closely. The hexagon travels to the hive (3.7\u20135.5s), the planes draw in order, and at 9.5\u201314.7s the city opens into a real tilted paper tabletop map: the dashed amber path grows to each plant in sequence and the haze circle carries 'Foraging range: about 3 km' along its edge. The closing at 21.8s is the cleanest frame of all three: hexagon at centre, four dashed loops with flower doodles reading as petals, and well-spaced headline and tagline. Weaknesses: the rush-in at 15.0s is a muddy blur of a translucent hexagon over haze buildings; once the map appears (10\u201314s) the skyline survives only as thin strips at the edges, so depth weakens; the map labels are well under 40 px; and '3 km' appears a second time in the closing.",
+   "judge-3 (as C): The closest match to the brief: Beat 3 (10\u201314.7s) is a real angled tabletop map with a grid and edge-on skyline planes. The foraging circle draws clockwise with '3 km' set along its edge, and the closing at 21.8s is the most legible composition of the three, with four petal paths, flower doodles and clear labels. The rush-in at 15.0s passes through the hexagon and the haze planes, which sells the depth. Weaknesses: the map loses the city (a blank grid sheet rather than hatched buildings), the skyline-to-empty-board change at 9.0\u20139.5s is abrupt, the hive looks like three boxes rather than two, and at 19.3s the hexagon appears over still-visible honey text.",
+   "judge-4 (as B): This is the closest match to the brief. The title, rooftop and swarm beats are solid (3.4s, 6.4\u20137.3s, 9.2s). Beat 3 is the only true angled tabletop map: the hive marker sits at centre, the dashed paths draw on, the plants grow, and the haze circle and '3 km' follow its edge (10\u201314.7s). The honey beat is clean, with the jar filling and the jar outline unwinding into a hexagon (16.4\u201319.3s). The 21.8s closing frame is portfolio-level: the paths read as petals, the flowers are staggered and the hierarchy is clear. Weak points: the city drops away to blank paper around 9.49s, the 15.0s rush-in frame is a muddy, oversized translucent hexagon over haze buildings, and the grid on the map is decoration the brief did not ask for.",
+   "judge-5 (as A): Only A really delivers the Beat 3 tabletop map (10.06\u201314.66s): a tilted paper plane, the hive marker at centre, a dashed amber path drawing behind the bee, plants growing as it arrives (11.0\u201311.9s), and 'Foraging range: about / 3 km' written along the haze circle. The title write-on and wash, the hexagon flying up to become the hive plate (3.74\u20135.46s), the rush-in through the planes at 15.0s, the jar turning back into the hexagon (18.69\u201319.26s) and the petal-path closing at 21.8s are all well judged. Weaknesses: small labels (especially the Beat 4 sub-lines) are under the 40\u201348px spec, and the bees and hive read small on the map.",
+   "judge-6 (as A): The most complete delivery of the brief: the hexagon draws on with an offset wash and lands on the hive as the entrance plate (3.4\u20135.5s), the rooftop has clear depth planes and blurred foreground leaves (9.2s), and 10\u201314.7s is a real angled tabletop map with paths, plants and the range circle drawn in order. The honey beat shows the jar filling and its outline turning back into the hexagon (16.4\u201319.3s), and the closing loops the paths into petals with flower doodles before fading to clean paper (21.8\u201322.7s). Weaknesses: labels and sub-lines are well under the 40\u201348px spec (7.8s, 11\u201314s), the rush-in at 15.0s is briefly a soft amber/blue blur, and the honey-beat drift and the drop falling into the jar are hard to see."
+  ]
+ }
+}

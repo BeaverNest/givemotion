@@ -1,0 +1,7 @@
+e-hyperframes 41.067022182 rc=0
+g-hyperframes 37.404466878 rc=0
+e-remotion 36.617280419 rc=0
+g-remotion 24.928164453 rc=0
+e-givemotion 17.705142730 rc=0
+g-givemotion 19.540116477 rc=0
+done

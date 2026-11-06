@@ -1,0 +1,44 @@
+[
+ {
+  "id": "c",
+  "genre": "year-in-review",
+  "subject": "electric ferries",
+  "techniques": [
+   "path animation / lines that draw themselves",
+   "match cuts / shared-element transitions",
+   "a living ambient background"
+  ],
+  "format": "1920x1080",
+  "seconds": 15,
+  "fonts": [
+   "Inter",
+   "Space Grotesk",
+   "Playfair Display",
+   "Bebas Neue",
+   "JetBrains Mono",
+   "Caveat",
+   "Nunito"
+  ]
+ },
+ {
+  "id": "d",
+  "genre": "brand manifesto",
+  "subject": "urban beekeeping",
+  "techniques": [
+   "kinetic typography",
+   "match cuts / shared-element transitions",
+   "an animated chart"
+  ],
+  "format": "1920x1080",
+  "seconds": 18,
+  "fonts": [
+   "Inter",
+   "Space Grotesk",
+   "Playfair Display",
+   "Bebas Neue",
+   "JetBrains Mono",
+   "Caveat",
+   "Nunito"
+  ]
+ }
+]

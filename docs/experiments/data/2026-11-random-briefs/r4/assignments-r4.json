@@ -1,0 +1,44 @@
+[
+ {
+  "id": "e",
+  "genre": "infographic",
+  "subject": "a city marathon",
+  "techniques": [
+   "3D depth and parallax",
+   "masked reveals and wipes",
+   "shape morphing"
+  ],
+  "format": "1920x1080",
+  "seconds": 19,
+  "fonts": [
+   "Inter",
+   "Space Grotesk",
+   "Playfair Display",
+   "Bebas Neue",
+   "JetBrains Mono",
+   "Caveat",
+   "Nunito"
+  ]
+ },
+ {
+  "id": "f",
+  "genre": "logo sting with tagline",
+  "subject": "a recycling program",
+  "techniques": [
+   "counters and numbers",
+   "masked reveals and wipes",
+   "a UI mockup with cursor interactions"
+  ],
+  "format": "1920x1080",
+  "seconds": 15,
+  "fonts": [
+   "Inter",
+   "Space Grotesk",
+   "Playfair Display",
+   "Bebas Neue",
+   "JetBrains Mono",
+   "Caveat",
+   "Nunito"
+  ]
+ }
+]

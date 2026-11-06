@@ -1,0 +1,309 @@
+{
+ "judges": 6,
+ "mean": {
+  "givemotion": {
+   "brief": 7.5,
+   "spec": 6.83,
+   "motion": 6.83,
+   "craft": 7.0,
+   "errors": 6.0,
+   "overall": 6.83
+  },
+  "remotion": {
+   "brief": 7.0,
+   "spec": 6.5,
+   "motion": 6.83,
+   "craft": 6.17,
+   "errors": 5.67,
+   "overall": 6.17
+  },
+  "hyperframes": {
+   "brief": 7.0,
+   "spec": 7.5,
+   "motion": 6.83,
+   "craft": 7.33,
+   "errors": 7.33,
+   "overall": 7.17
+  }
+ },
+ "per": {
+  "givemotion": {
+   "brief": [
+    8,
+    7,
+    7,
+    7,
+    8,
+    8
+   ],
+   "spec": [
+    7,
+    7,
+    7,
+    6,
+    7,
+    7
+   ],
+   "motion": [
+    7,
+    6,
+    6,
+    7,
+    8,
+    7
+   ],
+   "craft": [
+    8,
+    6,
+    6,
+    7,
+    8,
+    7
+   ],
+   "errors": [
+    8,
+    5,
+    6,
+    5,
+    6,
+    6
+   ],
+   "overall": [
+    8,
+    6,
+    6,
+    6,
+    8,
+    7
+   ]
+  },
+  "remotion": {
+   "brief": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "spec": [
+    6,
+    7,
+    6,
+    7,
+    6,
+    7
+   ],
+   "motion": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    6
+   ],
+   "craft": [
+    6,
+    5,
+    7,
+    7,
+    6,
+    6
+   ],
+   "errors": [
+    6,
+    5,
+    6,
+    7,
+    5,
+    5
+   ],
+   "overall": [
+    6,
+    5,
+    7,
+    7,
+    6,
+    6
+   ]
+  },
+  "hyperframes": {
+   "brief": [
+    7,
+    7,
+    8,
+    6,
+    7,
+    7
+   ],
+   "spec": [
+    7,
+    8,
+    8,
+    7,
+    7,
+    8
+   ],
+   "motion": [
+    7,
+    7,
+    8,
+    6,
+    6,
+    7
+   ],
+   "craft": [
+    7,
+    8,
+    8,
+    6,
+    7,
+    8
+   ],
+   "errors": [
+    7,
+    7,
+    8,
+    7,
+    7,
+    8
+   ],
+   "overall": [
+    7,
+    8,
+    8,
+    6,
+    7,
+    7
+   ]
+  }
+ },
+ "avg_rank": {
+  "givemotion": 1.83,
+  "remotion": 2.5,
+  "hyperframes": 1.67
+ },
+ "firsts": {
+  "givemotion": 2,
+  "remotion": 1,
+  "hyperframes": 3
+ },
+ "rows": [
+  {
+   "judge": "judge-1",
+   "order": [
+    "givemotion",
+    "hyperframes",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.8818442,
+   "overall": {
+    "givemotion": 8,
+    "remotion": 6,
+    "hyperframes": 7
+   }
+  },
+  {
+   "judge": "judge-2",
+   "order": [
+    "hyperframes",
+    "givemotion",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.8001389999999999,
+   "overall": {
+    "givemotion": 6,
+    "hyperframes": 8,
+    "remotion": 5
+   }
+  },
+  {
+   "judge": "judge-3",
+   "order": [
+    "hyperframes",
+    "remotion",
+    "givemotion"
+   ],
+   "images": 34,
+   "cost": 0.913543,
+   "overall": {
+    "remotion": 7,
+    "givemotion": 6,
+    "hyperframes": 8
+   }
+  },
+  {
+   "judge": "judge-4",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.9097522,
+   "overall": {
+    "remotion": 7,
+    "hyperframes": 6,
+    "givemotion": 6
+   }
+  },
+  {
+   "judge": "judge-5",
+   "order": [
+    "givemotion",
+    "hyperframes",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.8774126,
+   "overall": {
+    "hyperframes": 7,
+    "givemotion": 8,
+    "remotion": 6
+   }
+  },
+  {
+   "judge": "judge-6",
+   "order": [
+    "hyperframes",
+    "givemotion",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.8126445999999999,
+   "overall": {
+    "hyperframes": 7,
+    "remotion": 6,
+    "givemotion": 7
+   }
+  }
+ ],
+ "notes": {
+  "givemotion": [
+   "judge-1 (as A): A follows the brief most closely. The title wipe has its orange leading bar (1.19s). The closed loop draws on and crosses the river twice, with START and FINISH sharing one point (6.41s). Beat 3 is the low-angle view the brief asks for, with 18 drops running back into depth (8.8\u20139.9s), and the wavy-edge wipe is visible for 120,000 (9.7s). The medal carries an engraved route loop (16.6\u201317.5s), and the end hold is clean (18.1s). Weaknesses: the medal shows no visible 3D turn, the skyline parallax is mild, and 31,000 is revealed before the dot grid exists (11.64s). The 18 is jammed against the top margin with AID STATIONS above it rather than beside it (9.26s), and the bar labels are below 28 px (14.49s).",
+   "judge-2 (as A): Beat 3 follows the brief most closely: a low-angle view along the route with 18 drops shrinking into depth (8.8\u201310.7s), an iris-revealed 18 and a wavy-edge wipe for 120,000 (9.7\u20139.9s). Beat 1 is weak, though: the skyline is mostly flat silhouettes with little visible parallax (1.4\u20132.3s), and the medal shows no real 3D turn (16.6\u201317.5s). There are clear errors. The runner dot sits under the '2' of 42.195 for the whole hold (4.99\u20136.89s), and an orange ribbon shape pokes in at the top edge long before the medal exists (10.21\u201311.64s). The bar labels are tiny and hard to read (14.0\u201315.0s).",
+   "judge-3 (as B): Clean, centred, well-spaced type throughout. The aid-station beat follows the brief best: 18 drops recede along a low-angle route, '18' is revealed through a visible iris (8.8s), '120,000' comes in through a wavy wipe (9.7\u20139.9s), and the medal engraved with the route loop is a smart touch (16.6\u201317.5s). The world is thin, though: the near skyline layer is a single outline line, beat 3 has only one box, and the loop is a plain oval. Visible errors: a stray orange dot floats above the map under '42.195' (4.0\u20136.9s), an orange ribbon wedge pokes in at the top edge (10.2\u201311.6s), and partial digit fragments hang at the bar ends (14.0s).",
+   "judge-4 (as C): The truest Beat 3: a low-angle view of 18 drops shrinking into depth (7.6\u20139.9 s), a real iris reveal on '18' (8.8 s) and a wavy-edge wipe on 120,000 (9.7\u20139.9 s), plus a strong ring at 15.4 s and a clean end hold (18.1 s). Marred by a stray orange dot off the route (4.0\u20134.5 s) and under the '4' of 42.195 (5.0\u20136.9 s), the medal ribbon poking into the top of the frame early (10.2\u201311.6 s), and a leftover blue wavy line beside CUPS OF WATER (10.2 s). The near skyline is one continuous outline rather than separate towers, and the medal barely turns.",
+   "judge-5 (as B): This is the most faithful version of the brief. The parallax title and river open the piece (0\u20133s), the route draws on a gridded plane (4\u20136.9s), and Beat 3 has a strong low-angle push in with 18 drops shrinking into depth (7.6\u201310.7s), with a visible iris on '18' and a wavy edge on '120,000'. At 11.16s the drops stream out into the dot grid, then the dots regroup cleanly into the bars and curl into a ring at 15.44s. The medal has a nice engraved route loop and the piece ends on a stable hold with the dot (17.8\u201318.8s). The main flaw is a stray orange dot that floats above the plane at 4.04\u20134.51s and then sits inside the hero '42.195' between the 4 and the 2 (4.99\u20136.89s), which reads as a typo on the hero number. The Beat 2 district boxes are also small and low-contrast.",
+   "judge-6 (as C): Closest to the brief in Beat 3: a low camera along the route with 18 drops shrinking into depth, a visible iris mask on 18 (8.79s) and a wavy wipe for the water copy (9.7\u201310.2s); the large ring at 15.44s and the medal with its route loop also land well. A stray orange dot sits under the 4 of 42.195 (4.99\u20136.89s) and another floats at 4.04s, and START/FINISH collide at 6.41s. The near skyline is a single outline line, so the depth layers read weakly, and the medal shows no 3D turn."
+  ],
+  "remotion": [
+   "judge-1 (as B): B has the best skyline and depth ideas. The layered towers with antennae (2.9s) are strong, the map sits on a floating perspective slab (4.5\u20136.9s), the low-angle city street with extruded blocks works well (7.6s), and the medal has a skyline emblem (16.6s). But beat 3 is cramped. The 18 drops pile up into an overlapping blob (8.8\u201310.7s), and the 18 is pushed into the top-left corner over the skyline, past the safe margin (9.0\u201310.7s). 31,000 butts against the dot grid (12.3s). At 13.2s FINISH TIMES collides with a half-struck-through 31,000 and a stray orange rule. The clusters pass through off-palette peach and pale-blue tints (13.2\u201313.3s), and the medal shows no 3D turn.",
+   "judge-2 (as C): ",
+   "judge-3 (as A): Clear three-layer parallax skyline with good title wipes (0.7\u20132.1s), and a proper perspective plane with extruded districts and a route that draws on (4.0\u20136.9s). The low-angle view along the route with the skyline behind (7.6s) is the most cinematic shot of the three videos. However, the drops pile up into a messy clump (8.8\u201310.7s), the hero '18' is jammed against the top edge over the skyline, and '120,000 CUPS OF WATER' is tiny, sits at the left frame edge and overlaps the river band (9.7\u201310.7s), breaking the safe margin. Bars, ring and medal work (13.5\u201317.3s), but the medal shows no real 3D turn, the ribbon is cropped at the frame top, and the end hold is clean (17.8\u201318.8s).",
+   "judge-4 (as A): The most coherent piece: three distinct parallax layers with outlined near towers (0\u20133 s), a clean route draw-on across the river with START/FINISH sharing one point (4.0\u20136.9 s), a low-angle dot-to-drop morph (7.6\u20138.3 s), and good dot-to-bar morphs (13.5\u201313.7 s). Weaknesses: '18' presses against the top-left edge well inside the safe margin (9.0\u201310.7 s), '31,000' crowds the top-right corner at 11.6 s, and the medal (15.9\u201317.5 s) adds a skyline icon, has its ribbon cropped by the frame and shows no visible 3D turn.",
+   "judge-5 (as C): Its ideas are the richest. The ground plane is a perspective card with real extruded blocks (4.5\u20137.4s), the low-angle Beat 3 places a skyline behind the route (7.6s), and the medal has a skyline icon inside it (15.9\u201317.5s). Execution in the middle beats breaks down. From 9.0s to 10.7s '18' is jammed against the top-left corner of the frame, outside the safe margin, overlapping the skyline, and 'AID STATIONS' and '120,000 CUPS OF WATER' sit on the river line. The 18 drops pile up into a clump instead of an even row receding into depth. At 12.59\u201313.06s the dot grid butts into the '3' of 31,000, and the bar morph at 13.4\u201313.7s looks messy. The ending hold at 17.8\u201318.8s is clean.",
+   "judge-6 (as B): Strong parallax skyline (0\u20133s), the route on a tilted plane with extruded blocks (4.5\u20136.9s), and a clean ring-to-medal morph with a good end hold (15.44\u201318.76s). The middle is muddy: the drops pile into an overlapping smear (8.79\u201310.69s), the 18 is crammed top-left against the skyline, and 120,000 CUPS OF WATER sits on the river line and is hard to read. The dot grid nearly touches 31,000 (12.3\u201313.06s) and the bar labels are clipped during the morph (13.5\u201313.7s)."
+  ],
+  "hyperframes": [
+   "judge-1 (as C): C has good dimensional staging. Extruded blocks already sit on the ground during the title (2.9s), the camera tilt into the map is smooth (3.56s), there is a nice close follow on the dot-to-drop morph (7.6\u20137.84s), and the diagonal wipe that colours the dots is clean (12.3s). However, beat 3 pulls out to a high overhead loop instead of the low-angle view receding into depth (8.3\u201311.2s). Mid-wipe text looks truncated, for example the cropped 31,000 at 11.64s and the fragment 'D ATIONS' at 11.16s. The dot clusters tint to off-palette colours (13.5\u201313.7s). The ending is weak: the type sits over the busy skyline while the runner dot floats in an empty upper half (18.1s), the skyline jumps position between 15.91s and 16.39s, and the medal has no visible 3D turn.",
+   "judge-2 (as B): {'brief': '', 'x': ''}",
+   "judge-3 (as C): The most complete and controlled piece. The skyline has three distinct layers with the ground plane already visible in beat 1, so the tilt into the map is continuous (2.9\u20133.6s). The dot visibly morphs into a drop on the route at 7.6\u20137.8s, a true diagonal wipe turns the dot grid to paper (12.3s), a single vertical orange-bar wipe swaps 31,000 for FINISH TIMES (13.0\u201313.4s), and the dots line up into rows and then morph into accurately sized bars (13.6\u201314.5s) before curling into the ring and medal. Weaknesses: beat 3 pulls back to a high overview of the loop instead of the close, receding low angle, the '18' overlaps skyline outlines (9.0\u201311.2s), and the medal is a plain disc with no visible 3D turn and a ribbon cropped at the top.",
+   "judge-4 (as B): A solid tilt-down handover (3.0\u20133.6 s), a clear Beat 2 route (5.2\u20136.9 s), a nice diagonal dot recolour wipe (12.3 s) and a clean orange-bar wipe to FINISH TIMES (13.0\u201313.4 s). But Beat 3 drops the brief's close, low-angle receding view for a high three-quarter view with drops scattered around the loop (8.3\u201311.2 s), with '18' sitting on busy building outlines. The near skyline is small and repetitive, the skyline jumps position between 15.9 and 16.4 s, the end type overlaps the skyline (16.6\u201319 s), and the medal is plain with no turn.",
+   "judge-5 (as A): The skyline has clear depth with outlined stepped towers, and the title wipe has an orange edge bar (0.71\u20131.66s). Beat 2 is clean: the loop draws on, START/HALF/FINISH sit on stems, and 42.195 KM is crisp (4.99\u20136.89s). Beat 3's 18 drops are spread around the whole loop at a high angle, not a low view along a route that recedes into depth (8.3\u201310.7s). At 14.01s the dot clusters smear into dotted rows before turning into bars. The medal (15.9\u201317.5s) is a flat 2D disc with no visible turn and its ribbon is cut off at the top of frame, and the skyline jumps from the top of frame to the bottom between 15.91s and 16.39s.",
+   "judge-6 (as A): Clean, polished piece: the title wipe with its travelling orange bar (0.71\u20131.5s), a route that draws on with pop-up labels (4.04\u20136.41s), a crisp diagonal colour wipe across the dot grid (12.3s) and well-timed bars with masked percentages (14.0\u201314.96s). Weaknesses: the district blocks are hollow outlined cubes, Beat 3 pulls back to an overhead view instead of the low angle along the route (8.31s+), the ring at 15.44s is small and the medal is flat with no visible 3D turn."
+  ]
+ }
+}

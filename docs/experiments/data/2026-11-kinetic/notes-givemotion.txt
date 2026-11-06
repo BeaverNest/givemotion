@@ -1,0 +1,3 @@
+- givemotion 0.1.3 is installed in this folder: run it with `npx givemotion ...` from {DIR}.
+- Its agent docs (the skill pack): skills/givemotion/SKILL.md, then the references/ files it points to.
+- The fonts are in fonts/.

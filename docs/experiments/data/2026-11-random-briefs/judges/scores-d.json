@@ -1,0 +1,309 @@
+{
+ "judges": 6,
+ "mean": {
+  "givemotion": {
+   "brief": 6.0,
+   "spec": 6.83,
+   "motion": 6.83,
+   "craft": 6.5,
+   "errors": 5.83,
+   "overall": 6.0
+  },
+  "remotion": {
+   "brief": 8.0,
+   "spec": 8.0,
+   "motion": 7.67,
+   "craft": 7.67,
+   "errors": 6.67,
+   "overall": 7.67
+  },
+  "hyperframes": {
+   "brief": 7.33,
+   "spec": 8.0,
+   "motion": 7.33,
+   "craft": 7.33,
+   "errors": 7.5,
+   "overall": 7.33
+  }
+ },
+ "per": {
+  "givemotion": {
+   "brief": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+   ],
+   "spec": [
+    7,
+    7,
+    7,
+    6,
+    7,
+    7
+   ],
+   "motion": [
+    7,
+    7,
+    6,
+    7,
+    7,
+    7
+   ],
+   "craft": [
+    7,
+    7,
+    6,
+    6,
+    7,
+    6
+   ],
+   "errors": [
+    7,
+    6,
+    6,
+    5,
+    6,
+    5
+   ],
+   "overall": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+   ]
+  },
+  "remotion": {
+   "brief": [
+    9,
+    8,
+    7,
+    8,
+    8,
+    8
+   ],
+   "spec": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "motion": [
+    8,
+    8,
+    7,
+    7,
+    8,
+    8
+   ],
+   "craft": [
+    8,
+    8,
+    7,
+    7,
+    8,
+    8
+   ],
+   "errors": [
+    7,
+    7,
+    6,
+    6,
+    7,
+    7
+   ],
+   "overall": [
+    8,
+    8,
+    7,
+    7,
+    8,
+    8
+   ]
+  },
+  "hyperframes": {
+   "brief": [
+    8,
+    7,
+    8,
+    7,
+    7,
+    7
+   ],
+   "spec": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "motion": [
+    8,
+    7,
+    8,
+    7,
+    7,
+    7
+   ],
+   "craft": [
+    8,
+    7,
+    8,
+    7,
+    7,
+    7
+   ],
+   "errors": [
+    7,
+    8,
+    8,
+    7,
+    8,
+    7
+   ],
+   "overall": [
+    8,
+    7,
+    8,
+    7,
+    7,
+    7
+   ]
+  }
+ },
+ "avg_rank": {
+  "givemotion": 3.0,
+  "remotion": 1.17,
+  "hyperframes": 1.83
+ },
+ "firsts": {
+  "givemotion": 0,
+  "remotion": 5,
+  "hyperframes": 1
+ },
+ "rows": [
+  {
+   "judge": "judge-1",
+   "order": [
+    "remotion",
+    "hyperframes",
+    "givemotion"
+   ],
+   "images": 34,
+   "cost": 0.6577394,
+   "overall": {
+    "givemotion": 6,
+    "remotion": 8,
+    "hyperframes": 8
+   }
+  },
+  {
+   "judge": "judge-2",
+   "order": [
+    "remotion",
+    "hyperframes",
+    "givemotion"
+   ],
+   "images": 34,
+   "cost": 0.6282654,
+   "overall": {
+    "givemotion": 6,
+    "hyperframes": 7,
+    "remotion": 8
+   }
+  },
+  {
+   "judge": "judge-3",
+   "order": [
+    "hyperframes",
+    "remotion",
+    "givemotion"
+   ],
+   "images": 34,
+   "cost": 0.6370271999999999,
+   "overall": {
+    "remotion": 7,
+    "givemotion": 6,
+    "hyperframes": 8
+   }
+  },
+  {
+   "judge": "judge-4",
+   "order": [
+    "remotion",
+    "hyperframes",
+    "givemotion"
+   ],
+   "images": 34,
+   "cost": 0.6198646,
+   "overall": {
+    "remotion": 7,
+    "hyperframes": 7,
+    "givemotion": 6
+   }
+  },
+  {
+   "judge": "judge-5",
+   "order": [
+    "remotion",
+    "hyperframes",
+    "givemotion"
+   ],
+   "images": 34,
+   "cost": 0.7222559999999999,
+   "overall": {
+    "hyperframes": 7,
+    "givemotion": 6,
+    "remotion": 8
+   }
+  },
+  {
+   "judge": "judge-6",
+   "order": [
+    "remotion",
+    "hyperframes",
+    "givemotion"
+   ],
+   "images": 34,
+   "cost": 0.6459386,
+   "overall": {
+    "hyperframes": 7,
+    "remotion": 8,
+    "givemotion": 6
+   }
+  }
+ ],
+ "notes": {
+  "givemotion": [
+   "judge-1 (as A): Clean type and a strong chart beat (counters rolling at 8.5-9.0s, Leaf turn at 9.4s), the type-to-trail collapse at 15.07s is neat, and the end card holds still and clean at 17.3-17.8s. But Beat 1 skips the Honey strike-through on DESERT. and any visible shear-out (2.48-2.92s), and the honeycomb is not full-frame (3.38s). The bee is a motion-blurred, glowy blob (12.82s, 15.53s), and 'NEIGHBOR.' curls upside-down and is hard to read at 13.28s.",
+   "judge-2 (as A): Strong opening: the hexagon outline draws at 0.23s and floods at 0.68s, and the chart rolls its counters cleanly to 3/9/17/26/41/58, with 2026 turning Leaf at 9.4s. But the Honey strike-through on DESERT never appears (2.48\u20132.92s), and the honeycomb at 3.38s cuts straight to a finished skyline at 3.83s with no visible squash into windows, so match cut #1 reads as a swap. While the type unfurls along the curve (12.9\u201313.28s), 'NEIGHBOR.' runs upside-down and backwards, and the push-in at 11.7s leaves a cropped 'END' fragment at the frame edge. The end card at 17.1s is clean.",
+   "judge-3 (as B): The chart (8.5-9.4s, counters rolling to 58, Leaf recolor) and the end card at 17.1s are solid, and the type-on-path at 12.5-13.0s is lively. But the required strike-through on DESERT is missing (2.7s and 2.92s), and the match cut at 3.83s reads closer to a swap, with sparse windows that don't line up with the filled cells. Heavy motion blur turns the bee into a glowing smear (12.5s, 15.7s), losing its stripes and wings and edging toward the no-glow rule, and at 13.28s NEIGHBOR wraps nearly upside down and is hard to read. A stray dot appears at 12.6s.",
+   "judge-4 (as C): The best kinetic ideas: counters roll with blurred digits (8.5\u20138.9s), the letters really unfurl along the bee's path (12.5\u201313.0s), and the end card fills and stamps in well (16.1\u201316.6s). But the required Honey strike-through on 'DESERT.' never appears (2.48\u20132.92s, and the 2.7s key frame). At 12.9\u201313.28s 'NEIGHBOR.' curls round until it reads upside down and backwards. Heavy motion blur makes the bee a smeared, glowing blob with no clear wings (12.6s, 15.7s) and blurs the roof hives at 7.2s, close to the forbidden glow effects. Chart pieces are still visible behind the hexagon at 12.1s, and the 'EVERY ROOF' words jitter in scale at 6.53s.",
+   "judge-5 (as B): Setting the hexagon inside the headline (1.12s) is a smart way to compose the frame, the counters land correctly (9.22s), and the curved NEIGHBOR. type (12.8\u201313.28s) and end card (17.1s) are handsome. But the Honey strike-through on DESERT. never appears (2.48\u20132.92s), the honeycomb turns into a skyline almost at once (3.83s), and the headline smears away in motion blur at 6.53s. Heavy motion blur on the bee and on the counting digits makes them look ghosted and glowing (8.5\u20138.7s, 15.7s), and a seam line cuts across the green bar at 11.93s.",
+   "judge-6 (as C): Smooth timing with motion blur, a pleasant fill-from-bottom hexagon (0.68s, 16.2s) and a clean end card (16.88\u201317.77s). The brief's strike-through on 'DESERT.' is missing (2.7\u20132.92s), and blur smears the type and digits (4.28s, 6.53s, 8.5\u20138.8s). The 2026 bar fold shows a visible seam at 11.93s, the curved type wraps so tightly that 'NEIGHBOR.' reads upside down (12.9\u201313.28s), the trail crosses over 'IS' at 13.72s, and the bee is a blur rather than simple readable shapes."
+  ],
+  "remotion": [
+   "judge-1 (as B): The most complete reading of the brief: the strike-through draws across DESERT. (2.7s), and the honeycomb becomes a full-frame grid of lit and dark windows that splits into six buildings (3.83-4.28s). Windows go out row by row (6.53s), the bee is well built and flies a readable figure-eight (12.1-13.0s), and the type straightens and then collapses into a dashed trail (14.62-15.07s). Flaws: during the push-in the 2026 bar overlaps its '58' label (11.7s), and the hexagon's fill oddly drops back at 12.9-13.0s.",
+   "judge-2 (as C): The most complete and confident piece. The full Honey strike-through lands at 2.7s. At 3.83s the honeycomb becomes a solid Brick block of lit and dark windows that splits into towers (4.28s), the strongest of the three match cuts, and the windows go out row by row at 6.53s as the brief asks. The 58 pulses at 9.3s, and the bee flies a real looping figure-eight around the hex (12.3\u201313.0s) before the type unfurls on the curve and straightens (13.28\u201314.62s), collapses into the dotted trail (15.07s) and redraws the end hexagon (16.0\u201316.5s). Flaws: during the push-in the 58 label is overlapped by the top of the bar (11.7s), the hex oddly half-empties at 12.9\u201313.0s, stray specks appear around the type at 2.92s, and the bricks briefly shift to an off-palette orange mid-recolor at 7.2s (also true of A and B).",
+   "judge-3 (as A): Delivers every beat: full Honey strike-through at 2.7s, a solid chart with rolling counters and the Leaf pulse on 58 at 9.3s, legible curved type from 13.3 to 14.2s and a dotted trail tracing the hexagon at 15.97s. The hexagon sits inline in the type rather than the words landing around it, and the match cut at 3.83s goes to one solid Brick wall before splitting into buildings, which is less clean than an in-place transform. Faults: a ghost '58' and stray marks under the hexagon at 11.93s, the hexagon empties and refills oddly around 12.9-13.0s, and Beat 1 holds dead still from 1.3 to 2.2s.",
+   "judge-4 (as A): Strongest match cuts: at 3.83s the honeycomb becomes a full-frame wall of windows that then splits into buildings. The windows go out cleanly by 6.53s, the bars count up to the right values by 9.2s, and the bee flies a clear figure-eight with the type following its curve (13.3\u201314.6s) before collapsing into the trail line at 15.07s. The hexagon sits inline between the words instead of the type landing around it (0.68\u20132.7s), and the strike-through covers 'DESERT.' well at 2.7s. Flaws: a stray dim '58' left under the hexagon at 11.93s, the '58' label clipped behind the bar top at 11.7s, and the bars turn orange instead of Brick to Honey at 7.2s. The end card at 17.1s is clean.",
+   "judge-5 (as C): The most complete delivery: the hexagon sits inline in the headline, the strike-through is clear (2.7s), the honeycomb packs into a lit window wall (3.83s) and then becomes a detailed skyline with lit and dark windows (5.17s), the 2026 bar turns Leaf and pulses on time (9.1\u20139.3s), and the bee's flight, the type unfurling along its path and the line becoming its trail (12.3\u201315.07s) all read well, ending in a strong end card (17.1s). It has the most small mistakes: the '58' label is hidden behind its bar at 11.7s, a leftover dim '58' and stray marks sit under the hexagon at 11.93s, stray dots appear at 2.92s, and the hexagon empties and refills while the bee is flying (12.9\u201313.0s). For a moment around 4.28s the skyline shows more than six buildings.",
+   "judge-6 (as B): Strongest concept: the hexagon set inside the line ('THE CITY \u2b21 IS NOT') and a full Honey strike through 'DESERT.' (2.7s). The honeycomb turns into a dense block of lit and dark windows in place at 3.83s, the windows switch off by 6.53s, and the 2026 bar shifts from Honey to Leaf (9.1\u20139.4s). Figure-eight bee loops (12.5\u201313.0s), curved type (13.72s) and the trail drawing the end hexagon (15.97s) work well. Errors: the '58' label is half covered by the bar at 11.7s, a ghost '58' is left under the hexagon at 11.93s, and an extra half-filled hexagon outline appears at 13.0s."
+  ],
+  "hyperframes": [
+   "judge-1 (as C): Strong hierarchy with the type framing the hexagon (2.7s), and the best hexagon continuity: the cell stays under the curved type in Beat 4 (13.28-14.62s), and the collapsed line traces the final hexagon (15.07-15.53s). The chart is well timed and the end card polished (17.1s). The honeycomb-to-skyline morph is cluttered in the middle (3.83s) and leaves no dark-wall windows, a stray 'IS' drops in at the top edge (4.72s), and the 2026 bar warps during the fold (11.93s).",
+   "judge-2 (as B): Delivers most beats faithfully: the strike-through draws across DESERT at 2.7\u20132.92s, and at 3.83s you can actually see the hexes turning into windows as the buildings rise. 'FIELD.' gets a squash on impact (5.0\u20135.2s), the bars ease out in sequence (8.5\u20139.2s), and at 14.62\u201315.07s the type melts into the bee's dotted trail, which then traces the end hexagon (15.53s), a lovely handover. Weaknesses: at 4.72s a dropping 'IS' sits above the line near the top edge, the 2026 bar warps into a trapezoid during the fold (11.93s), the bee's flight (12.2\u201313.0s) is a loose arc rather than a clear figure-eight, and the push-in is modest. Clean, competent, slightly safe.",
+   "judge-3 (as C): The strongest composition and the best match cuts. The type wraps the hexagon with the strike-through drawing at 2.7s, and at 3.83s the filled cells squash into windows in place as the Brick buildings rise, which is the clearest same-object transformation of the three. The chart builds in sequence (8.5-9.4s), the 58 bar folds into the hexagon at 11.93s, the bee is cleanly built, and the type collapses into the trail at 14.62s before the trail traces the hexagon at 15.53s. Minor issues: the hexagon stays under the curved type from 13.7 to 14.6s and crowds it, and the incoming 'IS' is cut off at the top edge at 4.72s.",
+   "judge-4 (as B): The cleanest layout of the three: the type sits stacked above the hexagon, the strike-through is drawing at 2.7s, the chart grows with the bars clearly staggered (8.5\u20139.2s), and the fold of the 2026 bar into the hexagon shows at 11.93s. The handover into the bee's trail line is clean (14.6\u201315.5s), and the end card's mask-rise letters and blinking cursor (16.0\u201316.6s) match the brief. Weaknesses: the 3.83s match cut is cluttered, with hex outlines, floating windows and rising buildings all on screen at once, and the buildings have only a few windows. The bee wanders up into the top-left corner instead of flying a figure-eight (12.5\u201313.0s), and the bars pass through orange at 7.2s.",
+   "judge-5 (as A): Clean and close to the brief: the hexagon draws on at 0.23s, the Honey strike-through draws across DESERT. at 2.7s, windows morph out of the honeycomb at 3.83s, and the Beat 4 type unfurls along the curve and collapses into the bee's trail (13.28\u201315.07s), which then traces the end-card hexagon at 15.53s. The weak spots are a plain stacked layout in Beat 1 (type above and below the hexagon) and buildings that flatten to zero before regrowing as bars (7.42s), so the skyline-to-chart cut loses its sense of one object changing. The fold at 11.93s is crude, and the tagline on the end card is small. Visible mistakes are almost none.",
+   "judge-6 (as A): Clean Beat 1 with the hexagon drawing on, a Brick 'NOT' and the strike-through drawing across 'DESERT.' (2.7\u20132.92s), and an accurate, well-sequenced chart with count-ups and the Leaf 2026 bar (8.32\u201310.57s). The first match cut at 3.83s is muddy: hexagon outlines, loose windows and half-risen buildings show at once, so it reads as a swap more than a squash. The skyline has sparse windows and no dark-wall cells, the 2026 bar becomes an odd pinched shape at 11.93s, and a faint stray line sits under the hexagon at 12.1s. Bee, curved type and end card (13.28\u201317.77s) are tidy but plain."
+  ]
+ }
+}

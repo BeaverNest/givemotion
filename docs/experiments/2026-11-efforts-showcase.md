@@ -87,7 +87,7 @@ images or clip art. The full brief is `bench/agents/briefs-tools/walk.md` in the
   its own folder, and none could read another's.
 - **What each maker got.** The brief, the fonts as local files, givemotion's agent docs (`SKILL.md`, its reference
   files and `blocks/`), and a `./gm` command running a frozen copy of the engine (main at `6be35ff`). The prompt was
-  identical apart from the folder path.
+  identical apart from the folder path (the same one as in [2026-11-tools-showcase.md](2026-11-tools-showcase.md)).
 - **Sandbox.** The same rules as the three-tool round. Low, medium and high had no refusals. xhigh had three. `git`
   is blocked for every maker, so refusing it was correct. `set`, a harmless shell builtin our list did not include,
   was refused by mistake. A shell script it wrote to tile crops was refused under the existing no-`sh` rule. It

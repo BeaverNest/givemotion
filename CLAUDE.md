@@ -64,10 +64,11 @@ highlight primitive in the engine, its looks in the user's brand); split it.
 ## Independence (read before every commit)
 
 The repository is public. Follow the independence and clean-room policy in `CONTRIBUTING.md`: our code is written here
-from scratch (never read or reproduce other code-to-video tools' source), and nothing public (code, docs, commit
-messages, PRs, images, videos) names, pictures or characterizes comparable products or their companies. Benchmarking
-against other tools is fine, but its harness, data and videos stay outside the repo, and published results are about
-givemotion only. If something slips into an unpushed branch, rewrite that branch's history before pushing.
+from scratch (never read or reproduce other code-to-video tools' source, docs or assets). Comparisons with other tools
+are welcome, and must be true, dated, versioned, sourced and fair: same conditions for every tool, blind judging, the
+full method and raw data published, losses reported as clearly as wins, facts not attacks, plain names and no logos.
+They live in the README's comparison sections, `docs/experiments/` and `benchmarks/` only. If something that breaks
+the policy slips into an unpushed branch, rewrite that branch's history before pushing.
 
 ## When to stop and ask Leo
 

@@ -1,0 +1,309 @@
+{
+ "judges": 6,
+ "mean": {
+  "givemotion": {
+   "brief": 6.5,
+   "spec": 7.17,
+   "motion": 6.83,
+   "craft": 7.17,
+   "errors": 6.17,
+   "overall": 6.5
+  },
+  "remotion": {
+   "brief": 7.5,
+   "spec": 7.83,
+   "motion": 7.17,
+   "craft": 7.33,
+   "errors": 7.83,
+   "overall": 7.33
+  },
+  "hyperframes": {
+   "brief": 6.5,
+   "spec": 7.83,
+   "motion": 6.33,
+   "craft": 6.33,
+   "errors": 7.0,
+   "overall": 6.33
+  }
+ },
+ "per": {
+  "givemotion": {
+   "brief": [
+    6,
+    6,
+    7,
+    6,
+    7,
+    7
+   ],
+   "spec": [
+    7,
+    7,
+    8,
+    6,
+    7,
+    8
+   ],
+   "motion": [
+    6,
+    7,
+    7,
+    6,
+    7,
+    8
+   ],
+   "craft": [
+    6,
+    7,
+    7,
+    7,
+    8,
+    8
+   ],
+   "errors": [
+    6,
+    6,
+    7,
+    5,
+    6,
+    7
+   ],
+   "overall": [
+    6,
+    6,
+    6,
+    6,
+    7,
+    8
+   ]
+  },
+  "remotion": {
+   "brief": [
+    8,
+    8,
+    7,
+    7,
+    8,
+    7
+   ],
+   "spec": [
+    8,
+    8,
+    8,
+    7,
+    8,
+    8
+   ],
+   "motion": [
+    7,
+    8,
+    7,
+    7,
+    7,
+    7
+   ],
+   "craft": [
+    7,
+    8,
+    7,
+    7,
+    8,
+    7
+   ],
+   "errors": [
+    8,
+    8,
+    8,
+    7,
+    8,
+    8
+   ],
+   "overall": [
+    7,
+    8,
+    7,
+    7,
+    8,
+    7
+   ]
+  },
+  "hyperframes": {
+   "brief": [
+    7,
+    7,
+    6,
+    6,
+    7,
+    6
+   ],
+   "spec": [
+    8,
+    8,
+    8,
+    7,
+    8,
+    8
+   ],
+   "motion": [
+    7,
+    7,
+    6,
+    6,
+    6,
+    6
+   ],
+   "craft": [
+    7,
+    7,
+    6,
+    6,
+    6,
+    6
+   ],
+   "errors": [
+    7,
+    7,
+    7,
+    6,
+    8,
+    7
+   ],
+   "overall": [
+    7,
+    7,
+    6,
+    6,
+    6,
+    6
+   ]
+  }
+ },
+ "avg_rank": {
+  "givemotion": 2.33,
+  "remotion": 1.17,
+  "hyperframes": 2.5
+ },
+ "firsts": {
+  "givemotion": 1,
+  "remotion": 5,
+  "hyperframes": 0
+ },
+ "rows": [
+  {
+   "judge": "judge-1",
+   "order": [
+    "remotion",
+    "hyperframes",
+    "givemotion"
+   ],
+   "images": 34,
+   "cost": 0.709575,
+   "overall": {
+    "givemotion": 6,
+    "remotion": 7,
+    "hyperframes": 7
+   }
+  },
+  {
+   "judge": "judge-2",
+   "order": [
+    "remotion",
+    "hyperframes",
+    "givemotion"
+   ],
+   "images": 34,
+   "cost": 0.704968,
+   "overall": {
+    "givemotion": 6,
+    "hyperframes": 7,
+    "remotion": 8
+   }
+  },
+  {
+   "judge": "judge-3",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.7278033999999999,
+   "overall": {
+    "remotion": 7,
+    "givemotion": 6,
+    "hyperframes": 6
+   }
+  },
+  {
+   "judge": "judge-4",
+   "order": [
+    "remotion",
+    "hyperframes",
+    "givemotion"
+   ],
+   "images": 34,
+   "cost": 0.6377892000000001,
+   "overall": {
+    "remotion": 7,
+    "hyperframes": 6,
+    "givemotion": 6
+   }
+  },
+  {
+   "judge": "judge-5",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.7401724000000001,
+   "overall": {
+    "hyperframes": 6,
+    "givemotion": 7,
+    "remotion": 8
+   }
+  },
+  {
+   "judge": "judge-6",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.7146348,
+   "overall": {
+    "hyperframes": 6,
+    "remotion": 7,
+    "givemotion": 8
+   }
+  }
+ ],
+ "notes": {
+  "givemotion": [
+   "judge-1 (as A): Good draw-on of the mooring (1.2\u20132.1 s), a nice ferry reflection, and a lively spark swarm at 6.8 s. Beats run about a second late ('no roar' still full size at 5.74 s, 'plugged into the shore' only at 8.7 s), and at 4.7\u20134.8 s a blurred 'no roar' overlaps the remains of 'no smoke'. 'quiet water' (14.2\u201315.1 s) crowds the wake, and at 16.1 s the amber particles are still a cloud, not settled harbor lights.",
+   "judge-2 (as A): Strong stroke-drawn opening: the ferry draws in one continuous path (1.2\u20132.1s), 'the harbor wakes' is well centred above the boat (2.5s), and the glowing windows and FULL burst look good (11.1s). But everything runs about 1.3s late: 'no roar' shrinks at 6.16s, 'just current' streams into the mast at 8.4s, FULL comes at 10.84s and 'we cross' at 11.26s. That squeezes Beat 5, so the harbor lights only settle just before the end (16.36s). At 4.7\u20134.8s a motion-blurred 'no roar' sits on top of the leftover 'no smoke', which is a muddy double line. The ferry reflection is a nice touch, though the brief did not ask for it.",
+   "judge-3 (as B): This one has the most depth: a faint ferry reflection, motion blur on the 'no roar' slam (4.7s) and on the departing ferry (11.1s), and a generous two-colour charge burst (10.8\u201311.1s). On the other hand, the blurred 'no roar' lands on top of the still-dissolving 'no smoke' (4.7\u20134.8s), which looks muddy. 'The harbor wakes' lingers past 3.2s and 'we cross' past 12.3s, so 'on borrowed lightning' gets very little time (12.5\u201313.8s). The cable takes an odd path, running flat along the arm first (8.7s), and at 16.1s the amber particles are still a busy cloud under the type instead of settled horizon lights.",
+   "judge-4 (as C): The richest finish (ferry reflection, glow, motion blur, a strong two-color burst at 10.84-11.1s), but the most errors. The motion-blurred 'no roar' crashes into the still-dissolving 'no smoke' (4.7-4.8s), 'we cross' overlaps the burst while the pier is still in frame (11.1s), the route arc runs off the left edge (16.1s), and 'carries us home' crowds the arc and particle cloud (15.94s). Its timing drifts the most ('no smoke' still on screen at 4.6s).",
+   "judge-5 (as B): {'__comment': 'unused'}",
+   "judge-6 (as C): The richest piece of the three. A low-opacity ferry reflection adds depth (2.5s), the 'no roar' slam has motion blur (4.7\u20134.8s), sparks stream as glowing streaks (6.8s), and a big amber/cyan charge burst fires while 'we cross' blurs in on the move (11.1s). The final frame has lights on the horizon, the window glow and a long wake fan (16.1\u201316.79s). It is the latest of the three in the first half: 'the harbor wakes' is still on screen at 3.19s, 'no smoke' lasts until 4.6s and dissolves under the incoming 'no roar', and 'just current' holds until 8.4s, which squeezes the charging beat. The route arc also starts off the top-left edge, so it does not read as starting from the ferry."
+  ],
+  "remotion": [
+   "judge-1 (as B): Timing closest to the brief: the smoke breakup at 4.0 s, 'no roar' shrinking to almost nothing at 5.74 s, and 'just current' streaming into the mast at 8.1\u20138.5 s and handing straight to the cable draw. The lightning zigzag at 12.5\u201313.4 s reads clearly, and by 16.1 s the harbor lights have settled with little reflections, the best ending of the three. Weak spots: the 'FULL' burst at 10.4 s is small, the 'no roar' shake is hard to see, and the work is clean but fairly plain.",
+   "judge-2 (as C): Best timing against the brief: 'the harbor wakes' lifts out at 2.76s, 'no smoke' breaks apart at 4.04s, 'no roar' shrinks to a point by 5.74s and bursts at 6.16s. The cable retracts and FULL fires by 10.41s, 'we cross' starts at 10.84s, the zigzag strikes 'lightning' at 12.54\u201312.96s, and 'quiet water' lands on time (13.81s) with its reflection. The ending is the most polished of the three: 'quiet water' dissolves into amber and rebuilds as 'carries us home' (15.2\u201315.7s), and the light points settle on the horizon with small reflections, clear of the route (16.1s). Weak points: the mast is a bare inverted-L with no brace, and the charging/'just current' stream runs about 1s late (8.1\u20138.4s). Contrast on the mid-fade words is a little soft (11.8s, 12.0s).",
+   "judge-3 (as A): The cleanest of the three. The waterline draws with its tip dot (0.21s), the ferry draws in one stroke (1.2\u20132.1s), and the letters of 'the harbor wakes' stagger in. The windows light one by one, bow to stern (9.1\u201310.0s), and 'we cross' opens its letter-spacing (10.8\u201311.7s). There is a clear zigzag strike and burst on 'lightning' (12.5\u201313.0s), and the harbor lights settle with small reflections and a clean final hold (16.1\u201316.8s). The weak points: the charging beat runs about a second late (cable at 8.4s, 'just current' still forming at 6.8s), and 'quiet water' and 'carries us home' share the screen as particles at 15.5\u201315.7s. The 'no roar' shake and shrink is hard to read before it drops at 5.7s.",
+   "judge-4 (as A): Most complete and cleanest: the waterline draws with a cyan tip (0.21s), the ferry draws in one stroke with windows last (1.2-2.1s), 'no smoke' dissolves at 4.04s and the sparks rebuild 'just current' (6.16-7.0s) before streaming into the mast (8.2-8.4s). The ending is the best of the three: the gold particles settle into harbor lights on stems along the horizon (16.1s), and by 16.79s only the waterline, lights and text remain. Weaknesses: every beat runs about 1-1.5s late ('we cross' only at 10.8s), no visible shake on 'no roar' (4.6-5.5s), tiny mono labels, a thin charge-complete burst (10.41s), and 'quiet water' overlaps the route arc (13.81s).",
+   "judge-5 (as C): C has the tightest timing of the three in beats 4\u20135 ('we cross' at 10.8s, 'on borrowed lightning' at 11.9\u201313.4s, 'quiet water' at 13.8s). Its homecoming is the best of the three: 'quiet water' turns into amber particles that rise and build 'carries us home' (15.2\u201315.7s), and by 16.1s the harbor lights sit on the horizon as small posts with soft reflections. The cable, pulses, 'FULL' flicker and cable retraction all read clearly (8.4\u201310.4s). On the weak side, 'no roar' stays big and unbroken until about 5.5s, 'the harbor wakes' arrives before the ferry is drawn (1.06s), and the mast is a plain gantry.",
+   "judge-6 (as B): {'__': 'unused'}"
+  ],
+  "hyperframes": [
+   "judge-1 (as C): Matches B's timing and setup closely, with clean cable and word drops at 8.6\u20139.6 s. 'plugged into the shore' is still half visible during the burst at 11.1 s, and at 13.4\u201313.8 s the zigzag stays across 'lightning' without a clear full cyan change, which muddies the moment. The mast reads as a street lamp, and the harbor lights are still a particle cloud at 16.1 s, settling only in the last half second.",
+   "judge-2 (as B): This is close to A in structure, with timing nearer the brief early on: 'no smoke' at 3.19s, 'no roar' shrinks at 5.74s, the cyan burst at 6.16s, and 'just current' rebuilds well (6.59\u20137.01s). The cable, typed SHORE POWER and window-by-window lighting are clear (8.6\u201310.41s), and the zigzag strike on 'lightning' reads well (13.39s). The charging beat runs late, so 'plugged into the shore' is still fading at 11.1s while the ferry has not left. At 16.1s the amber particles are still floating as a loose cloud rather than settled horizon lights, and the dotted route crowds just under 'carries us home'. The FULL label is very faint.",
+   "judge-3 (as C): The build is competent and close to A: a clean ferry draw (1.2\u20132.1s), a smoke dissolve on 'no smoke' and 'no roar' (4.6\u20135.5s), and the windows filling while the cable is attached (9.1\u201310.4s). The handovers drag. 'Plugged into the shore' is still fading and 'FULL' still showing at 11.1s, while the ferry has barely moved. The 'lightning' strike is a single diagonal slash, not the 3-segment zigzag (13.4\u201313.8s). The 'quiet water' reflection stays solid while the top line dissolves (15.5s), and at 16.1s the amber particles have not yet settled into harbor lights. The final lights at 16.8s are so faint they almost disappear.",
+   "judge-4 (as B): Nearly the same plan as A with a solid ferry draw (1.2-2.1s), a clear window charge-up (9.1-10.4s) and the lightning zigzag at 13.39s. Beat 3 runs over: at 11.1s 'plugged into the shore' is still a faded ghost beside FULL and the burst, so 'we cross' starts at 11.26s. At 16.1s the harbor lights are still a loose cloud above the waterline instead of lights on the horizon, and the ferry's windows linger as ghosts while it un-draws (16.36s).",
+   "judge-5 (as A): A faithful, clean build. The waterline draws with its tip dot, the ferry draws in one stroke (1.2\u20132.1s), the windows light one by one (9.1\u201310.4s), the lightning zigzag lands (13.4s) and the final frame keeps only the waterline, lights and line (16.79s). But most beats run about 1s late: 'just current' at 6.6\u20138.2s, the cable at 8.6s and 'we cross' only at 11.2s. 'FULL' is a tiny grey label that barely reads (11.1s), and the harbor lights are still an unformed cloud at 16.1s. The left-aligned type is also less striking than the others, and there is no visible shake on 'no roar'.",
+   "judge-6 (as A): Clean opening: the waterline with its riding dot, the pier, and the ferry drawn in one stroke all build correctly (1.2\u20132.1s), and the 8-window lighting and lightning zigzag (13.4s) read well. The timeline drifts late: 'the harbor wakes' holds at full opacity to 2.76s with no lift-out, 'no roar' sits from 4.4 to 5.5s with no visible shake before shrinking, and the cable only starts at 8.6s. In the finale the amber particles hang in a mid-air cluster under 'carries us home' at 16.1s and only reach the horizon in the last frames (16.79s). The wake is three faint lines, and the 'FULL' label and burst at 10.84\u201311.1s are small and murky."
+  ]
+ }
+}

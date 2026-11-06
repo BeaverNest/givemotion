@@ -1,0 +1,309 @@
+{
+ "judges": 6,
+ "mean": {
+  "givemotion": {
+   "brief": 8.67,
+   "spec": 8.83,
+   "motion": 8.0,
+   "craft": 8.0,
+   "errors": 7.5,
+   "overall": 7.83
+  },
+  "remotion": {
+   "brief": 8.17,
+   "spec": 8.83,
+   "motion": 7.5,
+   "craft": 7.17,
+   "errors": 6.67,
+   "overall": 7.17
+  },
+  "hyperframes": {
+   "brief": 7.17,
+   "spec": 8.67,
+   "motion": 6.67,
+   "craft": 6.83,
+   "errors": 5.83,
+   "overall": 6.17
+  }
+ },
+ "per": {
+  "givemotion": {
+   "brief": [
+    9,
+    9,
+    8,
+    9,
+    9,
+    8
+   ],
+   "spec": [
+    9,
+    9,
+    9,
+    9,
+    8,
+    9
+   ],
+   "motion": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "craft": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": [
+    8,
+    7,
+    8,
+    7,
+    8,
+    7
+   ],
+   "overall": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    7
+   ]
+  },
+  "remotion": {
+   "brief": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    9
+   ],
+   "spec": [
+    9,
+    9,
+    8,
+    9,
+    9,
+    9
+   ],
+   "motion": [
+    7,
+    8,
+    7,
+    8,
+    7,
+    8
+   ],
+   "craft": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    8
+   ],
+   "errors": [
+    7,
+    6,
+    6,
+    6,
+    7,
+    8
+   ],
+   "overall": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    8
+   ]
+  },
+  "hyperframes": {
+   "brief": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    8
+   ],
+   "spec": [
+    9,
+    9,
+    8,
+    9,
+    8,
+    9
+   ],
+   "motion": [
+    7,
+    7,
+    6,
+    7,
+    6,
+    7
+   ],
+   "craft": [
+    7,
+    7,
+    7,
+    7,
+    6,
+    7
+   ],
+   "errors": [
+    6,
+    6,
+    5,
+    6,
+    5,
+    7
+   ],
+   "overall": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    7
+   ]
+  }
+ },
+ "avg_rank": {
+  "givemotion": 1.17,
+  "remotion": 1.83,
+  "hyperframes": 3.0
+ },
+ "firsts": {
+  "givemotion": 5,
+  "remotion": 1,
+  "hyperframes": 0
+ },
+ "rows": [
+  {
+   "judge": "judge-1",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6889688,
+   "overall": {
+    "givemotion": 8,
+    "remotion": 7,
+    "hyperframes": 6
+   }
+  },
+  {
+   "judge": "judge-2",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.7066134,
+   "overall": {
+    "givemotion": 8,
+    "hyperframes": 6,
+    "remotion": 7
+   }
+  },
+  {
+   "judge": "judge-3",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6759356000000001,
+   "overall": {
+    "remotion": 7,
+    "givemotion": 8,
+    "hyperframes": 6
+   }
+  },
+  {
+   "judge": "judge-4",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6264158,
+   "overall": {
+    "remotion": 7,
+    "hyperframes": 6,
+    "givemotion": 8
+   }
+  },
+  {
+   "judge": "judge-5",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6658094000000001,
+   "overall": {
+    "hyperframes": 6,
+    "givemotion": 8,
+    "remotion": 7
+   }
+  },
+  {
+   "judge": "judge-6",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.606792,
+   "overall": {
+    "hyperframes": 7,
+    "remotion": 8,
+    "givemotion": 7
+   }
+  }
+ ],
+ "notes": {
+  "givemotion": [
+   "judge-1 (as A): The most complete and atmospheric piece. Rotating true morphs (1.3-2.1 s), real three-depth parallax and a motion trail (3.5-5.0 s), and the word card drifting in by 5.0 s give real continuity. Three distinct word techniques: scale-in, a lime-bar wipe (8.4-8.7 s) and a scatter (10.0 s). The 3D grid and counters land by 14.0 s, and the FLOW card flies forward to become the violet title (15.0-16.2 s). Weaknesses: the ring burst over KINETIC at 17.0 s is cluttered, cream on violet has only moderate contrast, and the grid labels are small.",
+   "judge-2 (as A): Most complete delivery of the brief: an overshoot pop and heartbeat rings (1.0-1.3s), rotating glowing morphs, a parallax path whose card slides under the circle head (5.0-6.5s), three distinct word techniques (SHAPE with a ring at 7.0s, a lime bar wipe at 8.4-8.9s, FLOW scattering and reassembling at 10.0s), and a rich 6x4 grid with a wave and counters landing at 60/120/1 (12.5-14.0s). The FLOW card itself flies forward and fills the frame (15.0-16.0s), the shared-element hand-over the brief asks for. Weaknesses: lumpy in-between morph shapes (2.0-2.5s), a ring burst covering KINETIC's letters at 17.0s, and only medium contrast for cream text on the violet title ground.",
+   "judge-3 (as B): The most polished and complete piece. The 6x4 grid is rich, with drawn shapes on the cards, lime counters and a visible wave (12.5-13.4 s). The lime wipe bar hands SHAPE to MOVE cleanly at 8.4-8.8 s. The FLOW card lifts at 15.0 s and flies in as a translucent card carrying a lime dot that becomes the shapes, so the shared element reads well. KINETIC lands with a burst ring at 17.0 s and holds with ambient light. The weak spots are beat 2 (4.5-5.4 s), where the parallax is sparse and the frame is mostly empty and flat, and the square-to-triangle morph, which goes through an awkward wedge at 2.1 s.",
+   "judge-4 (as C): This is the richest and most polished piece. It has a glow, a heartbeat ring at 1.0-1.3 s, squash and stretch before launch at 2.5-3.0 s, and a trail. The word card glides in while the path is still drawing (5.0-6.5 s). MOVE is revealed by a lime wipe bar (8.4-8.9 s) and FLOW scatters and reassembles (10.0 s). The grid at 12-14.5 s is detailed, with drawn shapes on the cards and a strong staggered lift. The title card flies forward with its own lighting (15.5-16.2 s) and the end title has a lit gradient hold. Weaknesses: the triangle morph lands late and lumpy (2.0-2.1 s), a dark sliver is still visible at the frame edge at 16.0 s, and at 17.0 s the shockwave ring and shapes pile onto KINETIC for a cluttered beat before it settles.",
+   "judge-5 (as B): This is the most complete delivery. A pulse ring and glowing morphs open it (1.2-2.1s), a motion trail and large near/mid/far outlines give real parallax (4.5-5.4s), and the word card slides in while the path is still drawing (5.0-6.5s), so the beats flow into each other. The lime line becomes a wipe bar that hands SHAPE to MOVE (8.4-8.9s), FLOW scatters and reassembles (10.0s), and the 6x4 grid with shape icons and lime counters ripples convincingly (12.5-13.4s). The FLOW card itself lifts and flies forward to become the violet title background (15.0-16.2s), a true shared element, and KINETIC lands with a ring burst (17.0s). Minor issues: cream on violet has only moderate contrast, and the rounded square is slightly lumpy mid-morph (2.0s).",
+   "judge-6 (as C): The most polished surfaces: glows, a soft violet ambience, and the best grid of the three (key 13.5s, cards with icons, lime counters, a clear wave at 12.5-13.0s). The MOVE lime-bar clip reveal at 8.4-8.9s and the FLOW scatter at 10.0s are well judged. Beat 1 is less tidy: the square is still lumpy mid-morph at 2.0s, and the circle at 2.5s is an off-round blob. Beat 2 parallax is thin, often just the line and a single outline shape (4.5-5.4s). The hand-over is muddier: the card flips with mirrored 'FLOW' at 15.0s, a greyish translucent card at 15.5s, and a cluttered ring burst over half-formed KINETIC at 17.0s, though the final hold at 17.5-19.5s is clean."
+  ],
+  "remotion": [
+   "judge-1 (as B): Clean and coherent: the line draws across a plane of cards and underlines SHAPE as it forms (5.5-6.0 s), the best word hand-over of the three, and the violet card flying forward (15.5-16.4 s) is a textbook shared-element move. The morphs are real but small. SHAPE and MOVE overlap messily at 8.4-8.5 s. The grid (12.5-14.5 s) is very dark and low in contrast with a barely visible wave, and the counters reach 60/120 only around 14.5-15.0 s, so they barely hold. The end title is nearly identical to A's, and the tagline is faint at 17.0 s.",
+   "judge-2 (as C): Best sense of one world: the card grid already sits behind the path in beat 2 with real near/mid/far parallax (4.5-5.4s), and SHAPE appears small on its card while the camera pushes in (5.5-6.5s), with a smooth violet card fly-in to the title (15.5-16.4s). The triangle morph is wobbly with a dented edge (2.0s), SHAPE, MOVE and the lime line pile on top of each other at 8.4-8.5s, and the counters start late and look faint (still 22/15/0 at 13.5s). The wave is modest and the card that flies is a blank one rather than the word card, so the hand-over is weaker than A's.",
+   "judge-3 (as A): Strongest sense of one world: the card grid is already visible under the path at 4.5-5.4 s, the line lands on SHAPE at 5.5-6.5 s, and the flat 6x4 grid with its staggered wave and counters (12.5-14.5 s) leads into a clean card fly-out that fills the frame (15.5-16.4 s). The words arrive early (SHAPE is already readable at 6.0 s instead of 7 s), and the SHAPE-to-MOVE hand-over at 8.4-8.5 s leaves the two words stacked on top of each other with the lime bar striking through them. The triangle morph is lumpy at 1.9-2.0 s, and the cream tagline on violet at 17-19.5 s is low in contrast.",
+   "judge-4 (as A): This is the most continuous world of the three. From 4.5 s the lime path runs across the grid cards that are already there, and it leads SHAPE onto its card at 5.5-6.5 s, so the 11.5 s pull-back really shows the same card. The parallax at 3.5-4.5 s has three clear depths. Weaknesses: the triangle at 2.0 s is lumpy and half-formed. The SHAPE-to-MOVE swap at 8.4-8.5 s puts the lime line straight through both overlapping words, so it reads as a strikethrough. The grid wave at 12.5-14 s is faint. The flat, unlit violet card at 15.5-16.4 s and the low-contrast tagline at 17-20 s make the end title look plain.",
+   "judge-5 (as C): This is a strong, clean world. The path runs over the card grid in the background, with dense parallax (4.5-5.4s), the line writes SHAPE onto its card (5.5-7.0s), and FLOW scatters and reassembles (10.0-10.5s). The violet card flight that fills the frame (15.5-16.4s) is the smoothest shared-element move of the three. Weaknesses: the triangle morph lands blobby and soft-cornered (2.0s), and SHAPE and MOVE sit on top of each other with the line crossing them at 8.4-8.5s. The counters start late and are still at 15/22/0 at 13.5s, the grid wave is timid, and the KINETIC arrival and title hold feel flatter than B's.",
+   "judge-6 (as B): The strongest one-world continuity: the card grid is already visible under the path at 4.5-5.4s, and SHAPE wipes onto a card at 5.5-6.5s, so beat 2 flows into beat 3 with no break. Parallax at several depths is rich, and the card that will fly is set up as a violet empty card at 14.5s, then flies forward with a clean tilt and fills the frame (15.5-16.4s), a textbook shared-element transition. The weak spots are the lumpy, wobbly triangle at 1.9-2.1s (key 2.0s) and the busy SHAPE/MOVE overlap with the line crossing at 8.4-8.5s. The wave and counters at 13.0-14.5s look good; the final cream-on-violet title at 19.0s is crisp, with the shapes recoloured in palette."
+  ],
+  "hyperframes": [
+   "judge-1 (as C): Crisp morphs (1.3-2.1 s), the most readable grid wave (13.0-13.5 s) and the strongest single end frame (black KINETIC on lime, 17.5-19.5 s). It also has the most errors: a near-empty frame with the dot at the left edge at 6.5 s, a sliced swap from SHAPE to MOVE that garbles both words at 8.7-8.8 s, MOVE still scattering at 10.0 s so FLOW gets only about 0.9 s, and a stray lime circle masking 'LOW' on the flying card at 15.5 s. The parallax in beat 2 is sparse and flat.",
+   "judge-2 (as B): Strongest end frame: near-black KINETIC on lime with violet shapes and a clean tagline (17.5-19.5s), plus a convincing domed 3D wave (13.0-14.5s). Beat 2 is sparse and flat with tiny outline shapes, and at 6.5s the frame is nearly empty with only the dot at the edge. The SHAPE-to-MOVE slice transition is messy (8.7-8.8s), the grid cards are empty apart from the counters, and the FLOW card briefly turns into a lime circle with a clipped 'LOW' at 15.5s, which reads as a glitch.",
+   "judge-3 (as C): Beat 1 is crisp: a clean pop, sharp morphs and a well-judged triangle at 2.0 s. The lime end card has the best title contrast of the three (19.0 s). The rest is less controlled. The frame is nearly blank at 6.5 s, the slice hand-over at 8.7-8.8 s reads as broken glyph fragments, MOVE is still unsettled at 9.0 s, and at 15.5 s the flying card glitches into a lime blob with a clipped 'LOW' and '20' showing through. The beat 2 parallax is made of tiny, barely visible specks, so the depth is weak.",
+   "judge-4 (as B): Beat 1 has the cleanest morphs, with a crisp triangle at 2.0 s. The end title is the most legible and punchy of the three: near-black KINETIC on lime, with the shapes turning gently during the 17-20 s hold. The grid wave at 13-14.5 s visibly bends the plane. Weaknesses: the parallax in beat 2 is just sparse specks, so there is little real depth. 6.5 s is an almost empty frame with the dot stuck at the left edge, which breaks continuity. The slice transition at 8.7-8.9 s chops the letters into glitchy fragments, and the E is still out of line at 9.0 s. The lime card at 15.5 s shows a circular mask artefact with a cropped 'LOW' inside it.",
+   "judge-5 (as A): The shape morphs read as true outline changes with rotation (1.3-2.1s), the lime path is clean, and the curved 3D grid wave with counters reaching 60/120/1 (12.5-14.5s) is well done. The lime end card with near-black KINETIC has the strongest contrast of the three (19.0s). Continuity breaks at 6.5s, where the frame goes almost empty with the dot stuck at the edge before the words. The SHAPE to MOVE slice at 8.7-8.9s looks like broken fragments, and the card fly-out at 15.5s becomes an odd lime circle with a ghosted 'LOW' on it, which reads as an artifact rather than a shared element.",
+   "judge-6 (as A): Beat 1 is clean: the pop and overshoot at 0-1.0s, then real outline morphs with rotation at 1.3s and 1.9s. The lime path with motion trail from 3.5-6.0s works, but the parallax shapes are tiny and sparse, and 6.5s is a near-empty frame with only a dot at the left edge, a dead moment going into the words. The three word techniques are good and distinct: blur rise at 7.0s, a slice/mask swap at 8.7-8.9s, letters tumbling out at 10.0s. The curved 3D grid and counters from 12.0-15.0s read well, though the empty cards are muddy and low in contrast. The lime card hand-over at 15.5-15.9s works but has an odd circle-masked 'LOW' ghost at 15.5s and squashed letters at 16.5s; the final lime/ink title at 19.0s is bold and legible."
+  ]
+ }
+}
