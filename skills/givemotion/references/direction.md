@@ -5,16 +5,22 @@ anything; what separates a portfolio piece from a template is a clear direction,
 This page is the method, not a style: the looks come from the brief and from your research.
 
 Contents
-- 1. Research the genre (10 minutes, not an hour)
+- 1. Research the genre, when it adds something
 - 2. Write the direction at the top of the page
 - 3. Style frames: the key holds as stills, before any motion
 - 4. Build to the direction, review against it
 
-## 1. Research the genre
+## 1. Research the genre, when it adds something
 
-Ask: who makes the best work of this kind, and what do their pieces have in common? If you can search the web, look
-for 3-5 real examples of the genre and subject (studio reels, award sites, case studies, design write-ups) and read
-how they are described; if you cannot, recall well-known pieces you know. Pull out, in words:
+First take stock of what already decides the look: a brand kit or design system, earlier videos or parts in the
+project, references the user gave, a brief that already fixes palette, type and motion. When those answer the
+questions below, skip research and use them; consistency with earlier work matters more than novelty.
+
+Research when something is still open: a genre or style you cannot picture concretely, a first video for a new brand,
+a brief that names a look ("Swiss editorial", "risograph", "Apple-style launch") you have not built. Then, if you can
+search the web, look for a few real examples of the genre and subject (studio reels, award sites, case studies) and
+read how they are described; if you cannot, recall well-known pieces. Spend minutes, not the session. Pull out, in
+words, only what is still open:
 
 - **Layout:** where the focal point sits, how much empty space, a grid or a free composition, safe margins.
 - **Type:** one family or a pairing, the size steps (e.g. 200 / 96 / 40 px), weight and tracking, how many words per frame.

@@ -11,12 +11,12 @@ A composition is one HTML file. Every frame is that page at a moment in time. CS
 
 This file is the core (read it all). Then read **only** the 1-3 technique recipes your video needs (table at the end): each one shows how a professional builds that effect, with numbers and a working example. Look up anything else when you need it.
 
-## The loop
+## The loop (for an edit, only the steps it needs)
 
-0. **Direct.** If you have a web search tool, first run 2-3 searches for top work in this genre and subject and note what they share; else recall such work. Then write at the top of the HTML: the look, the type system, the motion language (easing families, rhythm, hand-overs) and the shot list (time, what is on screen, the move, the hand-over). How: `references/direction.md`.
+0. **Direct.** Decide how a top studio would make this look. Start from what you have (brand kit, earlier videos, references, a detailed brief); research only what is still open, with a web search if you have one. Then write at the top of the HTML: the look, type system, motion language and shot list (time, on screen, move, hand-over). How: `references/direction.md`.
 1. **Style frames.** Build the 2-3 key holds first, still, and `still` each: judge them as posters (one focal point, hierarchy, margins). Then animate.
 2. **Write** the motion; `npx givemotion check video.html` as you go: fix every ✖; ⚠ are real faults unless meant; ℹ are style hints.
-3. **Review twice.** `npx givemotion review video.html` (it finds `brief.md` next to the page, or `--brief f.md`) writes what a viewer sees: an overview, the frames people read, motion strips, and `beats.png`, each brief beat at its own times. Check every beat word by word, score per `review/REVIEW.md`, fix the five worst problems, review again. Then give a sub-agent the critic prompt in REVIEW.md. Put the brief's times in `data-expect`.
+3. **Review twice.** `npx givemotion review video.html` (reads `brief.md` beside the page, or `--brief`) shows what a viewer sees: overview, the frames people read, motion strips, `beats.png` (each brief beat at its times). Check each beat word by word, score per `review/REVIEW.md`, fix the five worst problems, review again. Give a sub-agent the critic prompt in REVIEW.md. Put the brief's times in `data-expect`.
 4. **Render:** `npx givemotion render video.html -o out/video.mp4`.
 
 `--json` for machine output, `<command> --help` for options. `still video.html -t 3.2 -o f.png` renders one moment; `inspect --at 4.5 --el "#logo"` says where an element is.
