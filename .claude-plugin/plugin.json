@@ -1,7 +1,7 @@
 {
   "name": "givemotion",
   "displayName": "givemotion",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Make videos with AI: your agent builds motion graphics, checks its own frames and renders MP4/WebM/GIF/ProRes with givemotion (free, MIT). The skill pack teaches the agent the composition format, motion design rules, styles and every engine API.",
   "author": {
     "name": "Leonardo Grigorio",

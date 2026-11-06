@@ -1,6 +1,6 @@
 {
   "name": "givemotion",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Make videos with AI, free and open source (MIT). Lets AI agents like Claude Code, Codex and Cursor make motion graphics: the agent builds the video, checks its own frames and renders an MP4. Same input, same video; a change touches only what you asked for.",
   "type": "module",
   "license": "MIT",
