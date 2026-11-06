@@ -1,0 +1,66 @@
+[
+ {
+  "id": "n",
+  "genre": "title sequence",
+  "subject": "a password manager",
+  "techniques": [
+   "particles or bursts",
+   "character or object animation with squash and stretch",
+   "kinetic typography"
+  ],
+  "format": "1920x1080",
+  "seconds": 22,
+  "fonts": [
+   "Inter",
+   "Space Grotesk",
+   "Playfair Display",
+   "Bebas Neue",
+   "JetBrains Mono",
+   "Caveat",
+   "Nunito"
+  ]
+ },
+ {
+  "id": "o",
+  "genre": "title sequence",
+  "subject": "a budgeting app",
+  "techniques": [
+   "a map or route animation",
+   "path animation / lines that draw themselves",
+   "masked reveals and wipes"
+  ],
+  "format": "1920x1080",
+  "seconds": 24,
+  "fonts": [
+   "Inter",
+   "Space Grotesk",
+   "Playfair Display",
+   "Bebas Neue",
+   "JetBrains Mono",
+   "Caveat",
+   "Nunito"
+  ]
+ },
+ {
+  "id": "p",
+  "genre": "year-in-review",
+  "subject": "a password manager",
+  "techniques": [
+   "masked reveals and wipes",
+   "particles or bursts",
+   "a living ambient background"
+  ],
+  "format": "1080x1920 (vertical)",
+  "seconds": 18,
+  "fonts": [
+   "Inter",
+   "Space Grotesk",
+   "Playfair Display",
+   "Bebas Neue",
+   "JetBrains Mono",
+   "Caveat",
+   "Nunito"
+  ],
+  "forced_vertical": true
+ }
+]

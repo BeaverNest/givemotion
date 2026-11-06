@@ -1,0 +1,309 @@
+{
+ "judges": 6,
+ "mean": {
+  "givemotion": {
+   "brief": 8.67,
+   "spec": 8.33,
+   "motion": 8.5,
+   "craft": 8.33,
+   "errors": 7.83,
+   "overall": 7.83
+  },
+  "remotion": {
+   "brief": 8.33,
+   "spec": 8.33,
+   "motion": 8.0,
+   "craft": 8.0,
+   "errors": 7.67,
+   "overall": 7.67
+  },
+  "hyperframes": {
+   "brief": 7.83,
+   "spec": 8.0,
+   "motion": 7.33,
+   "craft": 7.17,
+   "errors": 6.67,
+   "overall": 6.67
+  }
+ },
+ "per": {
+  "givemotion": {
+   "brief": [
+    9,
+    7,
+    9,
+    9,
+    9,
+    9
+   ],
+   "spec": [
+    9,
+    8,
+    8,
+    8,
+    8,
+    9
+   ],
+   "motion": [
+    8,
+    8,
+    9,
+    9,
+    8,
+    9
+   ],
+   "craft": [
+    8,
+    8,
+    8,
+    9,
+    8,
+    9
+   ],
+   "errors": [
+    8,
+    7,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overall": [
+    8,
+    7,
+    8,
+    8,
+    8,
+    8
+   ]
+  },
+  "remotion": {
+   "brief": [
+    8,
+    8,
+    8,
+    8,
+    9,
+    9
+   ],
+   "spec": [
+    9,
+    8,
+    8,
+    8,
+    8,
+    9
+   ],
+   "motion": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "craft": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": [
+    7,
+    8,
+    8,
+    8,
+    7,
+    8
+   ],
+   "overall": [
+    7,
+    8,
+    8,
+    7,
+    8,
+    8
+   ]
+  },
+  "hyperframes": {
+   "brief": [
+    8,
+    7,
+    8,
+    8,
+    8,
+    8
+   ],
+   "spec": [
+    8,
+    8,
+    8,
+    7,
+    8,
+    9
+   ],
+   "motion": [
+    7,
+    7,
+    7,
+    8,
+    7,
+    8
+   ],
+   "craft": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    8
+   ],
+   "errors": [
+    6,
+    7,
+    6,
+    6,
+    7,
+    8
+   ],
+   "overall": [
+    7,
+    6,
+    7,
+    6,
+    7,
+    7
+   ]
+  }
+ },
+ "avg_rank": {
+  "givemotion": 1.17,
+  "remotion": 1.83,
+  "hyperframes": 3.0
+ },
+ "firsts": {
+  "givemotion": 5,
+  "remotion": 1,
+  "hyperframes": 0
+ },
+ "rows": [
+  {
+   "judge": "judge-1",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.875486,
+   "overall": {
+    "givemotion": 8,
+    "remotion": 7,
+    "hyperframes": 7
+   }
+  },
+  {
+   "judge": "judge-2",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.8905612,
+   "overall": {
+    "givemotion": 7,
+    "hyperframes": 6,
+    "remotion": 8
+   }
+  },
+  {
+   "judge": "judge-3",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.8632836,
+   "overall": {
+    "remotion": 8,
+    "givemotion": 8,
+    "hyperframes": 7
+   }
+  },
+  {
+   "judge": "judge-4",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.776888,
+   "overall": {
+    "remotion": 7,
+    "hyperframes": 6,
+    "givemotion": 8
+   }
+  },
+  {
+   "judge": "judge-5",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.8559233999999999,
+   "overall": {
+    "hyperframes": 7,
+    "givemotion": 8,
+    "remotion": 8
+   }
+  },
+  {
+   "judge": "judge-6",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.7954196,
+   "overall": {
+    "hyperframes": 7,
+    "remotion": 8,
+    "givemotion": 8
+   }
+  }
+ ],
+ "notes": {
+  "givemotion": [
+   "judge-1 (as A): The most faithful to the brief: dots typed in at 0.4-1.2s, a clean bar wipe to 2026 with afterglow (1.5-2.1s), and the Beat 2 card already drawing under the rising band at 2.92s. The motion-blurred carousel (5.7-5.8s), the 37 burst and reassembly (11.0-12.2s) and a strong shockwave with grid ripple at 15.9-16.3s are all good. The padlock leaves a gap in its stroke around the 0, so it reads as one mark. Weaknesses: the amber diagonal edge is a soft smear (9.2-9.3s), particles briefly sit over the lock at 15.9s, and there is a tiny stray spark next to the counter at 6.53s.",
+   "judge-2 (as A): Most atmospheric of the three: the dot grid and glows read as alive, the bar sweep at 1.5\u20132.1s leaves a nice afterglow, the 2.7s band has a soft glow, and the 11.0s amber burst re-forms into a mint 37 with the grid pulsing at 11.7s. The 5.7\u20135.8s card exit is a motion-blurred slide with no visible second card, so the carousel idea is lost. A stray glyph sits by the wipe bar at 6.53s, and in the end lock (15.5s on) the 0 straddles the body's top edge instead of sitting in the lower half.",
+   "judge-3 (as B): The most complete reading of the brief: a visible breathing dot grid all the way through, soft glow on the wipe bars (1.5\u20132.1s, 12.1\u201312.5s), motion blur on the carousel handoff (5.7\u20135.8s), grid dots pulsing mint behind the reassembling 37 (11.7s), and a strong click payoff with a shockwave and grid flash rippling out across the frame (15.9\u201316.3s). The padlock follows the brief literally, wrapping the lower half of the 0 with a designed gap in the body stroke (17.1s), but the 0 crowding the shackle reads a bit busy. The amber diagonal handoff is a soft smear rather than a crisp edge (9.2\u20139.3s). In-flight particles pass through an off-palette chartreuse (11.7s), and the 5.8s blur frame is a bit muddy.",
+   "judge-4 (as C): The most polished of the three: wipe bars leave soft mint glow trails (1.5\u20132.1s, 12.1\u201312.6s), the carousel handoff gets real motion blur (5.7\u20135.8s), the 2.92s band uncovers the Beat 2 card beneath it, the diagonal is correctly angled with a warm amber edge (9.2\u20139.3s), and the click sends a ring plus a grid ripple across the whole screen (15.9\u201316.3s). The lock leaves a neat gap in the body for the 0. Small issues: particles look lime-yellow mid-transition (11.7s), the reassembled 37 shows a faint double image at 12.1s, and the 0 sitting up in the shackle reads slightly unusual.",
+   "judge-5 (as B): The most polished: wipe bars with a soft gradient trail (1.5\u20132.1s, 12.1\u201312.5s), a visible count-up during the wipe (1,061 at 3.83s), motion blur on the carousel slide (5.7\u20135.8s), richer glow, and a padlock whose outline breaks around the '0' (17.1s). The click at 15.9\u201316.3s has a strong grid ripple. Weak spots: the diagonal wipe at 9.3s leaves odd fragments of the number and the amber edge is muddy, the band at 2.7s has soft, blurry edges, and the particles pass through yellow-green mid-flight (11.7s).",
+   "judge-6 (as C): The most finished: bars leave glowing afterglow trails (1.5\u20132.1s, 12.1\u201312.6s, 16.2\u201316.6s), the counter reads correctly mid-count (1,061 at 3.83s), Beat 3 wipes right to left (6.53s), and the vault-door lines close at 13.28s. The padlock body stroke breaks cleanly around the 0, with a strong ring and grid ripple at 15.9\u201316.3s. The carousel motion-blur smear at 5.8s is heavy enough to look like a glitch, and the diagonal wipe leaves broken scraps of the number at 9.3s. Amber shards sit over the label at 11.7s."
+  ],
+  "remotion": [
+   "judge-1 (as B): Very close to A, with the crispest handoff edges (sharp amber diagonal at 9.3s, clean carousel cut-off at 5.8s), a nice thousand spark at 7.2s and the most legible padlock with the 0 fully inside the body (16.0s on), which moves away from the brief's 'around the lower half'. Weaknesses: the screen is empty at 2.92s, with the band past but Beat 2 not yet there; the counter reads a bug-like '0,917' at 3.83s; the grid flash at the click is barely visible.",
+   "judge-2 (as C): Delivers the most beats as written: a real carousel at 5.8s with the next card entering, a thousand-crossing spark from the top of 3,917 at 7.2s, vault-door lines closing the 37 and opening the 0 at 13.28/13.72s, and a clean padlock with the 0 inside the body plus a ring and particle burst at 15.9\u201316.1s. The end frame at 17.1s has good hierarchy and is still alive. Small flaws: the counter shows a leading-zero '0,917' at 3.83s, an amber mask line lingers under the 37 at 9.68\u201310.12s, and the background is slightly less luminous than A's.",
+   "judge-3 (as A): Very faithful and clean: crisp mint bar reveal of 2026 with glow (1.5\u20132.1s), a solid upward band handoff (2.7s), a carousel slide masked by the card (5.7\u20135.8s), a sharp amber diagonal edge (9.3s) and a nicely timed letter-by-letter reveal of 'Locked tight.' (16.3\u201316.6s). Its padlock is the tidiest of the three, with the 0 fully inside the body (17.1s), and the shockwave ring and particles are well judged (15.9s). Weak points: the dot grid and wave are barely visible through most of the piece (4.3\u20138.8s), so the 'living vault' feels thin. The 1,284 counter shows an odd zero-padded '0,917' mid-count (3.83s). Particles scatter far over 'weak passwords' (11.5s), and the 0-to-lock move skips a visible 45% shrink transition.",
+   "judge-4 (as A): Clean, faithful build: typed dots and bar reveal of 2026 (1.3\u20132.2s), the card carousel slide (5.7\u20135.8s), the amber 37 bursting and re-forming in mint (11.0\u201312.2s), and a well-composed lock with the 0 sitting neatly inside the body plus a shockwave and grid flash (15.9\u201316.1s). Weaknesses: the diagonal handoff at 9.3s is steep (about 65\u00b0, not 20\u00b0), the count shows an odd zero-padded '0,917' at 3.83s, and the 2.92s band handoff shows an almost empty frame instead of Beat 2 being uncovered beneath it. Particles drift over 'weak passwords' around 11.5s.",
+   "judge-5 (as C): Follows the brief closely: the spark pops from the number's top edge at 7.2s, the 37 and the 0 close and open on clear centerlines (13.28\u201313.72s), and the shockwave ring and particle burst read well (15.9\u201316.1s). The ending is well composed at 17.1s. Errors hold it back: the counter shows the wrong number '0,917' while revealing 1,284 (3.83s), an amber line hangs in an empty frame at 9.68s, and a stray dash sits above the '0' at 15.07s. The padlock puts the whole '0' inside the body rather than around its lower half, a clean but loose reading of the brief.",
+   "judge-6 (as B): Very close to A, with better handoffs: the second card visibly rides in at 5.8s, and the 37/fixed close and 0 open happen between mint lines at 13.28s and 13.72s as briefed. The thousand-mark spark is clear at 6.97\u20137.2s, and the burst keeps the 37's shape (11.03\u201311.93s). The counter shows the wrong value '0,917' at 3.83s. The 0 sits fully inside the padlock body rather than the body wrapping its lower half (17.1s), and the stroke flicker dots at 5.1\u20135.2s look a bit busy."
+  ],
+  "hyperframes": [
+   "judge-1 (as C): The same structure and good timing, and the counter genuinely counts behind the wipe ('29' at 3.83s, '3,634' at 6.97s). But the final padlock (15.7-18.0s) has the body's top edge and the shackle running straight through the 0, a visible clash on the frame the video ends on. Also: an empty frame at 2.92s, the counter still running and the label half risen at 7.2s, the '21 HOURS' line looking greyer than the specified white, and burst particles flying past the frame edge at 11.47s.",
+   "judge-2 (as B): Clean, faithful beat structure: bar wipe at 1.5\u20132.1s, a crisp thin amber diagonal at 9.2\u20139.3s, and a good shockwave plus grid ripple at 15.9\u201316.2s, with all copy correct and legible. The handoffs are weaker: the 2.7s band is a flat hard slab, and at 5.7\u20135.8s only the card's contents slide while the frame stays still, so there is no carousel. The 37 turns a muddy brown as it bursts at 11.03s, and the end lock's 0 is jammed into the body's top stroke (17.1s).",
+   "judge-3 (as C): The beats and copy are all there, with good timing on the 2026 reveal (1.5\u20132.1s), the label wipes (12.1s, 15.07s) and the shockwave and grid flash at the click (15.9\u201316.2s). The thin, shallow amber diagonal (9.2\u20139.3s) is less dramatic than the brief suggests. Its biggest flaw is the final padlock: the body's top stroke runs straight through the '0' (15.7s onward, clearly visible at 17.1s), on the hero frame the piece ends on. The Beat 4 'vault door' close is barely readable (13.28s), the amber 37 dims to a muddy brown as it bursts (11.03s), and the burst particles fly to the frame edges and beyond (11.7s).",
+   "judge-4 (as B): Hits every beat with good timing: the 20\u00b0 amber diagonal at 9.2\u20139.3s, a large grid-flash shockwave at 16.0\u201316.1s, the counter running during the wipe (3.83s, 6.97s). But the padlock is badly put together: the body's top stroke runs straight through the 0 and stays there for the whole closing hold (16.4\u201318s, key 17.1s). The 37 goes muddy brown as it breaks apart at 11.03s, and a faint leftover bar ghosts at 12.3s. Overall it feels a step less finished than the other two.",
+   "judge-5 (as A): Every beat lands in order: dots typed in at 0.68\u20131.12s, a clean bar wipe to 2026 (1.5\u20132.1s), the card carousel at 5.7\u20135.8s, the amber diagonal at 9.2\u20139.3s, the burst and reassembly at 11.0\u201312.2s, and the shockwave and lock at 15.9\u201316.1s, with a live ending at 17.77s. It is the flattest of the three: the dot grid is barely visible, and the frame is almost empty with a stray thin line at 2.92s. The '0' collides with the padlock's top stroke at 17.1s, and the burst particles spread to the screen edges at 11.47s, which makes the read loose. Competent, but less finished than the other two.",
+   "judge-6 (as A): Faithful and clean: the dots-to-2026 bar wipe (1.5\u20132.1s), the carousel of content inside a fixed card window (5.7\u20135.8s), the diagonal amber wipe (9.2\u20139.3s) and the lock shockwave with grid ripple (15.9\u201316.1s) all land. The Beat 4 close at 13.28s barely reads as a vault door, and the 0 at 13.72s has no visible opening from the centerline. The counter shows a broken glyph at 3.83s, and the amber burst scatters to the frame edges at 11.47\u201311.7s, losing the 37's shape. Bar wipes have less glow than C's."
+  ]
+ }
+}

@@ -1,0 +1,309 @@
+{
+ "judges": 6,
+ "mean": {
+  "givemotion": {
+   "brief": 7.83,
+   "spec": 7.17,
+   "motion": 7.67,
+   "craft": 7.17,
+   "errors": 6.0,
+   "overall": 6.83
+  },
+  "remotion": {
+   "brief": 8.0,
+   "spec": 7.33,
+   "motion": 7.83,
+   "craft": 7.33,
+   "errors": 6.17,
+   "overall": 7.33
+  },
+  "hyperframes": {
+   "brief": 7.17,
+   "spec": 7.17,
+   "motion": 7.33,
+   "craft": 6.5,
+   "errors": 6.17,
+   "overall": 6.5
+  }
+ },
+ "per": {
+  "givemotion": {
+   "brief": [
+    8,
+    8,
+    7,
+    8,
+    8,
+    8
+   ],
+   "spec": [
+    7,
+    8,
+    6,
+    8,
+    7,
+    7
+   ],
+   "motion": [
+    8,
+    8,
+    7,
+    7,
+    8,
+    8
+   ],
+   "craft": [
+    7,
+    8,
+    7,
+    7,
+    7,
+    7
+   ],
+   "errors": [
+    6,
+    7,
+    6,
+    6,
+    6,
+    5
+   ],
+   "overall": [
+    7,
+    8,
+    6,
+    7,
+    7,
+    6
+   ]
+  },
+  "remotion": {
+   "brief": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "spec": [
+    7,
+    8,
+    7,
+    8,
+    7,
+    7
+   ],
+   "motion": [
+    8,
+    8,
+    8,
+    8,
+    7,
+    8
+   ],
+   "craft": [
+    8,
+    7,
+    8,
+    8,
+    6,
+    7
+   ],
+   "errors": [
+    7,
+    6,
+    7,
+    7,
+    5,
+    5
+   ],
+   "overall": [
+    8,
+    7,
+    8,
+    8,
+    6,
+    7
+   ]
+  },
+  "hyperframes": {
+   "brief": [
+    7,
+    7,
+    6,
+    7,
+    8,
+    8
+   ],
+   "spec": [
+    7,
+    8,
+    6,
+    8,
+    7,
+    7
+   ],
+   "motion": [
+    7,
+    7,
+    7,
+    7,
+    8,
+    8
+   ],
+   "craft": [
+    6,
+    6,
+    6,
+    6,
+    7,
+    8
+   ],
+   "errors": [
+    5,
+    6,
+    5,
+    6,
+    8,
+    7
+   ],
+   "overall": [
+    6,
+    6,
+    5,
+    6,
+    8,
+    8
+   ]
+  }
+ },
+ "avg_rank": {
+  "givemotion": 2.0,
+  "remotion": 1.67,
+  "hyperframes": 2.33
+ },
+ "firsts": {
+  "givemotion": 1,
+  "remotion": 3,
+  "hyperframes": 2
+ },
+ "rows": [
+  {
+   "judge": "judge-1",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6741552,
+   "overall": {
+    "givemotion": 7,
+    "remotion": 8,
+    "hyperframes": 6
+   }
+  },
+  {
+   "judge": "judge-2",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6442382,
+   "overall": {
+    "givemotion": 8,
+    "hyperframes": 6,
+    "remotion": 7
+   }
+  },
+  {
+   "judge": "judge-3",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6692276,
+   "overall": {
+    "remotion": 8,
+    "givemotion": 6,
+    "hyperframes": 5
+   }
+  },
+  {
+   "judge": "judge-4",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.6459360000000001,
+   "overall": {
+    "remotion": 8,
+    "hyperframes": 6,
+    "givemotion": 7
+   }
+  },
+  {
+   "judge": "judge-5",
+   "order": [
+    "hyperframes",
+    "givemotion",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.6472741999999999,
+   "overall": {
+    "hyperframes": 8,
+    "givemotion": 7,
+    "remotion": 6
+   }
+  },
+  {
+   "judge": "judge-6",
+   "order": [
+    "hyperframes",
+    "remotion",
+    "givemotion"
+   ],
+   "images": 34,
+   "cost": 0.6456766,
+   "overall": {
+    "hyperframes": 8,
+    "remotion": 7,
+    "givemotion": 6
+   }
+  }
+ ],
+ "notes": {
+  "givemotion": [
+   "judge-1 (as A): Follows every beat closely: the grid draws itself, pins pop with ring pulses (2.1\u20132.3s), the balance slot-rolls with a coral flash (8.1s), the label rolls to LEFT TO SPEND with a gold $844 (12.4s), the pull-back shows the whole route (15.6s), it un-draws cleanly and the title rises from the line (16.3\u201318.9s). The camera loses the TRANSIT pill off the top of the frame at 11.6\u201312.0s, and the route runs under the 'featuring' credit at 7.1\u20137.6s. Debits use a hyphen instead of '\u2212', and the 'g' descender cuts through the title line at 22.8s. The title card itself is tidy and holds still at the end.",
+   "judge-2 (as A): Delivers every beat on time: the PAYDAY pin pops at 2.1s, the balance wipes in at 2.4s, the credit wipes in at 2.7s, the route tracks smoothly through the drops, the balance flashes coral at 8.1s and gold at 12.4s, the pullback at 15.6s shows the whole route, the un-draw runs 16.3\u201317.0s and the title rises at 18.3s, with large, legible pills (key 9.6s). Weak points: the TRANSIT pill is cut off by the top of the frame at 11.7\u201311.9s and 14.7s, the route runs through the 'featuring' credit at 7.1\u20137.6s and 9.6s, and the grid draw-on at 0.3\u20131.5s is nearly invisible.",
+   "judge-3 (as B): Structurally close to A, with good pill legibility (key 3.6s, 15.6s) and the same clean un-draw and title sequence (16.3\u201323.7s). But the vertical framing drifts: the TRANSIT pill and the start of the arc are cut off by the top edge from 11.5s to 14.1s, so the payoff stop is partly off-screen. The route runs through the credit text at 7.1\u20137.6s, and there are stray partial grid segments and faint vertical streaks at 9.6s and 15.6s. Hyphens replace the minus signs.",
+   "judge-4 (as C): Strong label hierarchy, with the category dimmed above a bright figure (3.6 s, 15.6 s), clean credit wipes with the leading hairline visible (2.6\u20132.8 s), and a good gold landing with the ring pulse and label roll (12.1\u201312.4 s). The camera frames the route too high: the TRANSIT label and the top of the arc are cut off at the top edge from about 11.7 to 14.1 s and again at 14.7 s, which breaks the safe margins. The route also slides behind the credit text at 7.1\u20137.6 s, and the right-aligned label text looks odd (9.6 s). The end card is close to identical to A's and is solid.",
+   "judge-5 (as B): Same structure and timing as A, with a stronger dot glow and larger, more readable pills placed above the pins (3.6 s, 15.6 s). The camera frames too high in Beat 3: the TRANSIT pill is cropped at the top of frame at 11.6\u201312.0 s and again at 14.7 s, which is a visible framing error. The route runs through the 'featuring' credit at 7.1\u20137.6 s. It shares the hyphen-minus and 'g' descender issues, and the title card is otherwise clean and still.",
+   "judge-6 (as C): Same solid structure and smooth motion, with good grid detail and pills placed above their pins (3.6 s, 15.6 s). However, the route runs straight along the credit baseline from 7.1\u20137.6 s, the TRANSIT pill is cut off by the top of the frame from 11.6\u201311.9 s and again at 14.7 s, and the arc runs off the top edge from 12.3\u201314.1 s. Right-aligned amounts in some pills (GROCERIES at 9.6 s) look inconsistent, and it shares the hyphen and 'g' descender issues."
+  ],
+  "remotion": [
+   "judge-1 (as B): The same complete beat structure as A, with slightly better framing: the TRANSIT pill stays in frame through the arc (11.5\u201312.4s), and pills to the right of the pins read clearly in the 15.6s overview. The balance roll, the gold flash at 12.4s and the label roll all land on time, the un-draw and the new title line hand over smoothly (16.3\u201317.7s), and the title card holds still. Faults: the RENT pill collides with the credit text at 8.7s, the route sits under the credit at 9.6s, debits use a hyphen instead of '\u2212', and the 'g' descender breaks the line at 22.8s.",
+   "judge-2 (as C): Has the most readable, best-designed pills (left-aligned name, amount at 70%, keys 9.6s and 15.6s) and a visible river that gives the map depth (3.6s); the route motion, balance rolls (8.1s coral, 12.4s gold) and title sequence are all clean. But at 8.7s the RENT pill collides with the credit text, the route runs through the 'featuring' credit at 9.3\u20139.9s, and the balance wipe-off at 14.7s leaves a stray '4' fragment, so it falls just short of A on polish.",
+   "judge-3 (as A): Most complete and best framed. The grid builds from PAYDAY (1.9\u20132.4s), the pills are large and legible (key 3.6s, 9.6s), slot rolls flash coral at 8.1s and gold at 12.4s, the pull-back at 15.6s reads cleanly, and the un-draw into the title line (16.3\u201317.2s) and the letter rise (18.3s) are smooth and continuous. Weaknesses: the route's vertical legs run straight through the 'RENT, GROCERIES & TRANSIT' credit at 8.7\u20139.3s, the minus signs are hyphens, the 'LEFT TO SPEND' label roll looks cramped at 12.4s, and the g descender cuts through the title line on the final card.",
+   "judge-4 (as A): Hits every beat cleanly: the grid draws out from PAYDAY with the pin, balance and credit following on time (2.1\u20132.8 s), the dot stays centred while the camera follows, labels grow with the 180% map so they read well (9.6 s), the balance flashes coral and gold on cue (8.1 s, 12.4 s), the map and route un-draw in order (15.9\u201317.0 s), and the end card is steady and well spaced (22.8 s). Weak spots: the RENT label sits under the 'featuring' credit at 8.7 s, the route runs through the credit lettering at 9.3\u201310.5 s, the debit figures use a hyphen instead of the minus sign, and the opening grid draw is so faint it barely registers (0.3\u20131.5 s).",
+   "judge-5 (as C): Good pill hierarchy (amounts at 70% opacity) and a well-placed river. Beat timings and flashes (8.1 s coral, 12.4 s gold) match the brief, and the end card holds cleanly. The worst fault of the three is a legibility collision: at 8.7\u20139.9 s the route and the RENT pill run straight through the 'featuring / RENT, GROCERIES & TRANSIT' credit, which breaks the rule that credits stay clear. There is a small stray sliver while the pills wipe away at 15.9 s, plus the shared hyphen-minus and 'g' descender issues.",
+   "judge-6 (as B): Strong map: the river is the most visible, the dot glow is the best of the three, and the ring pulses read clearly (2.1 s, 12.1\u201312.3 s). Timing and rolls match the brief and the end card holds still. But the RENT pill lands on top of the 'RENT, GROCERIES & TRANSIT' credit at 8.7 s, the route cuts through the credit text at 9.3 s, and leftover pill pieces show during the un-draw at 15.9 s. Same hyphen and 'g' descender issues as the others."
+  ],
+  "hyperframes": [
+   "judge-1 (as C): All beats are present with good timing (pins at 2.2s, roll to $1,540 with a coral flash at 8.1s, $844 in gold at 12.4s, a clean un-draw at 16.3\u201317.0s, and the same solid title card). The camera frames the route too low, though: at 6.9\u20137.6s the route hugs the bottom edge and the RENT pill is pushed out of frame. A dark band behind the credit hides the GROCERIES pin and pill at 9.6\u20139.9s, so that drop never reads. Pills are smaller and weaker in the route beats (3.3s, 8.1s), and it shares the hyphen and 'g' descender faults.",
+   "judge-2 (as B): Same timing and a clean ending as the others: the un-draw at 16.3\u201317.0s, the title rise at 18.3s, the tagline hairline at 20.1s and a still final hold. Darkening the route under the credit is a good legibility idea, but at 9.6s it hides the GROCERIES pin and pill and makes the route look like it fades out. The low camera framing pushes the RENT pill partly off the bottom of the frame at 6.7\u20137.2s, and the pills are small and get lost at 2.2\u20133.9s.",
+   "judge-3 (as C): The end beats are as good as the others (16.3\u201322.8s), but the route section is weak. The pills seem to be drawn at 100% while the map is at 180%, so PAYDAY, RENT and GROCERIES read as tiny chips (3.3s, 5.7s, 8.1s). The camera keeps the route so low that the RENT pill crowds and then leaves the bottom edge (6.9\u20137.2s). The line fades out behind the credit, which hides the GROCERIES drop entirely by 9.6s, and the TRANSIT and SAVINGS labels stay small through 12.3s, so the heist-drop beats lose their punch.",
+   "judge-4 (as B): The timing and end sequence are as solid as the others: the slot rolls, the gold label roll at 12.4 s, the route un-drawing from 16.7 to 17.0 s and a still final card. But the labels stay small while the map is zoomed to 180%, so the stops get lost (8.1 s, 9.9 s, 12.3 s). The camera keeps the route low, so the RENT label slides off the bottom edge at 7.2\u20137.6 s. The route fades out near the credit at 9.6 s, which hides the GROCERIES stop. It works, but it feels the least finished of the three.",
+   "judge-5 (as A): Closely follows the beat timings: pin, pill and balance wipe at 2.0\u20132.4 s, credit wipe with leading hairline at 2.6\u20132.8 s, coral debit flash at 8.1 s, gold flash with LEFT TO SPEND roll at 12.4 s, clean pull-back and un-draw at 15.6\u201317.2 s, and the title rising from behind the line with a still hold from 22.5 s. The route is dimmed under the credit zone (7.2\u20139.6 s), which keeps the credits legible but makes the line look inconsistent. Pills are small and TRANSIT sits near the top edge at 12.3\u201314.1 s. Hyphens are used instead of minus signs, and the 'g' descender breaks over the title line at 22.8 s.",
+   "judge-6 (as A): Delivers every beat on time: the grid draws in from 0.3\u20132.1 s, the camera follows the route smoothly from 4.5\u201311.9 s with rounded corners and one arc, the balance rolls with flashes at 8.1 s and 12.4 s, and the pull-back at 15.6 s and un-draw from 16.3\u201317.2 s lead neatly into the title rising out of the line at 18.3 s. The pills sit below or to the right of their pins, so they never hit the credits or the frame edge. Weak points: the route's older part fades to a dim tail (9.6 s), which the brief does not ask for; the route passes behind the 'featuring' credit at 9.6 s; amounts use a hyphen instead of a minus sign; and the 'g' descender breaks through the green line on the final card (22.8 s)."
+  ]
+ }
+}

@@ -34,33 +34,35 @@ The data story is in [`examples/data-story`](examples/data-story); more are in [
 ## givemotion vs HyperFrames vs Remotion, on briefs nobody tuned for
 
 Each brief is drawn at random (genre, subject, three motion techniques, length), written by a fresh AI session that does
-not know the tools, and made once (in round 7 twice) with each tool by Claude Opus 5.5 (effort high) in independent sessions that see only
+not know the tools, and made once (in rounds 7 and 8 twice) with each tool by Claude Opus 5.5 (effort high) in independent sessions that see only
 their own tool's docs. Six blind AI judges score the three videos of each brief
 ([the rounds](docs/experiments/2026-11-random-briefs.md); the kit to run your own is in
 [`docs/experiments/data/2026-11-random-briefs`](docs/experiments/data/2026-11-random-briefs)).
 
 <img src="docs/media/random-briefs.gif" width="100%" alt="One random brief made with givemotion, Remotion and HyperFrames, playing in a 2x2 grid next to its scores and process numbers">
 
-Thirteen random briefs in six rounds, 5-6 November 2026, sixteen judged sets (round 7 had two makers per tool per
-brief). givemotion 0.1.3-0.1.4 at its development branch, Remotion 4.0.541, HyperFrames 0.9.17 in round 2 and 0.9.18
-after; Claude Opus 5.5 at effort high for makers and judges; one 4-core Linux machine, no GPU.
+Sixteen random briefs in seven rounds, 5-6 November 2026, twenty-two judged sets (rounds 7 and 8 had two makers
+per tool per brief). givemotion 0.1.3-0.1.4 at its development branch, Remotion 4.0.541, HyperFrames 0.9.17 in round 2
+and 0.9.18 after; Claude Opus 5.5 at effort high for makers and judges; one 4-core Linux machine, no GPU.
 
 | | givemotion | Remotion | HyperFrames |
 |---|---|---|---|
-| Judges' overall, mean of 16 sets (1-10) | 6.91 | **7.13** | 6.68 |
-| Sets won (highest mean) | 5 | **8** | 3 |
-| Judges ranking it first (96 in all) | 31 | **49** | 16 |
-| Latest round (7: three briefs, two makers per tool each) | 7.03 | **7.05** | 6.22 |
-| Cost at list prices, all sixteen | $92 | **$82** | $97 |
-| Code the agents wrote, all sixteen | **9,126 lines** | 24,847 lines | 19,090 lines |
+| Latest round (8: three briefs, two makers per tool each) | **7.61** | 6.94 | 6.75 |
+| Sets won in round 8 (of 6) | **5** | 1 | 0 |
+| Judges' overall, mean of all 22 sets (1-10) | **7.13** | 7.09 | 6.75 |
+| Judges ranking it first, all sets (132 in all) | **57** | 50 | 25 |
+| Cost at list prices, all 22 sets | $125 | **$105** | $122 |
+| Code the agents wrote, all 22 sets | **12,502 lines** | 33,257 lines | 26,545 lines |
 | Render time, the 9 briefs timed (each tool's own command, one at a time) | **255 s** | 377 s | 539 s |
 
-Remotion made the best videos overall. In the latest round givemotion tied it (7.03 against 7.05): it won three of the
-four landscape sets and lost both vertical ones, where the judges marked down undersized type and hand-built counters.
-givemotion wrote far less code and rendered fastest on every brief we timed; since round 6 its agents run review and
-critic passes that make them cost more than Remotion's. One or two runs per tool per brief and AI judges looking at
-frames: read it as a running record, not a final benchmark. Every round, with versions, prompts, raw scores, the
-harness and a correction (vertical videos had been judged from squashed frames; re-judged), is in
+In the latest round givemotion made the best videos: it won five of six sets, both vertical ones included, and 24 of
+36 judges ranked it first. It got there over the rounds: last in rounds 2-6, a tie in round 7, a clear lead in round 8,
+after a review loop (the agent checks every beat of the brief at its own time and has a fresh critic look) and fixes for
+vertical videos. The cost of that: its agents now spend more than the others (about 40% more than the cheapest in
+round 8, and about a quarter more time). It writes far less code and rendered fastest on every brief we timed. One or
+two runs per tool per brief and AI judges looking at frames: read it as a running record, not a final benchmark. Every
+round, with versions, prompts, raw scores, the harness and a correction (vertical videos had first been judged from
+squashed frames, then re-judged), is in
 [`docs/experiments/2026-11-random-briefs.md`](docs/experiments/2026-11-random-briefs.md). Earlier single-brief
 showcases: [`2026-11-tools-showcase.md`](docs/experiments/2026-11-tools-showcase.md) and
 [`2026-11-kinetic-three-engines.md`](docs/experiments/2026-11-kinetic-three-engines.md).
@@ -406,8 +408,8 @@ See [How it compares](#how-it-compares).
 
 **Is it a free alternative to Remotion?** It does the same job (code in, video out) with HTML instead of React,
 under MIT for everyone, and it's built for AI agents to write. It renders faster in every test we ran. On quality it
-scored a little higher in our October 9-brief test and a little lower over the random-brief rounds of November 2026
-(6.91 vs 7.13 over sixteen sets; a tie, 7.03 vs 7.05, in the latest); see [the comparison at the top](#givemotion-vs-hyperframes-vs-remotion-on-briefs-nobody-tuned-for)
+scored a little higher in our October 9-brief test; in the random-brief rounds of November 2026 it started behind
+and led the latest round (7.61 vs 6.94); see [the comparison at the top](#givemotion-vs-hyperframes-vs-remotion-on-briefs-nobody-tuned-for)
 and [How it compares](#how-it-compares).
 
 **How is it different from HyperFrames?** Both are free and both use HTML. givemotion re-renders only what changed,

@@ -1,0 +1,309 @@
+{
+ "judges": 6,
+ "mean": {
+  "givemotion": {
+   "brief": 8.67,
+   "spec": 8.83,
+   "motion": 8.17,
+   "craft": 7.83,
+   "errors": 7.83,
+   "overall": 7.83
+  },
+  "remotion": {
+   "brief": 8.17,
+   "spec": 8.5,
+   "motion": 7.5,
+   "craft": 7.33,
+   "errors": 7.67,
+   "overall": 7.33
+  },
+  "hyperframes": {
+   "brief": 8.33,
+   "spec": 8.33,
+   "motion": 7.83,
+   "craft": 8.0,
+   "errors": 7.67,
+   "overall": 7.67
+  }
+ },
+ "per": {
+  "givemotion": {
+   "brief": [
+    9,
+    8,
+    9,
+    8,
+    9,
+    9
+   ],
+   "spec": [
+    9,
+    9,
+    9,
+    9,
+    9,
+    8
+   ],
+   "motion": [
+    8,
+    8,
+    9,
+    8,
+    8,
+    8
+   ],
+   "craft": [
+    8,
+    8,
+    8,
+    8,
+    7,
+    8
+   ],
+   "errors": [
+    8,
+    8,
+    8,
+    7,
+    8,
+    8
+   ],
+   "overall": [
+    8,
+    8,
+    8,
+    8,
+    7,
+    8
+   ]
+  },
+  "remotion": {
+   "brief": [
+    8,
+    8,
+    9,
+    8,
+    8,
+    8
+   ],
+   "spec": [
+    9,
+    8,
+    8,
+    9,
+    9,
+    8
+   ],
+   "motion": [
+    8,
+    7,
+    8,
+    8,
+    7,
+    7
+   ],
+   "craft": [
+    7,
+    7,
+    8,
+    8,
+    7,
+    7
+   ],
+   "errors": [
+    8,
+    7,
+    8,
+    8,
+    8,
+    7
+   ],
+   "overall": [
+    7,
+    7,
+    8,
+    8,
+    7,
+    7
+   ]
+  },
+  "hyperframes": {
+   "brief": [
+    8,
+    9,
+    8,
+    8,
+    9,
+    8
+   ],
+   "spec": [
+    9,
+    8,
+    8,
+    8,
+    9,
+    8
+   ],
+   "motion": [
+    8,
+    8,
+    8,
+    7,
+    8,
+    8
+   ],
+   "craft": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": [
+    7,
+    8,
+    7,
+    7,
+    9,
+    8
+   ],
+   "overall": [
+    8,
+    8,
+    7,
+    7,
+    8,
+    8
+   ]
+  }
+ },
+ "avg_rank": {
+  "givemotion": 1.5,
+  "remotion": 2.5,
+  "hyperframes": 2.0
+ },
+ "firsts": {
+  "givemotion": 3,
+  "remotion": 1,
+  "hyperframes": 2
+ },
+ "rows": [
+  {
+   "judge": "judge-1",
+   "order": [
+    "givemotion",
+    "hyperframes",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.8715872,
+   "overall": {
+    "givemotion": 8,
+    "remotion": 7,
+    "hyperframes": 8
+   }
+  },
+  {
+   "judge": "judge-2",
+   "order": [
+    "hyperframes",
+    "givemotion",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.8694203999999999,
+   "overall": {
+    "givemotion": 8,
+    "hyperframes": 8,
+    "remotion": 7
+   }
+  },
+  {
+   "judge": "judge-3",
+   "order": [
+    "givemotion",
+    "remotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.8780450000000001,
+   "overall": {
+    "remotion": 8,
+    "givemotion": 8,
+    "hyperframes": 7
+   }
+  },
+  {
+   "judge": "judge-4",
+   "order": [
+    "remotion",
+    "givemotion",
+    "hyperframes"
+   ],
+   "images": 34,
+   "cost": 0.880115,
+   "overall": {
+    "remotion": 8,
+    "hyperframes": 7,
+    "givemotion": 8
+   }
+  },
+  {
+   "judge": "judge-5",
+   "order": [
+    "hyperframes",
+    "givemotion",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.8764911999999999,
+   "overall": {
+    "hyperframes": 8,
+    "givemotion": 7,
+    "remotion": 7
+   }
+  },
+  {
+   "judge": "judge-6",
+   "order": [
+    "givemotion",
+    "hyperframes",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.7791926,
+   "overall": {
+    "hyperframes": 8,
+    "remotion": 7,
+    "givemotion": 8
+   }
+  }
+ ],
+ "notes": {
+  "givemotion": [
+   "judge-1 (as A): The beat timing follows the brief most closely. The mask dots appear one by one with a pop (0.68\u20131.12s), the bar wipe reveals 2026 cleanly with an afterglow (1.5\u20132.1s), and the mint band clears the screen (2.7s). The 37 bursts and rebuilds in order: amber shards at 11.03\u201311.7s turn mint and reassemble by 12.2s, and only then does the bar wipe 'weak passwords' into 'fixed' (12.2\u201312.6s). The 15.9\u201316.1s click is strong, with the shockwave ring, the grid flash and the 0 breaking through the top edge of the padlock body. Weak spots: the carousel handoff at 5.7\u20135.8s hides behind heavy motion blur, so the incoming second card never really reads. A stray amber fleck sits on the 'w' at 11.7s, and the grid wave is barely visible for most of the piece.",
+   "judge-2 (as A): Very faithful build: the typed-dot pop and left-to-right wipe revealing 2026 (1.5\u20132.1 s), the mint band handoff (2.7 s), the clean 20\u00b0 amber diagonal wipe (9.2\u20139.4 s), the amber-to-mint 37 reassembly with the grid pulsing mint (12.2\u201312.6 s), and the click with shockwave and grid flash (15.9\u201316.1 s) all land. The card slide at 5.7 s has nice motion blur, but no second card is seen riding in (only a mint glint at 5.8 s), so the carousel idea is lost. The dot grid is very faint throughout, and the lock with the 0 sitting at the top of the body (17.1 s) is a little bottom-heavy.",
+   "judge-3 (as B): Nearly the same structure as A, with extra motion polish: horizontal motion blur on the card carousel (5.7\u20135.8s), a clearly visible mint grid pulse during the 37 reassembly (12.2\u201312.6s), edge lines on the vault-door close and open (13.28s, 13.72s), and a strong grid ripple and shockwave at the click (15.9\u201316.1s). Burst particles change from amber to mint one by one (11.7s), so the frame mostly stays in palette. Small faults: a stray particle sits on the 'w' of 'weak passwords' at 11.7s, and the 0 crosses the shackle-body line, so the lock reads less cleanly than C's.",
+   "judge-4 (as C): It matches A beat for beat and adds two good touches: motion blur on the card slide (5.7\u20135.8s) and particles turning from amber to mint one by one (11.7s), plus a more visible grid pulse (12.3\u201312.6s). It loses points for a stray partial glyph at the wipe edge at 6.53s, an empty gap between 'fi' and the moving bar during the fixed swap (12.4s) and the word looking cut off at 12.5s. The padlock has the same awkward 0-on-the-join as A (17.1s).",
+   "judge-5 (as B): Nearly the same structure as A, with a more visible grid and a nice motion-blurred carousel handoff (5.7-5.8s); at 11.7s the particles are caught mid-change from amber to mint, as the brief asks. The 'fixed' wipe shows a gap between the bar and the revealed word ('fi | words' at 12.4s). The end lock (16.2-17.1s) puts the 0 across the join between shackle and body, breaking the body's top line and leaving the lower body empty, so it is weaker than A's.",
+   "judge-6 (as C): The most faithful to the brief on timing and detail. Particles shift amber to mint one by one in flight (11.7s), the weak-to-fixed bar wipe runs right on 12.2\u201312.6s, and the carousel slide gets tasteful motion blur (5.7\u20135.8s), which gives the handoff real speed. The diagonal amber wipe has a soft glowing leading edge (9.3s), and the click burst, ring and grid ripple read well (15.9\u201316.1s). Weaknesses: the padlock body sits large and empty under the 0 (17.1s), the end particle field is a bit even and busy, and the 37/'fixed' close squashes 'fixed' against the closing line (13.28s)."
+  ],
+  "remotion": [
+   "judge-1 (as B): Its carousel is the best of the three. At 5.7\u20135.8s the masked card slides out while the next card with mask dots rides in, and both are clearly visible. The Beat 1\u20133 wipes and the amber diagonal at 9.2\u20139.3s are well executed. Beat 4 is muddled, though. At 11.7\u201311.93s the wipe bar is already erasing 'weak passwords' and showing 'fixed' while the 37 is still a cloud of in-flight particles, so the label change runs on top of the rebuild instead of following it. In the final lock (17.1s) the 0 cuts across the shackle legs and the padlock body looks small. Once the shockwave passes (16.2s+), the particles mostly fall away to the screen edges, which leaves the final hold looking a bit empty.",
+   "judge-2 (as C): Built to the same standard: a tight 2026 reveal (1.4\u20131.9 s), a visible carousel card with dots at 5.8 s, a strong full-frame shockwave and grid flash (15.9\u201316.1 s). But the timing slips: the 'fixed' wipe runs at 11.7\u201312.2 s while the 37 is still a cloud of particles, so the payoff loses its order. The 0 collides with the shackle stroke as the lock forms (15.53\u201315.7 s), and the vault-door close at 13.1\u201313.5 s barely reads (only a thin line at 13.72 s). The lock body is left empty below the 0 at 17.1 s, and the particles settle along the bottom edge, which makes the end frame look unbalanced.",
+   "judge-3 (as A): Hits every beat with clean execution: the typed-dot row and bar wipe reveal 2026 (1.3\u20132.0s), the mint band handoff (2.7s), a masked card carousel (5.7\u20135.8s), the 20\u00b0 amber diagonal (9.2\u20139.3s), the burst and reassembly of 37 (11.0\u201312.3s) and a strong click with a full-frame shockwave and grid flash (15.9\u201316.1s). Mid-flight at 11.7s all particles are one off-palette yellow-green instead of a clean amber-to-mint change. The shackle is cut around the 0 (15.53s onward), which looks a little awkward, and the carousel slide is crisp but has no motion blur.",
+   "judge-4 (as A): Nearly every beat lands on time: dots type on and the bar sweeps to reveal 2026 (1.5\u20132.1s), the mint band wipes up (2.7s), the card slides out inside its frame (5.7\u20135.8s), the amber diagonal wipe is crisp (9.2\u20139.4s), the 37 breaks apart and comes back in mint (11.0\u201312.2s), and the lock click sends a ring past the frame with a full burst (15.9\u201316.1s). The weak points are small: the 0 sits across the shackle-body join with the outline cut away around it (17.1s), and spark particles sit over the count-up at 6.97s.",
+   "judge-5 (as C): Hits all the beats with a big shockwave that spreads past the frame edge (16.0-16.1s) and clean wipes on the 3,917 card (8.5-9.4s). The opening wipe finishes early (2026 done by 1.8s), and the 'fixed' wipe starts while 37 is still scattered particles (11.7-12.1s), so the label resolves before the number does and the beat's order breaks. In flight at 11.7s the particles look yellow-green rather than amber or mint, and the end lock squeezes the 0 up into the shackle (17.1s), so it looks cramped.",
+   "judge-6 (as B): Nearly the same build as the others, with the strongest click payoff: the shockwave ring overruns the frame and particles fill the screen (15.9\u201316.1s). But the 'fixed' wipe fires early, crossing the label while 37 is still particles (11.7\u201311.93s, 'fixe|ords'), so the fix moment feels rushed. At 13.72s 'breaches got through' shows with clipped descenders ('aot throuah') as it opens together with the 0. The padlock leaves the 0 straddling a broken shackle above a large empty body (17.1s), which feels top-heavy. Elsewhere the counters, carousel (5.8s) and amber diagonal wipe (9.2\u20139.4s) are solid."
+  ],
+  "hyperframes": [
+   "judge-1 (as C): It has the cleanest final image: the 0 sits fully inside a solid padlock body (17.1s), and the 15.9\u201316.3s shockwave with its grid ripple is satisfying. The carousel at 5.7\u20135.8s reads clearly as two framed cards inside a window, and Beat 4 is in the right order (rebuild at 12.1s, then the wipe to 'fixed' at 12.2\u201312.5s). The 3,917 counter runs long: it still reads 3,290 at 7.2s and 3,808 at 7.42s, so it overlaps the start of the '21 HOURS' line and pushes Beat 3 late. At 11.7s the particle cloud spills right over the 'weak passwords' label. At 16.0\u201316.6s the burst particles bunch into an odd flat band under the lock, as if they hit an invisible floor.",
+   "judge-2 (as B): Hits every beat, and its 5.7\u20135.8 s handoff is the only true carousel, with the next card visibly riding in from the right. The counters tick visibly (3,808 at 7.42 s, 3,290 at 7.2 s) with spark bursts off the number, and the 0 framed inside a filled padlock body (15.7\u201317.1 s) is the cleanest, most iconic end frame. Weaknesses: the mid-flight particles drift over 'weak passwords' at 11.47\u201311.7 s; the brief wanted the body around the lower half of the 0, which B ignores; and after the click the particles settle into a flat band under the lock (16.4\u201317.1 s), which reads oddly.",
+   "judge-3 (as C): Delivers all beats, with the clearest thousand-mark sparks over a slower 3,917 count-up (6.97\u20137.42s) and the most readable padlock at 17.1s. But the 0 sits fully inside the body, not with its lower half enclosed as briefed. The shockwave ring expands slowly and is still crossing 'Locked tight.' during its wipe (16.2\u201316.5s), and a band of particles collects under the lock like debris (16.0\u201316.6s). Amber particles drift over the 'weak passwords' label at 11.47\u201311.7s, and the incoming card shows a missing left edge at 6.08s.",
+   "judge-4 (as B): It has the cleanest padlock, with the 0 fully inside a solid body that reads clearly as a lock (17.1s), and the swap from weak passwords to fixed is tidy (12.1\u201312.4s). But a lone '0' counter sits beside the mask dots at 6.53s, the count-up drags (3,290 at 7.2s after the label is already up), and a stray 'TY' fragment shows at 7.42s. Particles fly across 'weak passwords' at 11.47\u201311.7s, and the lock burst stays as a ring close to the padlock while the shockwave grows slowly (15.9\u201316.6s), so the click feels weak.",
+   "judge-5 (as A): Every beat lands in order: the bar reveals 2026 from the dots (1.5-2.1s), the mint band wipes up (2.7s), the card slides like a carousel (5.7-5.8s), the counter throws sparks (7.2s), the amber diagonal wipe runs at 9.2-9.3s, and 37 bursts, reassembles and gives way to 'fixed' (11.0-12.4s). The end lock (15.7-17.1s) is the cleanest of the three: the 0 sits well inside the glowing body, and the shockwave and grid flash at 16.0s read clearly. Weaknesses: the dot grid is very faint for most of the piece, and the 0 fills the lock body instead of its lower half.",
+   "judge-6 (as A): Hits every beat. The dot-to-2026 bar wipe (1.5\u20132.1s), the mint band handoff (2.7s) and the masked card carousel (5.7\u20135.8s) are clean and well eased. The 'fixed' bar wipe lands on time (12.1\u201312.5s). The 37 burst and reassembly reads well (11.0\u201312.2s), though the particles sit over 'weak passwords' at 11.47s. The padlock puts the 0 fully inside the body (15.5s on) instead of the body wrapping its lower half. It is a deviation from the brief, but it gives the cleanest, most balanced end frame of the three (17.1s), and particles stay grouped around the lock. The shockwave and grid flash (15.9\u201316.4s) are good, if a little small."
+  ]
+ }
+}

@@ -1,0 +1,309 @@
+{
+ "judges": 6,
+ "mean": {
+  "givemotion": {
+   "brief": 8.5,
+   "spec": 8.0,
+   "motion": 7.83,
+   "craft": 8.0,
+   "errors": 7.83,
+   "overall": 7.67
+  },
+  "remotion": {
+   "brief": 7.67,
+   "spec": 6.5,
+   "motion": 6.83,
+   "craft": 6.67,
+   "errors": 5.67,
+   "overall": 6.17
+  },
+  "hyperframes": {
+   "brief": 8.17,
+   "spec": 8.0,
+   "motion": 7.83,
+   "craft": 7.5,
+   "errors": 7.67,
+   "overall": 7.5
+  }
+ },
+ "per": {
+  "givemotion": {
+   "brief": [
+    8,
+    8,
+    9,
+    9,
+    8,
+    9
+   ],
+   "spec": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "motion": [
+    7,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "craft": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": [
+    8,
+    8,
+    8,
+    7,
+    8,
+    8
+   ],
+   "overall": [
+    7,
+    7,
+    8,
+    8,
+    8,
+    8
+   ]
+  },
+  "remotion": {
+   "brief": [
+    8,
+    8,
+    8,
+    7,
+    7,
+    8
+   ],
+   "spec": [
+    6,
+    6,
+    7,
+    7,
+    6,
+    7
+   ],
+   "motion": [
+    7,
+    7,
+    7,
+    6,
+    7,
+    7
+   ],
+   "craft": [
+    7,
+    6,
+    7,
+    7,
+    6,
+    7
+   ],
+   "errors": [
+    6,
+    5,
+    6,
+    6,
+    5,
+    6
+   ],
+   "overall": [
+    6,
+    6,
+    7,
+    6,
+    6,
+    6
+   ]
+  },
+  "hyperframes": {
+   "brief": [
+    8,
+    9,
+    8,
+    8,
+    8,
+    8
+   ],
+   "spec": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "motion": [
+    8,
+    9,
+    8,
+    8,
+    7,
+    7
+   ],
+   "craft": [
+    8,
+    8,
+    7,
+    8,
+    7,
+    7
+   ],
+   "errors": [
+    8,
+    8,
+    7,
+    8,
+    8,
+    7
+   ],
+   "overall": [
+    8,
+    8,
+    7,
+    8,
+    7,
+    7
+   ]
+  }
+ },
+ "avg_rank": {
+  "givemotion": 1.33,
+  "remotion": 3.0,
+  "hyperframes": 1.67
+ },
+ "firsts": {
+  "givemotion": 4,
+  "remotion": 0,
+  "hyperframes": 2
+ },
+ "rows": [
+  {
+   "judge": "judge-1",
+   "order": [
+    "hyperframes",
+    "givemotion",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.7051014,
+   "overall": {
+    "givemotion": 7,
+    "remotion": 6,
+    "hyperframes": 8
+   }
+  },
+  {
+   "judge": "judge-2",
+   "order": [
+    "hyperframes",
+    "givemotion",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.7129568000000001,
+   "overall": {
+    "givemotion": 7,
+    "hyperframes": 8,
+    "remotion": 6
+   }
+  },
+  {
+   "judge": "judge-3",
+   "order": [
+    "givemotion",
+    "hyperframes",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.6845550000000001,
+   "overall": {
+    "remotion": 7,
+    "givemotion": 8,
+    "hyperframes": 7
+   }
+  },
+  {
+   "judge": "judge-4",
+   "order": [
+    "givemotion",
+    "hyperframes",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.7198509999999998,
+   "overall": {
+    "remotion": 6,
+    "hyperframes": 8,
+    "givemotion": 8
+   }
+  },
+  {
+   "judge": "judge-5",
+   "order": [
+    "givemotion",
+    "hyperframes",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.7002,
+   "overall": {
+    "hyperframes": 7,
+    "givemotion": 8,
+    "remotion": 6
+   }
+  },
+  {
+   "judge": "judge-6",
+   "order": [
+    "givemotion",
+    "hyperframes",
+    "remotion"
+   ],
+   "images": 34,
+   "cost": 0.63973,
+   "overall": {
+    "hyperframes": 7,
+    "remotion": 6,
+    "givemotion": 8
+   }
+  }
+ ],
+ "notes": {
+  "givemotion": [
+   "judge-1 (as A): Hits every beat: clean typing and crack (2.5-2.6s), a readable fall onto the floor (3.3s), coral-to-teal pops on each hop (6.1-7.0s), a clean slot scramble that uses only the password's characters (14.3-15.4s), the 40-door teal grid (13.47s), and a tidy assembly of the title out of particles (19.3-19.7s). The hops are fairly flat and the lock lands on top of the leftover letters (5.78s, 6.1s) instead of popping them cleanly. The tagline is still typing at 20.9s, which eats into the final hold. The lock icon sits close to the K, though a little above cap height (20.9s).",
+   "judge-2 (as A): Very faithful build: clean coral typing and zigzag crack (2.5\u20132.6s), staggered fall with a shadow dropping in (3.58s), lock drops in at x\u2248300 (4.67s), a 40-door grid that ripples to teal (12.4\u201313.5s), a clean scramble then left-to-right mask on the baseline (14.6\u201316.2s), and two amber rings plus a teal cloud (17.88s). The bold JetBrains Mono and faint grid give the strongest type presence of the three. Weaknesses: the fallen letters settle in an almost straight, barely tilted row (4.1\u20137.9s), so the hops don't clearly land on clusters. The particle-to-title convergence looks noisy and dithered (19.3\u201319.5s), and the tagline is still typing at 20.9s, pushing into the final hold.",
+   "judge-3 (as B): The most polished of the three. The open shackle has its left leg clearly lifted (8.8s) and keeps that character, the horizontal 'turn' squash at 8.53s is clearly readable, and the door grid flips shut in a visible ripple outward from the lock (12.93s). The scramble at 14.3\u201315.4s stays legible, uses only glyphs from the password string and locks in cleanly from left to right. The 60-particle cloud comes together into KEYWARD well, and the icon in the final lockup is a good size. Small issues: a stray shadow ellipse floating at 3.58s, a mostly empty frame with only 'LK' at the start of the scramble (14.03s), and the tagline is still typing at 20.9s, which shortens the clean final hold.",
+   "judge-4 (as C): Follows the brief most closely: a literal horizontal-squash turn (8.53s), doors breaking off the letters (12.38s) and rippling out from the lock as they fill teal (12.93s), a clean scramble using only password glyphs (14.3s, 14.9-15.3s), and a well-sized end icon aligned to the cap height (20.9s). Hops have good anticipation and squash (6.1-7.0s), and the lock moves smoothly to the icon position during the burst (18.43s). Flaws: a floating navy oval stands in for the dropped shadow (3.58s), the lock covers the 'pa' letters (5.78s), and the faint grid is allowed but slightly busy.",
+   "judge-5 (as B): This is the most polished of the three. A faint grid adds depth, and the shackle is clearly drawn open and tilted. The squash at landings is strong (6.3s, 7.0s), and the squash standing in for the turn at 8.53s reads well. The best transition in the set comes at 12.38s, where 'DOOR.' visibly breaks into door outlines letter by letter before the teal fill ripples out (12.93\u201313.47s). The lock shrinks and travels to its spot beside the title (18.43s), and the icon is bigger and closer to cap height (20.9s). On the weak side, the fallen letters settle in a tight row rather than scattered, so the lock overlaps them when it lands (5.78s, 6.88s). The tagline is still typing at 20.9s, cutting into the hold.",
+   "judge-6 (as C): Most faithful to the brief: the shadow drops in from the top (3.58s), the shackle is drawn with its left leg lifted, and the turn is a clear horizontal squash (8.53s). The italic squeeze on EVERY DOOR (11.3s) is good, and the doors close in a ripple with teal fill (12.93\u201313.47s). The lock shrinks and flies to its icon spot while the particle cloud hangs (18.43s), which gives a smooth handover into the title (19.3\u201319.7s). Weak points: the debris lands too neatly in a row and overlaps the lock (4.67s, 7.0s), the scramble is a little soft at 14.3s, and the tagline types slower than 1 frame per character (still 'THE RES' at 20.9s)."
+  ],
+  "remotion": [
+   "judge-1 (as B): Same structure and good timing; the final frame is clean and the tagline is done by 20.9s. But the fallen letters overlap into an unreadable heap (3.3s 'paS' colliding, 4.12-5.78s 'P\u00e6s w\u0251d 13'). The slot reel shows cut-off half-glyphs and tick-like marks that look like stray characters (14.03s, 14.3s, 14.9-15.1s). The door grid runs into the shackle (13.47s), and the 60 px lock icon floats above the cap height instead of aligning to it (20.9s).",
+   "judge-2 (as C): Delivers every beat, with a literal slot-machine reel scramble and a good door ripple (12.4\u201313.5s), a burst with rings (17.88s), and a tagline that finishes cleanly with the cursor gone well before the hold (20.9s). But the fallen letters pile on top of each other into illegible clumps on the floor ('Pas wo d 13', 4.1\u20137.9s). The reel scramble shows clipped half-glyphs and fragments that read as non-string characters (14.03s, 14.3s key, 14.9\u201315.1s). 'ONEKEY.' is jammed together while sliding in (10.18s), and the lock icon is buried inside the converging particle cloud (19.3\u201319.4s). The motion is serviceable, but the polish isn't client-ready.",
+   "judge-3 (as A): Every beat is there on time: the typing and zigzag crack (2.5\u20132.6s), the staggered letter fall, the lock's three hops with coral-to-teal pops (6.1\u20138.5s), the ONE KEY. slam, the tracking squeeze on EVERY DOOR. (11.2\u201311.4s), doors filling teal (13.47s), the burst rings (17.88s) and particles coming together into KEYWARD (19.3\u201319.7s). The scramble is the weak spot: at 14.03\u201314.3s the slot reels show clipped, half-cut glyphs stacked on two rows, which reads as a rendering glitch, and the reels still look broken at 14.9\u201315.1s. The squash and stretch is clear but a bit stiff and there is little secondary action. The final padlock icon is tiny and floats above the K's cap line (20.9s) rather than sitting cleanly beside it.",
+   "judge-4 (as A): Typing, crack and coral-to-teal pops all land, and the end frame is clean and legible (19.7s onward). But the fallen letters form one tidy row rather than scattered clusters (4.1s), and the hops are mostly vertical with little arc (6.1-7.0s). The slot-machine scramble is messy: glyphs cut in half by the window with stray tick marks (14.3s), odd half-glyphs (14.9s) and a lowercase 'z' that is not in the password (15.0s). The particle cloud at 18.98s is muddy and the end icon is undersized and sits above cap height.",
+   "judge-5 (as C): It covers the same beats as A and B and ends cleanly, with the tagline typed and the cursor gone by 20.9s, and the particles form the title as a convincing dotted shape (19.3\u201319.7s). But the falling letters pile on top of each other ('p', 'a' and 's' stacked at 3.3s, and 'word' squashed into a smudge from 4.1s to 7.0s). The slot-reel scramble shows clipped, half-drawn glyphs and accent-like fragments that read as broken characters or glyphs outside the allowed set (14.03s, 14.3s, 14.9\u201315.1s). There is also no word space in 'ONEKEY.' at 10.18s, and the teal doors run into the lock's shackle at 13.47s, which makes it the least clean.",
+   "judge-6 (as B): Strong lock acting, with a deep anticipation squash on the hops (6.2\u20136.4s). DOOR. breaks nicely into door outlines (12.38s) and real door shapes fill teal (13.47s). The dot-built KEYWARD (19.3\u201319.6s) and the clean final hold are good. But the fallen letters overlap each other until they can't be read ('Pass wad 13', 4.12\u20137.4s), and the slot-machine roll shows glyphs cut off mid-roll that read as stray marks (14.03s, 14.3s, 14.9s), so it looks the messiest of the three."
+  ],
+  "hyperframes": [
+   "judge-1 (as C): The most characterful motion: the letters land in three clusters that match the three hops (3.3-4.67s), and the lock tilts and rotates through its arcs and throws coral bursts on landing (6.1-7.0s, 8.8s). The scramble uses glyphs from the password with ghosted unresolved characters (14.3s), the rings and particle cloud read well (17.88-18.43s), and the particles streak into KEYWARD (18.98-19.5s). Weak points: some scramble glyphs jump in size (14.9s, 15.1s), the lock is still mid-hop at 8.8s, and the small icon sits above cap height rather than aligned to it (20.9s).",
+   "judge-2 (as B): The most alive character animation: the lock tilts and rotates through each hop arc with clear anticipation and landing squash (6.1\u20137.0s, 8.8s). The fallen letters sit in three distinct clusters (pass / word / 123), so each landing pops a cluster into coral circles that turn teal (5.78s, 6.9\u20137.0s), exactly as the brief describes. Clean doors-to-baseline handover (13.47\u201314.03s), a nice two-ring burst (17.88s), and directional streak particles flowing into KEYWARD (18.98\u201319.4s) give the most designed title resolve. Minor issues: the scramble fades in through grey half-opacity glyphs (14.3s), the tagline cursor appears before the title has snapped solid (19.6s), and the lighter mono weight reads a little thin.",
+   "judge-3 (as C): The lock's animation has the most life: it tilts and rotates through each hop's arc (6.4\u20136.7s, 8.8s), and the coral circles visibly turn teal in mid-air (6.9\u20137.0s). The letter clusters on the floor stay readable as 'pass / word / 123', so each landing visibly hits a target. The slam, squeeze and doors (11.2\u201313.47s) match B. Weaknesses: the shackle legs end in blunt square cuts and the 'open' pose reads weakly at 14.3s. Several scramble glyphs are dimmed to grey (14.3s). The password underline almost disappears around 15.1s. The particles form the title as streaky rain-like trails (18.98\u201319.4s), which look messier than a clean convergence.",
+   "judge-4 (as B): The best character animation: letters scatter into three real clusters (3.3s, 4.1s), and the lock tilts through arced hops with good squash and stretch (6.2-6.7s). The scramble is clean and uses only password glyphs (14.3s, 14.9-15.3s); the 2 rings plus 60-particle burst read well (17.88s) and the end lockup is clean (20.9s). Weaker points: the turn to camera is a mid-air tilt instead of a horizontal squash (8.8s), the scramble line is nearly empty at 14.03s, the doors seem to fill all at once rather than ripple out (13.47s), and the title-forming particles are streaky and noisy (18.98-19.4s).",
+   "judge-5 (as A): Every beat is there and on time. The typing and zigzag crack land at 2.3\u20132.6s, the letters end up nicely scattered and tilted along the floor (3.3\u20134.1s), the hops have clear squash and tilt in the air (6.1\u20137.0s), and the slot scramble locks left to right and collapses into teal dots (14.9\u201315.8s). The ONE KEY. exit and the EVERY DOOR. tracking squeeze (11.0\u201311.4s) read well. On the weak side, the doors at 12.38s just appear, without visibly breaking out of the letters. The particles forming the title smear into streaky vertical lines (18.98\u201319.4s), and the lock icon is small and sits at the top-left corner of the K rather than lined up with the cap height (20.9s).",
+   "judge-6 (as A): Clean typing, crack and gravity fall, with letters that end up scattered and tilted (3.3s, 4.12s). The hops show clear squash and coral-to-teal pops (6.1\u20137.0s), and the tracking squeeze on EVERY DOOR is strong (11.28\u201311.4s). The scramble is tidy and uses only glyphs from the password (14.3\u201315.4s). Weak points: the doors are thin teal bars rather than door shapes (13.47s), the title particles form as streaky vertical bars with jagged edges as they snap solid (19.3\u201319.8s), and the lock shrinks to a dot lost in the cloud (18.98s)."
+  ]
+ }
+}

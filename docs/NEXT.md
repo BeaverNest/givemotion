@@ -61,15 +61,14 @@ Touches `src/render.js` (`resolveMotionBlur`, `velocityBlur`, `AUTO_BLUR`). Acro
 on objects under 15% of the frame). It is now opt-in (`--motion-blur auto`). Open: a blind A/B on fast camera moves
 only, where a smear may still help.
 
-## Next from round 7 (2026-11-06)
+## Next from round 8 (2026-11-06)
 
-- Vertical (9:16) is givemotion's weak format: it lost both vertical sets of round 7 and brief H of round 6, and won
-  three of four landscape sets. Judges named undersized type (a headline filling a third of the width), ragged wipes
-  and near-empty hand-over frames. Next: look at what vertical frames need that the skill and `check` miss (type
-  scale relative to the frame width, safe areas, one column of focus), test on vertical briefs.
-- `data-roll` is new after round 7: check in the next round that makers use it for changing readouts.
-- Cost: since the review loop, givemotion's makers cost about 1.5x the cheapest tool's per video (see the random-briefs page). Find which review steps pay
-  off (beats.png, critic) and trim the rest.
+- givemotion led round 8 (7.61 against 6.94 and 6.75, five of six sets, both vertical sets). Keep testing: two makers
+  per tool per brief, random briefs, portrait boxes for vertical videos.
+- Cost: givemotion's makers spend about 40% more than the cheapest tool's and take about a quarter longer (review and
+  critic passes). Measure which passes earn their cost (beats.png, the critic, the number of review runs) and trim.
+- `data-roll` has not been exercised yet (no brief asked for a readout that changes value): check it in a round that does.
+- Render times were not measured in rounds 7 and 8.
 
 ## Next from round 5 (2026-11-06)
 

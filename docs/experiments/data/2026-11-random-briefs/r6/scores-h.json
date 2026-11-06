@@ -2,42 +2,42 @@
  "judges": 6,
  "mean": {
   "givemotion": {
-   "brief": 7.17,
-   "spec": 6.17,
-   "motion": 6.33,
-   "craft": 6.83,
-   "errors": 4.33,
-   "overall": 6.0
+   "brief": 7.0,
+   "spec": 6.33,
+   "motion": 6.0,
+   "craft": 6.5,
+   "errors": 4.5,
+   "overall": 5.67
   },
   "remotion": {
-   "brief": 7.83,
-   "spec": 7.33,
+   "brief": 7.67,
+   "spec": 7.0,
    "motion": 7.5,
-   "craft": 8.0,
-   "errors": 7.17,
-   "overall": 7.83
+   "craft": 7.5,
+   "errors": 7.0,
+   "overall": 7.33
   },
   "hyperframes": {
-   "brief": 7.17,
+   "brief": 7.33,
    "spec": 7.0,
-   "motion": 7.0,
-   "craft": 6.17,
-   "errors": 6.17,
-   "overall": 6.17
+   "motion": 7.17,
+   "craft": 6.83,
+   "errors": 7.17,
+   "overall": 6.83
   }
  },
  "per": {
   "givemotion": {
    "brief": [
+    8,
+    6,
     7,
     8,
     7,
-    7,
-    7,
-    7
+    6
    ],
    "spec": [
-    6,
+    7,
     7,
     6,
     6,
@@ -45,36 +45,36 @@
     6
    ],
    "motion": [
+    8,
+    5,
+    5,
+    6,
     7,
-    7,
-    6,
-    6,
-    6,
-    6
+    5
    ],
    "craft": [
-    7,
-    7,
+    8,
+    6,
+    6,
     6,
     7,
-    7,
-    7
+    6
    ],
    "errors": [
+    6,
+    4,
+    4,
+    4,
     5,
-    5,
-    4,
-    4,
-    4,
     4
    ],
    "overall": [
-    6,
-    7,
+    8,
+    5,
+    5,
     5,
     6,
-    6,
-    6
+    5
    ]
   },
   "remotion": {
@@ -84,47 +84,47 @@
     8,
     8,
     8,
-    8
+    7
    ],
    "spec": [
     7,
     7,
     7,
     7,
-    8,
-    8
+    7,
+    7
    ],
    "motion": [
     7,
-    8,
-    7,
     7,
     8,
-    8
+    8,
+    8,
+    7
    ],
    "craft": [
+    7,
+    7,
     8,
     8,
     8,
-    8,
-    8,
-    8
+    7
    ],
    "errors": [
+    6,
+    6,
+    8,
+    8,
     7,
-    7,
-    7,
-    7,
-    7,
-    8
+    7
    ],
    "overall": [
     7,
+    7,
     8,
     8,
-    8,
-    8,
-    8
+    7,
+    7
    ]
   },
   "hyperframes": {
@@ -132,74 +132,74 @@
     7,
     7,
     7,
-    7,
-    7,
-    8
+    8,
+    8,
+    7
    ],
    "spec": [
-    7,
     6,
     7,
     7,
     7,
-    8
+    8,
+    7
    ],
    "motion": [
     7,
     7,
     7,
-    7,
+    8,
     7,
     7
    ],
    "craft": [
     6,
+    7,
     6,
-    6,
-    6,
-    6,
+    7,
+    8,
     7
    ],
    "errors": [
     6,
-    6,
-    6,
-    6,
-    6,
-    7
+    7,
+    7,
+    7,
+    8,
+    8
    ],
    "overall": [
     6,
+    7,
     6,
-    6,
-    6,
-    6,
+    7,
+    8,
     7
    ]
   }
  },
  "avg_rank": {
   "givemotion": 2.67,
-  "remotion": 1.0,
-  "hyperframes": 2.33
+  "remotion": 1.5,
+  "hyperframes": 1.83
  },
  "firsts": {
-  "givemotion": 0,
-  "remotion": 6,
-  "hyperframes": 0
+  "givemotion": 1,
+  "remotion": 3,
+  "hyperframes": 2
  },
  "rows": [
   {
    "judge": "judge-1",
    "order": [
-    "remotion",
     "givemotion",
+    "remotion",
     "hyperframes"
    ],
    "images": 34,
-   "cost": 0.6659594,
+   "cost": 1.0847498,
    "overall": {
-    "givemotion": 6,
+    "givemotion": 8,
     "remotion": 7,
     "hyperframes": 6
    }
@@ -208,15 +208,15 @@
    "judge": "judge-2",
    "order": [
     "remotion",
-    "givemotion",
-    "hyperframes"
+    "hyperframes",
+    "givemotion"
    ],
    "images": 34,
-   "cost": 0.7165902000000001,
+   "cost": 1.06927,
    "overall": {
-    "givemotion": 7,
-    "hyperframes": 6,
-    "remotion": 8
+    "givemotion": 5,
+    "hyperframes": 7,
+    "remotion": 7
    }
   },
   {
@@ -227,7 +227,7 @@
     "givemotion"
    ],
    "images": 34,
-   "cost": 0.6966146,
+   "cost": 0.9858155999999999,
    "overall": {
     "remotion": 8,
     "givemotion": 5,
@@ -242,68 +242,68 @@
     "givemotion"
    ],
    "images": 34,
-   "cost": 0.7275718,
+   "cost": 1.081725,
    "overall": {
     "remotion": 8,
-    "hyperframes": 6,
-    "givemotion": 6
+    "hyperframes": 7,
+    "givemotion": 5
    }
   },
   {
    "judge": "judge-5",
    "order": [
-    "remotion",
     "hyperframes",
+    "remotion",
     "givemotion"
    ],
    "images": 34,
-   "cost": 0.7316579999999999,
+   "cost": 1.0886752,
    "overall": {
-    "hyperframes": 6,
+    "hyperframes": 8,
     "givemotion": 6,
-    "remotion": 8
+    "remotion": 7
    }
   },
   {
    "judge": "judge-6",
    "order": [
-    "remotion",
     "hyperframes",
+    "remotion",
     "givemotion"
    ],
    "images": 34,
-   "cost": 0.6696108,
+   "cost": 1.0811748,
    "overall": {
     "hyperframes": 7,
-    "remotion": 8,
-    "givemotion": 6
+    "remotion": 7,
+    "givemotion": 5
    }
   }
  ],
  "notes": {
   "givemotion": [
-   "judge-1 (as A): Beat 1 is strong: the words fall with a stretched motion blur and the HERE. full stop becomes the lure without moving (2.48-2.92s). It has the most elegant anglerfish, with the lure at its mouth, and the LIGHT. letters light up in a clear order (5.1-5.8s). But the stack touches the top safe margin (2.7s), the counter glides in as smeared, overlapping copies and the phone outline has a gap (7.2s), the readout says 1000 M while the handle is at 200 (8.5-9.4s), and the hero shows two offset dots (11.7s) plus stray marks at 15.53s.",
-   "judge-2 (as A): Covers every beat: the full stop turns into the lure and stays in place (2.48\u20132.92s), the stalk and body draw on, LIGHT. lights up letter by letter (5.1\u20135.8s), the slider lights the cards (8.5\u20139.4s), and the end card types out cleanly (15.7\u201316.6s). It is also the only one whose counter never goes down: the slider readout keeps 1000 M. But the counter's glide into the app leaves a stack of overlapping ghost readouts (7.2s), the card-to-hero transition smears the text into ghost copies (11.03s), and the falling words pile up as streaky duplicates (1.4s, 2.0\u20132.02s). In the hero at 11.7s the cursor dot sits apart from the lure, so two dots show.",
-   "judge-3 (as B): Good ideas (odometer counter, a well-set beat-2 type stack at 4.7\u20136.1s, a strong end card at 17.1s), but it has many visible glitches: smeared motion-blur letters at 1.4s, 2.0s and 4.3s, the counter appearing as three ghosted copies at 7.2s, a readout of 1000 M while the handle sits at 200 M (8.5s), a blurry card transition at 11.0s, two separate Dots in the hero at 11.7s, and stray marks near the icon at 15.5s. The match cuts read less cleanly as a result.",
-   "judge-4 (as C): C has the richest creature drawing: the hero anglerfish at 11.7s is detailed and eerie, and the beat 2 build at 3.8\u20136.08s is well staged. But motion-blur smears break the piece again and again: words ghost over each other at 1.4s and 2.0s, THEIR OWN smears at 4.28s, the counter is triple-ghosted at 7.2s, card text smears at 11.03s and 14.18s, and a stray mark appears at 15.53s. The slider readout says 1000 M while the handle is still at 200 M (8.5\u20139.0s), and IT'S drifts above the 64 px safe margin at 2.7s. The end card at 17.1s is clean and correct.",
-   "judge-5 (as B): {'_': ''}",
-   "judge-6 (as C): It has the richest anglerfish line art: the hero at 11.7s is elegant, eerie and has a Lure-colored lure, and beat 2 at 4.9\u20135.8s is well staged. It is let down by heavy motion-blur smears that read as broken frames: the stacked words at 1.4s and 2.0s, THEIR OWN at 4.28s, the card text at 11.03s, the text at the bottom while the phone sinks at 14.18s, and a stray mark at 15.53s. The depth counter garbles at 2.7s ('019\u25af') and smears at 7.2s. During the drag it reads 1000 M while the handle still sits at 200 M (8.5\u20139.4s), so the readout does not roll to match the slider."
+   "judge-1 (as A): The most complete piece. Each word falls with a stretched motion blur and the stack sinks cleanly with no collisions (1.4\u20132.2s), and the Dot keeps exactly the same screen position from the full stop through the lure to the cursor (2.48\u21923.38\u21926.53s). The anglerfish is the most elegant of the three: an eerie line drawing that sits whole in frame with seven teeth, and LIGHT. lights up letter by letter (4.9\u20135.8s); the counter is the only one that reaches 1000 M by 6.5s. The transitions leave messy marks: the counter shows as three overlapping 1000 M ghosts at 7.2s, the counter glyphs garble at 6.08s, text smears during the shared-element move at 11.03s, and ghost labels trail as the phone sinks at 14.18s. The slider readout stays at 1000 M while the handle starts at 200 M (8.5\u20139.0s), and the cursor and lure are still two separate dots at 11.7s.",
+   "judge-2 (as A): The strongest beat 2: the anglerfish is fully in frame and built around the Dot, which stays in place from 2.48s to 3.38s. The counter rolls to 1000 M as the brief asks, and LIGHT. lights up letter by letter on the pulses (4.9\u20135.8s). The transitions are messy, though. The counter glides in as a triple ghosted '1000 M' over a blue radial blob (7.2s). Cards and the hero dissolve into garbled noise at 11.03s. The fish and the word ANGLERFISH smear as they fall at 14.18s, and stray glyph fragments show up at 15.53s. In beat 3 the slider readout says 1000 M while the handle sits at 200 M (7.9\u20138.8s), and the full stop is a square rather than a round Dot (2.7s).",
+   "judge-3 (as B): The counter rolls correctly to 1000 in beat 2, and the slider icon states (8.5\u20139.4s) and end card (17.1s) are strong. But heavy smearing on moving type turns into mush (1.4s, 2.0s, 4.28s, 12.5s, 15.7s), the counter shows three overlapping copies as it glides into the app (7.2s), the readout already says 1000 M before the drag starts (8.5s), and the card-to-hero move at 11.03s is a garbled mess. The hero lure floats apart from its stalk (11.7\u201313.0s), a stray mark is left at 15.53s, and the jagged-toothed fish looks more cartoonish than eerie.",
+   "judge-4 (as C): Follows the brief closely (the only one to roll the counter to 1000 M in beat 2, radial screen fill at 7.4s, Lure dot on the anglerfish card icon, good icon reveal and end card), but the motion blur leaves smeared ghost copies: doubled words at 1.4s, 2.0s and 4.3s, triple copies of the readout at 7.2s and 11.0s, smeared cards at 11.0s, a smeared ANGLERFISH at 14.2s and smeared toast text at 12.5\u201312.6s. A stray mark appears at 15.5s, the counter's last digit is always caught mid-roll and often can't be read (6.1s shows ????), the slider readout says 1000 M while the handle sits at 200 M (8.5s), the caret is semi-transparent over the letters, and the full stop is square at 2.7s.",
+   "judge-5 (as B): Good energy, with motion-blurred drops (1.4s, 2.0s) and the only counter that correctly reaches 1000 M in beat 2 (4.9\u20135.8s). The fish is elegant and fully drawn. It also has the most visible mistakes. The counter is permanently mid-roll and reads as garbled digits (2.7s, 15.7\u201316.6s). The full stop is a square at 2.7s, not a round Dot. The counter glide at 7.2s leaves ghosted triple '1000 M' trails. The card-to-hero transition at 11.03s and the phone sink at 14.18s leave smeared, illegible text, and a stray 'hh' fragment appears at 15.53s. The slider readout stays at '1000 M' during the drag (8.5\u20139.4s) instead of rolling to match.",
+   "judge-6 (as C): Gets the beat-2 counter right (0200\u21921000 by 6.5s) and has a menacing anglerfish plus a good LIGHT. reveal (5.1\u20135.8s). But heavy motion-blur smears look like glitches: HERE. at 2.0s, THEIR OWN at 4.28s, and the shared-element transition at 11.03s breaks into streaky garbage. The counter gliding into the phone leaves three overlapping ghost copies (7.2s), the phone sinking smears (14.18s), and a stray fragment shows at 15.53s. The slider readout stays at 1000 M while the handle is dragged from 200 M (8.5\u20139.4s). The square full stop (2.7s), a caret that covers the letters (16.3\u201316.6s) and HADAL letter spacing left wide at 17.1s make it the weakest finish."
   ],
   "remotion": [
-   "judge-1 (as B): It is the most polished and consistent of the three: the readout counts up with the handle and the icons light as it passes (8.9-9.4s), the hero sits in a neat dark inset panel (11.7s), the phone sinks away in a staggered move (14.18s) and the end card is tidy (17.1s). Weaknesses: the falling words pass over the stack and the letters overlap (1.4s, 2.0s), 'SO THEY MAKE' sits on one line instead of stacking, the counter stays near 0200 M through beat 2 (7.2s), and the hero lure is drawn in Biolume, not Lure pink, so the single Dot breaks until 13.28s.",
-   "judge-2 (as C): The most polished piece. Its anglerfish is the most elegant and eerie drawing, with a proper crescent jaw and teeth (5.3\u20135.8s, 11.7s). LIGHT. lights up letter by letter with glow (4.9\u20135.8s), and the push-in scales the type past the frame as the brief asks (6.08s). The lure-to-cursor-to-icon handovers are continuous (6.53s, 13.28\u201315.53s), and the end card has clean hierarchy (17.1s). Against it: the counter falls back to 0200 M (7.2s), the cards are still drawing in while the cursor is already on the slider (8.5\u20138.6s), and the cursor hides part of LOG SIGHTING (12.1\u201312.3s). Like A and B, the falling words pass over each other (1.5s, 2.1s).",
-   "judge-3 (as A): The most complete and polished take: the anglerfish draws on elegantly around the Dot (3.8\u20135.6s), LIGHT. lights up letter by letter (5.0\u20135.8s), the push-in to the cursor is clean (6.1\u20136.5s), and the 11.7s detail screen and the end card are portfolio-level. Weaknesses: falling words overlap the stack on landing (1.5s, 2.0s, 2.1s), the stack sits high rather than centred, the Dot at 2.7s is a square full stop, and the hero lure is Biolume rather than Lure until about 12.4s.",
-   "judge-4 (as A): This is the most complete and cleanest piece. The full stop holds its screen position from 2.48s to 2.92s and becomes the lure. The anglerfish draws itself on around the Dot (3.8\u20134.7s), LIGHT. lights up letter by letter (5.0\u20135.8s), the cursor takes over at 6.53s, the phone draws in (7.2s), the slider and cards follow, and the hero transition lands at 11.0\u201311.5s. The hero line art at 11.7s is elegant, and the end card at 17.1s is well balanced. Weaknesses: falling words collide with the stack (1.4s, 1.5s, 2.1s), and the stack sits high in the frame instead of centered. The Dot is square at 2.7s. The corner counter reads 0200 M at 7.2s, so it never reached 1000 M in beat 2. The card UI text at 8.5\u20139.4s looks smaller than 28 px.",
-   "judge-5 (as C): ",
-   "judge-6 (as B): This one delivers the most complete version of the brief. Beat 1 drops are clean (1.3\u20132.2s), and the fish draws on from the lure, with the lure placed properly at the mouth (3.8\u20134.7s). LIGHT. lights up letter by letter in sync with the lure pulses (4.9\u20135.8s), and at 6.08s the type really scales past the frame edges. The slider drag and card highlights read well (8.8\u201310.6s), the hero is clean and well laid out (11.7s), and the toast check mark draws on (12.5\u201312.9s). Weaknesses: the full stop at 2.7s is a square, the cards are still building while the cursor is already moving (8.5\u20138.6s), and the hero card uses an Abyss fill with the lure in Biolume until the cursor reaches it."
+   "judge-1 (as B): Solid and faithful structure. The anglerfish is good: stalk first, then body, then a crescent jaw (3.4\u20135.6s); the slider logic is right, with the readout rolling 0200\u21920500 and the comb jelly and vampire squid icons lighting correctly (9.2\u20139.4s); and the icon draws its outline around the Dot (15.07s). Each word lands overlapping the one above for a frame or two (DARK/DOWN at 1.5s, DOWN/HERE. at 2.1s), the counter stays at 0200 M for all of beat 2 (3.0\u20136.5s), and SO THEY MAKE is set on one line, which weakens the separate entrances. The button reads 'LOG SIG_TING' with the H missing for about a second (11.93\u201312.9s), the hero lure is Biolume instead of Lure at 11.7s, and the cursor never really lands on the lure for the match cut.",
+   "judge-2 (as C): Delivers the most of what the brief asks for. The fish draws itself on around a Dot that never moves (2.92\u20135.6s). The push-in scales the type past the frame edges at 6.08s. The phone outline traces itself in before the screen fills (6.97\u20137.88s), and the cards stagger in (8.5\u20138.7s). In the hero, the lure starts Biolume and turns Lure-pink when the cursor merges with it (12.1\u201312.4s), which makes a clever match cut. The clearest defect: the 'LOG SIGHTING' button text loses letters ('SIG'TING') from 11.93s to 12.9s. The counter also stays at 0200 M through beat 2. 'SO THEY MAKE' is set on one line, which crowds the lower third, and the hero inside a dark inner frame reads more like a stock card than an illustration.",
+   "judge-3 (as A): The most complete and polished: a clean full-stop-to-lure match cut (2.48\u20132.92s), an elegant anglerfish that draws on in order with letter-by-letter LIGHT. pulses (4.9\u20135.8s), a working push-in to the cursor (6.08\u20136.53s), and a refined end card with letters rising and tightening (15.7\u201316.6s). Weaknesses: the counter stays at 0200 through all of beat 2 instead of reaching 1000, the Dot is briefly square at 2.7s, the click ripple cuts the H of 'LOG SIGHTING' (11.9\u201312.8s), and falling words overlap briefly as they land (1.5s, 2.1s).",
+   "judge-4 (as A): The most complete and polished piece: words drop with a stretch and land cleanly (1.3\u20132.2s), the stalk grows out of the Dot into an elegant, eerie line-art anglerfish (3.8\u20135.6s), the letters of LIGHT. light up with the pulses (5.0\u20135.7s), and the phone draw-on, slider, move into the hero card (11.0s), toast and end card are all clean. Weaknesses: the full stop is a square that pops into a circle (2.7\u21922.9s), the counter stays at 0200 M through beat 2 instead of reaching 1000 M, the Lure cursor and ripple are invisible on the Lure button and only cut a notch out of the H in LOG SIGHTING (11.9\u201312.8s), and the small UI labels look under 28 px.",
+   "judge-5 (as C): Strong staging of beats 2\u20134. The anglerfish draws on around the lure fully inside the frame, and its jaw and teeth build as LIGHT. lights letter by letter (3.83\u20135.8s). The push-in at 6.08s visibly scales fish and type past the frame. The card grows into a framed hero illustration as a convincing shared-element move (11.03\u201311.47s), and the slider drag rolls the readout (9.2\u20139.4s). Downsides: the Dot is a square glyph at 2.7s, the 'DEPTH' label and readout overlap in the header at 13.72s and leave an orphan label at 14.18s, the cursor sits on top of the 'LOG SIGHTING' text (12.1\u201312.8s), and the counter stays at 0200 M through beat 2.",
+   "judge-6 (as B): Nearly the same structure as A, with a more elegant beat-2 anglerfish (fin rays, crescent jaw drawing on, 4.28\u20135.8s), a stronger push-in where the type scales past the frame (6.08s), and nicer bordered-card UI in beat 3 (8.5\u20139.4s). The counter also glides into the phone during the screen fill (7.88s). Same flaw as A: the counter stays at 0200 M through beat 2. The full stop is a square at 2.7s before it turns round (2.92s). The hero lure is drawn in Biolume, not Lure (11.7\u201312.2s). The cursor almost disappears against the pink LOG SIGHTING button (12.1\u201312.9s), and the icon is still moving while HADAL rises (15.7\u201315.9s)."
   ],
   "hyperframes": [
-   "judge-1 (as C): It follows the brief's structure faithfully: the slider drags with a green readout that counts up (8.5-9.4s), the toast's check mark draws itself (12.5-12.9s) and the end card is clean (17.1s). But the beat-2 anglerfish is cut off by the left edge with a long stalk drooping away from the body (4.28-5.8s), and in the hero (11.7s) the lure hangs far from the fish while the cursor sits on its belly like a red spot. The falling words also overlap (2.0-2.1s) and the phone outline has a corner gap while it draws (7.42s).",
-   "judge-2 (as B): Lands the main beats: the lure handover (2.7s), the push-in to the cursor (6.53s), the check mark drawing on (12.6\u201312.9s), and a staggered sink into the icon (14.18\u201315.53s). The end card is neat and legible (17.1s). The anglerfish is the weakest drawing: its body is cropped by the left edge of the frame (4.28\u20136.08s) and the anatomy reads oddly. In the hero the cursor sits on the fin rather than the lure (11.47\u201311.7s), and from 12.1\u201312.9s it covers the text of LOG SIGHTING. The counter drops from 1000 M back to 0200 M (7.2s, 8.5s), which breaks the 'only ever increasing' rule.",
-   "judge-3 (as C): Solid structure: a round, glowing Dot handover at 2.7s, a slider readout that rolls in step with the drag (8.6\u20139.4s), a check mark that draws on (12.6\u201312.9s) and a clean end card. Weaknesses: an anatomically odd fish whose very long stalk leaves the lure hanging far below the head, cropped off the left edge (4.3\u20136.1s); LIGHT. finishes late; the 11.7s hero has the cursor floating over the belly away from the lure; and the cursor covers the LOG SIGHTING label during the click (12.1\u201312.9s).",
-   "judge-4 (as B): The beats and timing match A closely: the full stop becomes the lure at 2.48\u20132.92s, LIGHT. lights up (5.3\u20136.0s), and the slider drag and the toast with its check mark work (12.5\u201313.0s). The end card at 17.1s is clean. The beat-2 anglerfish is clumsy: at 4.28\u20136.08s it is cropped by the left edge of the frame, and the lure hangs on a long stalk well below the jaw. The hero version at 11.7s repeats this, with the lure dangling far off the body. From 12.1s to 12.9s the cursor sits on top of the LOG SIGHTING label. Other problems: a Midwater blob behind the cursor at 7.2s, visible gradient banding at 2.7s, and the counter held at 0200 M through beat 2.",
-   "judge-5 (as A): Covers every beat: words drop in stretched and land with an overshoot (1.4\u20132.2s), LIGHT. lights up letter by letter (5.3\u20135.8s), the phone draws itself in around the cursor (6.97\u20137.88s), the slider drag lights the cards (8.5\u20139.4s), the toast's check mark draws itself (12.5\u201312.9s), and HADAL rises letter by letter (15.7\u201316.1s). The anglerfish in beat 2 is cut off by the left edge of the frame (4.28\u20136.08s), and no sampled frame shows the push-in; between 6.08 and 6.53s everything has simply gone. HERE. lands on top of DOWN at 2.1s. The hero fish at 11.7s is oddly built, with a huge stalk and the lure far from the mouth, and the layout leaves a large empty lower half.",
-   "judge-6 (as A): Clean, faithful beat 1: words drop with a stretch, the stack fades and drifts up, and at 2.7s a round Lure dot stays in place while HERE fades. The handover into the phone at 7.2s and the end card at 17.1s are tidy. The anglerfish's anatomy is odd: in beat 2 (4.7\u20136.1s) it sits half off the left edge, and in the hero at 11.7s the lure hangs on a long stalk far below the mouth. The cursor also lands on the pectoral fin, leaving a large empty lower third of the phone. The push-in at 6.08\u20136.53s reads as a quick fade rather than a scale past the frame edges."
+   "judge-1 (as C): The beat 3 UI is the best of the three: an eased drag with a live odometer readout from 0200 to 0950 M and correct icon states (8.5\u20139.4s), a check mark that draws on nicely (12.6\u201312.9s), and an end card that holds together. The anglerfish is the weak point. In beat 2 its body is cut off by the left edge of the frame and the lure hangs far below the head on a stalk that is barely attached (4.28\u20136.08s); in the hero at 11.7s the stalk loops off the head to a dot far below, and the cursor sits on a spiky fin, so the 'two Dots become one' match cut doesn't read. The counter stays at 0200 M through beat 2, words collide as they land (1.5s, 2.1s), faint ghost letterforms show behind the stack (2.7s), and the cursor ring sits on top of 'SIGHTING' for about a second (12.1\u201312.9s).",
+   "judge-2 (as B): Clean and polished overall. The slider drag reads well: the readout rolls from 0200 to 1000 M and the icons light up as the handle passes each card's range (8.5\u20139.4s). The toast's check mark draws itself on (12.6\u201313.0s), the phone sinks smoothly (14.18s) and the end card is tidy (17.1s). Weak points: the anglerfish is cut off by the left frame edge for all of beat 2 (4.28\u20136.08s), and its stalk hangs loosely away from the body. The counter stays at 0200 M through beat 2 instead of rolling to 1000 M. At 11.47s the cursor wanders over the fish's fins, and its ring sits on top of the 'LOG SIGHTING' text (12.1\u201312.9s). There is no clear push-in on the lure at 6.0s.",
+   "judge-3 (as C): A round, continuous Dot at 2.7s, a readout that rolls smoothly with the slider drag (8.5\u20139.4s), a good card-to-hero move with the other cards falling away (11.03s), a check mark that draws on (12.6\u201312.9s) and a clean end card. Weaknesses: the counter sticks at 0200 through beat 2, and the beat-2 fish is awkward (half-built at 3.83s, cropped off the left edge at 4.28\u20136.08s, hanging from a long, limp stalk). In the hero view the lure floats apart from the stalk tip and the cursor rests on the fin rather than the lure (11.7s), the cursor ring sits over the button text (12.1\u201312.9s), and the screen fills in as a hard-edged disc (7.2s).",
+   "judge-4 (as B): Clean type and a smooth continuous flow: a round full stop gives the best match cut (2.5\u20132.9s), the screen fills outward from the cursor (7.2s), the slider readout rolls in step with the drag (8.7\u20139.4s), the cursor lands on the lure at 13.3s, and the end card is tidy (17.1s). But the anglerfish is drawn oddly, cropped at the left edge with the lure hanging below on a stalk that barely meets the head (4.3\u20136.1s, and again at 11.7s, where the cursor sits on the fin); faint ghost shapes sit behind and beside the word stack (1.3\u20132.0s, 2.7s); the cursor ring covers the I of LOG SIGHTING for almost a second (12.1\u201312.9s); the counter stays at 0200 M through beat 2; and the UI labels are small.",
+   "judge-5 (as A): The cleanest and most complete. In beat 1 the words fall stretched and stack properly (1.3\u20132.2s), and the full stop stays a round Lure dot that holds its position into beat 2 (2.48\u21922.92s). The slider drag rolls the readout 0200\u21921000 and the cards light up and dim as the handle passes (8.5\u20139.4s). Toast, check mark and ripple are well timed (12.1\u201313.0s), and the end card is polished (17.1s). Weak points: the beat-2 anglerfish is cropped by the left edge and its stalk floats free of the body (4.28\u20136.08s), the push-in at 6.0s barely registers, and the counter stays at 0200 M through beat 2 instead of reaching 1000 M.",
+   "judge-6 (as A): Hits most beats cleanly. The words drop in stretched and land (1.4\u20132.2s), the full stop becomes a round Lure dot that stays in place (2.48\u20132.92s), LIGHT. lights up letter by letter with the pulses (5.3\u20135.8s), and the slider readout rolls 0200\u21921000 while the icons light up and the card gets its border (8.5\u20139.68s). The cursor lands on the hero lure for the match cut (13.28s), and the end card is clean (17.1s). Weaknesses: the counter is stuck at 0200 M for all of beat 2 (3\u20136.5s). The beat-2 fish is cropped at the left edge, with the lure hanging far below the mouth. At 11.7s the cursor sits awkwardly inside the fish body among the fin lines, and the icon is still drifting up while HADAL builds (15.5\u201315.97s)."
   ]
  }
 }

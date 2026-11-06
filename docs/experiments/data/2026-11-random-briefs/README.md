@@ -44,3 +44,11 @@ The scripts expect the round folder at `/home/user/tools5` (change `R` / the pat
 - `pack.sh` now keeps each frame's shape (vertical frames are fitted, not squashed). The earlier scores of the vertical
   sets, judged from squashed frames, are in `r6/squashed-packs/` and `r7/squashed-packs/`.
 - Versions: givemotion 0.1.4 (development branch), Remotion 4.0.541, HyperFrames 0.9.18, Claude Opus 5.5 at effort high.
+
+## Round 8 and the portrait re-judging (added 2026-11-06)
+
+- `r8/`: assignments (brief P's format set to vertical, marked `forced_vertical`), seed, judge keys, scores for sets
+  N, N2, O, O2, P, P2, and the round's scripts.
+- `pack.sh` gives portrait videos portrait boxes of the same area. H, M and M2 were judged a third time with it; the
+  previous small-fitted scores are in `r6/fitted-small/` and `r7/fitted-small/` (`r7/rejudge-vertical-portrait.sh`).
+- Versions: givemotion 0.1.4 (development branch), Remotion 4.0.541, HyperFrames 0.9.18, Claude Opus 5.5 at effort high.
