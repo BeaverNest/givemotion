@@ -93,7 +93,7 @@ export async function review(input, opts = {}) {
   const peaks = bins.filter((b, i) => b.v >= 0.06 && (i === 0 || b.v >= bins[i - 1].v) && (i === bins.length - 1 || b.v >= bins[i + 1].v)).sort((a, b) => b.v - a.v);
   for (const p of peaks) if (busy.every((t) => Math.abs(t - p.t) > 1.2)) busy.push(p.t);
   if (!busy.length) for (const p of [0.2, 0.5, 0.8]) busy.push(p * dur);
-  const strips = busy.slice(0, 6).map((c) => Math.max(0, Math.min(last - 0.9, c - 0.5))).sort((a, b) => a - b);
+  const strips = busy.slice(0, 4).map((c) => Math.max(0, Math.min(last - 0.9, c - 0.5))).sort((a, b) => a - b);
 
   const shot = async (name, times, cols) => {
     const tmp = join(dir, '.tmp-' + name);
