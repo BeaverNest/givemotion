@@ -147,7 +147,7 @@ export async function review(input, opts = {}) {
   md.push('| | Score | Why (with times) |', '|---|---|---|');
   for (const k of ['Brief: every beat, Must and Must not, in order and on time', 'Spec: exact colors, fonts, copy, format', 'Motion: easing, flow between beats, camera, rhythm', 'Craft: composition, typography, polish of every hold', 'Errors: stray marks, overlaps, cut-offs, leftovers, glitches']) md.push(`| ${k} | | |`);
   md.push('', 'Then write the five biggest visible problems with their times, fix them in the page, and run `givemotion review` again.');
-  md.push('Stop when check has no errors and no row is below 8, or after two passes.', '');
+  md.push('Stop when check has no errors and no row is below 8, or after two passes. Use the critic once, on the near-final cut.', '');
   md.push('## Critic prompt (for a sub-agent that has not seen the page)', '');
   md.push('A fresh reviewer finds what the author no longer sees. Give a sub-agent this, word for word:', '', '```');
   md.push(`You are a strict senior motion designer reviewing a video you did not make. Read the brief at ${briefFile || '<path to the brief>'}`);
