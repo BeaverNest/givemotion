@@ -39,10 +39,30 @@ their own tool's docs. Six blind AI judges score the three videos of each brief
 ([the rounds](docs/experiments/2026-11-random-briefs.md); the kit to run your own is in
 [`docs/experiments/data/2026-11-random-briefs`](docs/experiments/data/2026-11-random-briefs)).
 
-<img src="docs/media/round8-p.gif" width="100%" alt="Round 8, brief P (a vertical year in review for a password manager), made with givemotion, Remotion and HyperFrames by the same model, playing side by side with each judge score">
+**Round 8, brief P** ("Locked Tight", a vertical year in review for a password manager), at the moments that decided
+it. Full-resolution crops from each tool's first maker, unedited; judges' means: givemotion 7.83, Remotion 7.67,
+HyperFrames 6.67 (a close set, not givemotion's widest margin).
 
-*Round 8, brief P, unedited: a close set (7.83 / 7.67 / 6.67), not givemotion's widest margin. The report on rounds 7
-and 8 is [`docs/experiments/2026-11-rounds-7-8.md`](docs/experiments/2026-11-rounds-7-8.md).*
+<img src="docs/media/r8p-1-handover.jpg" width="100%" alt="Brief P at 2.92 s: givemotion's next card is already drawing in under the rising band; Remotion and HyperFrames show an almost empty frame">
+
+*2.92 s, the hand-over. givemotion's next card is already drawing under the rising band, so the eye always has
+something to hold; Remotion's and HyperFrames' frames are empty here (the judges named the empty frame at 2.92 s for both).*
+
+<img src="docs/media/r8p-2-carousel.jpg" width="100%" alt="Brief P at 5.75 s: the carousel slide; givemotion's card is motion-blurred, Remotion's and HyperFrames' are crisp">
+
+*5.75 s, the carousel. Remotion's is the best: both cards crisp and clearly framed. givemotion's maker turned motion
+blur on, and the sliding number smears.*
+
+<img src="docs/media/r8p-3-rebuild.jpg" width="100%" alt="Brief P at 12.0 s: givemotion's 37 has re-formed from its shards before the wipe; Remotion's and HyperFrames' are still scattered particles">
+
+*12.0 s, the "37". The brief asks for the number to burst, rebuild, and only then wipe to the next word. givemotion's
+has rebuilt on time; the other two are still scattered while the wipe has already started.*
+
+<img src="docs/media/r8p-4-padlock.jpg" width="100%" alt="Brief P at 17.9 s, the last frame: three padlocks around a 0 with the line Locked tight">
+
+*17.9 s, the last frame. The brief asks for the padlock body around the lower half of the `0`. givemotion breaks the
+body's top edge around the digit; Remotion puts the `0` fully inside (cleanest, but not what was asked);
+HyperFrames' body edge runs straight through the `0`.*
 
 Sixteen random briefs in seven rounds, 5-6 November 2026, twenty-two judged sets (rounds 7 and 8 had two makers
 per tool per brief). givemotion 0.1.3-0.1.4 at its development branch, Remotion 4.0.541, HyperFrames 0.9.17 in round 2
