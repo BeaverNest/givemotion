@@ -280,6 +280,8 @@ affected.
 
 ## Round 7 (briefs K, L, M, two makers per tool each)
 
+Videos of every set: [videos/round-7/](videos/round-7/).
+
 What changed before this round:
 - Engine: motion blur off by default; `review` reads the brief (`brief.md` next to the page, or `--brief`) and adds
   `beats.png`, every timed beat at its own moments, and a critic prompt for a fresh sub-agent in REVIEW.md.
@@ -317,6 +319,8 @@ Changed after the round: `data-roll` (a readout that changes value at set times,
 critic prompt now names undersized type and half-rolled digits.
 
 ## Round 8 (briefs N, O, P, two makers per tool each)
+
+Videos of every set: [videos/round-8/](videos/round-8/).
 
 What changed before this round:
 - Skill: in 9:16, size headlines to the width; every vertical hold is a phone poster (high contrast, nothing cut by

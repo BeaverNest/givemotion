@@ -19,6 +19,7 @@ Test rounds with fresh AI agents (docs only) and blind AI judges. How to run one
 | 2026-11-kinetic-three-engines.md | "KINETIC" motion reel made with givemotion, Remotion 4.0.541 and HyperFrames 0.9.15 by Opus 5.5 (effort high), 6 blind judges (2026-11-05). |
 | 2026-11-random-briefs.md | All random-brief rounds (2-8, sixteen briefs, twenty-two judged sets; drawn at random, written blind, 6 blind judges each), givemotion vs Remotion 4.0.541 vs HyperFrames 0.9.17/0.9.18, with versions, dates, raw data, corrections and what each round changed (2026-11-05/06). |
 | 2026-11-rounds-7-8.md | Report on rounds 7 and 8: two makers per tool per brief, every tool open; round 7 a tie at the top, round 8 givemotion first (7.61 vs 6.94 vs 6.75, five of six sets), with judges' notes, process numbers, what changed and the caveats (2026-11-06). |
+| videos/ | The videos of rounds 7 and 8, every tool and set, one page per round with scores and a link to each video. |
 | data/ | raw results tables from `round.js results`. |
 
 Overall scores so far (blind Opus judges, 1-10): round 1 7.5 average, round 2 6.6, round-3 examples 7.9, hand-drawn

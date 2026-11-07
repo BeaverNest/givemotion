@@ -39,8 +39,14 @@ their own tool's docs. Six blind AI judges score the three videos of each brief
 ([the rounds](docs/experiments/2026-11-random-briefs.md); the kit to run your own is in
 [`docs/experiments/data/2026-11-random-briefs`](docs/experiments/data/2026-11-random-briefs)).
 
+**Watch the videos:** every video of the latest rounds, all three tools, every set, with its scores:
+[round 8](docs/experiments/videos/round-8/) · [round 7](docs/experiments/videos/round-7/) ·
+[all test videos](docs/experiments/videos/).
+
 **Round 8, brief P** ("Locked Tight", a vertical year in review for a password manager), at the moments that decided
-it. Full-resolution crops from each tool's first maker, unedited; judges' means: givemotion 7.83, Remotion 7.67,
+it. The full videos: [givemotion](docs/experiments/videos/round-8/P-givemotion.mp4) ·
+[Remotion](docs/experiments/videos/round-8/P-remotion.mp4) ·
+[HyperFrames](docs/experiments/videos/round-8/P-hyperframes.mp4). Full-resolution crops from each tool's first maker, unedited; judges' means: givemotion 7.83, Remotion 7.67,
 HyperFrames 6.67 (a close set, not givemotion's widest margin).
 
 <img src="docs/media/r8p-1-handover.jpg" width="100%" alt="Brief P at 2.92 s: givemotion's next card is already drawing in under the rising band; Remotion and HyperFrames show an almost empty frame">
