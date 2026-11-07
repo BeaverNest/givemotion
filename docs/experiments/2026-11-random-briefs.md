@@ -306,7 +306,7 @@ was killed by a machine restart before any video was made and was rerun from scr
 
 A tie with Remotion at the top (7.20 against 7.17, within the noise), well ahead of HyperFrames. givemotion won every landscape set but one (K) and lost both
 vertical sets. Its makers now cost the most: the review passes and the critic sub-agent roughly doubled their
-tool calls (55-93 against 42-69) and images viewed (21-38 against 7-18). Render times were not measured this round.
+tool calls (55-93 against 42-69) and images viewed (21-38 against 7-18). Render times: see [2026-11-rounds-7-8.md](2026-11-rounds-7-8.md).
 
 What the judges said about givemotion's vertical sets: type far smaller than the brief asked ("fills only about a
 third of the width"), a hand-built counter caught as "a jumble of half-rolled digits", ragged band wipes with divider
@@ -344,7 +344,8 @@ format for every tool). Two makers per tool per brief, six blind judges per set.
 
 givemotion's first clear round win: it led five of the six sets, both vertical ones included, and 24 of 36 judges put
 it first. Its makers still cost the most (about 40% more than the cheapest) and took about 26% longer, from the review
-and critic passes. Render times were not measured this round.
+and critic passes. Render times (set 1 of each brief, measured on 2026-11-07): givemotion 132 s for the six briefs of
+rounds 7 and 8, Remotion 1027 s, HyperFrames 675 s; see [2026-11-rounds-7-8.md](2026-11-rounds-7-8.md).
 
 ## All twenty-two judged sets (rounds 2-8)
 

@@ -39,7 +39,10 @@ their own tool's docs. Six blind AI judges score the three videos of each brief
 ([the rounds](docs/experiments/2026-11-random-briefs.md); the kit to run your own is in
 [`docs/experiments/data/2026-11-random-briefs`](docs/experiments/data/2026-11-random-briefs)).
 
-<img src="docs/media/random-briefs.gif" width="100%" alt="One random brief made with givemotion, Remotion and HyperFrames, playing in a 2x2 grid next to its scores and process numbers">
+<img src="docs/media/round8-p.gif" width="100%" alt="Round 8, brief P (a vertical year in review for a password manager), made with givemotion, Remotion and HyperFrames by the same model, playing side by side with each judge score">
+
+*Round 8, brief P, unedited: a close set (7.83 / 7.67 / 6.67), not givemotion's widest margin. The report on rounds 7
+and 8 is [`docs/experiments/2026-11-rounds-7-8.md`](docs/experiments/2026-11-rounds-7-8.md).*
 
 Sixteen random briefs in seven rounds, 5-6 November 2026, twenty-two judged sets (rounds 7 and 8 had two makers
 per tool per brief). givemotion 0.1.3-0.1.4 at its development branch, Remotion 4.0.541, HyperFrames 0.9.17 in round 2
@@ -53,15 +56,15 @@ and 0.9.18 after; Claude Opus 5.5 at effort high for makers and judges; one 4-co
 | Judges ranking it first, all sets (132 in all) | **57** | 50 | 25 |
 | Cost at list prices, all 22 sets | $125 | **$105** | $122 |
 | Code the agents wrote, all 22 sets | **12,502 lines** | 33,257 lines | 26,545 lines |
-| Render time, the 9 briefs timed (each tool's own command, one at a time) | **255 s** | 377 s | 539 s |
+| Render time, the 15 briefs timed (each tool's own command, one at a time) | **387 s** | 1404 s | 1214 s |
 
 In the latest round givemotion made the best videos: it won five of six sets, both vertical ones included, and 24 of
 36 judges ranked it first. It got there over the rounds: last in rounds 2-6, a tie in round 7, a clear lead in round 8,
 after a review loop (the agent checks every beat of the brief at its own time and has a fresh critic look) and fixes for
 vertical videos. The cost of that: its agents now spend more than the others (about 40% more than the cheapest in
 round 8, and about a quarter more time). It writes far less code and rendered fastest on every brief we timed. One or
-two runs per tool per brief and AI judges looking at frames: read it as a running record, not a final benchmark. Every
-round, with versions, prompts, raw scores, the harness and a correction (vertical videos had first been judged from
+two runs per tool per brief and AI judges looking at frames: read it as a running record, not a final benchmark. The report on the latest two rounds is
+[`docs/experiments/2026-11-rounds-7-8.md`](docs/experiments/2026-11-rounds-7-8.md); every round, with versions, prompts, raw scores, the harness and a correction (vertical videos had first been judged from
 squashed frames, then re-judged), is in
 [`docs/experiments/2026-11-random-briefs.md`](docs/experiments/2026-11-random-briefs.md). Earlier single-brief
 showcases: [`2026-11-tools-showcase.md`](docs/experiments/2026-11-tools-showcase.md) and

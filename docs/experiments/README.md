@@ -17,7 +17,8 @@ Test rounds with fresh AI agents (docs only) and blind AI judges. How to run one
 | 2026-11-efforts-showcase.md | One illustrated brief (a dog's walk) made with givemotion by Opus 5.5 at effort low, medium, high and xhigh (independent sessions), 8 blind judges, one 2x2 video: xhigh 8.0, medium 6.9, high 6.6, low 5.3; xhigh cost 3.5x medium. |
 | 2026-11-tools-showcase.md | One hard brief made with givemotion, HyperFrames and Remotion by Opus 5.5 (effort medium, independent sessions, each with only its own docs), 6 blind judges, one 2x2 video. |
 | 2026-11-kinetic-three-engines.md | "KINETIC" motion reel made with givemotion, Remotion 4.0.541 and HyperFrames 0.9.15 by Opus 5.5 (effort high), 6 blind judges (2026-11-05). |
-| 2026-11-random-briefs.md | Ten random briefs in five rounds (drawn at random, written blind, 6 blind judges each), givemotion vs Remotion 4.0.541 vs HyperFrames 0.9.17/0.9.18, with versions, dates, raw data and what each round changed (2026-11-06). |
+| 2026-11-random-briefs.md | All random-brief rounds (2-8, sixteen briefs, twenty-two judged sets; drawn at random, written blind, 6 blind judges each), givemotion vs Remotion 4.0.541 vs HyperFrames 0.9.17/0.9.18, with versions, dates, raw data, corrections and what each round changed (2026-11-05/06). |
+| 2026-11-rounds-7-8.md | Report on rounds 7 and 8: two makers per tool per brief, every tool open; round 7 a tie at the top, round 8 givemotion first (7.61 vs 6.94 vs 6.75, five of six sets), with judges' notes, process numbers, what changed and the caveats (2026-11-06). |
 | data/ | raw results tables from `round.js results`. |
 
 Overall scores so far (blind Opus judges, 1-10): round 1 7.5 average, round 2 6.6, round-3 examples 7.9, hand-drawn

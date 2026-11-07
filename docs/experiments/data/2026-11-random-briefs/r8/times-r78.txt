@@ -1,0 +1,19 @@
+k-hyperframes 33.373154749 rc=0
+l-hyperframes 428.934725302 rc=0
+m-hyperframes 48.495727127 rc=0
+n-hyperframes 53.862472199 rc=0
+o-hyperframes 49.862684798 rc=0
+p-hyperframes 60.421657366 rc=0
+k-remotion 39.711386429 rc=0
+l-remotion 805.471152934 rc=0
+m-remotion 49.383854208 rc=0
+n-remotion 42.155151827 rc=0
+o-remotion 45.945194739 rc=0
+p-remotion 44.429140272 rc=0
+k-givemotion 15.434278343 rc=0
+l-givemotion 29.256009013 rc=0
+m-givemotion 18.933234712 rc=0
+n-givemotion 26.080403672 rc=0
+o-givemotion 20.855823727 rc=0
+p-givemotion 21.767466886 rc=0
+done

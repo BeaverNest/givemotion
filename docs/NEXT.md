@@ -68,7 +68,6 @@ only, where a smear may still help.
 - Cost: givemotion's makers spend about 40% more than the cheapest tool's and take about a quarter longer (review and
   critic passes). Measure which passes earn their cost (beats.png, the critic, the number of review runs) and trim.
 - `data-roll` has not been exercised yet (no brief asked for a readout that changes value): check it in a round that does.
-- Render times were not measured in rounds 7 and 8.
 
 ## Next from round 5 (2026-11-06)
 

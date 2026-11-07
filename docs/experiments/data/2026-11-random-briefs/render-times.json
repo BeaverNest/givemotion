@@ -43,5 +43,35 @@
   "hyperframes": 46.5,
   "remotion": 46.1,
   "givemotion": 19.6
+ },
+ "k": {
+  "hyperframes": 33.4,
+  "remotion": 39.7,
+  "givemotion": 15.4
+ },
+ "l": {
+  "hyperframes": 428.9,
+  "remotion": 805.5,
+  "givemotion": 29.3
+ },
+ "m": {
+  "hyperframes": 48.5,
+  "remotion": 49.4,
+  "givemotion": 18.9
+ },
+ "n": {
+  "hyperframes": 53.9,
+  "remotion": 42.2,
+  "givemotion": 26.1
+ },
+ "o": {
+  "hyperframes": 49.9,
+  "remotion": 45.9,
+  "givemotion": 20.9
+ },
+ "p": {
+  "hyperframes": 60.4,
+  "remotion": 44.4,
+  "givemotion": 21.8
  }
 }
