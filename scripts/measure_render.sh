@@ -3,20 +3,20 @@
 # Usage: measure_render.sh <workers> <cpus> <tag>
 set -u
 W=$1; C=$2; TAG=$3
-OUT=/home/beavernest/scratch/gm-demo/out/measure-$TAG.mp4
-rm -rf /home/beavernest/scratch/gm-demo/out/.gm-parts
+OUT=/home/beavernest/givemotion-projects/demo/out/measure-$TAG.mp4
+rm -rf /home/beavernest/givemotion-projects/demo/out/.gm-parts
 NAME=gmmeas-$TAG
 docker rm -f "$NAME" >/dev/null 2>&1
 
 START=$(date +%s%N)
 docker run -d --name "$NAME" \
-  -v /home/beavernest/scratch/givemotion:/work \
+  -v /home/beavernest/givemotion:/work \
   -v docker_gm-cache:/cache \
-  -v /home/beavernest/scratch/gm-demo:/videos \
+  -v /home/beavernest/givemotion-projects:/videos \
   -e GIVEMOTION_CACHE=/cache -e GIVEMOTION_NO_SANDBOX=1 \
   -e GM_WORKERS="$W" -e GM_NICE=10 \
   --cpus "$C" --memory 4g --shm-size 1g --init \
-  givemotion:local render /videos/demo/index.html -o "/videos/out/measure-$TAG.mp4" >/dev/null
+  givemotion:local render /videos/demo/index.html -o "/videos/demo/out/measure-$TAG.mp4" >/dev/null
 
 CID=$(docker inspect -f '{{.Id}}' "$NAME")
 CG="/sys/fs/cgroup/system.slice/docker-$CID.scope/cpu.stat"

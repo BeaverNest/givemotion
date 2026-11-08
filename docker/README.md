@@ -7,7 +7,7 @@ Noto colour emoji). The engine is the **host checkout**, bind-mounted at `/work`
 ## Build and check
 
 ```bash
-cd /home/beavernest/scratch/givemotion
+cd /home/beavernest/givemotion
 docker compose -f docker/compose.yaml build
 docker compose -f docker/compose.yaml run --rm givemotion doctor
 ```
@@ -18,7 +18,7 @@ is missing, the image was built without network access and `install` never ran.
 ## Render a project
 
 Projects live outside the repo and are mounted at `/videos`
-(`GM_PROJECTS` overrides the default `../../gm-demo`):
+(`GM_PROJECTS` overrides the default `/home/beavernest/givemotion-projects`):
 
 ```bash
 docker compose -f docker/compose.yaml run --rm givemotion \
