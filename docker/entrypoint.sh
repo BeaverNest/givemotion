@@ -25,4 +25,14 @@ if [ -r /dev/shm ]; then
     [ "${shm_kb:-0}" -lt 262144 ] && echo "gm: /dev/shm is ${shm_kb}KB — run with --shm-size=1g or frames may fail" >&2
 fi
 
-exec node /work/src/cli.js "$@"
+# A render is not cheap: Chrome rasterises every frame and ffmpeg encodes them. The defaults here
+# keep the machine usable while that happens — GM_WORKERS browsers instead of one per core, and a
+# low scheduling priority. Raise them (`--workers 8`, GM_NICE=0) when the box is otherwise idle.
+if [ "${1:-}" = "render" ] && [ -n "${GM_WORKERS:-}" ]; then
+    case " $* " in
+        *" --workers "*) ;;
+        *) set -- "$@" --workers "$GM_WORKERS" ;;
+    esac
+fi
+
+exec nice -n "${GM_NICE:-10}" node /work/src/cli.js "$@"

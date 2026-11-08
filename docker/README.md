@@ -52,8 +52,28 @@ both are environment facts rather than engine breakage:
 - `GIVEMOTION_NO_SANDBOX=1` — Docker without `SYS_ADMIN` cannot give Chrome a user namespace
   for its sandbox. This is a real downgrade: render pages you trust.
 - `shm_size: 1gb` — the 64 MB default is where Chrome dies mid-capture with no useful message.
-- `cpus: "15"` on a 16-core host — a render saturates every core it is given.
+- `cpus: "4"` and `mem_limit: 4g` — a render saturates every core it is given; the ceiling keeps
+  twelve cores free for the agent, the gateway and the kanban, and stops a runaway page from
+  pushing the host into swap.
 - Colour emoji font — without it, emoji render as tofu boxes and the render still exits 0.
+
+## Cost, measured on the starter page (1920x1080, 10 s, 300 frames)
+
+| setting | wall | peak CPU | CPU-seconds | output |
+|---|---|---|---|---|
+| 2 workers, 4 cores, nice 10 (default) | 12-14 s | ~390% | 30-37 | identical to a 1-worker render |
+| 6 workers, 15 cores, nice 0 | 8-10 s | ~1400% | 52-55 | differs from the 2-worker render |
+
+More browsers is **not** just faster spread over more cores: total CPU work goes *up* (52 vs 34
+CPU-seconds) because each browser pays its own startup and compositing. Quiet mode is cheaper in
+energy and leaves twelve cores free; it costs three or four seconds of wall clock.
+
+Two things that cut the bill without touching the engine:
+
+- **Re-render with the same output name.** Parts are cached in `.gm-parts` next to the output, so
+  an unchanged page re-renders in **0.5 s** instead of 11.6 s. This is the biggest win for
+  iterate-on-a-slide work.
+- **`-o` to a different name defeats that cache.** Every new output name is a cold render.
 
 ## Determinism
 
@@ -61,3 +81,18 @@ Two runs of the same project inside the container are byte-identical (verified m
 the host is **not** byte-identical to a run in the container: the image pins Chrome for Testing
 157 and Debian ffmpeg 5.1, while the host has its own Chrome and ffmpeg 9. Pick one lane per
 project and stay in it if you need reproducible hashes.
+
+**Worker count is part of that lane, and the engine's own "any number of workers gives the same
+bytes" claim does not hold on the starter page.** Measured on the same container:
+
+| workers | md5 of the output |
+|---|---|
+| 1, 2, 3 | `9259d0b7…` (identical) |
+| 4 | `5ab12299…` |
+| 5, 6 | `c5e787b3…` |
+
+Frames 90-119 differ between 3 and 4 workers, and 60-119 between 3 and 6 — a few hundred pixels
+by up to 33/255 on a moving element, not a visible break, but not byte-identical either. The
+default of 2 workers sits in the group that matches a single-worker render, so quiet mode is
+also the reproducible mode. Do not assume that holds for every page: the repo's determinism tests
+cover its own test pages, and this starter page uses `requestAnimationFrame`.

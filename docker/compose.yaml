@@ -21,12 +21,19 @@ services:
     environment:
       GIVEMOTION_CACHE: /cache
       GIVEMOTION_NO_SANDBOX: "1"
+      # Keep the box answerable: two browsers on four cores, at a low priority. Measured on the
+      # starter page: 2 browsers = 9.8 s, 3 = 15.1 s (browsers fight over the same cores), 6 = 6.1 s.
+      # Idle machine? `GM_WORKERS=6 GM_NICE=0 docker compose ... run --rm givemotion render ...`
+      GM_WORKERS: "${GM_WORKERS:-2}"
+      GM_NICE: "${GM_NICE:-10}"
     # Chrome's frame capture needs shared memory; the 64 MB default is where renders die
     # halfway with no useful message.
     shm_size: 1gb
     init: true
-    # A render is CPU-bound: leave the machine one core so the box stays answerable.
-    cpus: "15"
+    # A render is CPU-bound: four cores of sixteen by default, and a memory ceiling so a runaway
+    # page is killed instead of pushing the host into swap.
+    cpus: "4"
+    mem_limit: 4g
 
 volumes:
   gm-cache:
