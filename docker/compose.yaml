@@ -1,0 +1,32 @@
+# givemotion in Docker on M80Q.
+#
+#   docker compose -f docker/compose.yaml build
+#   docker compose -f docker/compose.yaml run --rm givemotion doctor
+#   cd ../gm-demo && docker compose -f ../givemotion/docker/compose.yaml run --rm givemotion \
+#       render /videos/demo/index.html -o /videos/out/video.mp4
+#
+# The engine is the host checkout (bind mount), so editing src/ on the host changes the very
+# next render. Only the machine (node, Chrome, ffmpeg, fonts) comes from the image.
+services:
+  givemotion:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: givemotion:local
+    working_dir: /work
+    volumes:
+      - ../:/work              # the fork, live
+      - gm-cache:/cache        # frame/part cache and cross-render leases
+      - ${GM_PROJECTS:-../../gm-demo}:/videos  # scratch projects, outside the repo
+    environment:
+      GIVEMOTION_CACHE: /cache
+      GIVEMOTION_NO_SANDBOX: "1"
+    # Chrome's frame capture needs shared memory; the 64 MB default is where renders die
+    # halfway with no useful message.
+    shm_size: 1gb
+    init: true
+    # A render is CPU-bound: leave the machine one core so the box stays answerable.
+    cpus: "15"
+
+volumes:
+  gm-cache:

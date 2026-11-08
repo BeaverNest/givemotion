@@ -1,0 +1,11 @@
+.git
+node_modules
+docs
+benchmarks
+bench
+test
+examples
+*.mp4
+*.webm
+*.gif
+out
