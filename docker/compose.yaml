@@ -2,8 +2,7 @@
 #
 #   docker compose -f docker/compose.yaml build
 #   docker compose -f docker/compose.yaml run --rm givemotion doctor
-#   cd ../gm-demo && docker compose -f ../givemotion/docker/compose.yaml run --rm givemotion \
-#       render /videos/demo/index.html -o /videos/out/video.mp4
+#   givemotion render demo/index.html -o demo/out/video.mp4      (wrapper in ~/.local/bin)
 #
 # The engine is the host checkout (bind mount), so editing src/ on the host changes the very
 # next render. Only the machine (node, Chrome, ffmpeg, fonts) comes from the image.
@@ -17,7 +16,7 @@ services:
     volumes:
       - ../:/work              # the fork, live
       - gm-cache:/cache        # frame/part cache and cross-render leases
-      - ${GM_PROJECTS:-../../gm-demo}:/videos  # scratch projects, outside the repo
+      - ${GM_PROJECTS:-/home/beavernest/givemotion-projects}:/videos  # scratch projects, outside the repo
     environment:
       GIVEMOTION_CACHE: /cache
       GIVEMOTION_NO_SANDBOX: "1"
@@ -36,4 +35,7 @@ services:
     mem_limit: 4g
 
 volumes:
+  # A fixed name: the compose project name comes from the directory, and binding renders to the
+  # cache/lease directory must not change because someone copies the repo somewhere else.
   gm-cache:
+    name: givemotion-cache
