@@ -37,6 +37,16 @@ docker compose -f docker/compose.yaml run --rm --entrypoint sh givemotion -c 'np
 `node_modules/` comes from the host checkout, which is x86-64 Linux here — the same platform as
 the image, so `tsc` and the tests run unchanged.
 
+Baseline in this image: **146 of 148 pass, 0 skipped**. Two tests disagree with the host, and
+both are environment facts rather than engine breakage:
+
+1. `shared computer: … gives workers back when one starts` — fails on the host too. The
+   rebalancing ticker fires once a second; on 16 cores the render runs out of parts first.
+2. `check: missing-glyph …` — reports `→` where the host reports `₂`. Which character is
+   detected as drawn-from-a-fallback depends on the installed font stack (host has 550 faces,
+   the image 320), so this heuristic is not portable. If a project's typography matters, compare
+   that project's renders between host and container rather than trusting this warning alone.
+
 ## Why the flags in the image exist
 
 - `GIVEMOTION_NO_SANDBOX=1` — Docker without `SYS_ADMIN` cannot give Chrome a user namespace
